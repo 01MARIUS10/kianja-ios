@@ -1,5 +1,7 @@
 import java.util.Properties
 import java.io.FileInputStream
+import java.util.Date
+import java.text.SimpleDateFormat
 
 plugins {
     id("com.android.application")
@@ -12,6 +14,15 @@ val keystoreProperties = Properties()
 val keystorePropertiesFile = rootProject.file("key.properties")
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+}
+
+fun getVersionCodeTimestamp(): Int {
+    val date = Date()
+    val formatter = SimpleDateFormat("yyMMddHH")
+    val formattedDate = formatter.format(date)
+    val code = formattedDate.toInt()
+    println("VersionCode: $code")
+    return code
 }
 
 android {
@@ -35,8 +46,10 @@ android {
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
-        versionCode = flutter.versionCode
+        // versionCode = flutter.versionCode
+        versionCode = getVersionCodeTimestamp()
         versionName = flutter.versionName
+        setProperty("archivesBaseName", "KIANJA_v${versionName}-${versionCode}")
     }
 
     signingConfigs {
