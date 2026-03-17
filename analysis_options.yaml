@@ -23,10 +23,32 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
-    avoid_print: true # Uncomment to disable the `avoid_print` rule
-    prefer_single_quotes: true # Uncomment to enable the `prefer_single_quotes` rule
-    avoid_relative_lib_imports: true
+    # ----- Clarity & Readability -----
+    always_declare_return_types: true
+    prefer_final_locals: true
+    sort_constructors_first: true
     always_use_package_imports: true
+    avoid_dynamic_calls: true
+    prefer_single_quotes: true
+    require_trailing_commas: true
+
+    # ----- Performance -----
+    prefer_const_constructors: true
+    prefer_const_declarations: true
+    prefer_const_constructors_in_immutables: true
+    prefer_const_literals_to_create_immutables: true
+
+    # ----- Safety -----
+    avoid_print: true
+    unawaited_futures: true
+    cancel_subscriptions: true
+    close_sinks: true
+
+    # ----- Style Consistency -----
+    directives_ordering: true
+    prefer_relative_imports: false
+    unnecessary_lambdas: true
+    use_key_in_widget_constructors: true
 
 bloc:
   rules:

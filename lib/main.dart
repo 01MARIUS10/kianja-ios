@@ -1,12 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:kianja/config/assets.dart';
-import 'package:kianja/core/constants/constants.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/themes/languages.dart';
-import 'package:kianja/routing/router.dart';
+import 'package:kianja/kianja.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  final WidgetsBinding widgetsBinding =
+      WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await dotenv.load(fileName: '.env');
   await EasyLocalization.ensureInitialized();
 
   runApp(
@@ -17,21 +21,4 @@ void main() async {
       child: const Kianja(),
     ),
   );
-}
-
-class Kianja extends StatelessWidget {
-  const Kianja({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    context.setLocale(Languages.localeFrench);
-
-    return MaterialApp.router(
-      title: Constants.appName,
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      routerConfig: router(),
-    );
-  }
 }

@@ -7,8 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:kianja/main.dart';
+import 'package:kianja/kianja.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
