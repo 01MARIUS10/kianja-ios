@@ -1,5 +1,5 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:kianja/core/utils/extensions.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key, required this.title});
@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: .center,
-          children: [Text(context.tr('hello'))],
+          children: [Text(context.appLoc.hello_word)],
         ),
       ),
     );
