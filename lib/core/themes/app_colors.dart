@@ -37,4 +37,5 @@ abstract class AppColors {
   static const Color danger = Color(0xFFEF4444);
   static const Color info = Color(0xFF3B82F6);
   static const Color kara = Color(0xFFF59E0B);
+  static const Color icon = Color(0xFF999999);
 }

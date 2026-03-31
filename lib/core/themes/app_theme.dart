@@ -29,6 +29,13 @@ abstract class AppTheme {
         centerTitle: true,
       ),
 
+      tabBarTheme: const TabBarThemeData(
+        labelColor: AppColors.lightPrimary,
+        unselectedLabelColor: AppColors.lightTextSecondary,
+        indicatorColor: AppColors.lightPrimary,
+        dividerColor: AppColors.lightBorder,
+      ),
+
       textTheme: const TextTheme(
         headlineLarge: TextStyle(
           fontSize: 28,
@@ -40,6 +47,8 @@ abstract class AppTheme {
           fontWeight: FontWeight.w600,
           color: AppColors.lightTextPrimary,
         ),
+        titleMedium: TextStyle(color: AppColors.lightTextPrimary),
+        titleSmall: TextStyle(color: AppColors.lightTextPrimary),
         bodyLarge: TextStyle(fontSize: 16, color: AppColors.lightTextPrimary),
         bodyMedium: TextStyle(
           fontSize: 14,
@@ -57,6 +66,12 @@ abstract class AppTheme {
         ),
       ),
 
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: AppColors.lightPrimary,
+        foregroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.lightSurface,
@@ -72,6 +87,7 @@ abstract class AppTheme {
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: AppColors.lightPrimary, width: 2),
         ),
+        // hintStyle: const TextStyle(color: AppColors.lightTextMuted),
       ),
 
       bottomSheetTheme: const BottomSheetThemeData(
@@ -87,6 +103,32 @@ abstract class AppTheme {
       dividerTheme: const DividerThemeData(
         color: AppColors.lightBorder,
         thickness: 1,
+      ),
+
+      checkboxTheme: CheckboxThemeData(
+        fillColor: WidgetStateProperty.resolveWith<Color?>((states) {
+          if (states.contains(WidgetState.selected)) {
+            return AppColors.lightPrimary;
+          }
+          return null;
+        }),
+        side: const BorderSide(color: AppColors.lightBorderStrong),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+      ),
+
+      snackBarTheme: SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: AppColors.lightSurface,
+        contentTextStyle: const TextStyle(
+          color: AppColors.lightTextPrimary,
+          fontSize: 14,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+          side: const BorderSide(color: AppColors.lightBorder),
+        ),
+        showCloseIcon: true,
+        closeIconColor: AppColors.icon,
       ),
     );
   }
@@ -118,6 +160,13 @@ abstract class AppTheme {
         centerTitle: true,
       ),
 
+      tabBarTheme: const TabBarThemeData(
+        labelColor: AppColors.darkPrimary,
+        unselectedLabelColor: AppColors.darkTextSecondary,
+        indicatorColor: AppColors.darkPrimary,
+        dividerColor: AppColors.darkBorder,
+      ),
+
       textTheme: const TextTheme(
         headlineLarge: TextStyle(
           fontSize: 28,
@@ -129,6 +178,8 @@ abstract class AppTheme {
           fontWeight: FontWeight.w600,
           color: AppColors.darkTextPrimary,
         ),
+        titleMedium: TextStyle(color: AppColors.darkTextPrimary),
+        titleSmall: TextStyle(color: AppColors.darkTextPrimary),
         bodyLarge: TextStyle(fontSize: 16, color: AppColors.darkTextPrimary),
         bodyMedium: TextStyle(fontSize: 14, color: AppColors.darkTextSecondary),
       ),
@@ -141,6 +192,12 @@ abstract class AppTheme {
             borderRadius: BorderRadius.circular(12),
           ),
         ),
+      ),
+
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: AppColors.darkPrimary,
+        foregroundColor: Colors.black,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
 
       inputDecorationTheme: InputDecorationTheme(
@@ -158,6 +215,7 @@ abstract class AppTheme {
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: AppColors.darkPrimary, width: 2),
         ),
+        // hintStyle: const TextStyle(color: AppColors.darkTextMuted),
       ),
 
       bottomSheetTheme: const BottomSheetThemeData(
@@ -173,6 +231,32 @@ abstract class AppTheme {
       dividerTheme: const DividerThemeData(
         color: AppColors.darkBorder,
         thickness: 1,
+      ),
+
+      checkboxTheme: CheckboxThemeData(
+        fillColor: WidgetStateProperty.resolveWith<Color?>((states) {
+          if (states.contains(WidgetState.selected)) {
+            return AppColors.darkPrimary;
+          }
+          return null;
+        }),
+        side: const BorderSide(color: AppColors.darkBorderStrong),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+      ),
+
+      snackBarTheme: SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: AppColors.darkSurface,
+        contentTextStyle: const TextStyle(
+          color: AppColors.darkTextPrimary,
+          fontSize: 14,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+          side: const BorderSide(color: AppColors.darkBorder),
+        ),
+        showCloseIcon: true,
+        closeIconColor: AppColors.icon,
       ),
     );
   }
