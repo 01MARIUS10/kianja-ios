@@ -1,7 +1,13 @@
-abstract final class Routes {
-  static const home = '/';
-  static const myPost = '/my-post';
-  static const account = '/account';
-  static const chooseLang = '/choose-lang';
-  static const login = '/login';
+enum Routes {
+  chooseLang('/choose-lang'),
+  jobs('/'),
+  myPost('/my-post'),
+  account('/account'),
+  personalInfo('/account/personal-info'),
+  changePassword('/account/change-password'),
+  signIn('/sign-in'),
+  signUp('/sign-up');
+
+  const Routes(this.path);
+  final String path;
 }
