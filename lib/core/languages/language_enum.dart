@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:kianja/core/languages/languages.dart';
 
 enum LanguageEnum {
+  malagasy(
+    name: 'Malagasy',
+    flag: '🇲🇬',
+    locale: Languages.localeMalagasy,
+    langCode: 'mg',
+  ),
   french(
     name: 'Français',
     flag: '🇫🇷',
@@ -11,6 +17,7 @@ enum LanguageEnum {
   english(
     name: 'English',
     flag: '🇬🇧',
+    // flag: '🇺🇸',
     locale: Languages.localeEnglish,
     langCode: 'en',
   );
