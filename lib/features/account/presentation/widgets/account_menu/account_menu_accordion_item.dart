@@ -2,17 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
 import 'package:kianja/core/themes/app_colors.dart';
+import 'package:kianja/core/themes/app_mode.dart';
 import 'package:kianja/core/utils/constants.dart';
 
 /// The three theme options presented in the accordion.
 const _kThemeOptions = [
-  (label: 'Light', icon: Icons.light_mode_outlined, mode: ThemeMode.light),
-  (label: 'Dark', icon: Icons.dark_mode_outlined, mode: ThemeMode.dark),
-  (
-    label: 'System',
-    icon: Icons.brightness_auto_outlined,
-    mode: ThemeMode.system,
-  ),
+  (label: 'Light', icon: Icons.light_mode_outlined, mode: AppMode.light),
+  (label: 'Dark', icon: Icons.dark_mode_outlined, mode: AppMode.dark),
+  (label: 'System', icon: Icons.brightness_auto_outlined, mode: AppMode.system),
 ];
 
 /// An accordion-style account menu item that expands to show a radio list
@@ -70,8 +67,8 @@ class _AccountMenuAccordionItemState extends State<AccountMenuAccordionItem>
     });
   }
 
-  void _select(BuildContext context, ThemeMode mode) {
-    BlocProvider.of<AppBloc>(context).add(AppThemeChanged(themeMode: mode));
+  void _select(BuildContext context, AppMode mode) {
+    BlocProvider.of<AppBloc>(context).add(AppThemeChanged(appMode: mode));
     // Collapse after selection
     setState(() {
       _expanded = false;
@@ -83,7 +80,7 @@ class _AccountMenuAccordionItemState extends State<AccountMenuAccordionItem>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final currentMode = context.select((AppBloc bloc) => bloc.state.themeMode);
+    final currentMode = context.select((AppBloc bloc) => bloc.state.appMode);
 
     final iconBubbleColor = isDark
         ? AppColors.darkBackground
@@ -236,7 +233,7 @@ class _ThemeRadioTile extends StatelessWidget {
 
   final IconData icon;
   final String label;
-  final ThemeMode mode;
+  final AppMode mode;
   final bool selected;
   final Color activeColor;
   final bool isDark;

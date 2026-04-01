@@ -106,10 +106,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     },
                     builder: (context, state) {
                       return ElevatedButton(
-                        onPressed: state is AccountRequestInProgress
+                        onPressed:
+                            (state is AccountRequestInProgress) ||
+                                (state is AccountChangePasswordSuccess)
                             ? null
                             : () => _submit(context),
-                        child: state is AccountRequestInProgress
+                        child:
+                            (state is AccountRequestInProgress) ||
+                                (state is AccountChangePasswordSuccess)
                             ? const SizedBox(
                                 height: 20,
                                 width: 20,

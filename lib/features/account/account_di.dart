@@ -7,6 +7,7 @@ import 'package:kianja/features/account/data/repositories/account_repository_imp
 import 'package:kianja/features/account/domain/repositories/account_repository.dart';
 import 'package:kianja/features/account/domain/usecases/change_password_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/logout_usecase.dart';
+import 'package:kianja/features/account/domain/usecases/update_user_info_usecase.dart';
 import 'package:kianja/features/account/presentation/bloc/account_bloc.dart';
 
 Future<void> initAccountDependencies(GetIt getIt, Dio dio) async {
@@ -30,9 +31,16 @@ Future<void> initAccountDependencies(GetIt getIt, Dio dio) async {
   getIt.registerLazySingleton<ChangePasswordUseCase>(
     () => ChangePasswordUseCase(accountRepository: getIt()),
   );
+  getIt.registerLazySingleton<UpdateUserInfoUseCase>(
+    () => UpdateUserInfoUseCase(accountRepository: getIt()),
+  );
 
   // Blocs
   getIt.registerFactory(
-    () => AccountBloc(logoutUseCase: getIt(), changePasswordUseCase: getIt()),
+    () => AccountBloc(
+      logoutUseCase: getIt(),
+      changePasswordUseCase: getIt(),
+      updateUserInfoUseCase: getIt(),
+    ),
   );
 }
