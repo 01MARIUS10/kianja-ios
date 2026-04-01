@@ -11,11 +11,12 @@ import 'package:kianja/core/shared/widgets/fields/phone_input_field.dart';
 import 'package:kianja/core/shared/widgets/fields/text_input_field.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_debug.dart';
+import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:kianja/features/auth/presentation/widgets/auth_header.dart';
 import 'package:kianja/features/auth/presentation/widgets/gender_field.dart';
-import 'package:kianja/features/auth/presentation/widgets/residence_field.dart';
+import 'package:kianja/core/shared/widgets/fields/residence_field.dart';
 import 'package:kianja/routing/routes.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -199,20 +200,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: BlocConsumer<AuthBloc, AuthState>(
                     listener: (context, state) {
                       if (state is AuthSignUpSuccess) {
-                        BlocProvider.of<AppBloc>(
-                          context,
-                        ).add(const AppAuthenticated(isAuthenticated: true));
-                        context.goNamed(Routes.jobs.name);
+                        BlocProvider.of<AppBloc>(context)
+                          ..add(const AppAuthenticated(isAuthenticated: true))
+                          ..add(const AppUserLoaded());
+                        context.goNamed(Routes.account.name);
                       } else if (state is AuthRequestFailure) {
-                        ScaffoldMessenger.of(
-                          context,
-                        ).showSnackBar(SnackBar(content: Text(state.message)));
+                        AppMessenger.showError(context, state.message);
                       }
                     },
                     builder: (context, state) {
                       return ElevatedButton(
                         onPressed:
-                            state is AuthRequestInProgress || !_agreeToTerms
+                            (state is AuthRequestInProgress) ||
+                                (state is AuthSignUpSuccess) ||
+                                !_agreeToTerms
                             ? null
                             : () {
                                 AppDebug.showPrint(
@@ -235,7 +236,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   ),
                                 );
                               },
-                        child: state is AuthRequestInProgress
+                        child:
+                            (state is AuthRequestInProgress) ||
+                                (state is AuthSignUpSuccess)
                             ? const SizedBox(
                                 height: 20,
                                 width: 20,

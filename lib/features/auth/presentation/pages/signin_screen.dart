@@ -141,14 +141,16 @@ class _SignInScreenState extends State<SignInScreen> {
                         BlocProvider.of<AppBloc>(context)
                           ..add(const AppAuthenticated(isAuthenticated: true))
                           ..add(const AppUserLoaded());
-                        context.goNamed(Routes.jobs.name);
+                        context.goNamed(Routes.account.name);
                       } else if (state is AuthRequestFailure) {
                         AppMessenger.showError(context, state.message);
                       }
                     },
                     builder: (context, state) {
                       return ElevatedButton(
-                        onPressed: state is AuthRequestInProgress
+                        onPressed:
+                            (state is AuthRequestInProgress) ||
+                                (state is AuthSignInSuccess)
                             ? null
                             : () {
                                 BlocProvider.of<AuthBloc>(context).add(
@@ -159,7 +161,9 @@ class _SignInScreenState extends State<SignInScreen> {
                                   ),
                                 );
                               },
-                        child: state is AuthRequestInProgress
+                        child:
+                            (state is AuthRequestInProgress) ||
+                                (state is AuthSignInSuccess)
                             ? const SizedBox(
                                 height: 20,
                                 width: 20,
