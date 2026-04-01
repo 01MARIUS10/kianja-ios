@@ -50,7 +50,7 @@ class _KianjaState extends State<Kianja> {
           localizationsDelegates: _localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           locale: state.lang,
-          themeMode: state.themeMode,
+          themeMode: state.appMode.themeMode,
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           routerConfig: _router,
