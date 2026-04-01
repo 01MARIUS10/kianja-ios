@@ -1,7 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:kianja/core/services/dio/dio_client.dart';
-import 'package:kianja/core/shared/app_feature/data/datasources/app_shared_prefs.dart';
 import 'package:kianja/features/auth/data/datasources/auth_remote_data.dart';
 import 'package:kianja/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:kianja/features/auth/domain/repositories/auth_repository.dart';

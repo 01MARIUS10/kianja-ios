@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
+import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/features/account/presentation/pages/account_screen.dart';
 import 'package:kianja/features/account/presentation/pages/change_password/change_password_screen.dart';
 import 'package:kianja/features/account/presentation/pages/personal_info/personal_info_screen.dart';
@@ -32,10 +33,12 @@ abstract class AppRouter {
       redirect: (context, state) {
         final appState = appBloc.state;
         final isAuthenticated = appState.isAuthenticated;
-        print('AppRouter redirect');
-        print('matchedLocation: ${state.matchedLocation}');
-        print('isAlreadyChosenLang: ${appState.isAlreadyChosenLang}');
-        print('isAuthenticated: $isAuthenticated');
+        AppDebug.showPrint('AppRouter redirect');
+        AppDebug.showPrint('matchedLocation: ${state.matchedLocation}');
+        AppDebug.showPrint(
+          'isAlreadyChosenLang: ${appState.isAlreadyChosenLang}',
+        );
+        AppDebug.showPrint('isAuthenticated: $isAuthenticated');
         if (state.matchedLocation == Routes.chooseLang.path &&
             appState.isAlreadyChosenLang == true) {
           return Routes.jobs.path;
