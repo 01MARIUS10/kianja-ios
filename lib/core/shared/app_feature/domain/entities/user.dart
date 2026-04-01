@@ -7,6 +7,8 @@ class User {
         photoUrl: '',
         email: '',
         phone: '',
+        genre: '',
+        pseudo: '',
         residence: '',
       );
   const User({
@@ -16,6 +18,8 @@ class User {
     required this.photoUrl,
     required this.email,
     required this.phone,
+    required this.genre,
+    required this.pseudo,
     required this.residence,
   });
   final int id;
@@ -24,5 +28,7 @@ class User {
   final String photoUrl;
   final String email;
   final String phone;
+  final String genre;
+  final String pseudo;
   final String residence;
 }

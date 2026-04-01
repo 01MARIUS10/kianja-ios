@@ -12,7 +12,7 @@ class AppState extends Equatable {
     required this.lang,
     required this.isAlreadyChosenLang,
     required this.isAuthenticated,
-    this.themeMode = ThemeMode.system,
+    this.appMode = AppMode.system,
     this.user = const User.empty(),
     this.appInitStatus = AppInitStatus.initial,
     this.userStatus = AppUserStatus.initial,
@@ -22,7 +22,7 @@ class AppState extends Equatable {
   final Locale lang;
   final bool isAlreadyChosenLang;
   final bool isAuthenticated;
-  final ThemeMode themeMode;
+  final AppMode appMode;
   final User user;
   final AppInitStatus appInitStatus;
   final AppUserStatus userStatus;
@@ -33,7 +33,7 @@ class AppState extends Equatable {
     Locale? lang,
     bool? isAlreadyChosenLang,
     bool? isAuthenticated,
-    ThemeMode? themeMode,
+    AppMode? appMode,
     User? user,
     AppInitStatus? appInitStatus,
     AppUserStatus? userStatus,
@@ -44,7 +44,7 @@ class AppState extends Equatable {
       lang: lang ?? this.lang,
       isAlreadyChosenLang: isAlreadyChosenLang ?? this.isAlreadyChosenLang,
       isAuthenticated: isAuthenticated ?? this.isAuthenticated,
-      themeMode: themeMode ?? this.themeMode,
+      appMode: appMode ?? this.appMode,
       user: user ?? this.user,
       appInitStatus: appInitStatus ?? this.appInitStatus,
       userStatus: userStatus ?? this.userStatus,
@@ -58,7 +58,7 @@ class AppState extends Equatable {
     lang,
     isAlreadyChosenLang,
     isAuthenticated,
-    themeMode,
+    appMode,
     user,
     appInitStatus,
     userStatus,

@@ -39,14 +39,22 @@ class AppUserLoaded extends AppEvent {
   const AppUserLoaded();
 }
 
-class AppCachedUserDeleted extends AppEvent {
-  const AppCachedUserDeleted();
-}
-
-class AppThemeChanged extends AppEvent {
-  const AppThemeChanged({required this.themeMode});
-  final ThemeMode themeMode;
+class AppUserUpdated extends AppEvent {
+  const AppUserUpdated({required this.user});
+  final User user;
 
   @override
-  List<Object> get props => [themeMode];
+  List<Object> get props => [user];
+}
+
+// class AppCachedUserDeleted extends AppEvent {
+//   const AppCachedUserDeleted();
+// }
+
+class AppThemeChanged extends AppEvent {
+  const AppThemeChanged({required this.appMode});
+  final AppMode appMode;
+
+  @override
+  List<Object> get props => [appMode];
 }

@@ -73,8 +73,7 @@ Future<void> initAppDependencies(
     () => AppBloc(
       appSharedPrefs: getIt(),
       getUserUseCase: getIt(),
-      getCachedUserUseCase: getIt(),
-      deleteCachedUserUseCase: getIt(),
+      // deleteCachedUserUseCase: getIt(),
     ),
   );
 }

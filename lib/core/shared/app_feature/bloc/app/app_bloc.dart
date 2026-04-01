@@ -1,16 +1,12 @@
 import 'dart:ui';
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kianja/core/errors/failures.dart';
-
 import 'package:kianja/core/languages/languages.dart';
 import 'package:kianja/core/shared/app_feature/data/datasources/app_shared_prefs.dart';
 import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
-import 'package:kianja/core/shared/app_feature/domain/usecases/delete_cached_user_usecase.dart';
-import 'package:kianja/core/shared/app_feature/domain/usecases/get_cached_user_usecase.dart';
 import 'package:kianja/core/shared/app_feature/domain/usecases/get_user_usecase.dart';
+import 'package:kianja/core/themes/app_mode.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/core/utils/usecase.dart';
@@ -22,12 +18,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc({
     required AppSharedPrefs appSharedPrefs,
     required GetUserUseCase getUserUseCase,
-    required GetCachedUserUseCase getCachedUserUseCase,
-    required DeleteCachedUserUseCase deleteCachedUserUseCase,
+    // required DeleteCachedUserUseCase deleteCachedUserUseCase,
   }) : _appSharedPrefs = appSharedPrefs,
        _getUserUseCase = getUserUseCase,
-       _getCachedUserUseCase = getCachedUserUseCase,
-       _deleteCachedUserUseCase = deleteCachedUserUseCase,
+       //  _deleteCachedUserUseCase = deleteCachedUserUseCase,
        super(
          const AppState(
            lang: Languages.localeFrench,
@@ -40,13 +34,13 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<AppLanguageChanged>(_onAppLanguageChanged);
     on<AppAuthenticated>(_onAppAuthenticated);
     on<AppUserLoaded>(_onAppUserLoaded);
-    on<AppCachedUserDeleted>(_onAppCachedUserDeleted);
+    on<AppUserUpdated>(_onAppUserUpdated);
+    // on<AppCachedUserDeleted>(_onAppCachedUserDeleted);
     on<AppThemeChanged>(_onAppThemeChanged);
   }
   final AppSharedPrefs _appSharedPrefs;
   final GetUserUseCase _getUserUseCase;
-  final GetCachedUserUseCase _getCachedUserUseCase;
-  final DeleteCachedUserUseCase _deleteCachedUserUseCase;
+  // final DeleteCachedUserUseCase _deleteCachedUserUseCase;
 
   void _onAppInitialized(AppInitialized event, Emitter emit) async {
     emit(state.copyWith(appInitStatus: AppInitStatus.loading));
@@ -60,13 +54,13 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     final String token = _appSharedPrefs.get(Constants.token) ?? '';
     final bool isAuthenticated = token.isNotEmpty;
     final String? savedTheme = _appSharedPrefs.get(Constants.theme);
-    final ThemeMode themeMode = ThemeMode.values.firstWhere(
+    final AppMode appMode = AppMode.values.firstWhere(
       (m) => m.name == savedTheme,
-      orElse: () => ThemeMode.system,
+      orElse: () => AppMode.system,
     );
-    final result = await _getCachedUserUseCase(NoParams());
+    final result = await _getUserUseCase(NoParams());
     final User user = result.fold((failure) {
-      if (failure.message == 'Session expired') {
+      if (failure.message == 'Unauthorized') {
         _appSharedPrefs.remove(Constants.token);
         emit(
           state.copyWith(isAuthenticated: false, errorMessage: failure.message),
@@ -74,12 +68,14 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       }
       return const User.empty();
     }, (user) => user);
+    AppDebug.showPrint('user: $user');
+    AppDebug.showPrint('userStatus: ${user == const User.empty()}');
     emit(
       state.copyWith(
         lang: Locale(lang ?? 'fr'),
         isAlreadyChosenLang: isAlreadyChosenLang ?? false,
         isAuthenticated: isAuthenticated,
-        themeMode: themeMode,
+        appMode: appMode,
         user: user,
         userStatus: user == const User.empty()
             ? AppUserStatus.deleted
@@ -114,33 +110,36 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     emit(state.copyWith(userStatus: AppUserStatus.loading));
     final result = await _getUserUseCase(NoParams());
     result.fold(
-      (failure) => emit(
-        state.copyWith(
-          userStatus: AppUserStatus.error,
-          errorMessage: failure.message,
-        ),
-      ),
+      (failure) {
+        _appSharedPrefs.remove(Constants.token);
+        add(const AppInitialized());
+      },
       (user) =>
           emit(state.copyWith(userStatus: AppUserStatus.loaded, user: user)),
     );
   }
 
-  void _onAppCachedUserDeleted(AppCachedUserDeleted event, Emitter emit) async {
+  void _onAppUserUpdated(AppUserUpdated event, Emitter emit) async {
     emit(state.copyWith(userStatus: AppUserStatus.loading));
-    final result = await _deleteCachedUserUseCase(NoParams());
-    result.fold(
-      (failure) => emit(
-        state.copyWith(
-          userStatus: AppUserStatus.error,
-          errorMessage: failure.message,
-        ),
-      ),
-      (_) => emit(state.copyWith(userStatus: AppUserStatus.deleted)),
-    );
+    emit(state.copyWith(userStatus: AppUserStatus.loaded, user: event.user));
   }
 
+  // void _onAppCachedUserDeleted(AppCachedUserDeleted event, Emitter emit) async {
+  //   emit(state.copyWith(userStatus: AppUserStatus.loading));
+  //   final result = await _deleteCachedUserUseCase(NoParams());
+  //   result.fold(
+  //     (failure) => emit(
+  //       state.copyWith(
+  //         userStatus: AppUserStatus.error,
+  //         errorMessage: failure.message,
+  //       ),
+  //     ),
+  //     (_) => emit(state.copyWith(userStatus: AppUserStatus.deleted)),
+  //   );
+  // }
+
   void _onAppThemeChanged(AppThemeChanged event, Emitter emit) async {
-    await _appSharedPrefs.save(Constants.theme, event.themeMode.name);
-    emit(state.copyWith(themeMode: event.themeMode));
+    await _appSharedPrefs.save(Constants.theme, event.appMode.name);
+    emit(state.copyWith(appMode: event.appMode));
   }
 }

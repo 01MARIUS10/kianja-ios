@@ -13,6 +13,8 @@ abstract class UserModel with _$UserModel implements User {
     required String photoUrl,
     required String email,
     required String phone,
+    required String genre,
+    required String pseudo,
     required String residence,
   }) = _UserModel;
 
