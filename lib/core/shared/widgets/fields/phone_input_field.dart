@@ -5,9 +5,17 @@ import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/core/utils/input_formatters/phone_formatter.dart';
 
 class PhoneInputField extends StatefulWidget {
-  const PhoneInputField({super.key, required this.controller, this.onChanged});
+  const PhoneInputField({
+    super.key,
+    required this.controller,
+    this.onChanged,
+    this.readOnly = false,
+    this.enabled = true,
+  });
   final TextEditingController controller;
   final void Function(String)? onChanged;
+  final bool readOnly;
+  final bool enabled;
 
   @override
   State<PhoneInputField> createState() => _PhoneInputFieldState();
@@ -50,6 +58,8 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
     final ThemeData theme = Theme.of(context);
 
     return TextField(
+      enabled: widget.enabled,
+      readOnly: widget.readOnly,
       controller: widget.controller,
       keyboardType: TextInputType.phone,
       onChanged: _onInputChanged,
@@ -65,7 +75,7 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
 
   Widget _buildPrefixIcon(ThemeData theme) {
     return InkWell(
-      onTap: () => _showCountryPicker(theme),
+      onTap: widget.readOnly ? null : () => _showCountryPicker(theme),
       borderRadius: const BorderRadius.horizontal(left: Radius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.symmetric(
