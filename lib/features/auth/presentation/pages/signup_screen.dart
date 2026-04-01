@@ -8,6 +8,7 @@ import 'package:kianja/core/shared/widgets/fields/date_field.dart';
 import 'package:kianja/core/shared/widgets/fields/label_field.dart';
 import 'package:kianja/core/shared/widgets/fields/password_input_field.dart';
 import 'package:kianja/core/shared/widgets/fields/phone_input_field.dart';
+import 'package:kianja/core/shared/widgets/fields/residence_field.dart';
 import 'package:kianja/core/shared/widgets/fields/text_input_field.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_debug.dart';
@@ -16,7 +17,6 @@ import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:kianja/features/auth/presentation/widgets/auth_header.dart';
 import 'package:kianja/features/auth/presentation/widgets/gender_field.dart';
-import 'package:kianja/core/shared/widgets/fields/residence_field.dart';
 import 'package:kianja/routing/routes.dart';
 
 class SignUpScreen extends StatefulWidget {
