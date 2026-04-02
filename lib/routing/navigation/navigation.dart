@@ -16,9 +16,10 @@ class Navigation extends StatelessWidget {
       bottomNavigationBar: BlocConsumer<ConnectivityBloc, ConnectivityState>(
         listener: (context, state) {
           return switch (state) {
-            ConnectivityConnectionSuccess() => ScaffoldMessenger.of(
-              context,
-            ).clearSnackBars(),
+            ConnectivityConnectionSuccess() => {
+              ScaffoldMessenger.of(context).clearSnackBars(),
+              BlocProvider.of<AppBloc>(context).add(const AppUserLoaded()),
+            },
             ConnectivityConnectionFailure() => AppMessenger.showWarning(
               context,
               'No internet connection',
