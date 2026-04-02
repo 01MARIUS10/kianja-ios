@@ -60,7 +60,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     );
     final result = await _getUserUseCase(NoParams());
     final User user = result.fold((failure) {
-      if (failure.message == 'Unauthorized') {
+      if (failure.message == 'Unauthorized' && failure.statusCode == 401) {
         _appSharedPrefs.remove(Constants.token);
         emit(
           state.copyWith(isAuthenticated: false, errorMessage: failure.message),
@@ -69,7 +69,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       return const User.empty();
     }, (user) => user);
     AppDebug.showPrint('user: $user');
-    AppDebug.showPrint('userStatus: ${user == const User.empty()}');
+    AppDebug.showPrint(
+      'userStatus: ${user == const User.empty() ? 'deleted' : 'loaded'}',
+    );
     emit(
       state.copyWith(
         lang: Locale(lang ?? 'fr'),
@@ -111,6 +113,16 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     final result = await _getUserUseCase(NoParams());
     result.fold(
       (failure) {
+        AppDebug.showPrint(
+          'user: ${failure.message}, status: ${failure.statusCode}',
+        );
+        emit(
+          state.copyWith(
+            userStatus: AppUserStatus.error,
+            user: const User.empty(),
+            errorMessage: failure.message,
+          ),
+        );
         _appSharedPrefs.remove(Constants.token);
         add(const AppInitialized());
       },
