@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kianja/core/themes/app_colors.dart';
+import 'package:kianja/core/utils/constants.dart';
 
 abstract class AppTheme {
   // ================= LIGHT =================
@@ -7,6 +8,7 @@ abstract class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
+      shadowColor: AppColors.darkSurface,
 
       colorScheme: const ColorScheme(
         brightness: Brightness.light,
@@ -66,10 +68,15 @@ abstract class AppTheme {
         ),
       ),
 
-      floatingActionButtonTheme: FloatingActionButtonThemeData(
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: AppColors.lightPrimary,
         foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        elevation: 2,
+        sizeConstraints: BoxConstraints(
+          minWidth: Constants.size45,
+          minHeight: Constants.size45,
+        ),
+        shape: CircleBorder(),
       ),
 
       inputDecorationTheme: InputDecorationTheme(
@@ -138,6 +145,7 @@ abstract class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
+      shadowColor: AppColors.lightSurface,
 
       colorScheme: const ColorScheme(
         brightness: Brightness.dark,
@@ -194,10 +202,15 @@ abstract class AppTheme {
         ),
       ),
 
-      floatingActionButtonTheme: FloatingActionButtonThemeData(
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: AppColors.darkPrimary,
+        elevation: 2,
+        sizeConstraints: BoxConstraints(
+          minWidth: Constants.size45,
+          minHeight: Constants.size45,
+        ),
         foregroundColor: Colors.black,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: CircleBorder(),
       ),
 
       inputDecorationTheme: InputDecorationTheme(
