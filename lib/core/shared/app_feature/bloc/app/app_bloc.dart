@@ -35,7 +35,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<AppAuthenticated>(_onAppAuthenticated);
     on<AppUserLoaded>(_onAppUserLoaded);
     on<AppUserUpdated>(_onAppUserUpdated);
-    // on<AppCachedUserDeleted>(_onAppCachedUserDeleted);
+    on<AppUserDeleted>(_onAppUserDeleted);
     on<AppThemeChanged>(_onAppThemeChanged);
   }
   final AppSharedPrefs _appSharedPrefs;
@@ -70,7 +70,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }, (user) => user);
     AppDebug.showPrint('user: $user');
     AppDebug.showPrint(
-      'userStatus: ${user == const User.empty() ? 'deleted' : 'loaded'}',
+      'userStatus: ${user == const User.empty() ? 'session expired' : 'loaded'}',
     );
     emit(
       state.copyWith(
@@ -80,7 +80,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         appMode: appMode,
         user: user,
         userStatus: user == const User.empty()
-            ? AppUserStatus.deleted
+            ? AppUserStatus.sessionExpired
             : AppUserStatus.loaded,
         appInitStatus: AppInitStatus.loaded,
       ),
@@ -118,7 +118,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         );
         emit(
           state.copyWith(
-            userStatus: AppUserStatus.error,
+            userStatus: AppUserStatus.sessionExpired,
             user: const User.empty(),
             errorMessage: failure.message,
           ),
@@ -134,6 +134,18 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   void _onAppUserUpdated(AppUserUpdated event, Emitter emit) async {
     emit(state.copyWith(userStatus: AppUserStatus.loading));
     emit(state.copyWith(userStatus: AppUserStatus.loaded, user: event.user));
+  }
+
+  void _onAppUserDeleted(AppUserDeleted event, Emitter emit) async {
+    emit(state.copyWith(userStatus: AppUserStatus.loading));
+    // await Future.delayed(const Duration(milliseconds: 500));
+    emit(
+      state.copyWith(
+        isAuthenticated: false,
+        userStatus: AppUserStatus.deleted,
+        user: const User.empty(),
+      ),
+    );
   }
 
   // void _onAppCachedUserDeleted(AppCachedUserDeleted event, Emitter emit) async {
