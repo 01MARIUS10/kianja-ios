@@ -5,6 +5,10 @@ enum Routes {
 
   // ------------- HOME (Job offers) ----------------
   jobs('/'),
+  postJobApplicant('post-job-applicant'),
+  postJobOffer('post-job-offer'),
+  postTrainingCenter('post-training-center'),
+  postExpertExecutive('post-expert-executive'),
   // ------------- HOME (Job offers) ----------------
 
   // ------------- MY POST ----------------
