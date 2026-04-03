@@ -11,6 +11,8 @@ class TextInputField extends StatelessWidget {
     this.suffixIcon,
     this.readOnly = false,
     this.onTap,
+    this.maxLines = 1,
+    this.maxLength,
   });
 
   final TextEditingController controller;
@@ -21,6 +23,8 @@ class TextInputField extends StatelessWidget {
   final Widget? suffixIcon;
   final bool readOnly;
   final VoidCallback? onTap;
+  final int? maxLines;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +36,8 @@ class TextInputField extends StatelessWidget {
       onChanged: onChanged,
       readOnly: readOnly,
       onTap: onTap,
+      maxLines: maxLines,
+      maxLength: maxLength,
       style: theme.textTheme.bodyMedium,
       decoration: InputDecoration(
         hintText: hintText,
