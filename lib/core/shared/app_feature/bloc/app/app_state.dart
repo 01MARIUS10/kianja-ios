@@ -3,7 +3,7 @@ part of 'app_bloc.dart';
 
 enum AppInitStatus { initial, loading, loaded, error }
 
-enum AppUserStatus { initial, loading, loaded, deleted, error }
+enum AppUserStatus { initial, loading, loaded, sessionExpired, deleted, error }
 
 enum AppLanguageStatus { initial, loading, confirmed, error }
 

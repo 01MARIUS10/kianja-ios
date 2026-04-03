@@ -47,9 +47,9 @@ class AppUserUpdated extends AppEvent {
   List<Object> get props => [user];
 }
 
-// class AppCachedUserDeleted extends AppEvent {
-//   const AppCachedUserDeleted();
-// }
+class AppUserDeleted extends AppEvent {
+  const AppUserDeleted();
+}
 
 class AppThemeChanged extends AppEvent {
   const AppThemeChanged({required this.appMode});
