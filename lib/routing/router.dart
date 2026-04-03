@@ -12,6 +12,7 @@ import 'package:kianja/features/auth/presentation/pages/signin_screen.dart';
 import 'package:kianja/features/auth/presentation/pages/signup_screen.dart';
 import 'package:kianja/features/choose_lang/presentation/pages/choose_lang_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/jobs_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/post/post_job_applicant_screen.dart';
 import 'package:kianja/features/my_post/presentation/pages/my_post_screen.dart';
 import 'package:kianja/routing/navigation/navigation.dart';
 import 'package:kianja/routing/routes.dart';
@@ -81,6 +82,36 @@ abstract class AppRouter {
                   builder: (context, state) {
                     return const JobsScreen();
                   },
+                  routes: [
+                    GoRoute(
+                      name: Routes.postJobApplicant.name,
+                      path: Routes.postJobApplicant.path,
+                      builder: (context, state) {
+                        return const PostJobApplicantScreen();
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.postJobOffer.name,
+                      path: Routes.postJobOffer.path,
+                      builder: (context, state) {
+                        return Container(color: Colors.amber);
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.postTrainingCenter.name,
+                      path: Routes.postTrainingCenter.path,
+                      builder: (context, state) {
+                        return Container(color: Colors.green);
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.postExpertExecutive.name,
+                      path: Routes.postExpertExecutive.path,
+                      builder: (context, state) {
+                        return Container(color: Colors.blue);
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),
