@@ -46,7 +46,9 @@ class BannerPub extends StatelessWidget {
           Flexible(
             child: Text(
               'KIMS Restaurant coréen',
-              style: theme.textTheme.headlineMedium,
+              style: theme.textTheme.headlineMedium?.copyWith(
+                color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
+              ),
               overflow: TextOverflow.ellipsis,
             ),
           ),
