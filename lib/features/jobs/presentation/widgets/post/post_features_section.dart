@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:kianja/core/config/assets.dart';
+import 'package:kianja/core/utils/constants.dart';
 
 class PostFeaturesSection extends StatefulWidget {
-  const PostFeaturesSection({
-    super.key,
-  });
+  const PostFeaturesSection({super.key});
 
   @override
   State<PostFeaturesSection> createState() => _PostFeaturesSectionState();
@@ -60,7 +59,7 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 child: Row(
-                  mainAxisSize: MainAxisSize.min,
+                  // mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(
                       width: 24,
@@ -90,7 +89,7 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 child: Row(
-                  mainAxisSize: MainAxisSize.min,
+                  // mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(
                       width: 24,
@@ -113,16 +112,21 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
           children: [
             Text('Price : ', style: textTheme.bodyMedium),
             const SizedBox(width: 8),
-            Container(
-              padding: const EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                color: theme.colorScheme.primary,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(Icons.monetization_on, size: 16, color: Colors.white), // Placeholder for Kianja M coin icon if it's custom.
+            Image.asset(
+              Assets.kara,
+              cacheHeight: Constants.size70.toInt(),
+              cacheWidth: Constants.size70.toInt(),
+              height: 25,
+              width: 25,
+              fit: BoxFit.cover,
             ),
             const SizedBox(width: 4),
-            Text('5 000', style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold)),
+            Text(
+              '5 000',
+              style: textTheme.bodyMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ],
         ),
         const SizedBox(height: 16),
@@ -132,25 +136,34 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
             onPressed: () {},
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
             ),
-            child: const Text('Post', style: TextStyle(fontWeight: FontWeight.bold)),
+            child: const Text(
+              'Post',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
         ),
       ],
     );
   }
 
-  Widget _buildFeatureRow(BuildContext context, {required String label, required List<Widget> children}) {
+  Widget _buildFeatureRow(
+    BuildContext context, {
+    required String label,
+    required List<Widget> children,
+  }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-           width: 80,
-           child: Padding(
-             padding: const EdgeInsets.only(top: 4.0),
-             child: Text(label, style: Theme.of(context).textTheme.bodyMedium),
-           ),
+          width: 80,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 4.0),
+            child: Text(label, style: Theme.of(context).textTheme.bodyMedium),
+          ),
         ),
         Expanded(
           child: Column(

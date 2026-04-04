@@ -21,7 +21,7 @@ class _JobApplicantsScreenState extends State<JobApplicantsScreen>
     super.build(context);
     return JobSectionWithFloatingButton(
       child: const JobCategorySection(
-        key: PageStorageKey<String>('job_applicants'),
+        key: PageStorageKey<String>('Job applicants'),
         categoryName: 'Job applicants',
         itemCount: 8,
         showHeader: false,
