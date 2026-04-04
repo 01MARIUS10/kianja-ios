@@ -40,6 +40,15 @@ abstract class AppRouter {
           'isAlreadyChosenLang: ${appState.isAlreadyChosenLang}',
         );
         AppDebug.showPrint('isAuthenticated: $isAuthenticated');
+
+        // Prevent routing decisions while AppBloc is still initializing
+        // This ensures the native splash screen covers the loading phase
+        // without premature redirects.
+        if (appState.appInitStatus == AppInitStatus.initial ||
+            appState.appInitStatus == AppInitStatus.loading) {
+          return null;
+        }
+
         if (state.matchedLocation == Routes.chooseLang.path &&
             appState.isAlreadyChosenLang == true) {
           return Routes.jobs.path;
