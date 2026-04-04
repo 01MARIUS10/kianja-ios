@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
-import 'package:kianja/features/jobs/presentation/pages/categories/experts_executives_screen.dart';
-import 'package:kianja/features/jobs/presentation/pages/categories/job_applicants_screen.dart';
-import 'package:kianja/features/jobs/presentation/pages/categories/job_offers_screen.dart';
-import 'package:kianja/features/jobs/presentation/pages/categories/training_center_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/jobs_categories/experts_executives_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/jobs_categories/job_applicants_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/jobs_categories/job_offers_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/jobs_categories/training_center_screen.dart';
 import 'package:kianja/features/jobs/presentation/widgets/jobs_header.dart';
 
 class JobsScreen extends StatefulWidget {
