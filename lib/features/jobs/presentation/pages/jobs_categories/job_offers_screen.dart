@@ -34,7 +34,7 @@ class _JobOffersScreenState extends State<JobOffersScreen>
           isScrollable: true,
           tabAlignment: TabAlignment.start,
           tabs: const [
-            Tab(text: 'Enterprises / Companies'),
+            Tab(text: 'Enterprises'),
             Tab(text: 'Particular'),
             Tab(text: 'Public organizations'),
             Tab(text: 'ONG'),
@@ -45,10 +45,7 @@ class _JobOffersScreenState extends State<JobOffersScreen>
             controller: _tabController,
             physics: const NeverScrollableScrollPhysics(),
             children: const [
-              JobOfferCategoryScreen(
-                category: 'Enterprises / Companies',
-                itemCount: 15,
-              ),
+              JobOfferCategoryScreen(category: 'Enterprises', itemCount: 15),
               JobOfferCategoryScreen(category: 'Particular', itemCount: 25),
               JobOfferCategoryScreen(
                 category: 'Public organizations',

@@ -137,7 +137,8 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                 ],
               ),
               const SizedBox(height: Constants.spacingSmall),
-              Column(
+              Wrap(
+                spacing: Constants.spacingMedium,
                 children: ['Designer', 'Coder', 'Driver', 'Teacher'].map((
                   category,
                 ) {
@@ -148,6 +149,7 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 6),
                       child: Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           SizedBox(
                             width: 24,
@@ -157,7 +159,7 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                               onChanged: (value) => _toggleCategory(category),
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          const SizedBox(width: Constants.spacingExtraSmall),
                           Text(category, style: theme.textTheme.bodyMedium),
                         ],
                       ),
@@ -169,7 +171,8 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
 
               const LabelField(label: 'Location *'),
               const SizedBox(height: Constants.spacingSmall),
-              Column(
+              Wrap(
+                spacing: Constants.spacingMedium,
                 children: ['National', 'Antananarivo', 'Toliara'].map((
                   location,
                 ) {
@@ -189,7 +192,7 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                               onChanged: (value) => _toggleLocation(location),
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          const SizedBox(width: Constants.spacingExtraSmall),
                           Text(location, style: theme.textTheme.bodyMedium),
                         ],
                       ),
@@ -201,7 +204,9 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
 
               const LabelField(label: 'Gender *'),
               const SizedBox(height: Constants.spacingSmall),
-              Column(
+              Wrap(
+                spacing: Constants.spacingMedium,
+
                 children: ['Female', 'Male', 'Together'].map((gender) {
                   final isSelected = _selectedGenders.contains(gender);
                   return InkWell(
@@ -210,6 +215,7 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 6),
                       child: Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           SizedBox(
                             width: 24,
@@ -219,7 +225,7 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                               onChanged: (value) => _toggleGender(gender),
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          const SizedBox(width: Constants.spacingExtraSmall),
                           Text(gender, style: theme.textTheme.bodyMedium),
                         ],
                       ),
