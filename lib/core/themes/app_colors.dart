@@ -10,8 +10,8 @@ abstract class AppColors {
   static const Color lightTextSecondary = Color(0xFF6B7280);
   static const Color lightTextMuted = Color(0xFF9FA3B1);
 
-  static const Color lightPrimary = Color(0xFF3DB46D);
-  static const Color lightPrimaryHover = Color(0xFF2E9A58);
+  static const Color lightPrimary = Color(0xFF25D366);
+  static const Color lightPrimaryHover = Color(0xFF59CE72);
 
   static const Color lightBorder = Color(0xFFE0E2E7);
   static const Color lightBorderStrong = Color(0xFFC5C8D2);
@@ -25,14 +25,14 @@ abstract class AppColors {
   static const Color darkTextSecondary = Color(0xFF9FA3B1);
   static const Color darkTextMuted = Color(0xFF4B4F5C);
 
-  static const Color darkPrimary = Color(0xFF4DCF82);
-  static const Color darkPrimaryHover = Color(0xFF3BAA68);
+  static const Color darkPrimary = Color(0xFF25D366);
+  static const Color darkPrimaryHover = Color(0xFF59CE72);
 
   static const Color darkBorder = Color(0xFF2E2E3E);
   static const Color darkBorderStrong = Color(0xFF404050);
 
   // ================= SEMANTIC =================
-  static const Color success = Color(0xFF3DB46D);
+  static const Color success = Color(0xFF25D366);
   static const Color warning = Color(0xFFF97316);
   static const Color danger = Color(0xFFEF4444);
   static const Color info = Color(0xFF3B82F6);
