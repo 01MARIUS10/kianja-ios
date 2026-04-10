@@ -11,6 +11,10 @@ enum Routes {
   postExpertExecutive('post-expert-executive'),
   // ------------- HOME (Job offers) ----------------
 
+  // ------------- POST ----------------
+  post('/post'),
+  // ------------- POST ----------------
+
   // ------------- MY POST ----------------
   myPost('/my-post'),
   // ------------- MY POST ----------------

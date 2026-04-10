@@ -13,11 +13,13 @@ import 'package:kianja/features/auth/presentation/pages/signup_screen.dart';
 import 'package:kianja/features/choose_lang/presentation/pages/choose_lang_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/jobs_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_job_applicant_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/post/post_screen.dart';
 import 'package:kianja/features/my_post/presentation/pages/my_post_screen.dart';
 import 'package:kianja/routing/navigation/navigation.dart';
 import 'package:kianja/routing/routes.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
+final _rootNavigatorPostKey = GlobalKey<NavigatorState>();
 final _shellNavigatorJobsKey = GlobalKey<NavigatorState>();
 final _shellNavigatorMyPostKey = GlobalKey<NavigatorState>();
 final _shellNavigatorAccountKey = GlobalKey<NavigatorState>();
@@ -57,6 +59,10 @@ abstract class AppRouter {
           return Routes.chooseLang.path;
         }
         if (state.matchedLocation == Routes.myPost.path &&
+            isAuthenticated == false) {
+          return Routes.signIn.path;
+        }
+        if (state.matchedLocation == Routes.post.path &&
             isAuthenticated == false) {
           return Routes.signIn.path;
         }
@@ -121,6 +127,19 @@ abstract class AppRouter {
                       },
                     ),
                   ],
+                ),
+              ],
+            ),
+            // Post branch
+            StatefulShellBranch(
+              navigatorKey: _rootNavigatorPostKey,
+              routes: [
+                GoRoute(
+                  name: Routes.post.name,
+                  path: Routes.post.path,
+                  builder: (context, state) {
+                    return const PostScreen();
+                  },
                 ),
               ],
             ),
