@@ -13,15 +13,15 @@ class BannerPub extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      height: Constants.size50,
+      height: Constants.size40,
       padding: const EdgeInsets.symmetric(horizontal: Constants.spacingSmall),
       color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
       child: Row(
         spacing: Constants.spacingSmall,
         children: [
           Container(
-            width: Constants.size70,
-            height: Constants.size45,
+            width: Constants.size60,
+            height: Constants.size35,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(Constants.borderRadiusSmall),
@@ -31,8 +31,8 @@ class BannerPub extends StatelessWidget {
               child: Image.asset(
                 Assets.kimsKorea,
                 fit: BoxFit.cover,
-                cacheWidth: 140,
-                cacheHeight: 90,
+                cacheWidth: Constants.size150.toInt(),
+                cacheHeight: Constants.size70.toInt(),
                 errorBuilder: (context, error, stackTrace) => Icon(
                   Icons.restaurant,
                   color: isDark
@@ -46,7 +46,7 @@ class BannerPub extends StatelessWidget {
           Flexible(
             child: Text(
               'KIMS Restaurant coréen',
-              style: theme.textTheme.headlineMedium?.copyWith(
+              style: theme.textTheme.titleMedium?.copyWith(
                 color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
               ),
               overflow: TextOverflow.ellipsis,
