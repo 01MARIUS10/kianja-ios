@@ -85,8 +85,8 @@ class Navigation extends StatelessWidget {
                   },
                   items: const [
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.home),
-                      label: 'Home',
+                      icon: Icon(Icons.work),
+                      label: 'Jobs',
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.add_box),
