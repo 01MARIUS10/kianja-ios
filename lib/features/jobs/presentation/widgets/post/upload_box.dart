@@ -63,9 +63,8 @@ class UploadBox extends StatelessWidget {
 }
 
 class _DashedRectPainter extends CustomPainter {
-  final Color color;
-
   _DashedRectPainter({required this.color});
+  final Color color;
 
   @override
   void paint(Canvas canvas, Size size) {

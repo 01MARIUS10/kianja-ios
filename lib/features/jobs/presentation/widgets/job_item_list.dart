@@ -3,8 +3,8 @@ import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
 
-class JobItemWidget extends StatelessWidget {
-  const JobItemWidget({super.key});
+class JobItemList extends StatelessWidget {
+  const JobItemList({super.key});
 
   @override
   Widget build(BuildContext context) {
