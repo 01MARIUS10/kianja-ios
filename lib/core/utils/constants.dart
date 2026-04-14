@@ -22,6 +22,7 @@ abstract final class Constants {
   static const double spacingLarge = 32.0;
 
   // ================= PADDING LAYOUT =================
+  static const double paddingExtraSmall = 4.0;
   static const double paddingSmall = 8.0;
   static const double paddingMedium = 16.0;
   static const double paddingMediumLarge = 24.0;
@@ -43,6 +44,7 @@ abstract final class Constants {
   static const double size70 = 70.0;
   static const double size100 = 100.0;
   static const double size150 = 150.0;
+  static const double size230 = 230.0;
   static const double size300 = 300.0;
 
   // ================= ICON SIZE =================
