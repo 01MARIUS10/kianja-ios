@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/constants.dart';
-import 'package:kianja/features/jobs/presentation/pages/jobs_offers/job_offers_filter_screen.dart';
-import 'package:kianja/features/jobs/presentation/widgets/job_category_vertical_section.dart';
-import 'package:kianja/features/jobs/presentation/widgets/job_offer_category_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/job_offer/job_offers_filter_screen.dart';
+import 'package:kianja/features/jobs/presentation/widgets/category/job_category_horizontal_section.dart';
+import 'package:kianja/features/jobs/presentation/widgets/category/job_category_vertical_section.dart';
 
 class JobOffersScreen extends StatefulWidget {
   const JobOffersScreen({super.key});
@@ -199,18 +199,27 @@ class _JobOffersScreenState extends State<JobOffersScreen>
             children: const [
               JobOffersFilterScreen(
                 children: [
-                  JobOfferCategoryScreen(category: 'Entreprise', itemCount: 6),
-                  JobOfferCategoryScreen(category: 'Particular', itemCount: 6),
-                  JobOfferCategoryScreen(
+                  JobCategoryHorizontalSection(
+                    category: 'Entreprise',
+                    itemCount: 6,
+                  ),
+                  JobCategoryHorizontalSection(
+                    category: 'Particular',
+                    itemCount: 6,
+                  ),
+                  JobCategoryHorizontalSection(
                     category: 'Public organization',
                     itemCount: 6,
                   ),
-                  JobOfferCategoryScreen(category: 'ONG', itemCount: 6),
+                  JobCategoryHorizontalSection(category: 'ONG', itemCount: 6),
                 ],
               ),
               JobOffersFilterScreen(
                 children: [
-                  JobOfferCategoryScreen(category: 'Recents', itemCount: 6),
+                  JobCategoryHorizontalSection(
+                    category: 'Recents',
+                    itemCount: 6,
+                  ),
                   JobCategoryVerticalSection(
                     category: 'Limit date',
                     itemCount: 6,
@@ -219,17 +228,26 @@ class _JobOffersScreenState extends State<JobOffersScreen>
               ),
               JobOffersFilterScreen(
                 children: [
-                  JobOfferCategoryScreen(
+                  JobCategoryHorizontalSection(
                     category: 'Antananarivo',
                     itemCount: 6,
                   ),
-                  JobOfferCategoryScreen(category: 'Toamasina', itemCount: 2),
-                  JobOfferCategoryScreen(
+                  JobCategoryHorizontalSection(
+                    category: 'Toamasina',
+                    itemCount: 2,
+                  ),
+                  JobCategoryHorizontalSection(
                     category: 'Fianarantsoa',
                     itemCount: 1,
                   ),
-                  JobOfferCategoryScreen(category: 'Mahajanga', itemCount: 3),
-                  JobOfferCategoryScreen(category: 'Toliara', itemCount: 4),
+                  JobCategoryHorizontalSection(
+                    category: 'Mahajanga',
+                    itemCount: 3,
+                  ),
+                  JobCategoryHorizontalSection(
+                    category: 'Toliara',
+                    itemCount: 4,
+                  ),
                 ],
               ),
             ],

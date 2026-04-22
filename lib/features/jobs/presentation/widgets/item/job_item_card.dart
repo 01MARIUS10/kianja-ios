@@ -5,8 +5,8 @@ import 'package:kianja/core/shared/widgets/avatar/circle_user_avatar_detail.dart
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
 
-class JobHorizontalCardWidget extends StatelessWidget {
-  const JobHorizontalCardWidget({super.key});
+class JobItemCard extends StatelessWidget {
+  const JobItemCard({super.key});
 
   @override
   Widget build(BuildContext context) {

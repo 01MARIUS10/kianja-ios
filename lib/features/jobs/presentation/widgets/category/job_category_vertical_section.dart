@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
-import 'package:kianja/features/jobs/presentation/widgets/job_horizontal_card_widget.dart';
-import 'package:kianja/features/jobs/presentation/widgets/job_item_card.dart';
+import 'package:kianja/features/jobs/presentation/widgets/item/job_item_card.dart';
+import 'package:kianja/features/jobs/presentation/widgets/item/job_item_card.dart';
 import 'package:kianja/routing/router.dart';
 import 'package:kianja/routing/routes.dart';
 
@@ -73,7 +73,7 @@ class JobCategoryVerticalSection extends StatelessWidget {
               onTap: () {
                 context.goNamed(Routes.jobOfferDetail.name);
               },
-              child: const JobHorizontalCardWidget(),
+              child: const JobItemCard(),
             );
           },
         ),

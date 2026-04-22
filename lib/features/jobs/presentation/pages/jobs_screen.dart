@@ -3,10 +3,10 @@ import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/logo_header.dart';
 import 'package:kianja/core/utils/constants.dart';
-import 'package:kianja/features/jobs/presentation/pages/jobs_categories/experts_executives_screen.dart';
-import 'package:kianja/features/jobs/presentation/pages/jobs_categories/job_applicants_screen.dart';
-import 'package:kianja/features/jobs/presentation/pages/jobs_categories/training_center_screen.dart';
-import 'package:kianja/features/jobs/presentation/pages/jobs_offers/job_offers_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/job_categories/experts_executives_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/job_categories/job_applicants_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/job_categories/training_center_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/job_offer/job_offers_screen.dart';
 
 class JobsScreen extends StatefulWidget {
   const JobsScreen({super.key});
