@@ -3,11 +3,11 @@ import 'package:go_router/go_router.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/utils/constants.dart';
-import 'package:kianja/features/jobs/presentation/widgets/job_horizontal_card_widget.dart';
+import 'package:kianja/features/jobs/presentation/widgets/item/job_item_card.dart';
 import 'package:kianja/routing/routes.dart';
 
-class JobsViewAllScreen extends StatelessWidget {
-  const JobsViewAllScreen({super.key});
+class JobCategoryViewAllScreen extends StatelessWidget {
+  const JobCategoryViewAllScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class JobsViewAllScreen extends StatelessWidget {
                   onTap: () {
                     context.goNamed(Routes.jobOfferDetail.name);
                   },
-                  child: const JobHorizontalCardWidget(),
+                  child: const JobItemCard(),
                 );
               },
             ),

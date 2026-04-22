@@ -7,8 +7,8 @@ class PostTrainingCenterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
+    // final theme = Theme.of(context);
+    // final isDark = theme.brightness == Brightness.dark;
 
     return const BaseScreen(
       appBar: TitleHeader(title: 'Post a training center'),

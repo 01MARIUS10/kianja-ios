@@ -161,7 +161,7 @@ class _MultiPhotoUploadWidgetState extends State<MultiPhotoUploadWidget> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
-        color: Colors.grey.withOpacity(0.9),
+        color: Colors.grey.withValues(alpha: 0.9),
         borderRadius: BorderRadius.circular(4),
       ),
       child: Text(
@@ -177,10 +177,9 @@ class _MultiPhotoUploadWidgetState extends State<MultiPhotoUploadWidget> {
 }
 
 class _DashedRoundedRectPainter extends CustomPainter {
+  _DashedRoundedRectPainter({required this.color, required this.radius});
   final Color color;
   final double radius;
-
-  _DashedRoundedRectPainter({required this.color, required this.radius});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -201,7 +200,7 @@ class _DashedRoundedRectPainter extends CustomPainter {
     const dashLength = 6.0;
     const dashSpace = 4.0;
 
-    Path dashedPath = Path();
+    final Path dashedPath = Path();
     for (PathMetric measurePath in path.computeMetrics()) {
       double distance = 0.0;
       bool draw = true;

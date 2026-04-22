@@ -12,8 +12,8 @@ import 'package:kianja/features/auth/presentation/pages/signin_screen.dart';
 import 'package:kianja/features/auth/presentation/pages/signup_screen.dart';
 import 'package:kianja/features/choose_lang/presentation/pages/choose_lang_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/details/job_offer_detail_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/job_category_view_all_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/jobs_screen.dart';
-import 'package:kianja/features/jobs/presentation/pages/jobs_view_all_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_job_applicant_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_job_offer_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_screen.dart';
@@ -131,10 +131,10 @@ abstract class AppRouter {
                       },
                     ),
                     GoRoute(
-                      name: Routes.jobsViewAll.name,
-                      path: Routes.jobsViewAll.path,
+                      name: Routes.jobCategoryViewAll.name,
+                      path: Routes.jobCategoryViewAll.path,
                       builder: (context, state) {
-                        return const JobsViewAllScreen();
+                        return const JobCategoryViewAllScreen();
                       },
                     ),
                   ],

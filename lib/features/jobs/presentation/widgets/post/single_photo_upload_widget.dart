@@ -5,15 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SinglePhotoUploadWidget extends StatefulWidget {
+  const SinglePhotoUploadWidget({super.key, required this.onPhotoChanged});
   final ValueChanged<XFile?> onPhotoChanged;
 
-  const SinglePhotoUploadWidget({
-    super.key,
-    required this.onPhotoChanged,
-  });
-
   @override
-  State<SinglePhotoUploadWidget> createState() => _SinglePhotoUploadWidgetState();
+  State<SinglePhotoUploadWidget> createState() =>
+      _SinglePhotoUploadWidgetState();
 }
 
 class _SinglePhotoUploadWidgetState extends State<SinglePhotoUploadWidget> {
@@ -25,7 +22,7 @@ class _SinglePhotoUploadWidgetState extends State<SinglePhotoUploadWidget> {
       source: ImageSource.gallery,
       imageQuality: 80,
     );
-    
+
     if (pickedFile != null) {
       setState(() {
         _photo = pickedFile;
@@ -84,13 +81,12 @@ class _SinglePhotoUploadWidgetState extends State<SinglePhotoUploadWidget> {
               decoration: BoxDecoration(
                 color: theme.colorScheme.error,
                 shape: BoxShape.circle,
-                border: Border.all(color: theme.scaffoldBackgroundColor, width: 2),
+                border: Border.all(
+                  color: theme.scaffoldBackgroundColor,
+                  width: 2,
+                ),
               ),
-              child: const Icon(
-                Icons.close,
-                size: 14,
-                color: Colors.white,
-              ),
+              child: const Icon(Icons.close, size: 14, color: Colors.white),
             ),
           ),
         ),
@@ -122,10 +118,9 @@ class _SinglePhotoUploadWidgetState extends State<SinglePhotoUploadWidget> {
 }
 
 class _DashedRoundedRectPainter extends CustomPainter {
+  _DashedRoundedRectPainter({required this.color, required this.radius});
   final Color color;
   final double radius;
-
-  _DashedRoundedRectPainter({required this.color, required this.radius});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -135,15 +130,17 @@ class _DashedRoundedRectPainter extends CustomPainter {
       ..style = PaintingStyle.stroke;
 
     final path = Path()
-      ..addRRect(RRect.fromRectAndRadius(
-        Rect.fromLTWH(0, 0, size.width, size.height),
-        Radius.circular(radius),
-      ));
+      ..addRRect(
+        RRect.fromRectAndRadius(
+          Rect.fromLTWH(0, 0, size.width, size.height),
+          Radius.circular(radius),
+        ),
+      );
 
     const dashLength = 6.0;
     const dashSpace = 4.0;
-    
-    Path dashedPath = Path();
+
+    final Path dashedPath = Path();
     for (PathMetric measurePath in path.computeMetrics()) {
       double distance = 0.0;
       bool draw = true;
