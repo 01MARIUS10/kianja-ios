@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kianja/core/utils/constants.dart';
 
-class MyPostHeader extends StatelessWidget implements PreferredSizeWidget {
-  const MyPostHeader({super.key, required this.title});
+class TitleHeader extends StatelessWidget implements PreferredSizeWidget {
+  const TitleHeader({super.key, required this.title});
   final String title;
 
   @override
@@ -12,7 +12,7 @@ class MyPostHeader extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Text(title, style: theme.textTheme.headlineMedium),
       centerTitle: false,
-      titleSpacing: Constants.spacingSmall,
+      titleSpacing: Constants.spacingMedium,
     );
   }
 

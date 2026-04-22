@@ -7,11 +7,11 @@ import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/fields/label_field.dart';
 import 'package:kianja/core/shared/widgets/fields/password_input_field.dart';
 import 'package:kianja/core/shared/widgets/fields/phone_input_field.dart';
+import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:kianja/features/auth/presentation/widgets/auth_header.dart';
 import 'package:kianja/features/auth/presentation/widgets/forgot_password_bottom_sheet.dart';
 import 'package:kianja/routing/routes.dart';
 
@@ -44,7 +44,7 @@ class _SignInScreenState extends State<SignInScreen> {
     return BlocProvider(
       create: (context) => GetIt.instance<AuthBloc>(),
       child: BaseScreen(
-        appBar: const AuthHeader(title: 'Sign In'),
+        appBar: const TitleHeader(title: 'Sign In'),
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(Constants.paddingMedium),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kianja/core/themes/app_colors.dart';
-import 'package:kianja/core/utils/constants.dart';
 
 class DefaultAvatar extends StatelessWidget {
-  const DefaultAvatar({super.key});
+  const DefaultAvatar({super.key, this.size});
+  final double? size;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class DefaultAvatar extends StatelessWidget {
       color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
       child: Icon(
         Icons.person,
-        size: Constants.iconSizeLarge,
+        size: size,
         color: isDark
             ? AppColors.darkTextSecondary
             : AppColors.lightTextSecondary,

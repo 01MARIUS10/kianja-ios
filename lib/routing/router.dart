@@ -11,13 +11,19 @@ import 'package:kianja/features/account/presentation/pages/personal_info/update_
 import 'package:kianja/features/auth/presentation/pages/signin_screen.dart';
 import 'package:kianja/features/auth/presentation/pages/signup_screen.dart';
 import 'package:kianja/features/choose_lang/presentation/pages/choose_lang_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/details/job_offer_detail_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/jobs_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/jobs_view_all_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_job_applicant_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/post/post_job_offer_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/post/post_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/post/post_training_center_screen.dart';
 import 'package:kianja/features/my_post/presentation/pages/my_post_screen.dart';
 import 'package:kianja/routing/navigation/navigation.dart';
 import 'package:kianja/routing/routes.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
+final _rootNavigatorPostKey = GlobalKey<NavigatorState>();
 final _shellNavigatorJobsKey = GlobalKey<NavigatorState>();
 final _shellNavigatorMyPostKey = GlobalKey<NavigatorState>();
 final _shellNavigatorAccountKey = GlobalKey<NavigatorState>();
@@ -28,7 +34,8 @@ abstract class AppRouter {
     _appBlocNotifier.update(appBloc);
     return GoRouter(
       navigatorKey: _rootNavigatorKey,
-      initialLocation: Routes.jobs.path,
+      // initialLocation: Routes.chooseLang.path,
+      initialLocation: Routes.loading.path,
       debugLogDiagnostics: true,
       refreshListenable: _appBlocNotifier,
       redirect: (context, state) {
@@ -40,14 +47,31 @@ abstract class AppRouter {
           'isAlreadyChosenLang: ${appState.isAlreadyChosenLang}',
         );
         AppDebug.showPrint('isAuthenticated: $isAuthenticated');
+
+        // While the app is still initializing, stay on the /loading route.
+        // The native splash screen covers it — no UI is visible yet.
+        if (appState.appInitStatus != AppInitStatus.loaded) {
+          return null;
+        }
+
+        // App is ready. Dispatch from the loading route to the correct screen.
+        // This runs before the native splash is removed, so there is no flash.
+        if (state.matchedLocation == Routes.loading.path) {
+          return appState.isAlreadyChosenLang
+              ? Routes.jobs.path
+              : Routes.chooseLang.path;
+        }
+
+        // Guard protected routes that require authentication.
         if (state.matchedLocation == Routes.chooseLang.path &&
             appState.isAlreadyChosenLang == true) {
           return Routes.jobs.path;
         }
-        if (appState.isAlreadyChosenLang == false) {
-          return Routes.chooseLang.path;
-        }
         if (state.matchedLocation == Routes.myPost.path &&
+            isAuthenticated == false) {
+          return Routes.signIn.path;
+        }
+        if (state.matchedLocation == Routes.post.path &&
             isAuthenticated == false) {
           return Routes.signIn.path;
         }
@@ -59,6 +83,13 @@ abstract class AppRouter {
         return null;
       },
       routes: [
+        // ================= LOADING (initial, hidden under native splash) =====
+        GoRoute(
+          parentNavigatorKey: _rootNavigatorKey,
+          name: Routes.loading.name,
+          path: Routes.loading.path,
+          builder: (context, state) => const SizedBox.shrink(),
+        ),
         // ================= CHOOSE LANG =================
         GoRoute(
           parentNavigatorKey: _rootNavigatorKey,
@@ -84,6 +115,44 @@ abstract class AppRouter {
                   },
                   routes: [
                     GoRoute(
+                      name: Routes.postExpertExecutive.name,
+                      path: Routes.postExpertExecutive.path,
+                      builder: (context, state) {
+                        return Container(color: Colors.blue);
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.jobOfferDetail.name,
+                      path: Routes.jobOfferDetail.path,
+                      builder: (context, state) {
+                        // final extra = state.extra;
+                        // final jobOffer = extra is JobOffer ? extra : null;
+                        return const JobOfferDetailScreen();
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.jobsViewAll.name,
+                      path: Routes.jobsViewAll.path,
+                      builder: (context, state) {
+                        return const JobsViewAllScreen();
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            // Post branch
+            StatefulShellBranch(
+              navigatorKey: _rootNavigatorPostKey,
+              routes: [
+                GoRoute(
+                  name: Routes.post.name,
+                  path: Routes.post.path,
+                  builder: (context, state) {
+                    return const PostScreen();
+                  },
+                  routes: [
+                    GoRoute(
                       name: Routes.postJobApplicant.name,
                       path: Routes.postJobApplicant.path,
                       builder: (context, state) {
@@ -94,21 +163,14 @@ abstract class AppRouter {
                       name: Routes.postJobOffer.name,
                       path: Routes.postJobOffer.path,
                       builder: (context, state) {
-                        return Container(color: Colors.amber);
+                        return const PostJobOfferScreen();
                       },
                     ),
                     GoRoute(
                       name: Routes.postTrainingCenter.name,
                       path: Routes.postTrainingCenter.path,
                       builder: (context, state) {
-                        return Container(color: Colors.green);
-                      },
-                    ),
-                    GoRoute(
-                      name: Routes.postExpertExecutive.name,
-                      path: Routes.postExpertExecutive.path,
-                      builder: (context, state) {
-                        return Container(color: Colors.blue);
+                        return const PostTrainingCenterScreen();
                       },
                     ),
                   ],

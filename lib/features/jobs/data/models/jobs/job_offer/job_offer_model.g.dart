@@ -10,11 +10,19 @@ _JobOfferModel _$JobOfferModelFromJson(Map<String, dynamic> json) =>
     _JobOfferModel(
       id: (json['id'] as num).toInt(),
       userId: (json['userId'] as num).toInt(),
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
-      photo: json['photo'] as String,
+      userFirstName: json['userFirstName'] as String,
+      userLastName: json['userLastName'] as String,
+      userPhoto: json['userPhoto'] as String,
       title: json['title'] as String,
+      imageUrl: json['imageUrl'] as String,
       description: json['description'] as String,
+      categories: (json['categories'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
+      location: json['location'] as String,
+      gender: json['gender'] as String,
+      actor: json['actor'] as String,
+      limitDate: json['limitDate'] as String,
       createdAt: json['createdAt'] as String,
     );
 
@@ -22,10 +30,16 @@ Map<String, dynamic> _$JobOfferModelToJson(_JobOfferModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'userId': instance.userId,
-      'firstName': instance.firstName,
-      'lastName': instance.lastName,
-      'photo': instance.photo,
+      'userFirstName': instance.userFirstName,
+      'userLastName': instance.userLastName,
+      'userPhoto': instance.userPhoto,
       'title': instance.title,
+      'imageUrl': instance.imageUrl,
       'description': instance.description,
+      'categories': instance.categories,
+      'location': instance.location,
+      'gender': instance.gender,
+      'actor': instance.actor,
+      'limitDate': instance.limitDate,
       'createdAt': instance.createdAt,
     };

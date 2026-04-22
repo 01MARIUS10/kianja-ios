@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$JobApplicantModel {
 
- int get id; int get userId; String get firstName; String get lastName; String get photo; String get title; String get description; String get createdAt;
+ int get id; int get userId; String get userFirstName; String get userLastName; String get userPhoto; String get title; String get motivation; List<String> get categories; String get location; String get gender; String get pdfUrl; String get createdAt;
 /// Create a copy of JobApplicantModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $JobApplicantModelCopyWith<JobApplicantModel> get copyWith => _$JobApplicantMode
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is JobApplicantModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.photo, photo) || other.photo == photo)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is JobApplicantModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.userFirstName, userFirstName) || other.userFirstName == userFirstName)&&(identical(other.userLastName, userLastName) || other.userLastName == userLastName)&&(identical(other.userPhoto, userPhoto) || other.userPhoto == userPhoto)&&(identical(other.title, title) || other.title == title)&&(identical(other.motivation, motivation) || other.motivation == motivation)&&const DeepCollectionEquality().equals(other.categories, categories)&&(identical(other.location, location) || other.location == location)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.pdfUrl, pdfUrl) || other.pdfUrl == pdfUrl)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,firstName,lastName,photo,title,description,createdAt);
+int get hashCode => Object.hash(runtimeType,id,userId,userFirstName,userLastName,userPhoto,title,motivation,const DeepCollectionEquality().hash(categories),location,gender,pdfUrl,createdAt);
 
 @override
 String toString() {
-  return 'JobApplicantModel(id: $id, userId: $userId, firstName: $firstName, lastName: $lastName, photo: $photo, title: $title, description: $description, createdAt: $createdAt)';
+  return 'JobApplicantModel(id: $id, userId: $userId, userFirstName: $userFirstName, userLastName: $userLastName, userPhoto: $userPhoto, title: $title, motivation: $motivation, categories: $categories, location: $location, gender: $gender, pdfUrl: $pdfUrl, createdAt: $createdAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $JobApplicantModelCopyWith<$Res>  {
   factory $JobApplicantModelCopyWith(JobApplicantModel value, $Res Function(JobApplicantModel) _then) = _$JobApplicantModelCopyWithImpl;
 @useResult
 $Res call({
- int id, int userId, String firstName, String lastName, String photo, String title, String description, String createdAt
+ int id, int userId, String userFirstName, String userLastName, String userPhoto, String title, String motivation, List<String> categories, String location, String gender, String pdfUrl, String createdAt
 });
 
 
@@ -65,15 +65,19 @@ class _$JobApplicantModelCopyWithImpl<$Res>
 
 /// Create a copy of JobApplicantModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? firstName = null,Object? lastName = null,Object? photo = null,Object? title = null,Object? description = null,Object? createdAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? userFirstName = null,Object? userLastName = null,Object? userPhoto = null,Object? title = null,Object? motivation = null,Object? categories = null,Object? location = null,Object? gender = null,Object? pdfUrl = null,Object? createdAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as int,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
-as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
-as String,photo: null == photo ? _self.photo : photo // ignore: cast_nullable_to_non_nullable
+as int,userFirstName: null == userFirstName ? _self.userFirstName : userFirstName // ignore: cast_nullable_to_non_nullable
+as String,userLastName: null == userLastName ? _self.userLastName : userLastName // ignore: cast_nullable_to_non_nullable
+as String,userPhoto: null == userPhoto ? _self.userPhoto : userPhoto // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String,motivation: null == motivation ? _self.motivation : motivation // ignore: cast_nullable_to_non_nullable
+as String,categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
+as List<String>,location: null == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
+as String,gender: null == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
+as String,pdfUrl: null == pdfUrl ? _self.pdfUrl : pdfUrl // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -160,10 +164,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int userId,  String firstName,  String lastName,  String photo,  String title,  String description,  String createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int userId,  String userFirstName,  String userLastName,  String userPhoto,  String title,  String motivation,  List<String> categories,  String location,  String gender,  String pdfUrl,  String createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _JobApplicantModel() when $default != null:
-return $default(_that.id,_that.userId,_that.firstName,_that.lastName,_that.photo,_that.title,_that.description,_that.createdAt);case _:
+return $default(_that.id,_that.userId,_that.userFirstName,_that.userLastName,_that.userPhoto,_that.title,_that.motivation,_that.categories,_that.location,_that.gender,_that.pdfUrl,_that.createdAt);case _:
   return orElse();
 
 }
@@ -181,10 +185,10 @@ return $default(_that.id,_that.userId,_that.firstName,_that.lastName,_that.photo
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int userId,  String firstName,  String lastName,  String photo,  String title,  String description,  String createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int userId,  String userFirstName,  String userLastName,  String userPhoto,  String title,  String motivation,  List<String> categories,  String location,  String gender,  String pdfUrl,  String createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _JobApplicantModel():
-return $default(_that.id,_that.userId,_that.firstName,_that.lastName,_that.photo,_that.title,_that.description,_that.createdAt);case _:
+return $default(_that.id,_that.userId,_that.userFirstName,_that.userLastName,_that.userPhoto,_that.title,_that.motivation,_that.categories,_that.location,_that.gender,_that.pdfUrl,_that.createdAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -201,10 +205,10 @@ return $default(_that.id,_that.userId,_that.firstName,_that.lastName,_that.photo
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int userId,  String firstName,  String lastName,  String photo,  String title,  String description,  String createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int userId,  String userFirstName,  String userLastName,  String userPhoto,  String title,  String motivation,  List<String> categories,  String location,  String gender,  String pdfUrl,  String createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _JobApplicantModel() when $default != null:
-return $default(_that.id,_that.userId,_that.firstName,_that.lastName,_that.photo,_that.title,_that.description,_that.createdAt);case _:
+return $default(_that.id,_that.userId,_that.userFirstName,_that.userLastName,_that.userPhoto,_that.title,_that.motivation,_that.categories,_that.location,_that.gender,_that.pdfUrl,_that.createdAt);case _:
   return null;
 
 }
@@ -216,16 +220,26 @@ return $default(_that.id,_that.userId,_that.firstName,_that.lastName,_that.photo
 @JsonSerializable()
 
 class _JobApplicantModel extends JobApplicantModel {
-  const _JobApplicantModel({required this.id, required this.userId, required this.firstName, required this.lastName, required this.photo, required this.title, required this.description, required this.createdAt}): super._();
+  const _JobApplicantModel({required this.id, required this.userId, required this.userFirstName, required this.userLastName, required this.userPhoto, required this.title, required this.motivation, required final  List<String> categories, required this.location, required this.gender, required this.pdfUrl, required this.createdAt}): _categories = categories,super._();
   factory _JobApplicantModel.fromJson(Map<String, dynamic> json) => _$JobApplicantModelFromJson(json);
 
 @override final  int id;
 @override final  int userId;
-@override final  String firstName;
-@override final  String lastName;
-@override final  String photo;
+@override final  String userFirstName;
+@override final  String userLastName;
+@override final  String userPhoto;
 @override final  String title;
-@override final  String description;
+@override final  String motivation;
+ final  List<String> _categories;
+@override List<String> get categories {
+  if (_categories is EqualUnmodifiableListView) return _categories;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_categories);
+}
+
+@override final  String location;
+@override final  String gender;
+@override final  String pdfUrl;
 @override final  String createdAt;
 
 /// Create a copy of JobApplicantModel
@@ -241,16 +255,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _JobApplicantModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.photo, photo) || other.photo == photo)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _JobApplicantModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.userFirstName, userFirstName) || other.userFirstName == userFirstName)&&(identical(other.userLastName, userLastName) || other.userLastName == userLastName)&&(identical(other.userPhoto, userPhoto) || other.userPhoto == userPhoto)&&(identical(other.title, title) || other.title == title)&&(identical(other.motivation, motivation) || other.motivation == motivation)&&const DeepCollectionEquality().equals(other._categories, _categories)&&(identical(other.location, location) || other.location == location)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.pdfUrl, pdfUrl) || other.pdfUrl == pdfUrl)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,firstName,lastName,photo,title,description,createdAt);
+int get hashCode => Object.hash(runtimeType,id,userId,userFirstName,userLastName,userPhoto,title,motivation,const DeepCollectionEquality().hash(_categories),location,gender,pdfUrl,createdAt);
 
 @override
 String toString() {
-  return 'JobApplicantModel(id: $id, userId: $userId, firstName: $firstName, lastName: $lastName, photo: $photo, title: $title, description: $description, createdAt: $createdAt)';
+  return 'JobApplicantModel(id: $id, userId: $userId, userFirstName: $userFirstName, userLastName: $userLastName, userPhoto: $userPhoto, title: $title, motivation: $motivation, categories: $categories, location: $location, gender: $gender, pdfUrl: $pdfUrl, createdAt: $createdAt)';
 }
 
 
@@ -261,7 +275,7 @@ abstract mixin class _$JobApplicantModelCopyWith<$Res> implements $JobApplicantM
   factory _$JobApplicantModelCopyWith(_JobApplicantModel value, $Res Function(_JobApplicantModel) _then) = __$JobApplicantModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id, int userId, String firstName, String lastName, String photo, String title, String description, String createdAt
+ int id, int userId, String userFirstName, String userLastName, String userPhoto, String title, String motivation, List<String> categories, String location, String gender, String pdfUrl, String createdAt
 });
 
 
@@ -278,15 +292,19 @@ class __$JobApplicantModelCopyWithImpl<$Res>
 
 /// Create a copy of JobApplicantModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? firstName = null,Object? lastName = null,Object? photo = null,Object? title = null,Object? description = null,Object? createdAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? userFirstName = null,Object? userLastName = null,Object? userPhoto = null,Object? title = null,Object? motivation = null,Object? categories = null,Object? location = null,Object? gender = null,Object? pdfUrl = null,Object? createdAt = null,}) {
   return _then(_JobApplicantModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as int,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
-as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
-as String,photo: null == photo ? _self.photo : photo // ignore: cast_nullable_to_non_nullable
+as int,userFirstName: null == userFirstName ? _self.userFirstName : userFirstName // ignore: cast_nullable_to_non_nullable
+as String,userLastName: null == userLastName ? _self.userLastName : userLastName // ignore: cast_nullable_to_non_nullable
+as String,userPhoto: null == userPhoto ? _self.userPhoto : userPhoto // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String,motivation: null == motivation ? _self.motivation : motivation // ignore: cast_nullable_to_non_nullable
+as String,categories: null == categories ? _self._categories : categories // ignore: cast_nullable_to_non_nullable
+as List<String>,location: null == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
+as String,gender: null == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
+as String,pdfUrl: null == pdfUrl ? _self.pdfUrl : pdfUrl // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,
   ));

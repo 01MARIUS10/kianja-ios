@@ -1,16 +1,4 @@
 class User {
-  const User.empty()
-    : this(
-        id: -1, // This mean that the user is empty
-        firstName: '',
-        lastName: '',
-        photoUrl: '',
-        email: '',
-        phone: '',
-        genre: '',
-        pseudo: '',
-        residence: '',
-      );
   const User({
     required this.id,
     required this.firstName,
@@ -21,6 +9,17 @@ class User {
     required this.genre,
     required this.pseudo,
     required this.residence,
+  });
+  const User.empty({
+    this.id = -1,
+    this.firstName = '',
+    this.lastName = '',
+    this.photoUrl = '',
+    this.email = '',
+    this.phone = '',
+    this.genre = '',
+    this.pseudo = '',
+    this.residence = '',
   });
   final int id;
   final String firstName;

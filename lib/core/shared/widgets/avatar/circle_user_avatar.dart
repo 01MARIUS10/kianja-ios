@@ -29,9 +29,10 @@ class CircleUserAvatar extends StatelessWidget {
                 fit: BoxFit.cover,
                 width: Constants.size100,
                 height: Constants.size100,
-                errorBuilder: (_, _, _) => const DefaultAvatar(),
+                errorBuilder: (_, _, _) =>
+                    const DefaultAvatar(size: Constants.iconSizeLarge),
               )
-            : const DefaultAvatar(),
+            : const DefaultAvatar(size: Constants.iconSizeLarge),
       ),
     );
   }

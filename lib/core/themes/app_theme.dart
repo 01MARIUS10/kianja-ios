@@ -34,7 +34,6 @@ abstract class AppTheme {
       tabBarTheme: const TabBarThemeData(
         labelColor: AppColors.lightPrimary,
         unselectedLabelColor: AppColors.lightTextSecondary,
-        indicatorColor: AppColors.lightPrimary,
         dividerColor: AppColors.lightBorder,
       ),
 
@@ -49,6 +48,16 @@ abstract class AppTheme {
           fontWeight: FontWeight.w600,
           color: AppColors.lightTextPrimary,
         ),
+        headlineSmall: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          color: AppColors.lightTextPrimary,
+        ),
+        titleLarge: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          color: AppColors.lightTextPrimary,
+        ),
         titleMedium: TextStyle(color: AppColors.lightTextPrimary),
         titleSmall: TextStyle(color: AppColors.lightTextPrimary),
         bodyLarge: TextStyle(fontSize: 16, color: AppColors.lightTextPrimary),
@@ -56,6 +65,7 @@ abstract class AppTheme {
           fontSize: 14,
           color: AppColors.lightTextSecondary,
         ),
+        bodySmall: TextStyle(fontSize: 12, color: AppColors.lightTextSecondary),
       ),
 
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -171,7 +181,6 @@ abstract class AppTheme {
       tabBarTheme: const TabBarThemeData(
         labelColor: AppColors.darkPrimary,
         unselectedLabelColor: AppColors.darkTextSecondary,
-        indicatorColor: AppColors.darkPrimary,
         dividerColor: AppColors.darkBorder,
       ),
 
@@ -186,10 +195,21 @@ abstract class AppTheme {
           fontWeight: FontWeight.w600,
           color: AppColors.darkTextPrimary,
         ),
+        headlineSmall: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          color: AppColors.lightTextPrimary,
+        ),
+        titleLarge: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          color: AppColors.darkTextPrimary,
+        ),
         titleMedium: TextStyle(color: AppColors.darkTextPrimary),
         titleSmall: TextStyle(color: AppColors.darkTextPrimary),
         bodyLarge: TextStyle(fontSize: 16, color: AppColors.darkTextPrimary),
         bodyMedium: TextStyle(fontSize: 14, color: AppColors.darkTextSecondary),
+        bodySmall: TextStyle(fontSize: 12, color: AppColors.darkTextSecondary),
       ),
 
       elevatedButtonTheme: ElevatedButtonThemeData(

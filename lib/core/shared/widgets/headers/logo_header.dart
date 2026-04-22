@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/utils/constants.dart';
 
-class JobsHeader extends StatelessWidget implements PreferredSizeWidget {
-  const JobsHeader({super.key, required this.title});
+class LogoHeader extends StatelessWidget implements PreferredSizeWidget {
+  const LogoHeader({super.key, required this.title});
   final String title;
 
   @override
@@ -12,7 +12,12 @@ class JobsHeader extends StatelessWidget implements PreferredSizeWidget {
 
     return AppBar(
       leading: Padding(
-        padding: const EdgeInsets.all(Constants.paddingSmall),
+        padding: const EdgeInsets.fromLTRB(
+          Constants.paddingMedium,
+          Constants.paddingSmall,
+          Constants.spacingZero,
+          Constants.paddingSmall,
+        ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(Constants.borderRadiusSmall),
           child: Image.asset(
@@ -27,7 +32,7 @@ class JobsHeader extends StatelessWidget implements PreferredSizeWidget {
       ),
       title: Text(title, style: theme.textTheme.headlineMedium),
       centerTitle: false,
-      titleSpacing: Constants.spacingZero,
+      titleSpacing: Constants.spacingMedium,
     );
   }
 

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/fields/label_field.dart';
 import 'package:kianja/core/shared/widgets/fields/text_input_field.dart';
+import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/post_features_section.dart';
-import 'package:kianja/features/jobs/presentation/widgets/post/post_header.dart';
-import 'package:kianja/features/jobs/presentation/widgets/post/upload_box.dart';
+import 'package:kianja/features/jobs/presentation/widgets/post/single_pdf_upload_widget.dart';
+import 'package:kianja/features/jobs/presentation/widgets/post/single_photo_upload_widget.dart';
 
 class PostJobApplicantScreen extends StatefulWidget {
   const PostJobApplicantScreen({super.key});
@@ -69,7 +69,7 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
     final isDark = theme.brightness == Brightness.dark;
 
     return BaseScreen(
-      appBar: const PostHeader(title: 'Post a job applicant'),
+      appBar: const TitleHeader(title: 'Post a job applicant'),
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: SingleChildScrollView(
@@ -102,20 +102,28 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
 
               const LabelField(label: 'Recent photo (optional)'),
               const SizedBox(height: Constants.spacingSmall),
-              UploadBox(
-                text: 'Upload your recent photo\nIn jpg/jpeg/png format.',
-                icon: Icons.camera_alt_outlined,
-                onTap: () {},
+              SinglePhotoUploadWidget(
+                onPhotoChanged: (photo) {
+                  // Handle photo update
+                },
               ),
+
+              // MultiPhotoUploadWidget(
+              //   maxPhotos: 5,
+              //   onPhotosChanged: (photos) {
+              //     // Handle photos update
+              //   },
+              // ),
               const SizedBox(height: Constants.spacingMedium),
 
               const LabelField(label: 'Resume (optional)'),
               const SizedBox(height: Constants.spacingSmall),
-              UploadBox(
+              SinglePdfUploadWidget(
                 text:
                     'Upload your Resume and\nlet members look at it.\nIn PDF format.',
-                buttonText: 'Upload',
-                onTap: () {},
+                onPdfChanged: (pdf) {
+                  // Handle pdf update
+                },
               ),
               const SizedBox(height: Constants.spacingMedium),
 
@@ -137,7 +145,8 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                 ],
               ),
               const SizedBox(height: Constants.spacingSmall),
-              Column(
+              Wrap(
+                spacing: Constants.spacingMedium,
                 children: ['Designer', 'Coder', 'Driver', 'Teacher'].map((
                   category,
                 ) {
@@ -148,6 +157,7 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 6),
                       child: Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           SizedBox(
                             width: 24,
@@ -157,7 +167,7 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                               onChanged: (value) => _toggleCategory(category),
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          const SizedBox(width: Constants.spacingExtraSmall),
                           Text(category, style: theme.textTheme.bodyMedium),
                         ],
                       ),
@@ -169,7 +179,8 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
 
               const LabelField(label: 'Location *'),
               const SizedBox(height: Constants.spacingSmall),
-              Column(
+              Wrap(
+                spacing: Constants.spacingMedium,
                 children: ['National', 'Antananarivo', 'Toliara'].map((
                   location,
                 ) {
@@ -189,7 +200,7 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                               onChanged: (value) => _toggleLocation(location),
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          const SizedBox(width: Constants.spacingExtraSmall),
                           Text(location, style: theme.textTheme.bodyMedium),
                         ],
                       ),
@@ -201,7 +212,9 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
 
               const LabelField(label: 'Gender *'),
               const SizedBox(height: Constants.spacingSmall),
-              Column(
+              Wrap(
+                spacing: Constants.spacingMedium,
+
                 children: ['Female', 'Male', 'Together'].map((gender) {
                   final isSelected = _selectedGenders.contains(gender);
                   return InkWell(
@@ -210,6 +223,7 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 6),
                       child: Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           SizedBox(
                             width: 24,
@@ -219,7 +233,7 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                               onChanged: (value) => _toggleGender(gender),
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          const SizedBox(width: Constants.spacingExtraSmall),
                           Text(gender, style: theme.textTheme.bodyMedium),
                         ],
                       ),

@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
 import 'package:kianja/core/shared/widgets/avatar/circle_user_avatar.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
+import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
-import 'package:kianja/features/account/presentation/widgets/account_header.dart';
 import 'package:kianja/features/account/presentation/widgets/account_menu/account_menu_card.dart';
 import 'package:kianja/features/account/presentation/widgets/personal_info_row.dart';
 import 'package:kianja/routing/routes.dart';
@@ -21,7 +21,7 @@ class PersonalInfoScreen extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
 
     return BaseScreen(
-      appBar: const AccountHeader(title: 'Personal Info'),
+      appBar: const TitleHeader(title: 'Personal Info'),
       child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(
           Constants.paddingMedium,

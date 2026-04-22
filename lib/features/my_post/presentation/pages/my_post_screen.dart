@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
-import 'package:kianja/features/my_post/presentation/widgets/my_post_header.dart';
+import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 
 class MyPostScreen extends StatelessWidget {
   const MyPostScreen({super.key});
@@ -8,7 +8,7 @@ class MyPostScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const BaseScreen(
-      appBar: MyPostHeader(title: 'My Posts'),
+      appBar: TitleHeader(title: 'My Posts'),
       child: SizedBox(),
     );
   }

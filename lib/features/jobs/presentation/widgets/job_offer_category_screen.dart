@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kianja/features/jobs/presentation/widgets/job_category_section.dart';
-import 'package:kianja/features/jobs/presentation/widgets/job_section_with_floating_button.dart';
+import 'package:kianja/features/jobs/presentation/widgets/job_category_horizontal_section.dart';
 
 class JobOfferCategoryScreen extends StatefulWidget {
   const JobOfferCategoryScreen({
@@ -23,14 +22,12 @@ class _JobOfferCategoryScreenState extends State<JobOfferCategoryScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return JobSectionWithFloatingButton(
-      child: JobCategorySection(
+    return SingleChildScrollView(
+      child: JobCategoryHorizontalSection(
         key: PageStorageKey<String>(widget.category),
-        categoryName: widget.category,
+        category: widget.category,
         itemCount: widget.itemCount,
-        showHeader: false,
       ),
-      onPressed: () {},
     );
   }
 }

@@ -17,23 +17,17 @@ class AppRemoteDataSourceImpl implements AppRemoteDataSource {
       final response = await dio.get('/api/profil');
       final result = jsonHandler(response.data);
       AppDebug.showPrint('User data $result');
-      final Map<String, dynamic> profil = result['profil'];
-      final email = profil['email'];
-      final phone = profil['phone'];
-      final genre = profil['genre'];
-      final pseudo = profil['pseudo'];
-      final residence = profil['lieu_residence'];
 
       return UserModel.fromJson({
         'id': result['user_id'] ?? 0,
         'firstName': result['first_name'] ?? '',
         'lastName': result['last_name'] ?? '',
         'photoUrl': result['photo'] ?? '',
-        'email': email,
-        'phone': phone,
-        'genre': genre,
-        'pseudo': pseudo,
-        'residence': residence,
+        'email': result['email'] ?? '',
+        'phone': result['phone'] ?? '',
+        'genre': result['genre'] ?? '',
+        'pseudo': result['pseudo'] ?? '',
+        'residence': result['lieu_residence'] ?? '',
       });
     });
   }

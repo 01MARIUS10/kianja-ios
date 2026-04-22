@@ -13,4 +13,8 @@ abstract final class Assets {
 
   // Sponsors
   static const kimsKorea = 'assets/images/sponsors/kims_korea.jpeg';
+  static const mipsApps = 'assets/images/sponsors/mips_apps.jpeg';
+
+  // Jobs
+  static const hiring = 'assets/images/jobs/hiring.jpg';
 }

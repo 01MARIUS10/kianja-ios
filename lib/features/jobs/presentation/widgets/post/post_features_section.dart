@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kianja/core/config/assets.dart';
+import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
 
 class PostFeaturesSection extends StatefulWidget {
@@ -39,6 +40,7 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
+    final isDark = theme.brightness == Brightness.dark;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,15 +136,15 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
           alignment: Alignment.centerRight,
           child: ElevatedButton(
             onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+            child: Text(
+              'POST',
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.2,
+                color: isDark
+                    ? AppColors.darkTextPrimary
+                    : AppColors.lightTextPrimary,
               ),
-            ),
-            child: const Text(
-              'Post',
-              style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
         ),

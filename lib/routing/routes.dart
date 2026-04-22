@@ -1,15 +1,25 @@
 enum Routes {
+  // ------------- LOADING (initial route, hidden under native splash) ------
+  loading('/loading'),
+  // ------------- LOADING ----------------
+
   // ------------- CHOOSE LANG ----------------
   chooseLang('/choose-lang'),
   // ------------- CHOOSE LANG ----------------
 
   // ------------- HOME (Job offers) ----------------
   jobs('/'),
+  jobsViewAll('jobs-view-all'),
+  jobOfferDetail('job-offer-detail'),
   postJobApplicant('post-job-applicant'),
   postJobOffer('post-job-offer'),
   postTrainingCenter('post-training-center'),
   postExpertExecutive('post-expert-executive'),
   // ------------- HOME (Job offers) ----------------
+
+  // ------------- POST ----------------
+  post('/post'),
+  // ------------- POST ----------------
 
   // ------------- MY POST ----------------
   myPost('/my-post'),
