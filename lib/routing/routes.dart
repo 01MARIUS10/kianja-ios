@@ -9,7 +9,7 @@ enum Routes {
 
   // ------------- HOME (Job offers) ----------------
   jobs('/'),
-  jobsViewAll('jobs-view-all'),
+  jobCategoryViewAll('job-category-view-all'),
   jobOfferDetail('job-offer-detail'),
   postJobApplicant('post-job-applicant'),
   postJobOffer('post-job-offer'),
