@@ -31,8 +31,9 @@ class _JobsScreenState extends State<JobsScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    // final theme = Theme.of(context);
     // final isDark = theme.brightness == Brightness.dark;
+
     return BaseScreen(
       appBar: LogoHeader(title: EnvConfig.appName),
       child: Column(
