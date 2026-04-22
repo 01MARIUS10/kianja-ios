@@ -5,10 +5,10 @@ import 'package:go_router/go_router.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/fields/label_field.dart';
 import 'package:kianja/core/shared/widgets/fields/password_input_field.dart';
+import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/account/presentation/bloc/account_bloc.dart';
-import 'package:kianja/features/account/presentation/widgets/account_header.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
@@ -58,7 +58,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     return BlocProvider(
       create: (context) => GetIt.instance<AccountBloc>(),
       child: BaseScreen(
-        appBar: const AccountHeader(title: 'Change Password'),
+        appBar: const TitleHeader(title: 'Change Password'),
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(Constants.paddingMedium),

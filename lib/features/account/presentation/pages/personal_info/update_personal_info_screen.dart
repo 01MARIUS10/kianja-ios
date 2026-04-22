@@ -11,13 +11,13 @@ import 'package:kianja/core/shared/widgets/fields/label_field.dart';
 import 'package:kianja/core/shared/widgets/fields/phone_input_field.dart';
 import 'package:kianja/core/shared/widgets/fields/residence_field.dart';
 import 'package:kianja/core/shared/widgets/fields/text_input_field.dart';
+import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/account/presentation/bloc/account_bloc.dart';
-import 'package:kianja/features/account/presentation/widgets/account_header.dart';
 import 'package:kianja/features/account/presentation/widgets/camera_image_picker.dart';
 import 'package:kianja/routing/routes.dart';
 
@@ -113,7 +113,7 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
         builder: (context, state) {
           final user = state.user;
           return BaseScreen(
-            appBar: const AccountHeader(title: 'Edit profile'),
+            appBar: const TitleHeader(title: 'Edit profile'),
             child: SingleChildScrollView(
               padding: const EdgeInsets.fromLTRB(
                 Constants.paddingMedium,

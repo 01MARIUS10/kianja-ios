@@ -4,18 +4,18 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
-import 'package:kianja/core/shared/widgets/fields/date_field.dart';
+import 'package:kianja/core/shared/widgets/fields/birth_date_field.dart';
 import 'package:kianja/core/shared/widgets/fields/label_field.dart';
 import 'package:kianja/core/shared/widgets/fields/password_input_field.dart';
 import 'package:kianja/core/shared/widgets/fields/phone_input_field.dart';
 import 'package:kianja/core/shared/widgets/fields/residence_field.dart';
 import 'package:kianja/core/shared/widgets/fields/text_input_field.dart';
+import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:kianja/features/auth/presentation/widgets/auth_header.dart';
 import 'package:kianja/features/auth/presentation/widgets/gender_field.dart';
 import 'package:kianja/routing/routes.dart';
 
@@ -62,7 +62,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return BlocProvider(
       create: (context) => GetIt.instance<AuthBloc>(),
       child: BaseScreen(
-        appBar: const AuthHeader(title: 'Sign Up'),
+        appBar: const TitleHeader(title: 'Sign Up'),
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(Constants.paddingMedium),
@@ -117,9 +117,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(height: Constants.paddingMediumLarge),
 
                 // Birth Date Field
-                const LabelField(label: 'BIRTH DATE'),
-                const SizedBox(height: Constants.spacingSmall),
-                DateField(birthDateController: _birthDateController),
+                BirthDateField(birthDateController: _birthDateController),
                 const SizedBox(height: Constants.paddingMediumLarge),
 
                 // Residence Field

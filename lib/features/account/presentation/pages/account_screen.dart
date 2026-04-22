@@ -6,11 +6,11 @@ import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
 import 'package:kianja/core/shared/widgets/avatar/circle_user_avatar.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
+import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/account/presentation/bloc/account_bloc.dart';
-import 'package:kianja/features/account/presentation/widgets/account_header.dart';
 import 'package:kianja/features/account/presentation/widgets/account_menu/account_menu_accordion_item.dart';
 import 'package:kianja/features/account/presentation/widgets/account_menu/account_menu_card.dart';
 import 'package:kianja/features/account/presentation/widgets/account_menu/account_menu_image_item.dart';
@@ -29,7 +29,7 @@ class AccountScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => GetIt.instance<AccountBloc>(),
       child: BaseScreen(
-        appBar: const AccountHeader(title: 'Account'),
+        appBar: const TitleHeader(title: 'Account'),
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(Constants.paddingMedium),
           child: Column(
