@@ -39,7 +39,8 @@ class _KianjaState extends State<Kianja> {
   Widget build(BuildContext context) {
     return BlocConsumer<AppBloc, AppState>(
       listener: (context, state) {
-        if (state.appInitStatus == AppInitStatus.loaded) {
+        if (state.appInitStatus == AppInitStatus.loaded ||
+            state.appInitStatus == AppInitStatus.error) {
           FlutterNativeSplash.remove();
         }
       },
