@@ -30,14 +30,14 @@ class _DateFieldState extends State<DateField> {
   Future<void> _selectDate() async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now().subtract(const Duration(days: 365 * 18)),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
     );
     if (picked != null) {
       setState(() {
-        // widget.birthDateController.text = '${picked.toLocal()}'.split(' ')[0];
-        widget.birthDateController.text = picked.year.toString();
+        widget.birthDateController.text = '${picked.toLocal()}'.split(' ')[0];
+        // widget.birthDateController.text = picked.year.toString();
         AppDebug.showPrint('Selected date: ${widget.birthDateController.text}');
       });
     }

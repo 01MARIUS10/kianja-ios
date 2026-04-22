@@ -14,7 +14,7 @@ class BannerPub extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: Constants.size40,
-      padding: const EdgeInsets.symmetric(horizontal: Constants.spacingSmall),
+      padding: const EdgeInsets.symmetric(horizontal: Constants.paddingMedium),
       color: isDark ? AppColors.darkPrimary : AppColors.lightPrimary,
       child: Row(
         spacing: Constants.spacingSmall,
