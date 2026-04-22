@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$JobOfferModel {
 
- int get id; int get userId; String get firstName; String get lastName; String get photo; String get title; String get description; String get createdAt;
+ int get id; int get userId; String get userFirstName; String get userLastName; String get userPhoto; String get title; String get imageUrl; String get description; List<String> get categories; String get location; String get gender; String get actor; String get limitDate; String get createdAt;
 /// Create a copy of JobOfferModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $JobOfferModelCopyWith<JobOfferModel> get copyWith => _$JobOfferModelCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is JobOfferModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.photo, photo) || other.photo == photo)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is JobOfferModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.userFirstName, userFirstName) || other.userFirstName == userFirstName)&&(identical(other.userLastName, userLastName) || other.userLastName == userLastName)&&(identical(other.userPhoto, userPhoto) || other.userPhoto == userPhoto)&&(identical(other.title, title) || other.title == title)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other.categories, categories)&&(identical(other.location, location) || other.location == location)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.actor, actor) || other.actor == actor)&&(identical(other.limitDate, limitDate) || other.limitDate == limitDate)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,firstName,lastName,photo,title,description,createdAt);
+int get hashCode => Object.hash(runtimeType,id,userId,userFirstName,userLastName,userPhoto,title,imageUrl,description,const DeepCollectionEquality().hash(categories),location,gender,actor,limitDate,createdAt);
 
 @override
 String toString() {
-  return 'JobOfferModel(id: $id, userId: $userId, firstName: $firstName, lastName: $lastName, photo: $photo, title: $title, description: $description, createdAt: $createdAt)';
+  return 'JobOfferModel(id: $id, userId: $userId, userFirstName: $userFirstName, userLastName: $userLastName, userPhoto: $userPhoto, title: $title, imageUrl: $imageUrl, description: $description, categories: $categories, location: $location, gender: $gender, actor: $actor, limitDate: $limitDate, createdAt: $createdAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $JobOfferModelCopyWith<$Res>  {
   factory $JobOfferModelCopyWith(JobOfferModel value, $Res Function(JobOfferModel) _then) = _$JobOfferModelCopyWithImpl;
 @useResult
 $Res call({
- int id, int userId, String firstName, String lastName, String photo, String title, String description, String createdAt
+ int id, int userId, String userFirstName, String userLastName, String userPhoto, String title, String imageUrl, String description, List<String> categories, String location, String gender, String actor, String limitDate, String createdAt
 });
 
 
@@ -65,15 +65,21 @@ class _$JobOfferModelCopyWithImpl<$Res>
 
 /// Create a copy of JobOfferModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? firstName = null,Object? lastName = null,Object? photo = null,Object? title = null,Object? description = null,Object? createdAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? userFirstName = null,Object? userLastName = null,Object? userPhoto = null,Object? title = null,Object? imageUrl = null,Object? description = null,Object? categories = null,Object? location = null,Object? gender = null,Object? actor = null,Object? limitDate = null,Object? createdAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as int,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
-as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
-as String,photo: null == photo ? _self.photo : photo // ignore: cast_nullable_to_non_nullable
+as int,userFirstName: null == userFirstName ? _self.userFirstName : userFirstName // ignore: cast_nullable_to_non_nullable
+as String,userLastName: null == userLastName ? _self.userLastName : userLastName // ignore: cast_nullable_to_non_nullable
+as String,userPhoto: null == userPhoto ? _self.userPhoto : userPhoto // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String,categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
+as List<String>,location: null == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
+as String,gender: null == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
+as String,actor: null == actor ? _self.actor : actor // ignore: cast_nullable_to_non_nullable
+as String,limitDate: null == limitDate ? _self.limitDate : limitDate // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -160,10 +166,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int userId,  String firstName,  String lastName,  String photo,  String title,  String description,  String createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int userId,  String userFirstName,  String userLastName,  String userPhoto,  String title,  String imageUrl,  String description,  List<String> categories,  String location,  String gender,  String actor,  String limitDate,  String createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _JobOfferModel() when $default != null:
-return $default(_that.id,_that.userId,_that.firstName,_that.lastName,_that.photo,_that.title,_that.description,_that.createdAt);case _:
+return $default(_that.id,_that.userId,_that.userFirstName,_that.userLastName,_that.userPhoto,_that.title,_that.imageUrl,_that.description,_that.categories,_that.location,_that.gender,_that.actor,_that.limitDate,_that.createdAt);case _:
   return orElse();
 
 }
@@ -181,10 +187,10 @@ return $default(_that.id,_that.userId,_that.firstName,_that.lastName,_that.photo
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int userId,  String firstName,  String lastName,  String photo,  String title,  String description,  String createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int userId,  String userFirstName,  String userLastName,  String userPhoto,  String title,  String imageUrl,  String description,  List<String> categories,  String location,  String gender,  String actor,  String limitDate,  String createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _JobOfferModel():
-return $default(_that.id,_that.userId,_that.firstName,_that.lastName,_that.photo,_that.title,_that.description,_that.createdAt);case _:
+return $default(_that.id,_that.userId,_that.userFirstName,_that.userLastName,_that.userPhoto,_that.title,_that.imageUrl,_that.description,_that.categories,_that.location,_that.gender,_that.actor,_that.limitDate,_that.createdAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -201,10 +207,10 @@ return $default(_that.id,_that.userId,_that.firstName,_that.lastName,_that.photo
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int userId,  String firstName,  String lastName,  String photo,  String title,  String description,  String createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int userId,  String userFirstName,  String userLastName,  String userPhoto,  String title,  String imageUrl,  String description,  List<String> categories,  String location,  String gender,  String actor,  String limitDate,  String createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _JobOfferModel() when $default != null:
-return $default(_that.id,_that.userId,_that.firstName,_that.lastName,_that.photo,_that.title,_that.description,_that.createdAt);case _:
+return $default(_that.id,_that.userId,_that.userFirstName,_that.userLastName,_that.userPhoto,_that.title,_that.imageUrl,_that.description,_that.categories,_that.location,_that.gender,_that.actor,_that.limitDate,_that.createdAt);case _:
   return null;
 
 }
@@ -216,16 +222,28 @@ return $default(_that.id,_that.userId,_that.firstName,_that.lastName,_that.photo
 @JsonSerializable()
 
 class _JobOfferModel extends JobOfferModel {
-  const _JobOfferModel({required this.id, required this.userId, required this.firstName, required this.lastName, required this.photo, required this.title, required this.description, required this.createdAt}): super._();
+  const _JobOfferModel({required this.id, required this.userId, required this.userFirstName, required this.userLastName, required this.userPhoto, required this.title, required this.imageUrl, required this.description, required final  List<String> categories, required this.location, required this.gender, required this.actor, required this.limitDate, required this.createdAt}): _categories = categories,super._();
   factory _JobOfferModel.fromJson(Map<String, dynamic> json) => _$JobOfferModelFromJson(json);
 
 @override final  int id;
 @override final  int userId;
-@override final  String firstName;
-@override final  String lastName;
-@override final  String photo;
+@override final  String userFirstName;
+@override final  String userLastName;
+@override final  String userPhoto;
 @override final  String title;
+@override final  String imageUrl;
 @override final  String description;
+ final  List<String> _categories;
+@override List<String> get categories {
+  if (_categories is EqualUnmodifiableListView) return _categories;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_categories);
+}
+
+@override final  String location;
+@override final  String gender;
+@override final  String actor;
+@override final  String limitDate;
 @override final  String createdAt;
 
 /// Create a copy of JobOfferModel
@@ -241,16 +259,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _JobOfferModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.photo, photo) || other.photo == photo)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _JobOfferModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.userFirstName, userFirstName) || other.userFirstName == userFirstName)&&(identical(other.userLastName, userLastName) || other.userLastName == userLastName)&&(identical(other.userPhoto, userPhoto) || other.userPhoto == userPhoto)&&(identical(other.title, title) || other.title == title)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other._categories, _categories)&&(identical(other.location, location) || other.location == location)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.actor, actor) || other.actor == actor)&&(identical(other.limitDate, limitDate) || other.limitDate == limitDate)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,firstName,lastName,photo,title,description,createdAt);
+int get hashCode => Object.hash(runtimeType,id,userId,userFirstName,userLastName,userPhoto,title,imageUrl,description,const DeepCollectionEquality().hash(_categories),location,gender,actor,limitDate,createdAt);
 
 @override
 String toString() {
-  return 'JobOfferModel(id: $id, userId: $userId, firstName: $firstName, lastName: $lastName, photo: $photo, title: $title, description: $description, createdAt: $createdAt)';
+  return 'JobOfferModel(id: $id, userId: $userId, userFirstName: $userFirstName, userLastName: $userLastName, userPhoto: $userPhoto, title: $title, imageUrl: $imageUrl, description: $description, categories: $categories, location: $location, gender: $gender, actor: $actor, limitDate: $limitDate, createdAt: $createdAt)';
 }
 
 
@@ -261,7 +279,7 @@ abstract mixin class _$JobOfferModelCopyWith<$Res> implements $JobOfferModelCopy
   factory _$JobOfferModelCopyWith(_JobOfferModel value, $Res Function(_JobOfferModel) _then) = __$JobOfferModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id, int userId, String firstName, String lastName, String photo, String title, String description, String createdAt
+ int id, int userId, String userFirstName, String userLastName, String userPhoto, String title, String imageUrl, String description, List<String> categories, String location, String gender, String actor, String limitDate, String createdAt
 });
 
 
@@ -278,15 +296,21 @@ class __$JobOfferModelCopyWithImpl<$Res>
 
 /// Create a copy of JobOfferModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? firstName = null,Object? lastName = null,Object? photo = null,Object? title = null,Object? description = null,Object? createdAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? userFirstName = null,Object? userLastName = null,Object? userPhoto = null,Object? title = null,Object? imageUrl = null,Object? description = null,Object? categories = null,Object? location = null,Object? gender = null,Object? actor = null,Object? limitDate = null,Object? createdAt = null,}) {
   return _then(_JobOfferModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as int,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
-as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
-as String,photo: null == photo ? _self.photo : photo // ignore: cast_nullable_to_non_nullable
+as int,userFirstName: null == userFirstName ? _self.userFirstName : userFirstName // ignore: cast_nullable_to_non_nullable
+as String,userLastName: null == userLastName ? _self.userLastName : userLastName // ignore: cast_nullable_to_non_nullable
+as String,userPhoto: null == userPhoto ? _self.userPhoto : userPhoto // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String,categories: null == categories ? _self._categories : categories // ignore: cast_nullable_to_non_nullable
+as List<String>,location: null == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
+as String,gender: null == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
+as String,actor: null == actor ? _self.actor : actor // ignore: cast_nullable_to_non_nullable
+as String,limitDate: null == limitDate ? _self.limitDate : limitDate // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,
   ));

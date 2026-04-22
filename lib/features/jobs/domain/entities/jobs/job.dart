@@ -1,15 +1,4 @@
 abstract class Job {
-  const Job.empty()
-    : this(
-        id: -1,
-        userId: -1,
-        firstName: '',
-        lastName: '',
-        photo: '',
-        title: '',
-        description: '',
-        createdAt: '',
-      );
   const Job({
     required this.id,
     required this.userId,
@@ -19,6 +8,16 @@ abstract class Job {
     required this.title,
     required this.description,
     required this.createdAt,
+  });
+  const Job.empty({
+    this.id = -1,
+    this.userId = -1,
+    this.firstName = '',
+    this.lastName = '',
+    this.photo = '',
+    this.title = '',
+    this.description = '',
+    this.createdAt = '',
   });
   final int id;
   final int userId;

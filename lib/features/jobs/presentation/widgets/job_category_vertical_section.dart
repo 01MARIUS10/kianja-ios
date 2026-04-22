@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/presentation/widgets/job_horizontal_card_widget.dart';
 import 'package:kianja/features/jobs/presentation/widgets/job_item_card.dart';
+import 'package:kianja/routing/router.dart';
+import 'package:kianja/routing/routes.dart';
 
 class JobCategoryVerticalSection extends StatelessWidget {
   const JobCategoryVerticalSection({
@@ -23,8 +26,8 @@ class JobCategoryVerticalSection extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(
-            left: Constants.paddingSmall,
-            right: Constants.paddingSmall,
+            left: Constants.paddingMedium,
+            right: Constants.paddingMedium,
             bottom: Constants.paddingSmall,
           ),
           child: Row(
@@ -37,16 +40,18 @@ class JobCategoryVerticalSection extends StatelessWidget {
                   fontSize: 18,
                 ),
               ),
-              if (itemCount > 0)
-                Text(
-                  'Voir plus',
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: isDark
-                        ? AppColors.darkTextSecondary
-                        : AppColors.lightTextSecondary,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+              //   if (itemCount > 0)
+              //     InkWell(
+              //       child: Text(
+              //         'Voir plus',
+              //         style: theme.textTheme.bodyMedium?.copyWith(
+              //           color: isDark
+              //               ? AppColors.darkTextSecondary
+              //               : AppColors.lightTextSecondary,
+              //           fontWeight: FontWeight.w500,
+              //         ),
+              //       ),
+              //     ),
             ],
           ),
         ),
@@ -54,17 +59,22 @@ class JobCategoryVerticalSection extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           padding: const EdgeInsets.symmetric(
-            horizontal: Constants.paddingSmall,
+            horizontal: Constants.paddingMedium,
           ),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: Constants.spacingSmall,
             mainAxisSpacing: Constants.spacingMedium,
-            childAspectRatio: 0.77,
+            childAspectRatio: 0.74,
           ),
           itemCount: itemCount,
           itemBuilder: (context, index) {
-            return const JobHorizontalCardWidget();
+            return InkWell(
+              onTap: () {
+                context.goNamed(Routes.jobOfferDetail.name);
+              },
+              child: const JobHorizontalCardWidget(),
+            );
           },
         ),
         const SizedBox(height: Constants.spacingMedium),

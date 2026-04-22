@@ -11,11 +11,15 @@ abstract class JobApplicantModel
   const factory JobApplicantModel({
     required int id,
     required int userId,
-    required String firstName,
-    required String lastName,
-    required String photo,
+    required String userFirstName,
+    required String userLastName,
+    required String userPhoto,
     required String title,
-    required String description,
+    required String motivation,
+    required List<String> categories,
+    required String location,
+    required String gender,
+    required String pdfUrl,
     required String createdAt,
   }) = _JobApplicantModel;
 

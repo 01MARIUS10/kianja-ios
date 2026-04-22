@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/presentation/widgets/job_horizontal_card_widget.dart';
+import 'package:kianja/routing/routes.dart';
 
 class JobCategoryHorizontalSection extends StatelessWidget {
   const JobCategoryHorizontalSection({
@@ -22,8 +24,8 @@ class JobCategoryHorizontalSection extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(
-            left: Constants.paddingSmall,
-            right: Constants.paddingSmall,
+            left: Constants.paddingMedium,
+            right: Constants.paddingMedium,
             bottom: Constants.paddingSmall,
           ),
           child: Row(
@@ -36,13 +38,18 @@ class JobCategoryHorizontalSection extends StatelessWidget {
                   fontSize: 18,
                 ),
               ),
-              Text(
-                'Voir plus',
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: isDark
-                      ? AppColors.darkTextSecondary
-                      : AppColors.lightTextSecondary,
-                  fontWeight: FontWeight.w500,
+              TextButton(
+                onPressed: () {
+                  context.goNamed(Routes.jobsViewAll.name);
+                },
+                child: Text(
+                  'Voir plus',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: isDark
+                        ? AppColors.darkTextSecondary
+                        : AppColors.lightTextSecondary,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ],
@@ -53,14 +60,19 @@ class JobCategoryHorizontalSection extends StatelessWidget {
           child: ListView.separated(
             shrinkWrap: true,
             padding: const EdgeInsets.symmetric(
-              horizontal: Constants.paddingSmall,
+              horizontal: Constants.paddingMedium,
             ),
             scrollDirection: Axis.horizontal,
             itemCount: itemCount,
             separatorBuilder: (context, index) =>
                 const SizedBox(width: Constants.spacingSmall),
             itemBuilder: (context, index) {
-              return const JobHorizontalCardWidget();
+              return InkWell(
+                onTap: () {
+                  context.goNamed(Routes.jobOfferDetail.name);
+                },
+                child: const JobHorizontalCardWidget(),
+              );
             },
           ),
         ),

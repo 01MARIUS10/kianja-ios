@@ -39,122 +39,158 @@ class _JobOffersScreenState extends State<JobOffersScreen>
         : AppColors.lightTextSecondary;
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TabBar.secondary(
-          controller: _tabController,
-          indicatorColor: Colors.transparent,
-          dividerColor: Colors.transparent,
-          dividerHeight: 0.0,
-          splashFactory: NoSplash.splashFactory,
-          overlayColor: WidgetStateProperty.resolveWith<Color?>((
-            Set<WidgetState> states,
-          ) {
-            return states.contains(WidgetState.focused)
-                ? null
-                : Colors.transparent;
-          }),
-          isScrollable: true,
-          tabAlignment: TabAlignment.start,
-          onTap: (index) {
-            AppDebug.showPrint('Tab index: $index');
-            setState(() {
-              _selectedIndex = index;
-            });
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final maxWidth = constraints.maxWidth;
+            return SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minWidth: maxWidth),
+                child: Row(
+                  children: [
+                    TabBar.secondary(
+                      controller: _tabController,
+                      labelPadding: const EdgeInsets.fromLTRB(
+                        Constants.paddingMedium,
+                        Constants.paddingExtraSmall,
+                        Constants.spacingZero,
+                        Constants.paddingExtraSmall,
+                      ),
+                      indicatorColor: Colors.transparent,
+                      dividerColor: Colors.transparent,
+                      dividerHeight: 0.0,
+                      splashFactory: NoSplash.splashFactory,
+                      isScrollable: true,
+                      tabAlignment: TabAlignment.start,
+                      overlayColor: WidgetStateProperty.resolveWith<Color?>((
+                        Set<WidgetState> states,
+                      ) {
+                        return states.contains(WidgetState.focused)
+                            ? null
+                            : Colors.transparent;
+                      }),
+
+                      onTap: (index) {
+                        AppDebug.showPrint('Tab index: $index');
+                        setState(() {
+                          _selectedIndex = index;
+                        });
+                      },
+                      tabs: [
+                        Tab(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: Constants.paddingMedium,
+                              vertical: Constants.paddingExtraSmall,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                Constants.borderRadiusLarge,
+                              ),
+                              border: _selectedIndex == 0
+                                  ? Border.all(
+                                      color: isDark
+                                          ? AppColors.darkPrimary
+                                          : AppColors.lightPrimary,
+                                      width: 2,
+                                    )
+                                  : Border.all(
+                                      color: isDark
+                                          ? AppColors.darkBorder
+                                          : AppColors.lightBorder,
+                                      width: 2,
+                                    ),
+                            ),
+                            child: Text(
+                              'Type',
+                              style: theme.textTheme.titleSmall?.copyWith(
+                                color: colorText,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Tab(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: Constants.paddingMedium,
+
+                              vertical: Constants.paddingExtraSmall,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                Constants.borderRadiusLarge,
+                              ),
+                              border: _selectedIndex == 1
+                                  ? Border.all(
+                                      color: isDark
+                                          ? AppColors.darkPrimary
+                                          : AppColors.lightPrimary,
+                                      width: 2,
+                                    )
+                                  : Border.all(
+                                      color: isDark
+                                          ? AppColors.darkBorder
+                                          : AppColors.lightBorder,
+                                      width: 2,
+                                    ),
+                            ),
+                            child: Text(
+                              'Date',
+                              style: theme.textTheme.titleSmall?.copyWith(
+                                color: colorText,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Tab(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: Constants.paddingMedium,
+                              vertical: Constants.paddingExtraSmall,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                Constants.borderRadiusLarge,
+                              ),
+                              border: _selectedIndex == 2
+                                  ? Border.all(
+                                      color: isDark
+                                          ? AppColors.darkPrimary
+                                          : AppColors.lightPrimary,
+                                      width: 2,
+                                    )
+                                  : Border.all(
+                                      color: isDark
+                                          ? AppColors.darkBorder
+                                          : AppColors.lightBorder,
+                                      width: 2,
+                                    ),
+                            ),
+                            child: Text(
+                              'Zone',
+                              style: theme.textTheme.titleSmall?.copyWith(
+                                color: colorText,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(width: Constants.paddingMedium),
+                    Text(
+                      'Jobs (160,066,555)',
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        color: colorText,
+                      ),
+                    ),
+                    const SizedBox(width: Constants.paddingMedium),
+                  ],
+                ),
+              ),
+            );
           },
-          tabs: [
-            Tab(
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Constants.paddingMedium,
-                  vertical: Constants.paddingExtraSmall,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                    Constants.borderRadiusLarge,
-                  ),
-                  border: _selectedIndex == 0
-                      ? Border.all(
-                          color: isDark
-                              ? AppColors.darkPrimary
-                              : AppColors.lightPrimary,
-                          width: 2,
-                        )
-                      : Border.all(
-                          color: isDark
-                              ? AppColors.darkBorder
-                              : AppColors.lightBorder,
-                          width: 2,
-                        ),
-                ),
-                child: Text(
-                  'Type',
-                  style: theme.textTheme.titleSmall?.copyWith(color: colorText),
-                ),
-              ),
-            ),
-            Tab(
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Constants.paddingMedium,
-
-                  vertical: Constants.paddingExtraSmall,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                    Constants.borderRadiusLarge,
-                  ),
-                  border: _selectedIndex == 1
-                      ? Border.all(
-                          color: isDark
-                              ? AppColors.darkPrimary
-                              : AppColors.lightPrimary,
-                          width: 2,
-                        )
-                      : Border.all(
-                          color: isDark
-                              ? AppColors.darkBorder
-                              : AppColors.lightBorder,
-                          width: 2,
-                        ),
-                ),
-                child: Text(
-                  'Date',
-                  style: theme.textTheme.titleSmall?.copyWith(color: colorText),
-                ),
-              ),
-            ),
-            Tab(
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Constants.paddingMedium,
-
-                  vertical: Constants.paddingExtraSmall,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                    Constants.borderRadiusLarge,
-                  ),
-                  border: _selectedIndex == 2
-                      ? Border.all(
-                          color: isDark
-                              ? AppColors.darkPrimary
-                              : AppColors.lightPrimary,
-                          width: 2,
-                        )
-                      : Border.all(
-                          color: isDark
-                              ? AppColors.darkBorder
-                              : AppColors.lightBorder,
-                          width: 2,
-                        ),
-                ),
-                child: Text(
-                  'Zone',
-                  style: theme.textTheme.titleSmall?.copyWith(color: colorText),
-                ),
-              ),
-            ),
-          ],
         ),
         Expanded(
           child: TabBarView(

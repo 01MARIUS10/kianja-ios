@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/fields/label_field.dart';
 import 'package:kianja/core/shared/widgets/fields/text_input_field.dart';
+import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/post_features_section.dart';
-import 'package:kianja/features/jobs/presentation/widgets/post/post_header.dart';
-import 'package:kianja/features/jobs/presentation/widgets/post/upload_box.dart';
+import 'package:kianja/features/jobs/presentation/widgets/post/single_pdf_upload_widget.dart';
+import 'package:kianja/features/jobs/presentation/widgets/post/single_photo_upload_widget.dart';
 
 class PostJobApplicantScreen extends StatefulWidget {
   const PostJobApplicantScreen({super.key});
@@ -68,7 +69,7 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
     final isDark = theme.brightness == Brightness.dark;
 
     return BaseScreen(
-      appBar: const PostHeader(title: 'Post a job applicant'),
+      appBar: const TitleHeader(title: 'Post a job applicant'),
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: SingleChildScrollView(
@@ -101,20 +102,28 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
 
               const LabelField(label: 'Recent photo (optional)'),
               const SizedBox(height: Constants.spacingSmall),
-              UploadBox(
-                text: 'Upload your recent photo\nIn jpg/jpeg/png format.',
-                icon: Icons.camera_alt_outlined,
-                onTap: () {},
+              SinglePhotoUploadWidget(
+                onPhotoChanged: (photo) {
+                  // Handle photo update
+                },
               ),
+
+              // MultiPhotoUploadWidget(
+              //   maxPhotos: 5,
+              //   onPhotosChanged: (photos) {
+              //     // Handle photos update
+              //   },
+              // ),
               const SizedBox(height: Constants.spacingMedium),
 
               const LabelField(label: 'Resume (optional)'),
               const SizedBox(height: Constants.spacingSmall),
-              UploadBox(
+              SinglePdfUploadWidget(
                 text:
                     'Upload your Resume and\nlet members look at it.\nIn PDF format.',
-                buttonText: 'Upload',
-                onTap: () {},
+                onPdfChanged: (pdf) {
+                  // Handle pdf update
+                },
               ),
               const SizedBox(height: Constants.spacingMedium),
 

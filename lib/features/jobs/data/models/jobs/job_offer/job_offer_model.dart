@@ -9,11 +9,17 @@ abstract class JobOfferModel with _$JobOfferModel implements JobOffer {
   const factory JobOfferModel({
     required int id,
     required int userId,
-    required String firstName,
-    required String lastName,
-    required String photo,
+    required String userFirstName,
+    required String userLastName,
+    required String userPhoto,
     required String title,
+    required String imageUrl,
     required String description,
+    required List<String> categories,
+    required String location,
+    required String gender,
+    required String actor,
+    required String limitDate,
     required String createdAt,
   }) = _JobOfferModel;
 

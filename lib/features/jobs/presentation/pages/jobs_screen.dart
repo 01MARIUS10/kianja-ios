@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
+import 'package:kianja/core/shared/widgets/headers/logo_header.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/presentation/pages/jobs_categories/experts_executives_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/jobs_categories/job_applicants_screen.dart';
-import 'package:kianja/features/jobs/presentation/pages/jobs_offers/job_offers_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/jobs_categories/training_center_screen.dart';
-import 'package:kianja/features/jobs/presentation/widgets/jobs_header.dart';
+import 'package:kianja/features/jobs/presentation/pages/jobs_offers/job_offers_screen.dart';
 
 class JobsScreen extends StatefulWidget {
   const JobsScreen({super.key});
@@ -34,7 +34,7 @@ class _JobsScreenState extends State<JobsScreen> with TickerProviderStateMixin {
     final theme = Theme.of(context);
     // final isDark = theme.brightness == Brightness.dark;
     return BaseScreen(
-      appBar: JobsHeader(title: EnvConfig.appName),
+      appBar: LogoHeader(title: EnvConfig.appName),
       child: Column(
         children: [
           SizedBox(
@@ -42,7 +42,7 @@ class _JobsScreenState extends State<JobsScreen> with TickerProviderStateMixin {
             child: TabBar(
               padding: EdgeInsets.zero,
               labelPadding: const EdgeInsets.symmetric(
-                horizontal: Constants.paddingSmall,
+                horizontal: Constants.paddingMedium,
                 vertical: Constants.spacingZero,
               ),
               controller: _tabController,

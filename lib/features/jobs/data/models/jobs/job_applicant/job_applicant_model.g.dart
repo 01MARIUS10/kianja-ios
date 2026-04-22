@@ -10,11 +10,17 @@ _JobApplicantModel _$JobApplicantModelFromJson(Map<String, dynamic> json) =>
     _JobApplicantModel(
       id: (json['id'] as num).toInt(),
       userId: (json['userId'] as num).toInt(),
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
-      photo: json['photo'] as String,
+      userFirstName: json['userFirstName'] as String,
+      userLastName: json['userLastName'] as String,
+      userPhoto: json['userPhoto'] as String,
       title: json['title'] as String,
-      description: json['description'] as String,
+      motivation: json['motivation'] as String,
+      categories: (json['categories'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
+      location: json['location'] as String,
+      gender: json['gender'] as String,
+      pdfUrl: json['pdfUrl'] as String,
       createdAt: json['createdAt'] as String,
     );
 
@@ -22,10 +28,14 @@ Map<String, dynamic> _$JobApplicantModelToJson(_JobApplicantModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'userId': instance.userId,
-      'firstName': instance.firstName,
-      'lastName': instance.lastName,
-      'photo': instance.photo,
+      'userFirstName': instance.userFirstName,
+      'userLastName': instance.userLastName,
+      'userPhoto': instance.userPhoto,
       'title': instance.title,
-      'description': instance.description,
+      'motivation': instance.motivation,
+      'categories': instance.categories,
+      'location': instance.location,
+      'gender': instance.gender,
+      'pdfUrl': instance.pdfUrl,
       'createdAt': instance.createdAt,
     };
