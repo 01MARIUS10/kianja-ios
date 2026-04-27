@@ -12,7 +12,6 @@ import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
-import 'package:shimmer/shimmer.dart';
 
 class JobOfferDetailScreen extends StatelessWidget {
   const JobOfferDetailScreen({super.key, required this.id});

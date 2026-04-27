@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/presentation/pages/job_applicant/job_applicant_filter_screen.dart';
-import 'package:kianja/features/jobs/presentation/widgets/category/job_category_horizontal_section.dart';
 import 'package:kianja/features/jobs/presentation/widgets/category/job_template_horizontal_section.dart';
 
 class JobApplicantsScreen extends StatefulWidget {

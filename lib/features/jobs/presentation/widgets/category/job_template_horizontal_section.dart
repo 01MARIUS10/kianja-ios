@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
-import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/jobs/presentation/widgets/item/card/job_applicant_card.dart';
-import 'package:kianja/features/jobs/presentation/widgets/item/card/job_offer_card.dart';
-import 'package:kianja/routing/routes.dart';
 
 class JobTemplateHorizontalSection extends StatelessWidget {
   const JobTemplateHorizontalSection({
