@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
-import 'package:kianja/features/jobs/presentation/widgets/item/job_item_card.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
+import 'package:kianja/features/jobs/presentation/widgets/item/card/job_offer_card.dart';
 import 'package:kianja/routing/routes.dart';
 
 class JobCategoryHorizontalSection extends StatelessWidget {
   const JobCategoryHorizontalSection({
     super.key,
     required this.category,
-    required this.itemCount,
+    required this.query,
+    required this.jobOfferList,
   });
   final String category;
-  final int itemCount;
+  final String query;
+  final List<JobOffer> jobOfferList;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +43,10 @@ class JobCategoryHorizontalSection extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  context.goNamed(Routes.jobCategoryViewAll.name);
+                  context.goNamed(
+                    Routes.jobCategoryViewAll.name,
+                    extra: {'title': category, 'query': query},
+                  );
                 },
                 child: Text(
                   'Voir plus',
@@ -63,15 +69,18 @@ class JobCategoryHorizontalSection extends StatelessWidget {
               horizontal: Constants.paddingMedium,
             ),
             scrollDirection: Axis.horizontal,
-            itemCount: itemCount,
+            itemCount: jobOfferList.length,
             separatorBuilder: (context, index) =>
                 const SizedBox(width: Constants.spacingSmall),
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
-                  context.goNamed(Routes.jobOfferDetail.name);
+                  context.goNamed(
+                    Routes.jobOfferDetail.name,
+                    pathParameters: {'id': jobOfferList[index].id.toString()},
+                  );
                 },
-                child: const JobItemCard(),
+                child: JobOfferCard(jobOffer: jobOfferList[index]),
               );
             },
           ),

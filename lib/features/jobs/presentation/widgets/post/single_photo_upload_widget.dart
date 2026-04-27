@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kianja/core/themes/app_colors.dart';
 
 class SinglePhotoUploadWidget extends StatefulWidget {
   const SinglePhotoUploadWidget({super.key, required this.onPhotoChanged});
@@ -95,11 +96,12 @@ class _SinglePhotoUploadWidgetState extends State<SinglePhotoUploadWidget> {
   }
 
   Widget _buildAddPhotoButton(ThemeData theme) {
+    final isDark = theme.brightness == Brightness.dark;
     return GestureDetector(
       onTap: _pickImage,
       child: CustomPaint(
         painter: _DashedRoundedRectPainter(
-          color: theme.dividerTheme.color ?? Colors.grey.shade400,
+          color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
           radius: 12,
         ),
         child: Container(

@@ -13,6 +13,7 @@ class PostFeaturesSection extends StatefulWidget {
 class _PostFeaturesSectionState extends State<PostFeaturesSection> {
   final List<String> _selectedTypes = ['General'];
   final List<String> _selectedDurations = ['1 week'];
+  final List<String> _selectedPrices = ['5 000', '20 000', '50 000'];
 
   void _toggleType(String type) {
     setState(() {
@@ -26,14 +27,30 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
   }
 
   void _toggleDuration(String duration) {
+    _correspondedPrice(duration);
     setState(() {
       if (_selectedDurations.contains(duration)) {
-        _selectedDurations.remove(duration);
+        if (_selectedDurations.isEmpty) {
+          _selectedDurations.remove(duration);
+        }
       } else {
         _selectedDurations.clear();
         _selectedDurations.add(duration);
       }
     });
+  }
+
+  void _correspondedPrice(String duration) {
+    if (duration == '1 week') {
+      _selectedPrices.clear();
+      _selectedPrices.add('5 000');
+    } else if (duration == '1 month') {
+      _selectedPrices.clear();
+      _selectedPrices.add('10 000');
+    } else {
+      _selectedPrices.clear();
+      _selectedPrices.add('20 000');
+    }
   }
 
   @override
@@ -53,7 +70,7 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
         _buildFeatureRow(
           context,
           label: 'Type :',
-          children: ['General', 'Immediate'].map((type) {
+          children: ['General'].map((type) {
             final isSelected = _selectedTypes.contains(type);
             return InkWell(
               onTap: () => _toggleType(type),
@@ -124,7 +141,7 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
             ),
             const SizedBox(width: 4),
             Text(
-              '5 000',
+              _selectedPrices[0],
               style: textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
