@@ -7,26 +7,24 @@ part of 'user_model.dart';
 // **************************************************************************
 
 _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
-  id: (json['id'] as num).toInt(),
-  firstName: json['firstName'] as String,
-  lastName: json['lastName'] as String,
-  photoUrl: json['photoUrl'] as String,
-  email: json['email'] as String,
-  phone: json['phone'] as String,
-  genre: json['genre'] as String,
-  pseudo: json['pseudo'] as String,
-  residence: json['residence'] as String,
+  id: (json['user_id'] as num?)?.toInt() ?? -1,
+  firstName: json['first_name'] as String? ?? '',
+  lastName: json['last_name'] as String? ?? '',
+  photoUrl: json['photo'] as String? ?? '',
+  phone: json['phone'] as String? ?? '',
+  email: json['email'] as String? ?? '',
+  residence: json['lieu_residence'] as String? ?? '',
+  createdAt: json['created_at'] as String? ?? '',
 );
 
 Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'firstName': instance.firstName,
-      'lastName': instance.lastName,
-      'photoUrl': instance.photoUrl,
-      'email': instance.email,
+      'user_id': instance.id,
+      'first_name': instance.firstName,
+      'last_name': instance.lastName,
+      'photo': instance.photoUrl,
       'phone': instance.phone,
-      'genre': instance.genre,
-      'pseudo': instance.pseudo,
-      'residence': instance.residence,
+      'email': instance.email,
+      'lieu_residence': instance.residence,
+      'created_at': instance.createdAt,
     };

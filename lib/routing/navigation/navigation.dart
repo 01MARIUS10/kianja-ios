@@ -36,17 +36,17 @@ class Navigation extends StatelessWidget {
         body: navigationShell,
         bottomNavigationBar: BlocConsumer<ConnectivityBloc, ConnectivityState>(
           listener: (context, state) {
-            return switch (state) {
-              ConnectivityConnectionSuccess() => {
-                ScaffoldMessenger.of(context).clearSnackBars(),
-                BlocProvider.of<AppBloc>(context).add(const AppUserLoaded()),
-              },
-              ConnectivityConnectionFailure() => AppMessenger.showWarning(
-                context,
-                'No internet connection',
-              ),
-              ConnectivityInitial() => null,
-            };
+            // return switch (state) {
+            //   ConnectivityConnectionSuccess() => {
+            //     ScaffoldMessenger.of(context).clearSnackBars(),
+            //     BlocProvider.of<AppBloc>(context).add(const AppUserLoaded()),
+            //   },
+            //   ConnectivityConnectionFailure() => AppMessenger.showWarning(
+            //     context,
+            //     'No internet connection',
+            //   ),
+            //   ConnectivityInitial() => null,
+            // };
           },
           builder: (context, state) {
             return BlocConsumer<AppBloc, AppState>(

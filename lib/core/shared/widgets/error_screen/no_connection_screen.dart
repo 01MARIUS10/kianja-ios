@@ -17,9 +17,9 @@ class NoConnectionScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(height: Constants.spacingMedium),
+          // const SizedBox(height: Constants.spacingMedium),
           SvgPicture.asset(Assets.noConnectionIllustration, height: 250),
-          const SizedBox(height: Constants.spacingMedium),
+          // const SizedBox(height: Constants.spacingMedium),
           Text(
             'Page failed to load',
             style: theme.textTheme.headlineSmall?.copyWith(
@@ -33,22 +33,21 @@ class NoConnectionScreen extends StatelessWidget {
             style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: Constants.spacingLarge),
+          const SizedBox(height: Constants.spacingMedium),
           SizedBox(
             width: double.infinity,
             height: Constants.size50,
             child: ElevatedButton(
               onPressed: onRetry,
               child: Text(
-                'Retry',
+                'RETRY',
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
                 ),
               ),
             ),
           ),
-          const SizedBox(height: Constants.spacingLarge),
+          // const SizedBox(height: Constants.spacingLarge),
         ],
       ),
     );

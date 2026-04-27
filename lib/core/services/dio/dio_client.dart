@@ -24,8 +24,9 @@ class DioClient {
         onRequest: (options, handler) {
           final token = appSharedPrefs.get(Constants.token);
           final lang = appSharedPrefs.get(Constants.lang);
-          AppDebug.showPrint('token $token');
-          AppDebug.showPrint('lang $lang');
+          AppDebug.showPrint('Token $token');
+          AppDebug.showPrint('Lang $lang');
+          AppDebug.showPrint('Request to URL : ${options.uri.toString()}');
           if (lang != null) {
             options.headers['X-Language'] = lang;
           }

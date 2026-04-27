@@ -8,6 +8,7 @@ import 'package:kianja/core/di/di_container.dart';
 import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
 import 'package:kianja/core/shared/app_feature/bloc/connectivity/connectivity_bloc.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/kianja.dart';
 
 void main() async {
@@ -22,12 +23,12 @@ void main() async {
       providers: [
         BlocProvider(
           create: (context) =>
-              GetIt.instance<AppBloc>()..add(const AppInitialized()),
+              GetIt.instance<ConnectivityBloc>()
+                ..add(const ConnectivitySubscribed()),
         ),
         BlocProvider(
           create: (context) =>
-              GetIt.instance<ConnectivityBloc>()
-                ..add(const ConnectivitySubscribed()),
+              GetIt.instance<AppBloc>()..add(const AppInitialized()),
         ),
       ],
       child: const Kianja(),

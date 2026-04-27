@@ -7,18 +7,29 @@ part 'user_model.g.dart';
 @freezed
 abstract class UserModel with _$UserModel implements User {
   const factory UserModel({
-    required int id,
-    required String firstName,
-    required String lastName,
-    required String photoUrl,
-    required String email,
-    required String phone,
-    required String genre,
-    required String pseudo,
+    @JsonKey(name: 'user_id', defaultValue: -1) required int id,
+    @JsonKey(name: 'first_name', defaultValue: '') required String firstName,
+    @JsonKey(name: 'last_name', defaultValue: '') required String lastName,
+    @JsonKey(name: 'photo', defaultValue: '') required String photoUrl,
+    @JsonKey(defaultValue: '') required String phone,
+    @JsonKey(defaultValue: '') required String email,
+    @JsonKey(name: 'lieu_residence', defaultValue: '')
     required String residence,
+    @JsonKey(name: 'created_at', defaultValue: '') required String createdAt,
   }) = _UserModel;
 
   const UserModel._();
+
+  factory UserModel.empty() => const UserModel(
+        id: -1,
+        firstName: '',
+        lastName: '',
+        photoUrl: '',
+        phone: '',
+        email: '',
+        residence: '',
+        createdAt: '',
+      );
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);

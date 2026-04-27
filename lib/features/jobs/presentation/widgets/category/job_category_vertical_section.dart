@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kianja/core/utils/constants.dart';
-import 'package:kianja/features/jobs/presentation/widgets/item/job_item_card.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
+import 'package:kianja/features/jobs/presentation/widgets/item/card/job_offer_card.dart';
 import 'package:kianja/routing/routes.dart';
 
 class JobCategoryVerticalSection extends StatelessWidget {
   const JobCategoryVerticalSection({
     super.key,
     required this.category,
-    required this.itemCount,
+    required this.query,
+    required this.jobOfferList,
   });
   final String category;
-  final int itemCount;
+  final String query;
+  final List<JobOffer> jobOfferList;
 
   @override
   Widget build(BuildContext context) {
@@ -64,13 +67,16 @@ class JobCategoryVerticalSection extends StatelessWidget {
             mainAxisSpacing: Constants.spacingMedium,
             childAspectRatio: 0.74,
           ),
-          itemCount: itemCount,
+          itemCount: jobOfferList.length,
           itemBuilder: (context, index) {
             return InkWell(
               onTap: () {
-                context.goNamed(Routes.jobOfferDetail.name);
+                context.goNamed(
+                  Routes.jobOfferDetail.name,
+                  pathParameters: {'id': jobOfferList[index].id.toString()},
+                );
               },
-              child: const JobItemCard(),
+              child: JobOfferCard(jobOffer: jobOfferList[index]),
             );
           },
         ),

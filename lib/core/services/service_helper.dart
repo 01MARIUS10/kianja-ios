@@ -15,13 +15,16 @@ Future<T> requestHandler<T>(Future<T> Function() requestBody) async {
   }
 }
 
-Map<String, dynamic> jsonHandler(dynamic data) {
-  Map<String, dynamic> result;
+Map<String, dynamic> jsonSimpleDecode(dynamic data) {
   if (data is String) {
-    result = jsonDecode(data);
+    return jsonDecode(data);
   } else {
-    result = data;
+    return data;
   }
+}
+
+Map<String, dynamic> jsonHandler(dynamic data) {
+  final Map<String, dynamic> result = jsonSimpleDecode(data);
   try {
     final int status = result['status'] ?? 0;
     final int statusCode = result['statusCode'] ?? 0;

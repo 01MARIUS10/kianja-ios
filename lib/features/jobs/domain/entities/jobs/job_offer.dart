@@ -1,50 +1,50 @@
+import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_actor.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_category.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_gender.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_location.dart';
+
 class JobOffer {
   const JobOffer({
     required this.id,
-    required this.userId,
-    required this.userFirstName,
-    required this.userLastName,
-    required this.userPhoto,
     required this.title,
     required this.imageUrl,
     required this.description,
     required this.categories,
-    required this.location,
-    required this.gender,
-    required this.actor,
-    required this.limitDate,
+    this.location,
+    this.gender,
+    this.actor,
+    required this.dateLimit,
+    required this.status,
+    required this.user,
     required this.createdAt,
   });
 
   const JobOffer.empty({
     this.id = -1,
-    this.userId = -1,
-    this.userFirstName = '',
-    this.userLastName = '',
-    this.userPhoto = '',
     this.title = '',
-    this.description = '',
-    this.createdAt = '',
-    this.gender = '',
-    this.location = '',
-    this.actor = '',
-    this.limitDate = '',
-    this.categories = const [],
     this.imageUrl = '',
+    this.description = '',
+    this.categories = const [],
+    this.location,
+    this.gender,
+    this.actor,
+    this.dateLimit = '',
+    this.status = '',
+    this.user = const User.empty(),
+    this.createdAt = '',
   });
 
   final int id;
-  final int userId;
-  final String userFirstName;
-  final String userLastName;
-  final String userPhoto;
   final String title;
   final String imageUrl;
   final String description;
-  final List<String> categories;
-  final String location;
-  final String gender;
-  final String actor;
-  final String limitDate;
+  final List<JobCategory> categories;
+  final JobLocation? location;
+  final JobGender? gender;
+  final JobActor? actor;
+  final String dateLimit;
+  final String status;
+  final User user;
   final String createdAt;
 }

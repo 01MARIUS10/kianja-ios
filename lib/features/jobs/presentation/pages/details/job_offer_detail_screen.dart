@@ -1,12 +1,22 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:kianja/core/config/assets.dart';
+import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
+import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
+import 'package:kianja/core/shared/widgets/loading/shimmer_job_detail_indicator.dart';
 import 'package:kianja/core/themes/app_colors.dart';
+import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 
 class JobOfferDetailScreen extends StatelessWidget {
-  const JobOfferDetailScreen({super.key});
+  const JobOfferDetailScreen({super.key, required this.id});
+  final int id;
 
   @override
   Widget build(BuildContext context) {
@@ -20,255 +30,326 @@ class JobOfferDetailScreen extends StatelessWidget {
         ? AppColors.darkSurface
         : AppColors.lightSurface;
 
-    return BaseScreen(
-      appBar: const TitleHeader(title: 'Job details'),
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(vertical: Constants.paddingMedium),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header Info
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: Constants.paddingMedium,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: Constants.spacingSmall),
-                  Row(
-                    children: [
-                      Text('Limite date  ', style: theme.textTheme.bodySmall),
-                      const Icon(
-                        Icons.access_time,
-                        size: Constants.iconSizeExtraSmall,
-                        color: AppColors.danger,
-                      ),
-                      const SizedBox(width: Constants.spacingExtraSmall),
-                      Text(
-                        '4 Juillet 2026',
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: AppColors.danger,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: Constants.spacingExtraSmall),
-                  Text(
-                    'Posted  •  1h',
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: textSecondary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: Constants.spacingMedium),
-            Divider(
-              color: borderColor,
-              thickness: 1,
-              height: 1,
-              indent: Constants.paddingMedium,
-              endIndent: Constants.paddingMedium,
-            ),
-            const SizedBox(height: Constants.spacingMedium),
-
-            // Image
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: Constants.paddingMedium,
-              ),
-              child: ClipRRect(
-                child: Image.asset(
-                  Assets.hiring,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
+    return BlocProvider(
+      create: (context) =>
+          GetIt.instance<JobsBloc>()
+            ..add(JobsGetJobOfferDetailRequested(id: id)),
+      child: BaseScreen(
+        appBar: const TitleHeader(title: 'Job details'),
+        child: BlocBuilder<JobsBloc, JobsState>(
+          builder: (context, state) {
+            if (state is JobsGetJobOfferDetailSuccess) {
+              final jobOffer = state.jobOffer;
+              return SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(
+                  vertical: Constants.paddingMedium,
                 ),
-              ),
-            ),
-            const SizedBox(height: Constants.spacingMedium),
-            Divider(
-              color: borderColor,
-              thickness: 1,
-              height: 1,
-              indent: Constants.paddingMedium,
-              endIndent: Constants.paddingMedium,
-            ),
-            const SizedBox(height: Constants.spacingMedium),
-
-            // Description
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: Constants.paddingMedium,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Description',
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: Constants.spacingMedium),
-                  Text(
-                    'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.\n\nIt has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.\n\nIt was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-                    style: theme.textTheme.bodyMedium?.copyWith(height: 1.5),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: Constants.spacingMedium),
-            Divider(
-              color: borderColor,
-              thickness: 1,
-              height: 1,
-              indent: Constants.paddingMedium,
-              endIndent: Constants.paddingMedium,
-            ),
-            const SizedBox(height: Constants.spacingMedium),
-
-            // Job features
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: Constants.paddingMedium,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Job features',
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: Constants.spacingMedium),
-                  _buildFeatureRow(
-                    context,
-                    label: 'Category',
-                    value: 'Designer',
-                  ),
-                  const SizedBox(height: Constants.spacingSmall),
-                  _buildFeatureRow(
-                    context,
-                    label: 'Location',
-                    value: 'Outside the country',
-                  ),
-                  const SizedBox(height: Constants.spacingSmall),
-                  _buildFeatureRow(context, label: 'Gender', value: 'Together'),
-                ],
-              ),
-            ),
-            const SizedBox(height: Constants.spacingMedium),
-            Divider(
-              color: borderColor,
-              thickness: 1,
-              height: 1,
-              indent: Constants.paddingMedium,
-              endIndent: Constants.paddingMedium,
-            ),
-            const SizedBox(height: Constants.spacingMedium),
-
-            // Actor
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: Constants.paddingMedium,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Actor',
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: Constants.spacingMedium),
-                  Text('ONG', style: theme.textTheme.bodySmall),
-                ],
-              ),
-            ),
-            const SizedBox(height: Constants.spacingMedium),
-            Divider(
-              color: borderColor,
-              thickness: 1,
-              height: 1,
-              indent: Constants.paddingMedium,
-              endIndent: Constants.paddingMedium,
-            ),
-            const SizedBox(height: Constants.spacingMedium),
-
-            // About the client
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: Constants.paddingMedium,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'About the client',
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: Constants.spacingMedium),
-                  Row(
-                    children: [
-                      Container(
-                        width: Constants.size35,
-                        height: Constants.size35,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: surfaceColor,
-                          border: Border.all(color: borderColor, width: 1),
-                        ),
-                        child: ClipOval(
-                          child: Image.asset(
-                            Assets.rabbitAvatar,
-                            fit: BoxFit.cover,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Header Info
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Constants.paddingMedium,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            jobOffer.title,
+                            style: theme.textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
+                          const SizedBox(height: Constants.spacingSmall),
+                          Row(
+                            children: [
+                              Text(
+                                'Limite date  ',
+                                style: theme.textTheme.bodySmall,
+                              ),
+                              const Icon(
+                                Icons.access_time,
+                                size: Constants.iconSizeExtraSmall,
+                                color: AppColors.danger,
+                              ),
+                              const SizedBox(
+                                width: Constants.spacingExtraSmall,
+                              ),
+                              Text(
+                                AppFunction.getDate(jobOffer.dateLimit),
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: AppColors.danger,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: Constants.spacingExtraSmall),
+                          Text(
+                            'Posted  •  ${AppFunction.dateTimeCounter(jobOffer.createdAt)}',
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: textSecondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: Constants.spacingMedium),
+                    Divider(
+                      color: borderColor,
+                      thickness: 1,
+                      height: 1,
+                      indent: Constants.paddingMedium,
+                      endIndent: Constants.paddingMedium,
+                    ),
+                    const SizedBox(height: Constants.spacingMedium),
+
+                    // Image
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Constants.paddingMedium,
+                      ),
+                      child: ClipRRect(
+                        child: CachedNetworkImage(
+                          imageUrl:
+                              '${EnvConfig.baseApiUrl}${jobOffer.imageUrl}',
+                          fit: BoxFit.cover,
+                          errorWidget: (context, url, error) {
+                            return Image.asset(
+                              Assets.hiring,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, url, error) => const Icon(
+                                Icons.image,
+                                size: 40,
+                                color: Colors.grey,
+                              ),
+                            );
+                          },
+                          progressIndicatorBuilder: (context, url, progress) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          },
                         ),
                       ),
-                      const SizedBox(width: Constants.spacingSmall),
-                      Text('Full Name', style: theme.textTheme.bodySmall),
-                    ],
-                  ),
-                  const SizedBox(height: Constants.spacingSmall),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.verified_user_outlined,
-                        size: Constants.iconSizeExtraSmall,
-                        color: AppColors.success,
+                    ),
+                    const SizedBox(height: Constants.spacingMedium),
+                    Divider(
+                      color: borderColor,
+                      thickness: 1,
+                      height: 1,
+                      indent: Constants.paddingMedium,
+                      endIndent: Constants.paddingMedium,
+                    ),
+                    const SizedBox(height: Constants.spacingMedium),
+
+                    // Description
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Constants.paddingMedium,
                       ),
-                      const SizedBox(width: Constants.spacingExtraSmall),
-                      Text(
-                        'Verified phone number',
-                        style: theme.textTheme.bodySmall,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Description',
+                            style: theme.textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: Constants.spacingMedium),
+                          Text(
+                            jobOffer.description,
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              height: 1.5,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: Constants.spacingSmall),
-                  Text('10 jobs posted', style: theme.textTheme.bodySmall),
-                  const SizedBox(height: Constants.spacingSmall),
-                  Text('Antananarivo', style: theme.textTheme.bodySmall),
-                  const SizedBox(height: Constants.spacingSmall),
-                  Text(
-                    'Member since Jan 20, 2024',
-                    style: theme.textTheme.bodySmall,
-                  ),
-                  const SizedBox(height: Constants.spacingLarge),
-                ],
-              ),
-            ),
-          ],
+                    ),
+                    const SizedBox(height: Constants.spacingMedium),
+                    Divider(
+                      color: borderColor,
+                      thickness: 1,
+                      height: 1,
+                      indent: Constants.paddingMedium,
+                      endIndent: Constants.paddingMedium,
+                    ),
+                    const SizedBox(height: Constants.spacingMedium),
+
+                    // Job features
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Constants.paddingMedium,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Job features',
+                            style: theme.textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: Constants.spacingMedium),
+                          _buildFeatureRow(
+                            context,
+                            label: 'Category',
+                            value: jobOffer.categories
+                                .map((category) => category.name)
+                                .join(', '),
+                          ),
+                          const SizedBox(height: Constants.spacingSmall),
+                          _buildFeatureRow(
+                            context,
+                            label: 'Location',
+                            value: jobOffer.location?.name ?? '',
+                          ),
+                          const SizedBox(height: Constants.spacingSmall),
+                          _buildFeatureRow(
+                            context,
+                            label: 'Gender',
+                            value: jobOffer.gender?.name ?? '',
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: Constants.spacingMedium),
+                    Divider(
+                      color: borderColor,
+                      thickness: 1,
+                      height: 1,
+                      indent: Constants.paddingMedium,
+                      endIndent: Constants.paddingMedium,
+                    ),
+                    const SizedBox(height: Constants.spacingMedium),
+
+                    // Actor
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Constants.paddingMedium,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Actor',
+                            style: theme.textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: Constants.spacingMedium),
+                          Text(
+                            jobOffer.actor?.name ?? '',
+                            style: theme.textTheme.bodySmall,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: Constants.spacingMedium),
+                    Divider(
+                      color: borderColor,
+                      thickness: 1,
+                      height: 1,
+                      indent: Constants.paddingMedium,
+                      endIndent: Constants.paddingMedium,
+                    ),
+                    const SizedBox(height: Constants.spacingMedium),
+
+                    // About the client
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Constants.paddingMedium,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'About the client',
+                            style: theme.textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: Constants.spacingMedium),
+                          Row(
+                            children: [
+                              Container(
+                                width: Constants.size35,
+                                height: Constants.size35,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: surfaceColor,
+                                  border: Border.all(
+                                    color: borderColor,
+                                    width: 1,
+                                  ),
+                                ),
+                                child: ClipOval(
+                                  child: Image.asset(
+                                    Assets.rabbitAvatar,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: Constants.spacingSmall),
+                              Text(
+                                '${jobOffer.user.firstName} ${jobOffer.user.lastName}',
+                                style: theme.textTheme.bodySmall,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: Constants.spacingSmall),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.verified_user_outlined,
+                                size: Constants.iconSizeExtraSmall,
+                                color: AppColors.success,
+                              ),
+                              const SizedBox(
+                                width: Constants.spacingExtraSmall,
+                              ),
+                              Text(
+                                'Verified phone number',
+                                style: theme.textTheme.bodySmall,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: Constants.spacingSmall),
+                          Text(
+                            '10 jobs posted',
+                            style: theme.textTheme.bodySmall,
+                          ),
+                          const SizedBox(height: Constants.spacingSmall),
+                          Text(
+                            jobOffer.user.residence,
+                            style: theme.textTheme.bodySmall,
+                          ),
+                          const SizedBox(height: Constants.spacingSmall),
+                          Text(
+                            'Member since ${AppFunction.getDate(jobOffer.user.createdAt)}',
+                            style: theme.textTheme.bodySmall,
+                          ),
+                          const SizedBox(height: Constants.spacingLarge),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            } else if (state is JobsRequestFailure) {
+              return ServerFailureScreen(
+                onRetry: () {
+                  BlocProvider.of<JobsBloc>(
+                    context,
+                  ).add(JobsGetJobOfferDetailRequested(id: id));
+                },
+                message: state.message,
+              );
+            } else {
+              return const ShimmerJobDetailIndicator();
+            }
+          },
         ),
       ),
     );
