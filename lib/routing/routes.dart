@@ -10,15 +10,16 @@ enum Routes {
   // ------------- HOME (Job offers) ----------------
   jobs('/'),
   jobCategoryViewAll('job-category-view-all'),
-  jobOfferDetail('job-offer-detail'),
-  postJobApplicant('post-job-applicant'),
-  postJobOffer('post-job-offer'),
-  postTrainingCenter('post-training-center'),
-  postExpertExecutive('post-expert-executive'),
+  jobOfferDetail('job-offer-detail/:id'),
   // ------------- HOME (Job offers) ----------------
 
   // ------------- POST ----------------
   post('/post'),
+  postJobApplicant('post-job-applicant'),
+  postJobOffer('post-job-offer'),
+  postSuccessful('post-successful/:id'),
+  postTrainingCenter('post-training-center'),
+  postExpertExecutive('post-expert-executive'),
   // ------------- POST ----------------
 
   // ------------- MY POST ----------------
