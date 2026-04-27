@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:kianja/core/shared/app_feature/data/datasources/app_shared_prefs.dart';
+import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/core/utils/input_formatters/phone_formatter.dart';
 
 abstract class AppFunction {
@@ -8,5 +11,149 @@ abstract class AppFunction {
       mask: mgMask,
     ).formatEditUpdate(TextEditingValue.empty, TextEditingValue(text: phone));
     return formatted.text;
+  }
+
+  static String getDate(String dateInput) {
+    if (dateInput.isEmpty) return '';
+
+    DateTime inputDate;
+    try {
+      inputDate = DateTime.parse(dateInput).toLocal();
+    } catch (e) {
+      return dateInput;
+    }
+
+    final String? lang = GetIt.instance<AppSharedPrefs>().get(Constants.lang);
+    final String currentLang = lang ?? 'en';
+
+    final int day = inputDate.day;
+    final int month = inputDate.month;
+    final int year = inputDate.year;
+
+    const List<String> frenchMonths = [
+      '',
+      'Janvier',
+      'Février',
+      'Mars',
+      'Avril',
+      'Mai',
+      'Juin',
+      'Juillet',
+      'Août',
+      'Septembre',
+      'Octobre',
+      'Novembre',
+      'Décembre',
+    ];
+
+    const List<String> englishMonths = [
+      '',
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+
+    const List<String> malagasyMonths = [
+      '',
+      'Janoary',
+      'Febroary',
+      'Martsa',
+      'Aprily',
+      'Mey',
+      'Jona',
+      'Jolay',
+      'Aogositra',
+      'Septambra',
+      'Oktobra',
+      'Novambra',
+      'Desambra',
+    ];
+
+    if (currentLang == 'fr') {
+      return '$day ${frenchMonths[month]} $year';
+    } else if (currentLang == 'mg') {
+      return '${malagasyMonths[month]} $day, $year';
+    } else {
+      return '${englishMonths[month]} $day, $year';
+    }
+  }
+
+  static String dateTimeCounter(String dateInput) {
+    DateTime inputDate;
+    try {
+      // Attempt to parse the input ISO string (e.g., "2025-02-03T12:52:31.000000Z")
+      inputDate = DateTime.parse(dateInput).toLocal();
+    } catch (e) {
+      // If parsing fails, return a default value.
+      return 'N/A';
+    }
+
+    final DateTime now = DateTime.now();
+    final Duration diff = now.difference(inputDate);
+
+    final int totalMinutes = diff.inMinutes;
+    final int totalHours = diff.inHours;
+    final int totalDays = diff.inDays;
+
+    // Less than 1 minute → À l'instant
+    if (totalMinutes < 1) {
+      return "À l'instant";
+    }
+
+    // Less than 1 hour → X minute(s)
+    if (totalHours < 1) {
+      return totalMinutes == 1 ? '1 minute' : '$totalMinutes minutes';
+    }
+
+    // Less than 24 hours → X heure(s)
+    if (totalDays < 1) {
+      return totalHours == 1 ? '1 heure' : '$totalHours heures';
+    }
+
+    // Yesterday
+    final DateTime yesterday = DateTime(now.year, now.month, now.day - 1);
+    final DateTime inputDay = DateTime(
+      inputDate.year,
+      inputDate.month,
+      inputDate.day,
+    );
+    if (inputDay == yesterday) {
+      return 'Hier';
+    }
+
+    // Less than 7 days → X jour(s)
+    if (totalDays < 7) {
+      return '$totalDays jours';
+    }
+
+    // Compute full months difference for finer bucketing
+    int monthsDiff =
+        (now.year - inputDate.year) * 12 + (now.month - inputDate.month);
+    // Adjust if the day hasn't been reached yet this month
+    if (now.day < inputDate.day) monthsDiff--;
+
+    // Less than 4 weeks (≈ 1 month) → X semaine(s)
+    if (monthsDiff < 1) {
+      final int weeks = (totalDays / 7).floor();
+      return weeks == 1 ? '1 semaine' : '$weeks semaines';
+    }
+
+    // Less than 12 months → X mois
+    if (monthsDiff < 12) {
+      return monthsDiff == 1 ? '1 mois' : '$monthsDiff mois';
+    }
+
+    // 12+ months → X an(s)
+    final int years = (monthsDiff / 12).floor();
+    return years == 1 ? '1 an' : '$years ans';
   }
 }

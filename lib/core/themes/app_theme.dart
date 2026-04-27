@@ -198,7 +198,7 @@ abstract class AppTheme {
         headlineSmall: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w600,
-          color: AppColors.lightTextPrimary,
+          color: AppColors.darkTextPrimary,
         ),
         titleLarge: TextStyle(
           fontSize: 18,

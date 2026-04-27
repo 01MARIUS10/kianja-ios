@@ -5,6 +5,7 @@ import 'package:kianja/core/shared/app_feature/app_di.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/account/account_di.dart';
 import 'package:kianja/features/auth/auth_di.dart';
+import 'package:kianja/features/jobs/jobs_di.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Global service locator instance.
@@ -29,4 +30,7 @@ Future<void> initDependencies() async {
 
   // Account
   await initAccountDependencies(getIt, dioClient);
+
+  // Jobs
+  await initJobsDependencies(getIt, dioClient);
 }
