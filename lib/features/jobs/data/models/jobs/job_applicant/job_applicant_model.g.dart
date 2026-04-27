@@ -8,34 +8,28 @@ part of 'job_applicant_model.dart';
 
 _JobApplicantModel _$JobApplicantModelFromJson(Map<String, dynamic> json) =>
     _JobApplicantModel(
-      id: (json['id'] as num).toInt(),
-      userId: (json['userId'] as num).toInt(),
-      userFirstName: json['userFirstName'] as String,
-      userLastName: json['userLastName'] as String,
-      userPhoto: json['userPhoto'] as String,
-      title: json['title'] as String,
-      motivation: json['motivation'] as String,
+      id: (json['id'] as num?)?.toInt() ?? -1,
+      title: json['title'] as String? ?? '',
+      motivation: json['motivation'] as String? ?? '',
+      location: json['location'] as String? ?? '',
+      gender: json['gender'] as String? ?? '',
+      pdfUrl: json['pdf_url'] as String? ?? '',
+      createdAt: json['created_at'] as String? ?? '',
+      user: UserModel.fromJson(json['user'] as Map<String, dynamic>),
       categories: (json['categories'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
-      location: json['location'] as String,
-      gender: json['gender'] as String,
-      pdfUrl: json['pdfUrl'] as String,
-      createdAt: json['createdAt'] as String,
     );
 
 Map<String, dynamic> _$JobApplicantModelToJson(_JobApplicantModel instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'userId': instance.userId,
-      'userFirstName': instance.userFirstName,
-      'userLastName': instance.userLastName,
-      'userPhoto': instance.userPhoto,
       'title': instance.title,
       'motivation': instance.motivation,
-      'categories': instance.categories,
       'location': instance.location,
       'gender': instance.gender,
-      'pdfUrl': instance.pdfUrl,
-      'createdAt': instance.createdAt,
+      'pdf_url': instance.pdfUrl,
+      'created_at': instance.createdAt,
+      'user': instance.user,
+      'categories': instance.categories,
     };

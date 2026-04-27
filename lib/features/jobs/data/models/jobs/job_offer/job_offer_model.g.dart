@@ -8,38 +8,42 @@ part of 'job_offer_model.dart';
 
 _JobOfferModel _$JobOfferModelFromJson(Map<String, dynamic> json) =>
     _JobOfferModel(
-      id: (json['id'] as num).toInt(),
-      userId: (json['userId'] as num).toInt(),
-      userFirstName: json['userFirstName'] as String,
-      userLastName: json['userLastName'] as String,
-      userPhoto: json['userPhoto'] as String,
-      title: json['title'] as String,
-      imageUrl: json['imageUrl'] as String,
-      description: json['description'] as String,
-      categories: (json['categories'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
-      location: json['location'] as String,
-      gender: json['gender'] as String,
-      actor: json['actor'] as String,
-      limitDate: json['limitDate'] as String,
-      createdAt: json['createdAt'] as String,
+      id: (json['id'] as num?)?.toInt() ?? -1,
+      title: json['title'] as String? ?? '',
+      imageUrl: json['image_path'] as String? ?? '',
+      description: json['description'] as String? ?? '',
+      categories:
+          (json['categories'] as List<dynamic>?)
+              ?.map((e) => JobCategoryModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      location: json['location'] == null
+          ? null
+          : JobLocationModel.fromJson(json['location'] as Map<String, dynamic>),
+      gender: json['gender'] == null
+          ? null
+          : JobGenderModel.fromJson(json['gender'] as Map<String, dynamic>),
+      actor: json['actor'] == null
+          ? null
+          : JobActorModel.fromJson(json['actor'] as Map<String, dynamic>),
+      dateLimit: json['date_limit'] as String? ?? '',
+      status: json['status'] as String? ?? '',
+      user: UserModel.fromJson(json['user'] as Map<String, dynamic>),
+      createdAt: json['created_at'] as String? ?? '',
     );
 
 Map<String, dynamic> _$JobOfferModelToJson(_JobOfferModel instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'userId': instance.userId,
-      'userFirstName': instance.userFirstName,
-      'userLastName': instance.userLastName,
-      'userPhoto': instance.userPhoto,
       'title': instance.title,
-      'imageUrl': instance.imageUrl,
+      'image_path': instance.imageUrl,
       'description': instance.description,
       'categories': instance.categories,
       'location': instance.location,
       'gender': instance.gender,
       'actor': instance.actor,
-      'limitDate': instance.limitDate,
-      'createdAt': instance.createdAt,
+      'date_limit': instance.dateLimit,
+      'status': instance.status,
+      'user': instance.user,
+      'created_at': instance.createdAt,
     };
