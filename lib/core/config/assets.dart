@@ -3,6 +3,7 @@ abstract final class Assets {
   static const langIllustration = 'assets/images/illustrations/languages.svg';
   static const noConnectionIllustration =
       'assets/images/illustrations/no_connection.svg';
+  static const serverIllustration = 'assets/images/illustrations/server.svg';
 
   // Logos
   static const logoKianja = 'assets/images/logo/ic_kianja.png';
