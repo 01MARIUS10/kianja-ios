@@ -57,8 +57,6 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
     _emailController.text = user.email;
     _phoneController.text = AppFunction.formatPhoneNumber(user.phone);
     _residenceController.text = user.residence;
-    _genreController.text = user.genre;
-    _pseudoController.text = user.pseudo;
   }
 
   @override
