@@ -20,17 +20,6 @@ abstract class UserModel with _$UserModel implements User {
 
   const UserModel._();
 
-  factory UserModel.empty() => const UserModel(
-        id: -1,
-        firstName: '',
-        lastName: '',
-        photoUrl: '',
-        phone: '',
-        email: '',
-        residence: '',
-        createdAt: '',
-      );
-
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);
 }
