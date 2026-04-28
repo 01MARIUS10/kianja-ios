@@ -42,7 +42,7 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
         '/api/documentation/customList?Category=1&Location=1&Gender=1&Actor=1&Domain=1&AbonnementType=1&AbonnementDuration=1',
       );
       final List<dynamic> result = response.data;
-      return JobFeaturesModel.fromJson(result[0] as Map<String, dynamic>);
+      return JobFeaturesModel.fromJson(result.first);
     });
   }
 

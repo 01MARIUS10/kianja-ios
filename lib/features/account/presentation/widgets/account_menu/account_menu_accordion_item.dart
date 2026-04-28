@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
 import 'package:kianja/core/themes/app_colors.dart';
-import 'package:kianja/core/themes/app_mode.dart';
+import 'package:kianja/core/themes/mode/app_mode.dart';
 import 'package:kianja/core/utils/constants.dart';
 
 /// The three theme options presented in the accordion.

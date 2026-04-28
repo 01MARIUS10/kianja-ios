@@ -17,6 +17,7 @@ import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/features/account/domain/usecases/upate_user_info/update_user_info_params.dart';
 import 'package:kianja/features/account/presentation/bloc/account_bloc.dart';
 import 'package:kianja/features/account/presentation/widgets/camera_image_picker.dart';
 import 'package:kianja/routing/routes.dart';
@@ -38,7 +39,6 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
   final _residenceController = TextEditingController();
-  final _genreController = TextEditingController();
   final _pseudoController = TextEditingController();
 
   File? _pickedImage;
@@ -66,7 +66,6 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
     _emailController.dispose();
     _phoneController.dispose();
     _residenceController.dispose();
-    _genreController.dispose();
     _pseudoController.dispose();
     super.dispose();
   }
@@ -77,7 +76,6 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
     final lastName = _lastNameController.text.trim();
     final email = _emailController.text.trim();
     final residence = _residenceController.text.trim();
-    final genre = _genreController.text.trim();
     final pseudo = _pseudoController.text.trim();
 
     if (firstName.isEmpty || lastName.isEmpty) {
@@ -88,13 +86,14 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
 
     BlocProvider.of<AccountBloc>(context).add(
       AccountUpdateUserInfoRequested(
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        residence: residence,
-        genre: genre,
-        pseudo: pseudo,
-        photo: '',
+        updateUserInfoParams: UpdateUserInfoParams(
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          residence: residence,
+          pseudo: pseudo,
+          photo: '',
+        ),
       ),
     );
   }

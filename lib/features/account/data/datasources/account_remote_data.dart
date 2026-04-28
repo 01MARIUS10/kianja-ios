@@ -2,21 +2,16 @@ import 'package:dio/dio.dart';
 import 'package:kianja/core/services/service_helper.dart';
 import 'package:kianja/core/shared/app_feature/data/models/user/user_model.dart';
 import 'package:kianja/core/utils/app_debug.dart';
+import 'package:kianja/features/account/data/models/input/change_password/change_password_input_model.dart';
+import 'package:kianja/features/account/data/models/input/update_user_info/update_user_info_input_model.dart';
 
 abstract interface class AccountRemoteDataSource {
   Future<void> logout();
   Future<void> changePassword({
-    required String oldPassword,
-    required String newPassword,
+    required ChangePasswordInputModel changePasswordInputModel,
   });
   Future<UserModel> updateUserInfo({
-    required String firstName,
-    required String lastName,
-    required String email,
-    required String photo,
-    required String genre,
-    required String pseudo,
-    required String residence,
+    required UpdateUserInfoInputModel updateUserInfoInputModel,
   });
 }
 
@@ -33,61 +28,30 @@ class AccountRemoteDataSourceImpl implements AccountRemoteDataSource {
 
   @override
   Future<void> changePassword({
-    required String oldPassword,
-    required String newPassword,
+    required ChangePasswordInputModel changePasswordInputModel,
   }) async {
     return requestHandler(() async {
       await dio.post(
         '/api/auth/change-password',
-        data: {'old_password': oldPassword, 'new_password': newPassword},
+        data: changePasswordInputModel.toJson(),
       );
     });
   }
 
   @override
   Future<UserModel> updateUserInfo({
-    required String firstName,
-    required String lastName,
-    required String email,
-    required String photo,
-    required String genre,
-    required String pseudo,
-    required String residence,
+    required UpdateUserInfoInputModel updateUserInfoInputModel,
   }) async {
+    AppDebug.showPrint('User data ${updateUserInfoInputModel.toJson()}');
+
     return requestHandler(() async {
       final response = await dio.put(
         '/api/profil',
-        data: {
-          'first_name': firstName,
-          'last_name': lastName,
-          'photo': photo,
-          'genre': genre,
-          'pseudo': pseudo,
-          'email': email,
-          'lieu_residence': residence,
-        },
+        data: updateUserInfoInputModel.toJson(),
       );
-
       final result = jsonHandler(response.data);
       AppDebug.showPrint('User data $result');
-      final Map<String, dynamic> profil = result['profil'];
-      // final profilEmail = profil['email'];
-      final profilPhone = profil['phone'];
-      // final profilGenre = profil['genre'];
-      // final profilPseudo = profil['pseudo'];
-      // final profilResidence = profil['lieu_residence'];
-
-      return UserModel.fromJson({
-        'id': result['user_id'] ?? 0,
-        'firstName': result['first_name'] ?? '',
-        'lastName': result['last_name'] ?? '',
-        'photoUrl': result['photo'] ?? '',
-        'email': email,
-        'phone': profilPhone,
-        'genre': genre,
-        'pseudo': pseudo,
-        'residence': residence,
-      });
+      return UserModel.fromJson(result);
     });
   }
 }

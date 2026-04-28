@@ -1,6 +1,6 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:kianja/core/errors/failures.dart';
-import 'package:kianja/core/utils/usecase.dart';
+import 'package:kianja/core/utils/usecase/usecase.dart';
 import 'package:kianja/features/auth/domain/repositories/auth_repository.dart';
 
 class SignUpUseCase implements UseCase<String, SignUpParams> {
