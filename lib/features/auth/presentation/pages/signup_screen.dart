@@ -15,6 +15,7 @@ import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/features/auth/domain/usecases/signup/signup_params.dart';
 import 'package:kianja/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:kianja/features/auth/presentation/widgets/gender_field.dart';
 import 'package:kianja/routing/routes.dart';
@@ -219,18 +220,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 );
                                 BlocProvider.of<AuthBloc>(context).add(
                                   AuthSignUpRequested(
-                                    firstName: _firstNameController.text,
-                                    lastName: _lastNameController.text,
-                                    genre: _genderController.text,
-                                    phone: _fullPhone,
-                                    birthDate:
-                                        int.tryParse(
-                                          _birthDateController.text,
-                                        ) ??
-                                        0,
-                                    residence: _residenceController.text,
-                                    email: _emailController.text,
-                                    password: _passwordController.text,
+                                    signUpParams: SignUpParams(
+                                      firstName: _firstNameController.text,
+                                      lastName: _lastNameController.text,
+                                      genre: _genderController.text,
+                                      phone: _fullPhone,
+                                      birthDate:
+                                          int.tryParse(
+                                            _birthDateController.text,
+                                          ) ??
+                                          0,
+                                      residence: _residenceController.text,
+                                      email: _emailController.text,
+                                      password: _passwordController.text,
+                                    ),
                                   ),
                                 );
                               },

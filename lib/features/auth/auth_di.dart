@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:kianja/features/auth/data/datasources/auth_remote_data.dart';
+import 'package:kianja/features/auth/data/datasources/remote/auth_remote_data.dart';
+import 'package:kianja/features/auth/data/datasources/remote/auth_remote_data_impl.dart';
 import 'package:kianja/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:kianja/features/auth/domain/repositories/auth_repository.dart';
-import 'package:kianja/features/auth/domain/usecases/signin_usecase.dart';
-import 'package:kianja/features/auth/domain/usecases/signup_usecase.dart';
+import 'package:kianja/features/auth/domain/usecases/sigin/signin_usecase.dart';
+import 'package:kianja/features/auth/domain/usecases/signup/signup_usecase.dart';
 import 'package:kianja/features/auth/presentation/bloc/auth_bloc.dart';
 
 Future<void> initAuthDependencies(GetIt getIt, Dio dio) async {

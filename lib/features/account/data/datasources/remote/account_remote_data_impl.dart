@@ -1,19 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:kianja/core/services/api/api_endpoint.dart';
 import 'package:kianja/core/services/service_helper.dart';
 import 'package:kianja/core/shared/app_feature/data/models/user/user_model.dart';
 import 'package:kianja/core/utils/app_debug.dart';
+import 'package:kianja/features/account/data/datasources/remote/account_remote_data.dart';
 import 'package:kianja/features/account/data/models/input/change_password/change_password_input_model.dart';
 import 'package:kianja/features/account/data/models/input/update_user_info/update_user_info_input_model.dart';
-
-abstract interface class AccountRemoteDataSource {
-  Future<void> logout();
-  Future<void> changePassword({
-    required ChangePasswordInputModel changePasswordInputModel,
-  });
-  Future<UserModel> updateUserInfo({
-    required UpdateUserInfoInputModel updateUserInfoInputModel,
-  });
-}
 
 class AccountRemoteDataSourceImpl implements AccountRemoteDataSource {
   const AccountRemoteDataSourceImpl({required this.dio});
@@ -22,7 +14,7 @@ class AccountRemoteDataSourceImpl implements AccountRemoteDataSource {
   @override
   Future<void> logout() async {
     return requestHandler(() async {
-      await dio.post('/api/auth/logout');
+      await dio.post(ApiEndpoint.logout.path);
     });
   }
 
@@ -32,7 +24,7 @@ class AccountRemoteDataSourceImpl implements AccountRemoteDataSource {
   }) async {
     return requestHandler(() async {
       await dio.post(
-        '/api/auth/change-password',
+        ApiEndpoint.changePassword.path,
         data: changePasswordInputModel.toJson(),
       );
     });
@@ -46,7 +38,7 @@ class AccountRemoteDataSourceImpl implements AccountRemoteDataSource {
 
     return requestHandler(() async {
       final response = await dio.put(
-        '/api/profil',
+        ApiEndpoint.profile.path,
         data: updateUserInfoInputModel.toJson(),
       );
       final result = jsonHandler(response.data);

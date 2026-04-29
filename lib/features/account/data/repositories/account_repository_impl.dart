@@ -5,7 +5,7 @@ import 'package:kianja/core/services/service_helper.dart';
 import 'package:kianja/core/shared/app_feature/data/datasources/app_shared_prefs.dart';
 import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
 import 'package:kianja/core/utils/constants.dart';
-import 'package:kianja/features/account/data/datasources/account_remote_data.dart';
+import 'package:kianja/features/account/data/datasources/remote/account_remote_data.dart';
 import 'package:kianja/features/account/data/models/input/change_password/change_password_input_model.dart';
 import 'package:kianja/features/account/data/models/input/update_user_info/update_user_info_input_model.dart';
 import 'package:kianja/features/account/domain/repositories/account_repository.dart';
