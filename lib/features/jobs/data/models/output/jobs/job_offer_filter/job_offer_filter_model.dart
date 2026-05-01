@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:kianja/features/jobs/data/models/jobs/job_offer/job_offer_model.dart';
+import 'package:kianja/features/jobs/data/models/output/jobs/job_offer/job_offer_model.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer_filter.dart';
 
 part 'job_offer_filter_model.freezed.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
@@ -9,6 +10,7 @@ import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
+import 'package:kianja/features/jobs/presentation/widgets/enum/width_view_enum.dart';
 import 'package:kianja/features/jobs/presentation/widgets/item/card/job_offer_card.dart';
 import 'package:kianja/routing/routes.dart';
 
@@ -40,41 +42,35 @@ class JobCategoryViewAllScreen extends StatelessWidget {
           builder: (context, state) {
             if (state is JobsViewAllFetchSuccess) {
               final jobOfferList = state.jobOffers;
-              return SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(height: Constants.spacingMedium),
-                    GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Constants.paddingMedium,
-                      ),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: Constants.spacingSmall,
-                            mainAxisSpacing: Constants.spacingMedium,
-                            childAspectRatio: 0.74,
-                          ),
-                      itemCount: jobOfferList.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            context.pushNamed(
-                              Routes.jobOfferDetail.name,
-                              pathParameters: {
-                                'id': jobOfferList[index].id.toString(),
-                              },
-                            );
+              return AlignedGridView.count(
+                padding: const EdgeInsets.symmetric(
+                  vertical: Constants.paddingMedium,
+                  horizontal: Constants.paddingMedium,
+                ),
+                addAutomaticKeepAlives: false,
+                crossAxisCount: 2,
+                crossAxisSpacing: Constants.spacingSmall,
+                mainAxisSpacing: Constants.spacingMedium,
+                itemCount: jobOfferList.length,
+                itemBuilder: (context, index) {
+                  return Align(
+                    alignment: Alignment.topLeft,
+                    child: InkWell(
+                      onTap: () {
+                        context.pushNamed(
+                          Routes.jobOfferDetail.name,
+                          pathParameters: {
+                            'id': jobOfferList[index].id.toString(),
                           },
-                          child: JobOfferCard(jobOffer: jobOfferList[index]),
                         );
                       },
+                      child: JobOfferCard(
+                        jobOffer: jobOfferList[index],
+                        widthViewEnum: WidthViewEnum.grid,
+                      ),
                     ),
-                    const SizedBox(height: Constants.spacingMedium),
-                  ],
-                ),
+                  );
+                },
               );
             } else if (state is JobsRequestFailure) {
               if (state.message.contains('connection')) {

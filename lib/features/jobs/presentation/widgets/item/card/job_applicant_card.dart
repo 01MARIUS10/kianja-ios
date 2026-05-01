@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
 import 'package:kianja/core/shared/widgets/avatar/circle_user_avatar_detail.dart';
 import 'package:kianja/core/themes/app_colors.dart';
+import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
 
 class JobApplicantCard extends StatelessWidget {
-  const JobApplicantCard({super.key});
-  // final JobOffer jobOffer;
+  const JobApplicantCard({super.key, required this.jobApplicant});
+  final JobApplicant jobApplicant;
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +31,9 @@ class JobApplicantCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Je cherche un emploi en tant que développeur web',
+                  jobApplicant.title,
                   style: theme.textTheme.bodySmall?.copyWith(height: 1.2),
-                  maxLines: 3,
+                  maxLines: 6,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: Constants.spacingSmall),
@@ -50,7 +51,7 @@ class JobApplicantCard extends StatelessWidget {
                     const SizedBox(width: Constants.spacingExtraSmall),
                     Expanded(
                       child: Text(
-                        'Antananarivo',
+                        jobApplicant.location.name,
                         style: theme.textTheme.bodySmall,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -71,7 +72,7 @@ class JobApplicantCard extends StatelessWidget {
                     const SizedBox(width: Constants.spacingExtraSmall),
                     Expanded(
                       child: Text(
-                        'Informaticien',
+                        jobApplicant.category.name,
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: AppColors.success,
                         ),
@@ -87,14 +88,14 @@ class JobApplicantCard extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const CircleUserAvatarDetail(user: User.empty()),
+                    CircleUserAvatarDetail(user: jobApplicant.user),
                     const SizedBox(width: Constants.spacingSmall),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Full Name',
+                            '${jobApplicant.user.firstName} ${jobApplicant.user.lastName}',
                             style: theme.textTheme.bodySmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -102,7 +103,7 @@ class JobApplicantCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            '• 2 jours',
+                            '• ${AppFunction.dateTimeCounter(jobApplicant.createdAt)}',
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: isDark
                                   ? AppColors.darkTextSecondary

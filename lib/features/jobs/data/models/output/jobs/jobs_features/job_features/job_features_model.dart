@@ -1,11 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:kianja/features/jobs/data/models/jobs/jobs_features/job_abonnement_duration/job_abonnement_duration_model.dart';
-import 'package:kianja/features/jobs/data/models/jobs/jobs_features/job_abonnement_type/job_abonnement_type_model.dart';
-import 'package:kianja/features/jobs/data/models/jobs/jobs_features/job_actor/job_actor_model.dart';
-import 'package:kianja/features/jobs/data/models/jobs/jobs_features/job_category/job_category_model.dart';
-import 'package:kianja/features/jobs/data/models/jobs/jobs_features/job_domain/job_domain_model.dart';
-import 'package:kianja/features/jobs/data/models/jobs/jobs_features/job_gender/job_gender_model.dart';
-import 'package:kianja/features/jobs/data/models/jobs/jobs_features/job_location/job_location_model.dart';
+import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_abonnement_duration/job_abonnement_duration_model.dart';
+import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_abonnement_type/job_abonnement_type_model.dart';
+import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_actor/job_actor_model.dart';
+import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_category/job_category_model.dart';
+import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_domain/job_domain_model.dart';
+import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_gender/job_gender_model.dart';
+import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_location/job_location_model.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
 
 part 'job_features_model.freezed.dart';

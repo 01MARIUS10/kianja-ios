@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
+import 'package:kianja/features/jobs/presentation/widgets/category/padding_separator.dart';
 import 'package:kianja/features/jobs/presentation/widgets/item/card/job_applicant_card.dart';
+import 'package:kianja/routing/routes.dart';
 
-class JobTemplateHorizontalSection extends StatelessWidget {
-  const JobTemplateHorizontalSection({
+class JobApplicantsHorizontalSection extends StatelessWidget {
+  const JobApplicantsHorizontalSection({
     super.key,
     required this.category,
-    required this.itemCount,
+    required this.query,
+    required this.jobApplicants,
   });
   final String category;
-  final int itemCount;
+  final String query;
+  final List<JobApplicant> jobApplicants;
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +44,10 @@ class JobTemplateHorizontalSection extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  // context.goNamed(
-                  //   Routes.jobCategoryViewAll.name,
-                  //   extra: {'title': category, 'query': 0},
-                  // );
+                  context.goNamed(
+                    Routes.jobApplicantViewAll.name,
+                    extra: {'title': category, 'query': query},
+                  );
                 },
                 child: Text(
                   'Voir plus',
@@ -56,28 +62,30 @@ class JobTemplateHorizontalSection extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(
-          height: 150,
-          child: ListView.separated(
-            shrinkWrap: true,
-            padding: const EdgeInsets.symmetric(
-              horizontal: Constants.paddingMedium,
-            ),
-            scrollDirection: Axis.horizontal,
-            itemCount: itemCount,
-            separatorBuilder: (context, index) =>
-                const SizedBox(width: Constants.spacingSmall),
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  // context.goNamed(
-                  //   Routes.jobOfferDetail.name,
-                  //   pathParameters: {'id': index.toString()},
-                  // );
-                },
-                child: const JobApplicantCard(),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(
+            horizontal: Constants.paddingMedium,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(jobApplicants.length, (index) {
+              return PaddingSeparator(
+                index: index,
+                itemCount: jobApplicants.length,
+                child: InkWell(
+                  onTap: () {
+                    context.goNamed(
+                      Routes.jobApplicantDetail.name,
+                      pathParameters: {
+                        'id': jobApplicants[index].id.toString(),
+                      },
+                    );
+                  },
+                  child: JobApplicantCard(jobApplicant: jobApplicants[index]),
+                ),
               );
-            },
+            }),
           ),
         ),
         const SizedBox(height: Constants.spacingMedium),

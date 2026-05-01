@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
+import 'package:kianja/features/jobs/presentation/widgets/category/padding_separator.dart';
+import 'package:kianja/features/jobs/presentation/widgets/enum/width_view_enum.dart';
 import 'package:kianja/features/jobs/presentation/widgets/item/card/job_offer_card.dart';
 import 'package:kianja/routing/routes.dart';
 
@@ -61,28 +63,31 @@ class JobCategoryHorizontalSection extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(
-          height: 218,
-          child: ListView.separated(
-            shrinkWrap: true,
-            padding: const EdgeInsets.symmetric(
-              horizontal: Constants.paddingMedium,
-            ),
-            scrollDirection: Axis.horizontal,
-            itemCount: jobOfferList.length,
-            separatorBuilder: (context, index) =>
-                const SizedBox(width: Constants.spacingSmall),
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  context.goNamed(
-                    Routes.jobOfferDetail.name,
-                    pathParameters: {'id': jobOfferList[index].id.toString()},
-                  );
-                },
-                child: JobOfferCard(jobOffer: jobOfferList[index]),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(
+            horizontal: Constants.paddingMedium,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(jobOfferList.length, (index) {
+              return PaddingSeparator(
+                index: index,
+                itemCount: jobOfferList.length,
+                child: InkWell(
+                  onTap: () {
+                    context.goNamed(
+                      Routes.jobOfferDetail.name,
+                      pathParameters: {'id': jobOfferList[index].id.toString()},
+                    );
+                  },
+                  child: JobOfferCard(
+                    jobOffer: jobOfferList[index],
+                    widthViewEnum: WidthViewEnum.list,
+                  ),
+                ),
               );
-            },
+            }),
           ),
         ),
         const SizedBox(height: Constants.spacingMedium),

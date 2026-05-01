@@ -4,11 +4,14 @@ import 'package:kianja/features/jobs/data/datasources/jobs_remote_data.dart';
 import 'package:kianja/features/jobs/data/repositories/jobs_repository_impl.dart';
 import 'package:kianja/features/jobs/domain/repositories/jobs_repository.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_offer_usecase.dart';
-import 'package:kianja/features/jobs/domain/usecases/get_job_featurs_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_detail_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_job_features_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_offer_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_offers_group_by_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/upload_image_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/upload_pdf_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/view_all_job_applicants/view_all_job_applicants_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_job_offers_usecase.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 
@@ -45,6 +48,15 @@ Future<void> initJobsDependencies(GetIt getIt, Dio dio) async {
   getIt.registerLazySingleton<GetJobFeaturesUseCase>(
     () => GetJobFeaturesUseCase(jobsRepository: getIt()),
   );
+  getIt.registerLazySingleton<GetJobApplicantZoneUseCase>(
+    () => GetJobApplicantZoneUseCase(jobsRepository: getIt()),
+  );
+  getIt.registerLazySingleton<ViewAllJobApplicantsUseCase>(
+    () => ViewAllJobApplicantsUseCase(jobsRepository: getIt()),
+  );
+  getIt.registerLazySingleton<GetJobApplicantDetailUseCase>(
+    () => GetJobApplicantDetailUseCase(jobsRepository: getIt()),
+  );
 
   // Bloc
   getIt.registerFactory(
@@ -52,6 +64,9 @@ Future<void> initJobsDependencies(GetIt getIt, Dio dio) async {
       getJobFeaturesUseCase: getIt(),
       getJobOffersGroupByUseCase: getIt(),
       viewAllJobOffersUseCase: getIt(),
+      getJobApplicantZoneUseCase: getIt(),
+      viewAllJobApplicantsUseCase: getIt(),
+      getJobApplicantDetailUseCase: getIt(),
       uploadPdfUseCase: getIt(),
       uploadImageUseCase: getIt(),
       createJobOfferUseCase: getIt(),

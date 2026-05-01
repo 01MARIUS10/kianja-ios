@@ -1,4 +1,7 @@
 import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_category.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_gender.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_location.dart';
 
 class JobApplicant {
   const JobApplicant({
@@ -6,32 +9,32 @@ class JobApplicant {
     required this.title,
     required this.motivation,
     required this.location,
-    required this.gender,
+    this.gender,
     required this.pdfUrl,
     required this.createdAt,
     required this.user,
-    required this.categories,
+    required this.category,
   });
 
   const JobApplicant.empty({
     this.id = -1,
     this.title = '',
     this.motivation = '',
-    this.location = '',
-    this.gender = '',
+    this.location = const JobLocation.empty(),
+    this.gender,
     this.pdfUrl = '',
     this.createdAt = '',
     this.user = const User.empty(),
-    this.categories = const [],
+    this.category = const JobCategory.empty(),
   });
 
   final int id;
   final String title;
   final String motivation;
-  final String location;
-  final String gender;
+  final JobLocation location;
+  final JobGender? gender;
   final String pdfUrl;
   final String createdAt;
   final User user;
-  final List<String> categories;
+  final JobCategory category;
 }
