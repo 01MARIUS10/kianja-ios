@@ -1,0 +1,1 @@
+enum JobCategoryEnum { jobOffer, jobApplicant }

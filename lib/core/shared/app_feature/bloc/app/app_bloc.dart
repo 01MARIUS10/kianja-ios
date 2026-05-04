@@ -6,10 +6,10 @@ import 'package:kianja/core/languages/languages.dart';
 import 'package:kianja/core/shared/app_feature/data/datasources/app_shared_prefs.dart';
 import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
 import 'package:kianja/core/shared/app_feature/domain/usecases/get_user_usecase.dart';
-import 'package:kianja/core/themes/app_mode.dart';
+import 'package:kianja/core/themes/mode/app_mode.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/constants.dart';
-import 'package:kianja/core/utils/usecase.dart';
+import 'package:kianja/core/utils/usecase/no_params.dart';
 
 part 'app_event.dart';
 part 'app_state.dart';

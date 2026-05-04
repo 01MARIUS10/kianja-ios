@@ -11,6 +11,7 @@ import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/features/auth/domain/usecases/sigin/signin_params.dart';
 import 'package:kianja/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:kianja/features/auth/presentation/widgets/forgot_password_bottom_sheet.dart';
 import 'package:kianja/routing/routes.dart';
@@ -26,7 +27,6 @@ class _SignInScreenState extends State<SignInScreen> {
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   String _fullPhone = '';
-  // bool _rememberMe = false;
   bool _rememberMe = true;
 
   @override
@@ -155,9 +155,11 @@ class _SignInScreenState extends State<SignInScreen> {
                             : () {
                                 BlocProvider.of<AuthBloc>(context).add(
                                   AuthSignInRequested(
-                                    phone: _fullPhone,
-                                    password: _passwordController.text,
-                                    stayLogged: _rememberMe,
+                                    signInParams: SignInParams(
+                                      phone: _fullPhone,
+                                      password: _passwordController.text,
+                                      stayLogged: _rememberMe,
+                                    ),
                                   ),
                                 );
                               },
@@ -194,7 +196,6 @@ class _SignInScreenState extends State<SignInScreen> {
                       style: theme.textTheme.bodyMedium,
                     ),
                     GestureDetector(
-                      // onTap: () => context.push(Routes.signUp),
                       onTap: () => context.pushNamed(Routes.signUp.name),
                       child: Text(
                         'SIGN UP',

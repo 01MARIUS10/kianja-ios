@@ -2,8 +2,10 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
 import 'package:kianja/core/utils/app_debug.dart';
-import 'package:kianja/features/auth/domain/usecases/signin_usecase.dart';
-import 'package:kianja/features/auth/domain/usecases/signup_usecase.dart';
+import 'package:kianja/features/auth/domain/usecases/sigin/signin_params.dart';
+import 'package:kianja/features/auth/domain/usecases/sigin/signin_usecase.dart';
+import 'package:kianja/features/auth/domain/usecases/signup/signup_params.dart';
+import 'package:kianja/features/auth/domain/usecases/signup/signup_usecase.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -26,13 +28,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(const AuthRequestInProgress());
-    final result = await _signInUseCase(
-      SignInParams(
-        phone: event.phone,
-        password: event.password,
-        stayLogged: event.stayLogged,
-      ),
-    );
+    final result = await _signInUseCase(event.signInParams);
     result.fold(
       (failure) => emit(AuthRequestFailure(message: failure.message)),
       (token) => emit(AuthSignInSuccess(token: token)),
@@ -44,18 +40,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(const AuthRequestInProgress());
-    final result = await _signUpUseCase(
-      SignUpParams(
-        firstName: event.firstName,
-        lastName: event.lastName,
-        genre: event.genre,
-        phone: event.phone,
-        birthDate: event.birthDate,
-        residence: event.residence,
-        email: event.email,
-        password: event.password,
-      ),
-    );
+    final result = await _signUpUseCase(event.signUpParams);
     result.fold(
       (failure) => emit(AuthRequestFailure(message: failure.message)),
       (token) => emit(AuthSignUpSuccess(token: token)),

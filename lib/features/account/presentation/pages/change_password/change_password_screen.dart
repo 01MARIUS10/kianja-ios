@@ -8,6 +8,7 @@ import 'package:kianja/core/shared/widgets/fields/password_input_field.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/features/account/domain/usecases/change_password/change_password_params.dart';
 import 'package:kianja/features/account/presentation/bloc/account_bloc.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
@@ -45,8 +46,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
     BlocProvider.of<AccountBloc>(context).add(
       AccountChangePasswordRequested(
-        oldPassword: _oldPasswordController.text,
-        newPassword: _newPasswordController.text,
+        changePasswordParams: ChangePasswordParams(
+          oldPassword: _oldPasswordController.text,
+          newPassword: _newPasswordController.text,
+        ),
       ),
     );
   }

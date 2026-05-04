@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
+import 'package:kianja/features/jobs/presentation/widgets/enum/width_view_enum.dart';
 import 'package:kianja/features/jobs/presentation/widgets/item/card/job_offer_card.dart';
 import 'package:kianja/routing/routes.dart';
 
@@ -19,7 +22,7 @@ class JobCategoryVerticalSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    // final isDark = Brightness.dark == Theme.of(context).brightness;
+    final isDark = Brightness.dark == Theme.of(context).brightness;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,45 +43,74 @@ class JobCategoryVerticalSection extends StatelessWidget {
                   fontSize: 18,
                 ),
               ),
-              //   if (itemCount > 0)
-              //     InkWell(
-              //       child: Text(
-              //         'Voir plus',
-              //         style: theme.textTheme.bodyMedium?.copyWith(
-              //           color: isDark
-              //               ? AppColors.darkTextSecondary
-              //               : AppColors.lightTextSecondary,
-              //           fontWeight: FontWeight.w500,
-              //         ),
-              //       ),
-              //     ),
             ],
           ),
         ),
-        GridView.builder(
+        AlignedGridView.count(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           padding: const EdgeInsets.symmetric(
             horizontal: Constants.paddingMedium,
           ),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: Constants.spacingSmall,
-            mainAxisSpacing: Constants.spacingMedium,
-            childAspectRatio: 0.74,
-          ),
+          crossAxisCount: 2,
+          crossAxisSpacing: Constants.spacingSmall,
+          mainAxisSpacing: Constants.spacingMedium,
           itemCount: jobOfferList.length,
           itemBuilder: (context, index) {
-            return InkWell(
-              onTap: () {
-                context.goNamed(
-                  Routes.jobOfferDetail.name,
-                  pathParameters: {'id': jobOfferList[index].id.toString()},
-                );
-              },
-              child: JobOfferCard(jobOffer: jobOfferList[index]),
+            return Align(
+              alignment: Alignment.topLeft,
+              child: InkWell(
+                onTap: () {
+                  context.goNamed(
+                    Routes.jobOfferDetail.name,
+                    pathParameters: {'id': jobOfferList[index].id.toString()},
+                  );
+                },
+                child: JobOfferCard(
+                  jobOffer: jobOfferList[index],
+                  widthViewEnum: WidthViewEnum.grid,
+                ),
+              ),
             );
           },
+        ),
+        const SizedBox(height: Constants.spacingSmall),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(
+            horizontal: Constants.paddingMedium,
+          ),
+          child: ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.all<Color>(
+                isDark ? AppColors.darkSurface : AppColors.lightSurface,
+              ),
+              shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                    Constants.borderRadiusMedium,
+                  ),
+                  side: BorderSide(
+                    color: isDark
+                        ? AppColors.darkBorder
+                        : AppColors.lightBorder,
+                  ),
+                ),
+              ),
+            ),
+            onPressed: () {
+              context.goNamed(
+                Routes.jobCategoryViewAll.name,
+                extra: {'title': category, 'query': query},
+              );
+            },
+            child: Text(
+              'Voir plus',
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
         ),
         const SizedBox(height: Constants.spacingMedium),
       ],

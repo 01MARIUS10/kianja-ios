@@ -1,10 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
-import 'package:kianja/core/utils/usecase.dart';
-import 'package:kianja/features/account/domain/usecases/change_password_usecase.dart';
+import 'package:kianja/core/utils/usecase/no_params.dart';
+import 'package:kianja/features/account/domain/usecases/change_password/change_password_params.dart';
+import 'package:kianja/features/account/domain/usecases/change_password/change_password_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/logout_usecase.dart';
-import 'package:kianja/features/account/domain/usecases/update_user_info_usecase.dart';
+import 'package:kianja/features/account/domain/usecases/upate_user_info/update_user_info_params.dart';
+import 'package:kianja/features/account/domain/usecases/upate_user_info/update_user_info_usecase.dart';
 
 part 'account_event.dart';
 part 'account_state.dart';
@@ -44,12 +46,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     Emitter<AccountState> emit,
   ) async {
     emit(AccountRequestInProgress());
-    final result = await _changePasswordUseCase(
-      ChangePasswordParams(
-        oldPassword: event.oldPassword,
-        newPassword: event.newPassword,
-      ),
-    );
+    final result = await _changePasswordUseCase(event.changePasswordParams);
     result.fold(
       (failure) => emit(AccountRequestFailure(message: failure.message)),
       (_) => emit(
@@ -65,17 +62,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     Emitter<AccountState> emit,
   ) async {
     emit(AccountRequestInProgress());
-    final result = await _updateUserInfoUseCase(
-      UpdateUserInfoParams(
-        firstName: event.firstName,
-        lastName: event.lastName,
-        email: event.email,
-        photo: event.photo,
-        genre: event.genre,
-        pseudo: event.pseudo,
-        residence: event.residence,
-      ),
-    );
+    final result = await _updateUserInfoUseCase(event.updateUserInfoParams);
     result.fold(
       (failure) => emit(AccountRequestFailure(message: failure.message)),
       (user) => emit(AccountUpdateUserInfoSuccess(user: user)),

@@ -1,7 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/errors/failures.dart';
-import 'package:kianja/core/utils/usecase.dart';
+import 'package:kianja/core/utils/usecase/usecase.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_image.dart';
 import 'package:kianja/features/jobs/domain/repositories/jobs_repository.dart';
 

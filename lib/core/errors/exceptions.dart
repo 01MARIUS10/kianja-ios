@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 abstract class AppException extends Equatable implements Exception {
-  const AppException({required this.message, this.statusCode = 0});
+  const AppException({required this.message, this.statusCode = 500});
   final String message;
   final int statusCode;
 

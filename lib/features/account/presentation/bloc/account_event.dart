@@ -12,45 +12,17 @@ class AccountLogoutRequested extends AccountEvent {
 }
 
 class AccountChangePasswordRequested extends AccountEvent {
-  const AccountChangePasswordRequested({
-    required this.oldPassword,
-    required this.newPassword,
-  });
-
-  final String oldPassword;
-  final String newPassword;
+  const AccountChangePasswordRequested({required this.changePasswordParams});
+  final ChangePasswordParams changePasswordParams;
 
   @override
-  List<Object> get props => [oldPassword, newPassword];
+  List<Object> get props => [changePasswordParams];
 }
 
 class AccountUpdateUserInfoRequested extends AccountEvent {
-  const AccountUpdateUserInfoRequested({
-    required this.firstName,
-    required this.lastName,
-    required this.email,
-    required this.photo,
-    required this.genre,
-    required this.pseudo,
-    required this.residence,
-  });
-
-  final String firstName;
-  final String lastName;
-  final String email;
-  final String photo;
-  final String genre;
-  final String pseudo;
-  final String residence;
+  const AccountUpdateUserInfoRequested({required this.updateUserInfoParams});
+  final UpdateUserInfoParams updateUserInfoParams;
 
   @override
-  List<Object> get props => [
-    firstName,
-    lastName,
-    email,
-    photo,
-    genre,
-    pseudo,
-    residence,
-  ];
+  List<Object> get props => [updateUserInfoParams];
 }

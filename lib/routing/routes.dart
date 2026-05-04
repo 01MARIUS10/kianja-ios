@@ -13,13 +13,18 @@ enum Routes {
   jobOfferDetail('job-offer-detail/:id'),
   // ------------- HOME (Job offers) ----------------
 
+  // ------------- JOB APPLICANT ----------------
+  jobApplicantViewAll('job-applicant-view-all'),
+  jobApplicantDetail('job-applicant-detail/:id'),
+  // ------------- JOB APPLICANT ----------------
+
   // ------------- POST ----------------
   post('/post'),
-  postJobApplicant('post-job-applicant'),
-  postJobOffer('post-job-offer'),
-  postSuccessful('post-successful/:id'),
-  postTrainingCenter('post-training-center'),
-  postExpertExecutive('post-expert-executive'),
+  postJobApplicant('job-applicant'),
+  postJobOffer('job-offer'),
+  postSuccessful('successfully-posted/:id'),
+  postTrainingCenter('training-center'),
+  postExpertExecutive('expert-executive'),
   // ------------- POST ----------------
 
   // ------------- MY POST ----------------

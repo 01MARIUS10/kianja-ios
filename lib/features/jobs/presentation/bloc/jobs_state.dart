@@ -13,13 +13,22 @@ class JobsInitial extends JobsState {}
 /// A request is in flight.
 class JobsRequestInProgress extends JobsState {}
 
-/// [GetJobOffersGroupByUseCase] succeeded.
-class JobsGroupByTypeFetchSuccess extends JobsState {
-  const JobsGroupByTypeFetchSuccess({required this.jobOffersType});
-  final List<JobOfferFilter> jobOffersType;
+/// [ViewAllJobApplicantsUseCase] succeeded.
+class JobApplicantsViewAllFetchSuccess extends JobsState {
+  const JobApplicantsViewAllFetchSuccess({required this.jobApplicants});
+  final List<JobApplicant> jobApplicants;
 
   @override
-  List<Object> get props => [jobOffersType];
+  List<Object> get props => [jobApplicants];
+}
+
+/// [GetJobApplicantsZoneUseCase] succeeded.
+class JobApplicantsZoneFetchSuccess extends JobsState {
+  const JobApplicantsZoneFetchSuccess({required this.jobApplicantsZone});
+  final List<JobApplicantZone> jobApplicantsZone;
+
+  @override
+  List<Object> get props => [jobApplicantsZone];
 }
 
 /// [GetJobFeaturesUseCase] succeeded.
@@ -29,6 +38,33 @@ class JobFeaturesFetchSuccess extends JobsState {
 
   @override
   List<Object> get props => [jobFeatures];
+}
+
+/// [GetJobApplicantProfessionsUseCase] succeeded.
+class JobApplicantProfessionsFetchSuccess extends JobsState {
+  const JobApplicantProfessionsFetchSuccess({required this.jobCategories});
+  final List<JobCategory> jobCategories;
+
+  @override
+  List<Object> get props => [jobCategories];
+}
+
+/// [GetJobApplicantFiltersUseCase] succeeded.
+class JobApplicantFiltersFetchSuccess extends JobsState {
+  const JobApplicantFiltersFetchSuccess({required this.jobApplicantFilter});
+  final JobApplicantFilter jobApplicantFilter;
+
+  @override
+  List<Object> get props => [jobApplicantFilter];
+}
+
+/// [GetJobOffersGroupByUseCase] succeeded.
+class JobsGroupByTypeFetchSuccess extends JobsState {
+  const JobsGroupByTypeFetchSuccess({required this.jobOffersType});
+  final List<JobOfferFilter> jobOffersType;
+
+  @override
+  List<Object> get props => [jobOffersType];
 }
 
 /// [GetJobOffersGroupByUseCase] succeeded.
@@ -94,6 +130,15 @@ class JobsGetJobOfferDetailSuccess extends JobsState {
 
   @override
   List<Object> get props => [jobOffer];
+}
+
+/// [GetJobApplicantDetailUseCase] succeeded.
+class JobsGetJobApplicantDetailSuccess extends JobsState {
+  const JobsGetJobApplicantDetailSuccess({required this.jobApplicant});
+  final JobApplicant jobApplicant;
+
+  @override
+  List<Object> get props => [jobApplicant];
 }
 
 /// Any request failed.

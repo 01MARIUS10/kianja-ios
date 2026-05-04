@@ -18,4 +18,5 @@ abstract final class Assets {
 
   // Jobs
   static const hiring = 'assets/images/jobs/hiring.jpg';
+  static const pdf = 'assets/images/jobs/pdf.png';
 }

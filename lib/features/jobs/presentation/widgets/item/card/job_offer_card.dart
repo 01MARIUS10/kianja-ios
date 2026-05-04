@@ -8,10 +8,16 @@ import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
+import 'package:kianja/features/jobs/presentation/widgets/enum/width_view_enum.dart';
 
 class JobOfferCard extends StatelessWidget {
-  const JobOfferCard({super.key, required this.jobOffer});
+  const JobOfferCard({
+    super.key,
+    required this.jobOffer,
+    required this.widthViewEnum,
+  });
   final JobOffer jobOffer;
+  final WidthViewEnum widthViewEnum;
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +25,12 @@ class JobOfferCard extends StatelessWidget {
     final isDark = Brightness.dark == Theme.of(context).brightness;
 
     return Container(
-      width: 160,
+      width: widthViewEnum.width,
       decoration: BoxDecoration(
         color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
         borderRadius: BorderRadius.circular(Constants.borderRadiusSmall),
       ),
-      clipBehavior: Clip.antiAlias,
+      clipBehavior: Clip.hardEdge,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -55,12 +61,13 @@ class JobOfferCard extends StatelessWidget {
             padding: const EdgeInsets.all(Constants.paddingSmall),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 // Description Text
                 Text(
                   jobOffer.title,
                   style: theme.textTheme.bodySmall?.copyWith(height: 1.2),
-                  maxLines: 3,
+                  maxLines: 6,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: Constants.spacingSmall),
@@ -119,6 +126,7 @@ class JobOfferCard extends StatelessWidget {
                     const SizedBox(width: Constants.spacingSmall),
                     Expanded(
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(

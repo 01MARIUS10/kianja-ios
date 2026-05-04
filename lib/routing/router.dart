@@ -11,7 +11,9 @@ import 'package:kianja/features/account/presentation/pages/personal_info/update_
 import 'package:kianja/features/auth/presentation/pages/signin_screen.dart';
 import 'package:kianja/features/auth/presentation/pages/signup_screen.dart';
 import 'package:kianja/features/choose_lang/presentation/pages/choose_lang_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/details/job_applicant_detail_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/details/job_offer_detail_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/job_applicants_view_all_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/job_category_view_all_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/jobs_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_job_applicant_screen.dart';
@@ -140,6 +142,29 @@ abstract class AppRouter {
                         AppDebug.showPrint('title ${extra['title']}');
                         AppDebug.showPrint('query ${extra['query']}');
                         return JobCategoryViewAllScreen(
+                          title: extra['title'] ?? '',
+                          query: extra['query'] ?? '',
+                        );
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.jobApplicantDetail.name,
+                      path: Routes.jobApplicantDetail.path,
+                      builder: (context, state) {
+                        final params = state.pathParameters;
+                        return JobApplicantDetailScreen(
+                          id: int.parse(params['id'] ?? '0'),
+                        );
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.jobApplicantViewAll.name,
+                      path: Routes.jobApplicantViewAll.path,
+                      builder: (context, state) {
+                        final extra = state.extra as Map<String, String>? ?? {};
+                        AppDebug.showPrint('title ${extra['title']}');
+                        AppDebug.showPrint('query ${extra['query']}');
+                        return JobApplicantsViewAllScreen(
                           title: extra['title'] ?? '',
                           query: extra['query'] ?? '',
                         );

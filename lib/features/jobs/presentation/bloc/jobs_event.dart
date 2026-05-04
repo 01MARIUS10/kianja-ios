@@ -15,6 +15,22 @@ class JobFeaturesFetchRequested extends JobsEvent {
   List<Object> get props => [];
 }
 
+/// Fetch job applicant professions.
+class JobApplicantProfessionsFetchRequested extends JobsEvent {
+  const JobApplicantProfessionsFetchRequested();
+
+  @override
+  List<Object> get props => [];
+}
+
+/// Fetch job applicant filters.
+class JobApplicantFiltersFetchRequested extends JobsEvent {
+  const JobApplicantFiltersFetchRequested();
+
+  @override
+  List<Object> get props => [];
+}
+
 /// Fetch job offers grouped by [query] (e.g. category, actor type…).
 class JobsGroupByTypeFetchRequested extends JobsEvent {
   const JobsGroupByTypeFetchRequested({required this.query});
@@ -49,6 +65,26 @@ class JobsViewAllFetchRequested extends JobsEvent {
 
   @override
   List<Object> get props => [query];
+}
+
+/// Fetch job applicants by zone.
+class JobApplicantsZoneFetchRequested extends JobsEvent {
+  const JobApplicantsZoneFetchRequested({required this.getJobApplicantParams});
+  final GetJobApplicantParams getJobApplicantParams;
+
+  @override
+  List<Object> get props => [getJobApplicantParams];
+}
+
+/// Fetch the flat list of all job applicants matching [query].
+class JobApplicantsViewAllFetchRequested extends JobsEvent {
+  const JobApplicantsViewAllFetchRequested({
+    required this.viewAllJobApplicantsParams,
+  });
+  final ViewAllJobApplicantsParams viewAllJobApplicantsParams;
+
+  @override
+  List<Object> get props => [viewAllJobApplicantsParams];
 }
 
 /// Upload a PDF file.
@@ -109,6 +145,15 @@ class JobsCreateJobOfferRequested extends JobsEvent {
 /// Get a job offer detail.
 class JobsGetJobOfferDetailRequested extends JobsEvent {
   const JobsGetJobOfferDetailRequested({required this.id});
+  final int id;
+
+  @override
+  List<Object> get props => [id];
+}
+
+/// Get a job applicant detail.
+class JobsGetJobApplicantDetailRequested extends JobsEvent {
+  const JobsGetJobApplicantDetailRequested({required this.id});
   final int id;
 
   @override
