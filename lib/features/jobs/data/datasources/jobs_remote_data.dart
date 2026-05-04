@@ -6,17 +6,23 @@ import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/features/jobs/data/models/output/files/job_image/job_image_model.dart';
 import 'package:kianja/features/jobs/data/models/output/files/pdf_image/job_pdf_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_applicant/job_applicant_model.dart';
+import 'package:kianja/features/jobs/data/models/output/jobs/job_applicant_filter/job_applicant_filter_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_applicant_zone/job_applicant_zone_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_offer/job_offer_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_offer_filter/job_offer_filter_model.dart';
+import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_category/job_category_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_features/job_features_model.dart';
 
 abstract interface class JobsRemoteDataSource {
   Future<JobFeaturesModel> getJobFeatures();
+  Future<List<JobCategoryModel>> getJobApplicantProfessions();
+  Future<JobApplicantFilterModel> getJobApplicantFilters();
   Future<List<JobOfferFilterModel>> getJobOffersGroupBy({
     required String query,
   });
-  Future<List<JobApplicantZoneModel>> getJobApplicantsZone();
+  Future<List<JobApplicantZoneModel>> getJobApplicantsZone({
+    required String query,
+  });
   Future<List<JobOfferModel>> viewAllJobOffers({required String query});
   Future<List<JobApplicantModel>> viewAllJobApplicants({required String query});
   Future<JobImageModel> uploadJobImage({required XFile file});
@@ -48,6 +54,27 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
       );
       final List<dynamic> result = response.data;
       return JobFeaturesModel.fromJson(result.first);
+    });
+  }
+
+  @override
+  Future<List<JobCategoryModel>> getJobApplicantProfessions() async {
+    return requestHandler(() async {
+      final response = await dio.get('/api/job-applicants/proffessions');
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      final Map<String, dynamic> content = result['Contenu'];
+      return (content['categories'] as List<dynamic>)
+          .map((e) => JobCategoryModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    });
+  }
+
+  @override
+  Future<JobApplicantFilterModel> getJobApplicantFilters() async {
+    return requestHandler(() async {
+      final response = await dio.get('/api/job-applicants/filtres');
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      return JobApplicantFilterModel.fromJson(result['Contenu']);
     });
   }
 
@@ -84,9 +111,14 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
   }
 
   @override
-  Future<List<JobApplicantZoneModel>> getJobApplicantsZone() async {
+  Future<List<JobApplicantZoneModel>> getJobApplicantsZone({
+    required String query,
+  }) async {
     return requestHandler(() async {
-      final response = await dio.get('/api/job-applicants/zone');
+      final response = await dio.get(
+        '/api/job-applicants',
+        queryParameters: {'groupBy': query},
+      );
       final result = jsonHandler(response.data);
       AppDebug.showPrint(result['Contenu'].toString());
       return (result['Contenu'] as List<dynamic>)
@@ -100,7 +132,7 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
     required String query,
   }) async {
     return requestHandler(() async {
-      final response = await dio.get('/api/job-applicants/zone?$query');
+      final response = await dio.get('/api/job-applicants?$query');
       final result = jsonHandler(response.data);
       final Map<String, dynamic> contenu =
           result['Contenu'] as Map<String, dynamic>;

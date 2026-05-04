@@ -258,13 +258,6 @@ class JobApplicantDetailScreen extends StatelessWidget {
                             ],
                           ),
                           const SizedBox(height: Constants.spacingSmall),
-                          if (jobApplicant.gender != null) ...[
-                            Text(
-                              jobApplicant.gender!.name,
-                              style: theme.textTheme.bodySmall,
-                            ),
-                            const SizedBox(height: Constants.spacingSmall),
-                          ],
                           Text(
                             jobApplicant.user.residence,
                             style: theme.textTheme.bodySmall,

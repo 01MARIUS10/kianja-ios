@@ -40,6 +40,24 @@ class JobFeaturesFetchSuccess extends JobsState {
   List<Object> get props => [jobFeatures];
 }
 
+/// [GetJobApplicantProfessionsUseCase] succeeded.
+class JobApplicantProfessionsFetchSuccess extends JobsState {
+  const JobApplicantProfessionsFetchSuccess({required this.jobCategories});
+  final List<JobCategory> jobCategories;
+
+  @override
+  List<Object> get props => [jobCategories];
+}
+
+/// [GetJobApplicantFiltersUseCase] succeeded.
+class JobApplicantFiltersFetchSuccess extends JobsState {
+  const JobApplicantFiltersFetchSuccess({required this.jobApplicantFilter});
+  final JobApplicantFilter jobApplicantFilter;
+
+  @override
+  List<Object> get props => [jobApplicantFilter];
+}
+
 /// [GetJobOffersGroupByUseCase] succeeded.
 class JobsGroupByTypeFetchSuccess extends JobsState {
   const JobsGroupByTypeFetchSuccess({required this.jobOffersType});
@@ -122,7 +140,6 @@ class JobsGetJobApplicantDetailSuccess extends JobsState {
   @override
   List<Object> get props => [jobApplicant];
 }
-
 
 /// Any request failed.
 class JobsRequestFailure extends JobsState {

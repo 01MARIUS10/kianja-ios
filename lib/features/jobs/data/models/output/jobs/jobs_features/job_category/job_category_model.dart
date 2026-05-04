@@ -9,6 +9,7 @@ abstract class JobCategoryModel with _$JobCategoryModel implements JobCategory {
   const factory JobCategoryModel({
     @JsonKey(name: 'id', defaultValue: -1) required int id,
     @JsonKey(name: 'nom', defaultValue: '') required String name,
+    @JsonKey(name: 'icon', defaultValue: '') required String iconUrl,
   }) = _JobCategoryModel;
 
   const JobCategoryModel._();

@@ -7,13 +7,18 @@ import 'package:kianja/core/utils/usecase/no_params.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_image.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_pdf.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_filter.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_zone.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer_filter.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_category.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_offer_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_detail_usecase.dart';
-import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_filters_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_professions_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_zone_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_features_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_offer_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_offers_group_by_usecase.dart';
@@ -38,6 +43,9 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     required GetJobFeaturesUseCase getJobFeaturesUseCase,
     required GetJobApplicantZoneUseCase getJobApplicantZoneUseCase,
     required ViewAllJobApplicantsUseCase viewAllJobApplicantsUseCase,
+    required GetJobApplicantProfessionsUseCase
+    getJobApplicantProfessionsUseCase,
+    required GetJobApplicantFiltersUseCase getJobApplicantFiltersUseCase,
   }) : _getJobOffersGroupByUseCase = getJobOffersGroupByUseCase,
        _viewAllJobOffersUseCase = viewAllJobOffersUseCase,
        _uploadPdfUseCase = uploadPdfUseCase,
@@ -48,6 +56,8 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
        _getJobFeaturesUseCase = getJobFeaturesUseCase,
        _getJobApplicantZoneUseCase = getJobApplicantZoneUseCase,
        _viewAllJobApplicantsUseCase = viewAllJobApplicantsUseCase,
+       _getJobApplicantProfessionsUseCase = getJobApplicantProfessionsUseCase,
+       _getJobApplicantFiltersUseCase = getJobApplicantFiltersUseCase,
        super(JobsInitial()) {
     on<JobsGroupByTypeFetchRequested>(_onGroupByTypeFetchRequested);
     on<JobsGroupByDateFetchRequested>(_onGroupByDateFetchRequested);
@@ -63,6 +73,10 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
       _onJobApplicantsViewAllFetchRequested,
     );
     on<JobApplicantsZoneFetchRequested>(_onJobApplicantsZoneFetchRequested);
+    on<JobApplicantProfessionsFetchRequested>(
+      _onJobApplicantProfessionsFetchRequested,
+    );
+    on<JobApplicantFiltersFetchRequested>(_onJobApplicantFiltersFetchRequested);
   }
 
   final GetJobOffersGroupByUseCase _getJobOffersGroupByUseCase;
@@ -75,6 +89,8 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
   final GetJobFeaturesUseCase _getJobFeaturesUseCase;
   final GetJobApplicantZoneUseCase _getJobApplicantZoneUseCase;
   final ViewAllJobApplicantsUseCase _viewAllJobApplicantsUseCase;
+  final GetJobApplicantProfessionsUseCase _getJobApplicantProfessionsUseCase;
+  final GetJobApplicantFiltersUseCase _getJobApplicantFiltersUseCase;
 
   Future<void> _onJobFeaturesFetchRequested(
     JobFeaturesFetchRequested event,
@@ -87,6 +103,42 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     result.fold(
       (failure) => emit(JobsRequestFailure(message: failure.message)),
       (jobFeatures) => emit(JobFeaturesFetchSuccess(jobFeatures: jobFeatures)),
+    );
+  }
+
+  Future<void> _onJobApplicantProfessionsFetchRequested(
+    JobApplicantProfessionsFetchRequested event,
+    Emitter<JobsState> emit,
+  ) async {
+    AppDebug.showPrint('Bloc Jobs - Job applicant professions request');
+
+    emit(JobsRequestInProgress());
+    final result = await _getJobApplicantProfessionsUseCase(NoParams());
+    result.fold(
+      (failure) => emit(JobsRequestFailure(message: failure.message)),
+      (jobApplicantProfessions) => emit(
+        JobApplicantProfessionsFetchSuccess(
+          jobCategories: jobApplicantProfessions,
+        ),
+      ),
+    );
+  }
+
+  Future<void> _onJobApplicantFiltersFetchRequested(
+    JobApplicantFiltersFetchRequested event,
+    Emitter<JobsState> emit,
+  ) async {
+    AppDebug.showPrint('Bloc Jobs - Job applicant filters request');
+
+    emit(JobsRequestInProgress());
+    final result = await _getJobApplicantFiltersUseCase(NoParams());
+    result.fold(
+      (failure) => emit(JobsRequestFailure(message: failure.message)),
+      (jobApplicantFilters) => emit(
+        JobApplicantFiltersFetchSuccess(
+          jobApplicantFilter: jobApplicantFilters,
+        ),
+      ),
     );
   }
 
@@ -174,7 +226,9 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     Emitter<JobsState> emit,
   ) async {
     emit(JobsRequestInProgress());
-    final result = await _getJobApplicantZoneUseCase(NoParams());
+    final result = await _getJobApplicantZoneUseCase(
+      event.getJobApplicantParams,
+    );
     result.fold(
       (failure) => emit(JobsRequestFailure(message: failure.message)),
       (jobApplicantsZone) {

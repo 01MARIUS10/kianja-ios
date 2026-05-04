@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$JobCategoryModel {
 
-@JsonKey(name: 'id', defaultValue: -1) int get id;@JsonKey(name: 'nom', defaultValue: '') String get name;
+@JsonKey(name: 'id', defaultValue: -1) int get id;@JsonKey(name: 'nom', defaultValue: '') String get name;@JsonKey(name: 'icon', defaultValue: '') String get iconUrl;
 /// Create a copy of JobCategoryModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $JobCategoryModelCopyWith<JobCategoryModel> get copyWith => _$JobCategoryModelCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is JobCategoryModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is JobCategoryModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.iconUrl, iconUrl) || other.iconUrl == iconUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name);
+int get hashCode => Object.hash(runtimeType,id,name,iconUrl);
 
 @override
 String toString() {
-  return 'JobCategoryModel(id: $id, name: $name)';
+  return 'JobCategoryModel(id: $id, name: $name, iconUrl: $iconUrl)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $JobCategoryModelCopyWith<$Res>  {
   factory $JobCategoryModelCopyWith(JobCategoryModel value, $Res Function(JobCategoryModel) _then) = _$JobCategoryModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'id', defaultValue: -1) int id,@JsonKey(name: 'nom', defaultValue: '') String name
+@JsonKey(name: 'id', defaultValue: -1) int id,@JsonKey(name: 'nom', defaultValue: '') String name,@JsonKey(name: 'icon', defaultValue: '') String iconUrl
 });
 
 
@@ -65,10 +65,11 @@ class _$JobCategoryModelCopyWithImpl<$Res>
 
 /// Create a copy of JobCategoryModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? iconUrl = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,iconUrl: null == iconUrl ? _self.iconUrl : iconUrl // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -154,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'id', defaultValue: -1)  int id, @JsonKey(name: 'nom', defaultValue: '')  String name)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'id', defaultValue: -1)  int id, @JsonKey(name: 'nom', defaultValue: '')  String name, @JsonKey(name: 'icon', defaultValue: '')  String iconUrl)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _JobCategoryModel() when $default != null:
-return $default(_that.id,_that.name);case _:
+return $default(_that.id,_that.name,_that.iconUrl);case _:
   return orElse();
 
 }
@@ -175,10 +176,10 @@ return $default(_that.id,_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'id', defaultValue: -1)  int id, @JsonKey(name: 'nom', defaultValue: '')  String name)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'id', defaultValue: -1)  int id, @JsonKey(name: 'nom', defaultValue: '')  String name, @JsonKey(name: 'icon', defaultValue: '')  String iconUrl)  $default,) {final _that = this;
 switch (_that) {
 case _JobCategoryModel():
-return $default(_that.id,_that.name);case _:
+return $default(_that.id,_that.name,_that.iconUrl);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -195,10 +196,10 @@ return $default(_that.id,_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'id', defaultValue: -1)  int id, @JsonKey(name: 'nom', defaultValue: '')  String name)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'id', defaultValue: -1)  int id, @JsonKey(name: 'nom', defaultValue: '')  String name, @JsonKey(name: 'icon', defaultValue: '')  String iconUrl)?  $default,) {final _that = this;
 switch (_that) {
 case _JobCategoryModel() when $default != null:
-return $default(_that.id,_that.name);case _:
+return $default(_that.id,_that.name,_that.iconUrl);case _:
   return null;
 
 }
@@ -210,11 +211,12 @@ return $default(_that.id,_that.name);case _:
 @JsonSerializable()
 
 class _JobCategoryModel extends JobCategoryModel {
-  const _JobCategoryModel({@JsonKey(name: 'id', defaultValue: -1) required this.id, @JsonKey(name: 'nom', defaultValue: '') required this.name}): super._();
+  const _JobCategoryModel({@JsonKey(name: 'id', defaultValue: -1) required this.id, @JsonKey(name: 'nom', defaultValue: '') required this.name, @JsonKey(name: 'icon', defaultValue: '') required this.iconUrl}): super._();
   factory _JobCategoryModel.fromJson(Map<String, dynamic> json) => _$JobCategoryModelFromJson(json);
 
 @override@JsonKey(name: 'id', defaultValue: -1) final  int id;
 @override@JsonKey(name: 'nom', defaultValue: '') final  String name;
+@override@JsonKey(name: 'icon', defaultValue: '') final  String iconUrl;
 
 /// Create a copy of JobCategoryModel
 /// with the given fields replaced by the non-null parameter values.
@@ -229,16 +231,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _JobCategoryModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _JobCategoryModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.iconUrl, iconUrl) || other.iconUrl == iconUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name);
+int get hashCode => Object.hash(runtimeType,id,name,iconUrl);
 
 @override
 String toString() {
-  return 'JobCategoryModel(id: $id, name: $name)';
+  return 'JobCategoryModel(id: $id, name: $name, iconUrl: $iconUrl)';
 }
 
 
@@ -249,7 +251,7 @@ abstract mixin class _$JobCategoryModelCopyWith<$Res> implements $JobCategoryMod
   factory _$JobCategoryModelCopyWith(_JobCategoryModel value, $Res Function(_JobCategoryModel) _then) = __$JobCategoryModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'id', defaultValue: -1) int id,@JsonKey(name: 'nom', defaultValue: '') String name
+@JsonKey(name: 'id', defaultValue: -1) int id,@JsonKey(name: 'nom', defaultValue: '') String name,@JsonKey(name: 'icon', defaultValue: '') String iconUrl
 });
 
 
@@ -266,10 +268,11 @@ class __$JobCategoryModelCopyWithImpl<$Res>
 
 /// Create a copy of JobCategoryModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? iconUrl = null,}) {
   return _then(_JobCategoryModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,iconUrl: null == iconUrl ? _self.iconUrl : iconUrl // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

@@ -9,11 +9,14 @@ import 'package:kianja/features/jobs/data/datasources/jobs_remote_data.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_image.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_pdf.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_filter.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_zone.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer_filter.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_category.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
 import 'package:kianja/features/jobs/domain/repositories/jobs_repository.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_job_applicants/view_all_job_applicants_params.dart';
 
 class JobsRepositoryImpl implements JobsRepository {
@@ -24,6 +27,27 @@ class JobsRepositoryImpl implements JobsRepository {
   Future<Either<Failure, JobFeatures>> getJobFeatures() async {
     try {
       final response = await remoteDataSource.getJobFeatures();
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<JobCategory>>>
+  getJobApplicantProfessions() async {
+    try {
+      final response = await remoteDataSource.getJobApplicantProfessions();
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, JobApplicantFilter>> getJobApplicantFilters() async {
+    try {
+      final response = await remoteDataSource.getJobApplicantFilters();
       return right(response);
     } on AppException catch (e) {
       return left(failureHandler(e));
@@ -56,9 +80,13 @@ class JobsRepositoryImpl implements JobsRepository {
   }
 
   @override
-  Future<Either<Failure, List<JobApplicantZone>>> getJobApplicantsZone() async {
+  Future<Either<Failure, List<JobApplicantZone>>> getJobApplicantsZone({
+    required GetJobApplicantParams getJobApplicantParams,
+  }) async {
     try {
-      final response = await remoteDataSource.getJobApplicantsZone();
+      final response = await remoteDataSource.getJobApplicantsZone(
+        query: getJobApplicantParams.query,
+      );
       return right(response);
     } on AppException catch (e) {
       return left(failureHandler(e));

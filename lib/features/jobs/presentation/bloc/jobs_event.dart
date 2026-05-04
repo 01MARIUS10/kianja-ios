@@ -15,6 +15,22 @@ class JobFeaturesFetchRequested extends JobsEvent {
   List<Object> get props => [];
 }
 
+/// Fetch job applicant professions.
+class JobApplicantProfessionsFetchRequested extends JobsEvent {
+  const JobApplicantProfessionsFetchRequested();
+
+  @override
+  List<Object> get props => [];
+}
+
+/// Fetch job applicant filters.
+class JobApplicantFiltersFetchRequested extends JobsEvent {
+  const JobApplicantFiltersFetchRequested();
+
+  @override
+  List<Object> get props => [];
+}
+
 /// Fetch job offers grouped by [query] (e.g. category, actor type…).
 class JobsGroupByTypeFetchRequested extends JobsEvent {
   const JobsGroupByTypeFetchRequested({required this.query});
@@ -53,10 +69,11 @@ class JobsViewAllFetchRequested extends JobsEvent {
 
 /// Fetch job applicants by zone.
 class JobApplicantsZoneFetchRequested extends JobsEvent {
-  const JobApplicantsZoneFetchRequested();
+  const JobApplicantsZoneFetchRequested({required this.getJobApplicantParams});
+  final GetJobApplicantParams getJobApplicantParams;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [getJobApplicantParams];
 }
 
 /// Fetch the flat list of all job applicants matching [query].
@@ -142,4 +159,3 @@ class JobsGetJobApplicantDetailRequested extends JobsEvent {
   @override
   List<Object> get props => [id];
 }
-

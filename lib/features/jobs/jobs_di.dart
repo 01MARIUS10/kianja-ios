@@ -5,7 +5,9 @@ import 'package:kianja/features/jobs/data/repositories/jobs_repository_impl.dart
 import 'package:kianja/features/jobs/domain/repositories/jobs_repository.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_offer_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_detail_usecase.dart';
-import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_filters_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_professions_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_zone_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_features_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_offer_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_offers_group_by_usecase.dart';
@@ -45,6 +47,12 @@ Future<void> initJobsDependencies(GetIt getIt, Dio dio) async {
   getIt.registerLazySingleton<GetJobOfferDetailUseCase>(
     () => GetJobOfferDetailUseCase(jobsRepository: getIt()),
   );
+  getIt.registerLazySingleton<GetJobApplicantProfessionsUseCase>(
+    () => GetJobApplicantProfessionsUseCase(jobsRepository: getIt()),
+  );
+  getIt.registerLazySingleton<GetJobApplicantFiltersUseCase>(
+    () => GetJobApplicantFiltersUseCase(jobsRepository: getIt()),
+  );
   getIt.registerLazySingleton<GetJobFeaturesUseCase>(
     () => GetJobFeaturesUseCase(jobsRepository: getIt()),
   );
@@ -62,6 +70,8 @@ Future<void> initJobsDependencies(GetIt getIt, Dio dio) async {
   getIt.registerFactory(
     () => JobsBloc(
       getJobFeaturesUseCase: getIt(),
+      getJobApplicantFiltersUseCase: getIt(),
+      getJobApplicantProfessionsUseCase: getIt(),
       getJobOffersGroupByUseCase: getIt(),
       viewAllJobOffersUseCase: getIt(),
       getJobApplicantZoneUseCase: getIt(),
