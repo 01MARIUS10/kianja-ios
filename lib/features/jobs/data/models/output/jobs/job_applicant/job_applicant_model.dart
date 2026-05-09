@@ -21,7 +21,7 @@ abstract class JobApplicantModel
     @JsonKey(name: 'resumepdf_path', defaultValue: '') required String pdfUrl,
     @JsonKey(name: 'created_at', defaultValue: '') required String createdAt,
     required UserModel user,
-    required JobCategoryModel category,
+    JobCategoryModel? category,
   }) = _JobApplicantModel;
 
   const JobApplicantModel._();

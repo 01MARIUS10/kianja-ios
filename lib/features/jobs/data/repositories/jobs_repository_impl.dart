@@ -6,16 +6,19 @@ import 'package:kianja/core/errors/failures.dart';
 import 'package:kianja/core/services/service_helper.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/features/jobs/data/datasources/jobs_remote_data.dart';
+import 'package:kianja/features/jobs/data/models/input/create_job_applicant/create_job_applicant_input_model.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_image.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_pdf.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_filter.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_plan.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_zone.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer_filter.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_category.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
 import 'package:kianja/features/jobs/domain/repositories/jobs_repository.dart';
+import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_job_applicants/view_all_job_applicants_params.dart';
 
@@ -123,6 +126,41 @@ class JobsRepositoryImpl implements JobsRepository {
   }) async {
     try {
       final response = await remoteDataSource.uploadJobPdf(file: file);
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<JobApplicantPlan>>> getJobApplicantPlans() async {
+    try {
+      final response = await remoteDataSource.getJobApplicantPlans();
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, JobApplicant>> createJobApplicant({
+    required CreateJobApplicantParams createJobApplicantParams,
+  }) async {
+    try {
+      final response = await remoteDataSource.createJobApplicant(
+        createJobApplicantInputModel: CreateJobApplicantInputModel(
+          title: createJobApplicantParams.title,
+          motivation: createJobApplicantParams.motivation,
+          imageUrl: createJobApplicantParams.imageUrl,
+          pdfUrl: createJobApplicantParams.pdfUrl,
+          locationId: createJobApplicantParams.locationId,
+          genderId: createJobApplicantParams.genderId,
+          typeId: createJobApplicantParams.typeId,
+          durationId: createJobApplicantParams.durationId,
+          categoryId: createJobApplicantParams.categoryId,
+          status: createJobApplicantParams.status,
+        ),
+      );
       return right(response);
     } on AppException catch (e) {
       return left(failureHandler(e));

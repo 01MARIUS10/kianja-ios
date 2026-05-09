@@ -20,7 +20,7 @@ class _JobsScreenState extends State<JobsScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
   }
 
   @override
@@ -56,7 +56,7 @@ class _JobsScreenState extends State<JobsScreen> with TickerProviderStateMixin {
                 Tab(text: 'Job offers'),
                 Tab(text: 'Job applicants'),
                 Tab(text: 'Training center'),
-                Tab(text: 'Experts & executes'),
+                // Tab(text: 'Experts & executes'),
               ],
             ),
           ),
@@ -68,7 +68,7 @@ class _JobsScreenState extends State<JobsScreen> with TickerProviderStateMixin {
                 JobOffersScreen(),
                 JobApplicantsScreen(),
                 TrainingCenterScreen(),
-                ExpertExecutiveScreen(),
+                // ExpertExecutiveScreen(),
               ],
             ),
           ),

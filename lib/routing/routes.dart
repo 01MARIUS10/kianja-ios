@@ -23,8 +23,10 @@ enum Routes {
   postJobApplicant('job-applicant'),
   postJobOffer('job-offer'),
   postSuccessful('successfully-posted/:id'),
+  postJobApplicantSuccessful('job-applicantsuccessfully-posted/:id'),
   postTrainingCenter('training-center'),
   postExpertExecutive('expert-executive'),
+  subscribeExpertExecutive('subscribe-expert-executive'),
   // ------------- POST ----------------
 
   // ------------- MY POST ----------------

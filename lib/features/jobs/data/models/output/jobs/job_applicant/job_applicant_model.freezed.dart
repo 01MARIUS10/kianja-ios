@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$JobApplicantModel {
 
-@JsonKey(defaultValue: -1) int get id;@JsonKey(defaultValue: '') String get title;@JsonKey(defaultValue: '') String get motivation; JobLocationModel get location; JobGenderModel? get gender;@JsonKey(name: 'resumepdf_path', defaultValue: '') String get pdfUrl;@JsonKey(name: 'created_at', defaultValue: '') String get createdAt; UserModel get user; JobCategoryModel get category;
+@JsonKey(defaultValue: -1) int get id;@JsonKey(defaultValue: '') String get title;@JsonKey(defaultValue: '') String get motivation; JobLocationModel get location; JobGenderModel? get gender;@JsonKey(name: 'resumepdf_path', defaultValue: '') String get pdfUrl;@JsonKey(name: 'created_at', defaultValue: '') String get createdAt; UserModel get user; JobCategoryModel? get category;
 /// Create a copy of JobApplicantModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,11 +48,11 @@ abstract mixin class $JobApplicantModelCopyWith<$Res>  {
   factory $JobApplicantModelCopyWith(JobApplicantModel value, $Res Function(JobApplicantModel) _then) = _$JobApplicantModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(defaultValue: -1) int id,@JsonKey(defaultValue: '') String title,@JsonKey(defaultValue: '') String motivation, JobLocationModel location, JobGenderModel? gender,@JsonKey(name: 'resumepdf_path', defaultValue: '') String pdfUrl,@JsonKey(name: 'created_at', defaultValue: '') String createdAt, UserModel user, JobCategoryModel category
+@JsonKey(defaultValue: -1) int id,@JsonKey(defaultValue: '') String title,@JsonKey(defaultValue: '') String motivation, JobLocationModel location, JobGenderModel? gender,@JsonKey(name: 'resumepdf_path', defaultValue: '') String pdfUrl,@JsonKey(name: 'created_at', defaultValue: '') String createdAt, UserModel user, JobCategoryModel? category
 });
 
 
-$JobLocationModelCopyWith<$Res> get location;$JobGenderModelCopyWith<$Res>? get gender;$UserModelCopyWith<$Res> get user;$JobCategoryModelCopyWith<$Res> get category;
+$JobLocationModelCopyWith<$Res> get location;$JobGenderModelCopyWith<$Res>? get gender;$UserModelCopyWith<$Res> get user;$JobCategoryModelCopyWith<$Res>? get category;
 
 }
 /// @nodoc
@@ -65,7 +65,7 @@ class _$JobApplicantModelCopyWithImpl<$Res>
 
 /// Create a copy of JobApplicantModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? motivation = null,Object? location = null,Object? gender = freezed,Object? pdfUrl = null,Object? createdAt = null,Object? user = null,Object? category = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? motivation = null,Object? location = null,Object? gender = freezed,Object? pdfUrl = null,Object? createdAt = null,Object? user = null,Object? category = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -75,8 +75,8 @@ as JobLocationModel,gender: freezed == gender ? _self.gender : gender // ignore:
 as JobGenderModel?,pdfUrl: null == pdfUrl ? _self.pdfUrl : pdfUrl // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
-as UserModel,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
-as JobCategoryModel,
+as UserModel,category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
+as JobCategoryModel?,
   ));
 }
 /// Create a copy of JobApplicantModel
@@ -113,9 +113,12 @@ $UserModelCopyWith<$Res> get user {
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$JobCategoryModelCopyWith<$Res> get category {
-  
-  return $JobCategoryModelCopyWith<$Res>(_self.category, (value) {
+$JobCategoryModelCopyWith<$Res>? get category {
+    if (_self.category == null) {
+    return null;
+  }
+
+  return $JobCategoryModelCopyWith<$Res>(_self.category!, (value) {
     return _then(_self.copyWith(category: value));
   });
 }
@@ -200,7 +203,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String motivation,  JobLocationModel location,  JobGenderModel? gender, @JsonKey(name: 'resumepdf_path', defaultValue: '')  String pdfUrl, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt,  UserModel user,  JobCategoryModel category)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String motivation,  JobLocationModel location,  JobGenderModel? gender, @JsonKey(name: 'resumepdf_path', defaultValue: '')  String pdfUrl, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt,  UserModel user,  JobCategoryModel? category)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _JobApplicantModel() when $default != null:
 return $default(_that.id,_that.title,_that.motivation,_that.location,_that.gender,_that.pdfUrl,_that.createdAt,_that.user,_that.category);case _:
@@ -221,7 +224,7 @@ return $default(_that.id,_that.title,_that.motivation,_that.location,_that.gende
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String motivation,  JobLocationModel location,  JobGenderModel? gender, @JsonKey(name: 'resumepdf_path', defaultValue: '')  String pdfUrl, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt,  UserModel user,  JobCategoryModel category)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String motivation,  JobLocationModel location,  JobGenderModel? gender, @JsonKey(name: 'resumepdf_path', defaultValue: '')  String pdfUrl, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt,  UserModel user,  JobCategoryModel? category)  $default,) {final _that = this;
 switch (_that) {
 case _JobApplicantModel():
 return $default(_that.id,_that.title,_that.motivation,_that.location,_that.gender,_that.pdfUrl,_that.createdAt,_that.user,_that.category);case _:
@@ -241,7 +244,7 @@ return $default(_that.id,_that.title,_that.motivation,_that.location,_that.gende
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String motivation,  JobLocationModel location,  JobGenderModel? gender, @JsonKey(name: 'resumepdf_path', defaultValue: '')  String pdfUrl, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt,  UserModel user,  JobCategoryModel category)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String motivation,  JobLocationModel location,  JobGenderModel? gender, @JsonKey(name: 'resumepdf_path', defaultValue: '')  String pdfUrl, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt,  UserModel user,  JobCategoryModel? category)?  $default,) {final _that = this;
 switch (_that) {
 case _JobApplicantModel() when $default != null:
 return $default(_that.id,_that.title,_that.motivation,_that.location,_that.gender,_that.pdfUrl,_that.createdAt,_that.user,_that.category);case _:
@@ -256,7 +259,7 @@ return $default(_that.id,_that.title,_that.motivation,_that.location,_that.gende
 @JsonSerializable()
 
 class _JobApplicantModel extends JobApplicantModel {
-  const _JobApplicantModel({@JsonKey(defaultValue: -1) required this.id, @JsonKey(defaultValue: '') required this.title, @JsonKey(defaultValue: '') required this.motivation, required this.location, this.gender, @JsonKey(name: 'resumepdf_path', defaultValue: '') required this.pdfUrl, @JsonKey(name: 'created_at', defaultValue: '') required this.createdAt, required this.user, required this.category}): super._();
+  const _JobApplicantModel({@JsonKey(defaultValue: -1) required this.id, @JsonKey(defaultValue: '') required this.title, @JsonKey(defaultValue: '') required this.motivation, required this.location, this.gender, @JsonKey(name: 'resumepdf_path', defaultValue: '') required this.pdfUrl, @JsonKey(name: 'created_at', defaultValue: '') required this.createdAt, required this.user, this.category}): super._();
   factory _JobApplicantModel.fromJson(Map<String, dynamic> json) => _$JobApplicantModelFromJson(json);
 
 @override@JsonKey(defaultValue: -1) final  int id;
@@ -267,7 +270,7 @@ class _JobApplicantModel extends JobApplicantModel {
 @override@JsonKey(name: 'resumepdf_path', defaultValue: '') final  String pdfUrl;
 @override@JsonKey(name: 'created_at', defaultValue: '') final  String createdAt;
 @override final  UserModel user;
-@override final  JobCategoryModel category;
+@override final  JobCategoryModel? category;
 
 /// Create a copy of JobApplicantModel
 /// with the given fields replaced by the non-null parameter values.
@@ -302,11 +305,11 @@ abstract mixin class _$JobApplicantModelCopyWith<$Res> implements $JobApplicantM
   factory _$JobApplicantModelCopyWith(_JobApplicantModel value, $Res Function(_JobApplicantModel) _then) = __$JobApplicantModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(defaultValue: -1) int id,@JsonKey(defaultValue: '') String title,@JsonKey(defaultValue: '') String motivation, JobLocationModel location, JobGenderModel? gender,@JsonKey(name: 'resumepdf_path', defaultValue: '') String pdfUrl,@JsonKey(name: 'created_at', defaultValue: '') String createdAt, UserModel user, JobCategoryModel category
+@JsonKey(defaultValue: -1) int id,@JsonKey(defaultValue: '') String title,@JsonKey(defaultValue: '') String motivation, JobLocationModel location, JobGenderModel? gender,@JsonKey(name: 'resumepdf_path', defaultValue: '') String pdfUrl,@JsonKey(name: 'created_at', defaultValue: '') String createdAt, UserModel user, JobCategoryModel? category
 });
 
 
-@override $JobLocationModelCopyWith<$Res> get location;@override $JobGenderModelCopyWith<$Res>? get gender;@override $UserModelCopyWith<$Res> get user;@override $JobCategoryModelCopyWith<$Res> get category;
+@override $JobLocationModelCopyWith<$Res> get location;@override $JobGenderModelCopyWith<$Res>? get gender;@override $UserModelCopyWith<$Res> get user;@override $JobCategoryModelCopyWith<$Res>? get category;
 
 }
 /// @nodoc
@@ -319,7 +322,7 @@ class __$JobApplicantModelCopyWithImpl<$Res>
 
 /// Create a copy of JobApplicantModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? motivation = null,Object? location = null,Object? gender = freezed,Object? pdfUrl = null,Object? createdAt = null,Object? user = null,Object? category = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? motivation = null,Object? location = null,Object? gender = freezed,Object? pdfUrl = null,Object? createdAt = null,Object? user = null,Object? category = freezed,}) {
   return _then(_JobApplicantModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -329,8 +332,8 @@ as JobLocationModel,gender: freezed == gender ? _self.gender : gender // ignore:
 as JobGenderModel?,pdfUrl: null == pdfUrl ? _self.pdfUrl : pdfUrl // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
-as UserModel,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
-as JobCategoryModel,
+as UserModel,category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
+as JobCategoryModel?,
   ));
 }
 
@@ -368,9 +371,12 @@ $UserModelCopyWith<$Res> get user {
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$JobCategoryModelCopyWith<$Res> get category {
-  
-  return $JobCategoryModelCopyWith<$Res>(_self.category, (value) {
+$JobCategoryModelCopyWith<$Res>? get category {
+    if (_self.category == null) {
+    return null;
+  }
+
+  return $JobCategoryModelCopyWith<$Res>(_self.category!, (value) {
     return _then(_self.copyWith(category: value));
   });
 }

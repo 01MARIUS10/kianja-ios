@@ -159,3 +159,22 @@ class JobsGetJobApplicantDetailRequested extends JobsEvent {
   @override
   List<Object> get props => [id];
 }
+
+/// Get a job applicant plan.
+class JobsGetJobApplicantPlanRequested extends JobsEvent {
+  const JobsGetJobApplicantPlanRequested();
+
+  @override
+  List<Object> get props => [];
+}
+
+/// Create Job applicant
+class JobCreateJobApplicantRequested extends JobsEvent {
+  const JobCreateJobApplicantRequested({
+    required this.createJobApplicantParams,
+  });
+  final CreateJobApplicantParams createJobApplicantParams;
+
+  @override
+  List<Object> get props => [createJobApplicantParams];
+}

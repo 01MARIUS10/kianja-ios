@@ -6,11 +6,13 @@ import 'package:kianja/features/jobs/domain/entities/files/job_image.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_pdf.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_filter.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_plan.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_zone.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer_filter.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_category.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
+import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_job_applicants/view_all_job_applicants_params.dart';
 
@@ -32,6 +34,10 @@ abstract interface class JobsRepository {
   });
   Future<Either<Failure, JobImage>> uploadImage({required XFile file});
   Future<Either<Failure, JobPdf>> uploadPdf({required PlatformFile file});
+  Future<Either<Failure, List<JobApplicantPlan>>> getJobApplicantPlans();
+  Future<Either<Failure, JobApplicant>> createJobApplicant({
+    required CreateJobApplicantParams createJobApplicantParams,
+  });
   Future<Either<Failure, JobOffer>> createJobOffer({
     required String title,
     required int imageId,
