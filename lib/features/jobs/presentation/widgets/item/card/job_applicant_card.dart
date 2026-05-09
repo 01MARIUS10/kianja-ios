@@ -4,10 +4,16 @@ import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
+import 'package:kianja/features/jobs/presentation/widgets/enum/width_view_enum.dart';
 
 class JobApplicantCard extends StatelessWidget {
-  const JobApplicantCard({super.key, required this.jobApplicant});
+  const JobApplicantCard({
+    super.key,
+    required this.jobApplicant,
+    required this.widthViewEnum,
+  });
   final JobApplicant jobApplicant;
+  final WidthViewEnum widthViewEnum;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +21,7 @@ class JobApplicantCard extends StatelessWidget {
     final isDark = Brightness.dark == Theme.of(context).brightness;
 
     return Container(
-      width: 160,
+      width: widthViewEnum.width,
       decoration: BoxDecoration(
         color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
         borderRadius: BorderRadius.circular(Constants.borderRadiusSmall),
@@ -72,7 +78,7 @@ class JobApplicantCard extends StatelessWidget {
                     const SizedBox(width: Constants.spacingExtraSmall),
                     Expanded(
                       child: Text(
-                        jobApplicant.category.name,
+                        jobApplicant.category?.name ?? '',
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: AppColors.success,
                         ),

@@ -6,7 +6,7 @@ import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/routing/routes.dart';
 
-enum PostType { jobOffer, jobApplicant, trainingCenter }
+enum PostType { jobOffer, jobApplicant, trainingCenter, expertExecutive }
 
 class PostScreen extends StatefulWidget {
   const PostScreen({super.key});
@@ -23,6 +23,7 @@ class _PostScreenState extends State<PostScreen> {
       PostType.jobOffer => 'Job Offer',
       PostType.jobApplicant => 'Job Applicant',
       PostType.trainingCenter => 'Training Center',
+      PostType.expertExecutive => 'Expert & Executive',
     };
   }
 
@@ -34,6 +35,8 @@ class _PostScreenState extends State<PostScreen> {
         'Create an applicant profile to apply for jobs that match your skills.',
       PostType.trainingCenter =>
         'Register your training center to offer courses and build skills.',
+      PostType.expertExecutive =>
+        'Create an expert or executive profile to offer your services.',
     };
   }
 
@@ -47,6 +50,9 @@ class _PostScreenState extends State<PostScreen> {
         break;
       case PostType.trainingCenter:
         context.goNamed(Routes.postTrainingCenter.name);
+        break;
+      case PostType.expertExecutive:
+        context.goNamed(Routes.postExpertExecutive.name);
         break;
     }
   }
@@ -122,6 +128,19 @@ class _PostScreenState extends State<PostScreen> {
                   onTap: () {
                     setState(() {
                       _selectedType = PostType.trainingCenter;
+                    });
+                  },
+                ),
+                const SizedBox(height: Constants.spacingMedium),
+                _PostOptionTile(
+                  icon: Icons.work_outline,
+                  title: 'Expert & Executive',
+                  isSelected: _selectedType == PostType.expertExecutive,
+                  isDark: isDark,
+                  theme: theme,
+                  onTap: () {
+                    setState(() {
+                      _selectedType = PostType.expertExecutive;
                     });
                   },
                 ),

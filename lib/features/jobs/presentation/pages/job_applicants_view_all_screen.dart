@@ -11,6 +11,7 @@ import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_job_applicants/view_all_job_applicants_params.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
+import 'package:kianja/features/jobs/presentation/widgets/enum/width_view_enum.dart';
 import 'package:kianja/features/jobs/presentation/widgets/item/card/job_applicant_card.dart';
 import 'package:kianja/routing/routes.dart';
 
@@ -59,7 +60,7 @@ class JobApplicantsViewAllScreen extends StatelessWidget {
                 itemCount: jobApplicants.length,
                 itemBuilder: (context, index) {
                   return Align(
-                    alignment: Alignment.topLeft,
+                    alignment: Alignment.topCenter,
                     child: InkWell(
                       onTap: () {
                         context.pushNamed(
@@ -71,6 +72,7 @@ class JobApplicantsViewAllScreen extends StatelessWidget {
                       },
                       child: JobApplicantCard(
                         jobApplicant: jobApplicants[index],
+                        widthViewEnum: WidthViewEnum.grid,
                       ),
                     ),
                   );

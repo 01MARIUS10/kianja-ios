@@ -2,55 +2,107 @@ import 'package:flutter/material.dart';
 import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_plan.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_duration.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_type.dart';
 
 class PostFeaturesSection extends StatefulWidget {
-  const PostFeaturesSection({super.key});
+  const PostFeaturesSection({
+    super.key,
+    required this.plans,
+    required this.onPlanSelected,
+    this.onPost,
+    this.isLoading = false,
+  });
+  final List<JobApplicantPlan> plans;
+  final ValueChanged<JobApplicantPlan?> onPlanSelected;
+  final VoidCallback? onPost;
+  final bool isLoading;
 
   @override
   State<PostFeaturesSection> createState() => _PostFeaturesSectionState();
 }
 
 class _PostFeaturesSectionState extends State<PostFeaturesSection> {
-  final List<String> _selectedTypes = ['General'];
-  final List<String> _selectedDurations = ['1 week'];
-  final List<String> _selectedPrices = ['5 000', '20 000', '50 000'];
+  JobType? _selectedType;
+  JobDuration? _selectedDuration;
+  JobApplicantPlan? _selectedPlan;
 
-  void _toggleType(String type) {
-    setState(() {
-      if (_selectedTypes.contains(type)) {
-        _selectedTypes.remove(type);
-      } else {
-        _selectedTypes.clear();
-        _selectedTypes.add(type);
-      }
-    });
-  }
-
-  void _toggleDuration(String duration) {
-    _correspondedPrice(duration);
-    setState(() {
-      if (_selectedDurations.contains(duration)) {
-        if (_selectedDurations.isEmpty) {
-          _selectedDurations.remove(duration);
-        }
-      } else {
-        _selectedDurations.clear();
-        _selectedDurations.add(duration);
-      }
-    });
-  }
-
-  void _correspondedPrice(String duration) {
-    if (duration == '1 week') {
-      _selectedPrices.clear();
-      _selectedPrices.add('5 000');
-    } else if (duration == '1 month') {
-      _selectedPrices.clear();
-      _selectedPrices.add('10 000');
-    } else {
-      _selectedPrices.clear();
-      _selectedPrices.add('20 000');
+  @override
+  void initState() {
+    super.initState();
+    if (widget.plans.isNotEmpty) {
+      _selectedType = widget.plans.first.type;
+      _updateDurationsForSelectedType();
     }
+  }
+
+  @override
+  void didUpdateWidget(covariant PostFeaturesSection oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.plans != oldWidget.plans) {
+      if (widget.plans.isNotEmpty && _selectedType == null) {
+        _selectedType = widget.plans.first.type;
+        _updateDurationsForSelectedType();
+      }
+    }
+  }
+
+  void _updateDurationsForSelectedType() {
+    if (_selectedType == null) return;
+    final availablePlansForType = widget.plans
+        .where((p) => p.type.id == _selectedType!.id)
+        .toList();
+    if (availablePlansForType.isNotEmpty) {
+      _selectedDuration = availablePlansForType.first.duration;
+      _selectedPlan = availablePlansForType.first;
+    } else {
+      _selectedDuration = null;
+      _selectedPlan = null;
+    }
+    widget.onPlanSelected(_selectedPlan);
+  }
+
+  void _toggleType(JobType type) {
+    if (_selectedType?.id == type.id) return;
+    setState(() {
+      _selectedType = type;
+      _updateDurationsForSelectedType();
+    });
+  }
+
+  void _toggleDuration(JobDuration duration) {
+    if (_selectedDuration?.id == duration.id) return;
+    setState(() {
+      _selectedDuration = duration;
+      try {
+        _selectedPlan = widget.plans.firstWhere(
+          (p) => p.type.id == _selectedType!.id && p.duration.id == duration.id,
+        );
+      } catch (e) {
+        _selectedPlan = null;
+      }
+      widget.onPlanSelected(_selectedPlan);
+    });
+  }
+
+  List<JobType> get _distinctTypes {
+    final types = <int, JobType>{};
+    for (final plan in widget.plans) {
+      types[plan.type.id] = plan.type;
+    }
+    return types.values.toList();
+  }
+
+  List<JobDuration> get _availableDurations {
+    if (_selectedType == null) return [];
+    final durations = <int, JobDuration>{};
+    for (final plan in widget.plans) {
+      if (plan.type.id == _selectedType!.id) {
+        durations[plan.duration.id] = plan.duration;
+      }
+    }
+    return durations.values.toList();
   }
 
   @override
@@ -58,6 +110,10 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     final isDark = theme.brightness == Brightness.dark;
+
+    if (widget.plans.isEmpty) {
+      return const SizedBox.shrink();
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,8 +126,8 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
         _buildFeatureRow(
           context,
           label: 'Type :',
-          children: ['General'].map((type) {
-            final isSelected = _selectedTypes.contains(type);
+          children: _distinctTypes.map((type) {
+            final isSelected = _selectedType?.id == type.id;
             return InkWell(
               onTap: () => _toggleType(type),
               borderRadius: BorderRadius.circular(4),
@@ -89,7 +145,7 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    Text(type, style: textTheme.bodyMedium),
+                    Text(type.name, style: textTheme.bodyMedium),
                   ],
                 ),
               ),
@@ -100,8 +156,8 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
         _buildFeatureRow(
           context,
           label: 'Duration :',
-          children: ['1 week', '1 month', '3 months'].map((duration) {
-            final isSelected = _selectedDurations.contains(duration);
+          children: _availableDurations.map((duration) {
+            final isSelected = _selectedDuration?.id == duration.id;
             return InkWell(
               onTap: () => _toggleDuration(duration),
               borderRadius: BorderRadius.circular(4),
@@ -119,7 +175,7 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    Text(duration, style: textTheme.bodyMedium),
+                    Text(duration.duration, style: textTheme.bodyMedium),
                   ],
                 ),
               ),
@@ -141,7 +197,7 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
             ),
             const SizedBox(width: 4),
             Text(
-              _selectedPrices[0],
+              _selectedPlan != null ? _selectedPlan!.price.toString() : '-',
               style: textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -152,17 +208,23 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
         Align(
           alignment: Alignment.centerRight,
           child: ElevatedButton(
-            onPressed: () {},
-            child: Text(
-              'POST',
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1.2,
-                color: isDark
-                    ? AppColors.darkTextPrimary
-                    : AppColors.lightTextPrimary,
-              ),
-            ),
+            onPressed: widget.isLoading ? null : widget.onPost,
+            child: widget.isLoading
+                ? const SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                : Text(
+                    'POST',
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.2,
+                      color: isDark
+                          ? AppColors.darkTextPrimary
+                          : AppColors.lightTextPrimary,
+                    ),
+                  ),
           ),
         ),
       ],

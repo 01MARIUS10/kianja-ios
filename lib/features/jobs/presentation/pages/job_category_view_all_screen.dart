@@ -54,7 +54,7 @@ class JobCategoryViewAllScreen extends StatelessWidget {
                 itemCount: jobOfferList.length,
                 itemBuilder: (context, index) {
                   return Align(
-                    alignment: Alignment.topLeft,
+                    alignment: Alignment.topCenter,
                     child: InkWell(
                       onTap: () {
                         context.pushNamed(

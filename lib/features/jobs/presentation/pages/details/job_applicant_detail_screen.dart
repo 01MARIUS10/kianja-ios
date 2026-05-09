@@ -171,7 +171,7 @@ class JobApplicantDetailScreen extends StatelessWidget {
                           _buildFeatureRow(
                             context,
                             label: 'Category',
-                            value: jobApplicant.category.name,
+                            value: jobApplicant.category?.name ?? '',
                           ),
                           const SizedBox(height: Constants.spacingSmall),
                           _buildFeatureRow(

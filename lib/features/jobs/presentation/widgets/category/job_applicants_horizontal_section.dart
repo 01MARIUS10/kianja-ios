@@ -4,6 +4,7 @@ import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
 import 'package:kianja/features/jobs/presentation/widgets/category/padding_separator.dart';
+import 'package:kianja/features/jobs/presentation/widgets/enum/width_view_enum.dart';
 import 'package:kianja/features/jobs/presentation/widgets/item/card/job_applicant_card.dart';
 import 'package:kianja/routing/routes.dart';
 
@@ -82,7 +83,10 @@ class JobApplicantsHorizontalSection extends StatelessWidget {
                       },
                     );
                   },
-                  child: JobApplicantCard(jobApplicant: jobApplicants[index]),
+                  child: JobApplicantCard(
+                    jobApplicant: jobApplicants[index],
+                    widthViewEnum: WidthViewEnum.list,
+                  ),
                 ),
               );
             }),

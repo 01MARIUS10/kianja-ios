@@ -3,10 +3,12 @@ import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/services/service_helper.dart';
 import 'package:kianja/core/utils/app_debug.dart';
+import 'package:kianja/features/jobs/data/models/input/create_job_applicant/create_job_applicant_input_model.dart';
 import 'package:kianja/features/jobs/data/models/output/files/job_image/job_image_model.dart';
 import 'package:kianja/features/jobs/data/models/output/files/pdf_image/job_pdf_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_applicant/job_applicant_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_applicant_filter/job_applicant_filter_model.dart';
+import 'package:kianja/features/jobs/data/models/output/jobs/job_applicant_plan/job_applicant_plan_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_applicant_zone/job_applicant_zone_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_offer/job_offer_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_offer_filter/job_offer_filter_model.dart';
@@ -27,6 +29,10 @@ abstract interface class JobsRemoteDataSource {
   Future<List<JobApplicantModel>> viewAllJobApplicants({required String query});
   Future<JobImageModel> uploadJobImage({required XFile file});
   Future<JobPdfModel> uploadJobPdf({required PlatformFile file});
+  Future<List<JobApplicantPlanModel>> getJobApplicantPlans();
+  Future<JobApplicantModel> createJobApplicant({
+    required CreateJobApplicantInputModel createJobApplicantInputModel,
+  });
   Future<JobOfferModel> createJobOffer({
     required String title,
     required int imageId,
@@ -222,6 +228,32 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
       );
       final Map<String, dynamic> result = jsonHandler(response.data);
       return JobOfferModel.fromJson(result);
+    });
+  }
+
+  @override
+  Future<List<JobApplicantPlanModel>> getJobApplicantPlans() async {
+    return requestHandler(() async {
+      final response = await dio.get('/api/plans');
+      final result = jsonSimpleDecode(response.data);
+      final List<dynamic> plans = result['data'] ?? [];
+      return plans
+          .map((e) => JobApplicantPlanModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    });
+  }
+
+  @override
+  Future<JobApplicantModel> createJobApplicant({
+    required CreateJobApplicantInputModel createJobApplicantInputModel,
+  }) async {
+    return requestHandler(() async {
+      final response = await dio.post(
+        '/api/job-applicants',
+        data: createJobApplicantInputModel.toJson(),
+      );
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      return JobApplicantModel.fromJson(result);
     });
   }
 

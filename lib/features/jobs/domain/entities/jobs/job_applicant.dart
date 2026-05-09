@@ -13,7 +13,7 @@ class JobApplicant {
     required this.pdfUrl,
     required this.createdAt,
     required this.user,
-    required this.category,
+    this.category,
   });
 
   const JobApplicant.empty({
@@ -25,7 +25,7 @@ class JobApplicant {
     this.pdfUrl = '',
     this.createdAt = '',
     this.user = const User.empty(),
-    this.category = const JobCategory.empty(),
+    this.category,
   });
 
   final int id;
@@ -36,5 +36,5 @@ class JobApplicant {
   final String pdfUrl;
   final String createdAt;
   final User user;
-  final JobCategory category;
+  final JobCategory? category;
 }

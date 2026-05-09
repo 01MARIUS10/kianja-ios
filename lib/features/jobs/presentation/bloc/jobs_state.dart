@@ -132,6 +132,24 @@ class JobsGetJobOfferDetailSuccess extends JobsState {
   List<Object> get props => [jobOffer];
 }
 
+/// [GetJobApplicantPlanUsecase] succeeded.
+class JobsGetJobApplicantPlanSuccess extends JobsState {
+  const JobsGetJobApplicantPlanSuccess({required this.jobApplicantPlans});
+  final List<JobApplicantPlan> jobApplicantPlans;
+
+  @override
+  List<Object> get props => [jobApplicantPlans];
+}
+
+/// [CreateJobApplicantUseCase] succeeded.
+class JobsCreateJobApplicantSuccess extends JobsState {
+  const JobsCreateJobApplicantSuccess({required this.jobApplicant});
+  final JobApplicant jobApplicant;
+
+  @override
+  List<Object> get props => [jobApplicant];
+}
+
 /// [GetJobApplicantDetailUseCase] succeeded.
 class JobsGetJobApplicantDetailSuccess extends JobsState {
   const JobsGetJobApplicantDetailSuccess({required this.jobApplicant});
