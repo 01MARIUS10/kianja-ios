@@ -186,7 +186,7 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
             builder: (context, state) {
               final isLoading = state is JobsRequestInProgress;
               final theme = Theme.of(context);
-              final isDark = theme.brightness == Brightness.dark;
+              // final isDark = theme.brightness == Brightness.dark;
 
               return BaseScreen(
                 appBar: const TitleHeader(title: 'Post a job applicant'),

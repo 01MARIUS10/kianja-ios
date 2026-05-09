@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/fields/label_field.dart';
 import 'package:kianja/core/shared/widgets/fields/text_input_field.dart';
@@ -12,7 +11,6 @@ import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/multi_photo_upload_widget.dart';
-import 'package:image_picker/image_picker.dart';
 
 class PostTrainingCenterScreen extends StatefulWidget {
   const PostTrainingCenterScreen({super.key});
@@ -34,7 +32,7 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
   int? _selectedActorId;
 
   // ── Photos ───────────────────────────────────────────────────────────────
-  List<XFile> _photos = [];
+  // List<XFile> _photos = [];
 
   // ── Features from bloc ───────────────────────────────────────────────────
   JobFeatures? _jobFeatures;
@@ -72,8 +70,6 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
     });
   }
 
-
-
   // ── Clear ─────────────────────────────────────────────────────────────────
   void _clearValues() {
     _centerNameController.clear();
@@ -82,7 +78,7 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
       _selectedCategories.clear();
       _selectedLocationId = null;
       _selectedActorId = null;
-      _photos = [];
+      // _photos = [];
     });
   }
 
@@ -168,7 +164,7 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
                         MultiPhotoUploadWidget(
                           maxPhotos: 5,
                           onPhotosChanged: (photos) {
-                            setState(() => _photos = photos);
+                            // setState(() => _photos = photos);
                           },
                         ),
                         const SizedBox(height: Constants.spacingMedium),
@@ -197,9 +193,7 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
                               '(max 5)',
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
-                                color: isDark
-                                    ? Colors.white54
-                                    : Colors.black54,
+                                color: isDark ? Colors.white54 : Colors.black54,
                               ),
                             ),
                           ],
@@ -208,8 +202,7 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
                         if (_jobFeatures != null)
                           Wrap(
                             spacing: Constants.spacingMedium,
-                            children:
-                                _jobFeatures!.categories.map((category) {
+                            children: _jobFeatures!.categories.map((category) {
                               final isSelected = _selectedCategories.contains(
                                 category.id,
                               );
@@ -364,12 +357,12 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
                                     'POST',
                                     style: theme.textTheme.titleMedium
                                         ?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1.2,
-                                      color: isDark
-                                          ? AppColors.darkTextPrimary
-                                          : AppColors.lightTextPrimary,
-                                    ),
+                                          fontWeight: FontWeight.bold,
+                                          letterSpacing: 1.2,
+                                          color: isDark
+                                              ? AppColors.darkTextPrimary
+                                              : AppColors.lightTextPrimary,
+                                        ),
                                   ),
                           ),
                         ),
