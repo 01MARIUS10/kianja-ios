@@ -21,6 +21,7 @@ _TrainingCenterModel _$TrainingCenterModelFromJson(Map<String, dynamic> json) =>
       location: json['location'] == null
           ? null
           : JobLocationModel.fromJson(json['location'] as Map<String, dynamic>),
+      badge: $enumDecodeNullable(_$TrainingCenterBadgeEnumMap, json['badge']),
       user: UserModel.fromJson(json['user'] as Map<String, dynamic>),
       createdAt: json['created_at'] as String? ?? '',
     );
@@ -35,6 +36,13 @@ Map<String, dynamic> _$TrainingCenterModelToJson(
   'category': instance.category,
   'actor': instance.actor,
   'location': instance.location,
+  'badge': _$TrainingCenterBadgeEnumMap[instance.badge],
   'user': instance.user,
   'created_at': instance.createdAt,
+};
+
+const _$TrainingCenterBadgeEnumMap = {
+  TrainingCenterBadge.vip: 'vip',
+  TrainingCenterBadge.premium: 'premium',
+  TrainingCenterBadge.normal: 'normal',
 };

@@ -7,6 +7,7 @@ import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.da
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/features/jobs/domain/entities/training/enum/training_center_badge.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_view_category_usecase.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
@@ -103,144 +104,115 @@ class _CategoryContent extends StatelessWidget {
           ),
         );
       },
-      child: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: Constants.spacingMedium),
-
-            // ── VIP section (horizontal cards, max 3) ──────────────
-            if (vip.isNotEmpty) ...[
-              TrainingCenterVipSection(vipCenters: vip),
-              Divider(color: borderColor, thickness: 1, height: 1),
-              const SizedBox(height: Constants.spacingMedium),
-            ],
-
-            // ── Premium section (first 3 list items) ──────────────
-            if (premium.isNotEmpty) ...[
-              const _SectionHeader(
-                label: 'Premium',
-                color: AppColors.success,
-                icon: Icons.workspace_premium_rounded,
-              ),
-              ...premium.take(3).toList().asMap().entries.map((entry) {
-                final index = entry.key;
-                final center = entry.value;
-                return Column(
-                  children: [
-                    TrainingCenterItemList(
-                      trainingCenter: center,
-                      badge: TrainingCenterItemBadge.premium,
-                      onTap: () => context.pushNamed(
-                        Routes.trainingCenterDetail.name,
-                        pathParameters: {'id': center.id.toString()},
-                      ),
-                    ),
-                    if (index < premium.take(3).length - 1)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: Constants.paddingMedium,
-                        ),
-                        child: Divider(color: borderColor, height: 1),
-                      ),
-                  ],
-                );
-              }),
-              const SizedBox(height: Constants.spacingMedium),
-              Divider(color: borderColor, thickness: 1, height: 1),
-              const SizedBox(height: Constants.spacingMedium),
-            ],
-
-            // ── Normal / rest ──────────────────────────────────────
-            if (normal.isNotEmpty) ...[
-              _SectionHeader(
-                label: 'Autres',
-                color: isDark
-                    ? AppColors.darkTextSecondary
-                    : AppColors.lightTextSecondary,
-                icon: Icons.list_alt_rounded,
-              ),
-              ...normal.asMap().entries.map((entry) {
-                final index = entry.key;
-                final center = entry.value;
-                return Column(
-                  children: [
-                    TrainingCenterItemList(
-                      trainingCenter: center,
-                      onTap: () => context.pushNamed(
-                        Routes.trainingCenterDetail.name,
-                        pathParameters: {'id': center.id.toString()},
-                      ),
-                    ),
-                    if (index < normal.length - 1)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: Constants.paddingMedium,
-                        ),
-                        child: Divider(color: borderColor, height: 1),
-                      ),
-                  ],
-                );
-              }),
-            ],
-
-            // Empty state
-            if (vip.isEmpty && premium.isEmpty && normal.isEmpty)
-              _EmptyState(theme: theme),
-
-            const SizedBox(height: Constants.spacingLarge),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// ─────────────────────────────────────────────
-// Section header chip
-// ─────────────────────────────────────────────
-
-class _SectionHeader extends StatelessWidget {
-  const _SectionHeader({
-    required this.label,
-    required this.color,
-    required this.icon,
-  });
-
-  final String label;
-  final Color color;
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: Constants.paddingMedium,
-        right: Constants.paddingMedium,
-        bottom: Constants.paddingSmall,
-      ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 3,
-            height: 18,
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: BorderRadius.circular(2),
+          const SizedBox(height: Constants.spacingMedium),
+          if (vip.isNotEmpty) ...[
+            TrainingCenterVipSection(vipCenters: vip),
+            Divider(
+              color: borderColor,
+              thickness: 1,
+              height: 1,
+              indent: Constants.paddingMedium,
+              endIndent: Constants.paddingMedium,
+            ),
+            const SizedBox(height: Constants.spacingExtraSmall),
+          ],
+          Expanded(
+            child: ListView.separated(
+              itemCount: premium.length + normal.length,
+              itemBuilder: (context, index) {
+                if (index < premium.length) {
+                  return TrainingCenterItemList(
+                    trainingCenter: premium[index],
+                    badge: premium[index].badge ?? TrainingCenterBadge.normal,
+                    onTap: () => context.pushNamed(
+                      Routes.trainingCenterDetail.name,
+                      pathParameters: {'id': premium[index].id.toString()},
+                    ),
+                  );
+                }
+                return TrainingCenterItemList(
+                  trainingCenter: normal[index - premium.length],
+                  onTap: () => context.pushNamed(
+                    Routes.trainingCenterDetail.name,
+                    pathParameters: {
+                      'id': normal[index - premium.length].id.toString(),
+                    },
+                  ),
+                );
+              },
+              separatorBuilder: (context, index) => Divider(
+                color: borderColor,
+                thickness: 1,
+                height: 1,
+                indent: Constants.paddingMedium,
+                endIndent: Constants.paddingMedium,
+              ),
             ),
           ),
-          const SizedBox(width: Constants.spacingExtraSmall),
-          Icon(icon, size: Constants.iconSizeExtraSmall, color: color),
-          const SizedBox(width: Constants.spacingExtraSmall),
-          Text(
-            label,
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: color,
-            ),
-          ),
+          // if (premium.isNotEmpty) ...[
+          //   ...premium.asMap().entries.map((entry) {
+          //     final index = entry.key;
+          //     final center = entry.value;
+          //     return Column(
+          //       children: [
+          //         TrainingCenterItemList(
+          //           trainingCenter: center,
+          //           badge: center.badge ?? TrainingCenterBadge.normal,
+          //           onTap: () => context.pushNamed(
+          //             Routes.trainingCenterDetail.name,
+          //             pathParameters: {'id': center.id.toString()},
+          //           ),
+          //         ),
+          //         if (index < premium.take(3).length - 1)
+          //           Padding(
+          //             padding: const EdgeInsets.symmetric(
+          //               horizontal: Constants.paddingMedium,
+          //             ),
+          //             child: Divider(color: borderColor, height: 1),
+          //           ),
+          //       ],
+          //     );
+          //   }),
+          // ],
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(
+          //     horizontal: Constants.paddingMedium,
+          //   ),
+          //   child: Divider(color: borderColor, height: 1),
+          // ),
+          // if (normal.isNotEmpty) ...[
+          //   ...normal.asMap().entries.map((entry) {
+          //     final index = entry.key;
+          //     final center = entry.value;
+          //     return Column(
+          //       children: [
+          //         TrainingCenterItemList(
+          //           trainingCenter: center,
+          //           onTap: () => context.pushNamed(
+          //             Routes.trainingCenterDetail.name,
+          //             pathParameters: {'id': center.id.toString()},
+          //           ),
+          //         ),
+          //         if (index < normal.length - 1)
+          //           Padding(
+          //             padding: const EdgeInsets.symmetric(
+          //               horizontal: Constants.paddingMedium,
+          //             ),
+          //             child: Divider(color: borderColor, height: 1),
+          //           ),
+          //       ],
+          //     );
+          //   }),
+          // ],
+
+          // Empty state
+          if (vip.isEmpty && premium.isEmpty && normal.isEmpty)
+            _EmptyState(theme: theme),
+
+          const SizedBox(height: Constants.spacingLarge),
         ],
       ),
     );

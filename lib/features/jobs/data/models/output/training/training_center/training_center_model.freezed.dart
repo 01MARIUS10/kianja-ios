@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TrainingCenterModel {
 
-@JsonKey(defaultValue: -1) int get id;@JsonKey(defaultValue: '') String get name;@JsonKey(name: 'image_path', defaultValue: '') String? get imageUrl;@JsonKey(defaultValue: '') String get description; JobCategoryModel? get category; JobActorModel? get actor; JobLocationModel? get location;@JsonKey(name: 'user') UserModel get user;@JsonKey(name: 'created_at', defaultValue: '') String get createdAt;
+@JsonKey(defaultValue: -1) int get id;@JsonKey(defaultValue: '') String get name;@JsonKey(name: 'image_path', defaultValue: '') String? get imageUrl;@JsonKey(defaultValue: '') String get description; JobCategoryModel? get category; JobActorModel? get actor; JobLocationModel? get location; TrainingCenterBadge? get badge;@JsonKey(name: 'user') UserModel get user;@JsonKey(name: 'created_at', defaultValue: '') String get createdAt;
 /// Create a copy of TrainingCenterModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $TrainingCenterModelCopyWith<TrainingCenterModel> get copyWith => _$TrainingCent
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TrainingCenterModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.description, description) || other.description == description)&&(identical(other.category, category) || other.category == category)&&(identical(other.actor, actor) || other.actor == actor)&&(identical(other.location, location) || other.location == location)&&(identical(other.user, user) || other.user == user)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TrainingCenterModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.description, description) || other.description == description)&&(identical(other.category, category) || other.category == category)&&(identical(other.actor, actor) || other.actor == actor)&&(identical(other.location, location) || other.location == location)&&(identical(other.badge, badge) || other.badge == badge)&&(identical(other.user, user) || other.user == user)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,imageUrl,description,category,actor,location,user,createdAt);
+int get hashCode => Object.hash(runtimeType,id,name,imageUrl,description,category,actor,location,badge,user,createdAt);
 
 @override
 String toString() {
-  return 'TrainingCenterModel(id: $id, name: $name, imageUrl: $imageUrl, description: $description, category: $category, actor: $actor, location: $location, user: $user, createdAt: $createdAt)';
+  return 'TrainingCenterModel(id: $id, name: $name, imageUrl: $imageUrl, description: $description, category: $category, actor: $actor, location: $location, badge: $badge, user: $user, createdAt: $createdAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $TrainingCenterModelCopyWith<$Res>  {
   factory $TrainingCenterModelCopyWith(TrainingCenterModel value, $Res Function(TrainingCenterModel) _then) = _$TrainingCenterModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(defaultValue: -1) int id,@JsonKey(defaultValue: '') String name,@JsonKey(name: 'image_path', defaultValue: '') String? imageUrl,@JsonKey(defaultValue: '') String description, JobCategoryModel? category, JobActorModel? actor, JobLocationModel? location,@JsonKey(name: 'user') UserModel user,@JsonKey(name: 'created_at', defaultValue: '') String createdAt
+@JsonKey(defaultValue: -1) int id,@JsonKey(defaultValue: '') String name,@JsonKey(name: 'image_path', defaultValue: '') String? imageUrl,@JsonKey(defaultValue: '') String description, JobCategoryModel? category, JobActorModel? actor, JobLocationModel? location, TrainingCenterBadge? badge,@JsonKey(name: 'user') UserModel user,@JsonKey(name: 'created_at', defaultValue: '') String createdAt
 });
 
 
@@ -65,7 +65,7 @@ class _$TrainingCenterModelCopyWithImpl<$Res>
 
 /// Create a copy of TrainingCenterModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? imageUrl = freezed,Object? description = null,Object? category = freezed,Object? actor = freezed,Object? location = freezed,Object? user = null,Object? createdAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? imageUrl = freezed,Object? description = null,Object? category = freezed,Object? actor = freezed,Object? location = freezed,Object? badge = freezed,Object? user = null,Object? createdAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -74,7 +74,8 @@ as String?,description: null == description ? _self.description : description //
 as String,category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as JobCategoryModel?,actor: freezed == actor ? _self.actor : actor // ignore: cast_nullable_to_non_nullable
 as JobActorModel?,location: freezed == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
-as JobLocationModel?,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
+as JobLocationModel?,badge: freezed == badge ? _self.badge : badge // ignore: cast_nullable_to_non_nullable
+as TrainingCenterBadge?,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as UserModel,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -206,10 +207,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String name, @JsonKey(name: 'image_path', defaultValue: '')  String? imageUrl, @JsonKey(defaultValue: '')  String description,  JobCategoryModel? category,  JobActorModel? actor,  JobLocationModel? location, @JsonKey(name: 'user')  UserModel user, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String name, @JsonKey(name: 'image_path', defaultValue: '')  String? imageUrl, @JsonKey(defaultValue: '')  String description,  JobCategoryModel? category,  JobActorModel? actor,  JobLocationModel? location,  TrainingCenterBadge? badge, @JsonKey(name: 'user')  UserModel user, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TrainingCenterModel() when $default != null:
-return $default(_that.id,_that.name,_that.imageUrl,_that.description,_that.category,_that.actor,_that.location,_that.user,_that.createdAt);case _:
+return $default(_that.id,_that.name,_that.imageUrl,_that.description,_that.category,_that.actor,_that.location,_that.badge,_that.user,_that.createdAt);case _:
   return orElse();
 
 }
@@ -227,10 +228,10 @@ return $default(_that.id,_that.name,_that.imageUrl,_that.description,_that.categ
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String name, @JsonKey(name: 'image_path', defaultValue: '')  String? imageUrl, @JsonKey(defaultValue: '')  String description,  JobCategoryModel? category,  JobActorModel? actor,  JobLocationModel? location, @JsonKey(name: 'user')  UserModel user, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String name, @JsonKey(name: 'image_path', defaultValue: '')  String? imageUrl, @JsonKey(defaultValue: '')  String description,  JobCategoryModel? category,  JobActorModel? actor,  JobLocationModel? location,  TrainingCenterBadge? badge, @JsonKey(name: 'user')  UserModel user, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _TrainingCenterModel():
-return $default(_that.id,_that.name,_that.imageUrl,_that.description,_that.category,_that.actor,_that.location,_that.user,_that.createdAt);case _:
+return $default(_that.id,_that.name,_that.imageUrl,_that.description,_that.category,_that.actor,_that.location,_that.badge,_that.user,_that.createdAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -247,10 +248,10 @@ return $default(_that.id,_that.name,_that.imageUrl,_that.description,_that.categ
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String name, @JsonKey(name: 'image_path', defaultValue: '')  String? imageUrl, @JsonKey(defaultValue: '')  String description,  JobCategoryModel? category,  JobActorModel? actor,  JobLocationModel? location, @JsonKey(name: 'user')  UserModel user, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String name, @JsonKey(name: 'image_path', defaultValue: '')  String? imageUrl, @JsonKey(defaultValue: '')  String description,  JobCategoryModel? category,  JobActorModel? actor,  JobLocationModel? location,  TrainingCenterBadge? badge, @JsonKey(name: 'user')  UserModel user, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _TrainingCenterModel() when $default != null:
-return $default(_that.id,_that.name,_that.imageUrl,_that.description,_that.category,_that.actor,_that.location,_that.user,_that.createdAt);case _:
+return $default(_that.id,_that.name,_that.imageUrl,_that.description,_that.category,_that.actor,_that.location,_that.badge,_that.user,_that.createdAt);case _:
   return null;
 
 }
@@ -262,7 +263,7 @@ return $default(_that.id,_that.name,_that.imageUrl,_that.description,_that.categ
 @JsonSerializable()
 
 class _TrainingCenterModel extends TrainingCenterModel {
-  const _TrainingCenterModel({@JsonKey(defaultValue: -1) required this.id, @JsonKey(defaultValue: '') required this.name, @JsonKey(name: 'image_path', defaultValue: '') this.imageUrl, @JsonKey(defaultValue: '') required this.description, this.category, this.actor, this.location, @JsonKey(name: 'user') required this.user, @JsonKey(name: 'created_at', defaultValue: '') required this.createdAt}): super._();
+  const _TrainingCenterModel({@JsonKey(defaultValue: -1) required this.id, @JsonKey(defaultValue: '') required this.name, @JsonKey(name: 'image_path', defaultValue: '') this.imageUrl, @JsonKey(defaultValue: '') required this.description, this.category, this.actor, this.location, this.badge, @JsonKey(name: 'user') required this.user, @JsonKey(name: 'created_at', defaultValue: '') required this.createdAt}): super._();
   factory _TrainingCenterModel.fromJson(Map<String, dynamic> json) => _$TrainingCenterModelFromJson(json);
 
 @override@JsonKey(defaultValue: -1) final  int id;
@@ -272,6 +273,7 @@ class _TrainingCenterModel extends TrainingCenterModel {
 @override final  JobCategoryModel? category;
 @override final  JobActorModel? actor;
 @override final  JobLocationModel? location;
+@override final  TrainingCenterBadge? badge;
 @override@JsonKey(name: 'user') final  UserModel user;
 @override@JsonKey(name: 'created_at', defaultValue: '') final  String createdAt;
 
@@ -288,16 +290,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TrainingCenterModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.description, description) || other.description == description)&&(identical(other.category, category) || other.category == category)&&(identical(other.actor, actor) || other.actor == actor)&&(identical(other.location, location) || other.location == location)&&(identical(other.user, user) || other.user == user)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TrainingCenterModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.description, description) || other.description == description)&&(identical(other.category, category) || other.category == category)&&(identical(other.actor, actor) || other.actor == actor)&&(identical(other.location, location) || other.location == location)&&(identical(other.badge, badge) || other.badge == badge)&&(identical(other.user, user) || other.user == user)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,imageUrl,description,category,actor,location,user,createdAt);
+int get hashCode => Object.hash(runtimeType,id,name,imageUrl,description,category,actor,location,badge,user,createdAt);
 
 @override
 String toString() {
-  return 'TrainingCenterModel(id: $id, name: $name, imageUrl: $imageUrl, description: $description, category: $category, actor: $actor, location: $location, user: $user, createdAt: $createdAt)';
+  return 'TrainingCenterModel(id: $id, name: $name, imageUrl: $imageUrl, description: $description, category: $category, actor: $actor, location: $location, badge: $badge, user: $user, createdAt: $createdAt)';
 }
 
 
@@ -308,7 +310,7 @@ abstract mixin class _$TrainingCenterModelCopyWith<$Res> implements $TrainingCen
   factory _$TrainingCenterModelCopyWith(_TrainingCenterModel value, $Res Function(_TrainingCenterModel) _then) = __$TrainingCenterModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(defaultValue: -1) int id,@JsonKey(defaultValue: '') String name,@JsonKey(name: 'image_path', defaultValue: '') String? imageUrl,@JsonKey(defaultValue: '') String description, JobCategoryModel? category, JobActorModel? actor, JobLocationModel? location,@JsonKey(name: 'user') UserModel user,@JsonKey(name: 'created_at', defaultValue: '') String createdAt
+@JsonKey(defaultValue: -1) int id,@JsonKey(defaultValue: '') String name,@JsonKey(name: 'image_path', defaultValue: '') String? imageUrl,@JsonKey(defaultValue: '') String description, JobCategoryModel? category, JobActorModel? actor, JobLocationModel? location, TrainingCenterBadge? badge,@JsonKey(name: 'user') UserModel user,@JsonKey(name: 'created_at', defaultValue: '') String createdAt
 });
 
 
@@ -325,7 +327,7 @@ class __$TrainingCenterModelCopyWithImpl<$Res>
 
 /// Create a copy of TrainingCenterModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? imageUrl = freezed,Object? description = null,Object? category = freezed,Object? actor = freezed,Object? location = freezed,Object? user = null,Object? createdAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? imageUrl = freezed,Object? description = null,Object? category = freezed,Object? actor = freezed,Object? location = freezed,Object? badge = freezed,Object? user = null,Object? createdAt = null,}) {
   return _then(_TrainingCenterModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -334,7 +336,8 @@ as String?,description: null == description ? _self.description : description //
 as String,category: freezed == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as JobCategoryModel?,actor: freezed == actor ? _self.actor : actor // ignore: cast_nullable_to_non_nullable
 as JobActorModel?,location: freezed == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
-as JobLocationModel?,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
+as JobLocationModel?,badge: freezed == badge ? _self.badge : badge // ignore: cast_nullable_to_non_nullable
+as TrainingCenterBadge?,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as UserModel,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,
   ));

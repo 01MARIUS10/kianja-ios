@@ -1,4 +1,4 @@
-import 'package:kianja/features/jobs/domain/entities/training/training_name.dart';
+import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
 
 class HotEvent {
   const HotEvent({
@@ -9,7 +9,7 @@ class HotEvent {
     required this.endDate,
     required this.type,
     required this.imageUrl,
-    this.trainingName,
+    required this.center,
   });
 
   const HotEvent.empty({
@@ -20,7 +20,7 @@ class HotEvent {
     this.endDate = '',
     this.type = '',
     this.imageUrl = '',
-    this.trainingName,
+    this.center = const TrainingCenter.empty(),
   });
 
   final int id;
@@ -30,5 +30,5 @@ class HotEvent {
   final String endDate;
   final String type;
   final String imageUrl;
-  final TrainingName? trainingName;
+  final TrainingCenter center;
 }

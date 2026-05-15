@@ -2,6 +2,7 @@ import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_actor.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_category.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_location.dart';
+import 'package:kianja/features/jobs/domain/entities/training/enum/training_center_badge.dart';
 
 class TrainingCenter {
   const TrainingCenter({
@@ -12,6 +13,7 @@ class TrainingCenter {
     this.category,
     this.actor,
     this.location,
+    this.badge,
     required this.user,
     required this.createdAt,
   });
@@ -24,6 +26,7 @@ class TrainingCenter {
     this.category,
     this.actor,
     this.location,
+    this.badge,
     this.user = const User.empty(),
     this.createdAt = '',
   });
@@ -35,6 +38,7 @@ class TrainingCenter {
   final JobCategory? category;
   final JobActor? actor;
   final JobLocation? location;
+  final TrainingCenterBadge? badge;
   final User user;
   final String createdAt;
 }

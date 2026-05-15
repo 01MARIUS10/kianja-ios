@@ -5,28 +5,28 @@ import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/features/jobs/domain/entities/training/enum/training_center_badge.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
-
-enum TrainingCenterItemBadge { vip, premium, none }
 
 class TrainingCenterItemList extends StatelessWidget {
   const TrainingCenterItemList({
     super.key,
     required this.trainingCenter,
-    this.badge = TrainingCenterItemBadge.none,
+    this.badge = TrainingCenterBadge.normal,
     this.onTap,
   });
 
   final TrainingCenter trainingCenter;
-  final TrainingCenterItemBadge badge;
+  final TrainingCenterBadge badge;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = Brightness.dark == Theme.of(context).brightness;
-    final textSecondary =
-        isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary;
+    final textSecondary = isDark
+        ? AppColors.darkTextSecondary
+        : AppColors.lightTextSecondary;
 
     return InkWell(
       onTap: onTap,
@@ -45,8 +45,7 @@ class TrainingCenterItemList extends StatelessWidget {
                 width: 110,
                 height: 75,
                 child: CachedNetworkImage(
-                  imageUrl:
-                      '${EnvConfig.baseApiUrl}${trainingCenter.imageUrl}',
+                  imageUrl: '${EnvConfig.baseApiUrl}${trainingCenter.imageUrl}',
                   fit: BoxFit.cover,
                   errorWidget: (context, url, error) => Image.asset(
                     Assets.hiring,
@@ -64,13 +63,13 @@ class TrainingCenterItemList extends StatelessWidget {
                   ),
                   progressIndicatorBuilder: (context, url, progress) =>
                       Container(
-                    color: isDark
-                        ? AppColors.darkBorder
-                        : AppColors.lightBorder,
-                    child: const Center(
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    ),
-                  ),
+                        color: isDark
+                            ? AppColors.darkBorder
+                            : AppColors.lightBorder,
+                        child: const Center(
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        ),
+                      ),
                 ),
               ),
             ),
@@ -165,7 +164,7 @@ class TrainingCenterItemList extends StatelessWidget {
                       ),
 
                       // Badge
-                      if (badge != TrainingCenterItemBadge.none)
+                      if (badge != TrainingCenterBadge.normal)
                         _BadgeChip(badge: badge),
                     ],
                   ),
@@ -181,11 +180,11 @@ class TrainingCenterItemList extends StatelessWidget {
 
 class _BadgeChip extends StatelessWidget {
   const _BadgeChip({required this.badge});
-  final TrainingCenterItemBadge badge;
+  final TrainingCenterBadge badge;
 
   @override
   Widget build(BuildContext context) {
-    final isVip = badge == TrainingCenterItemBadge.vip;
+    final isVip = badge == TrainingCenterBadge.vip;
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: Constants.paddingSmall,

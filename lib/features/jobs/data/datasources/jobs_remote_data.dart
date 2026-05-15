@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/services/service_helper.dart';
 import 'package:kianja/core/utils/app_debug.dart';
+import 'package:kianja/features/jobs/data/mappers/training_center_badge_mapper.dart';
 import 'package:kianja/features/jobs/data/models/input/create_job_applicant/create_job_applicant_input_model.dart';
 import 'package:kianja/features/jobs/data/models/output/files/job_image/job_image_model.dart';
 import 'package:kianja/features/jobs/data/models/output/files/pdf_image/job_pdf_model.dart';
@@ -156,20 +157,28 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
       final List<TrainingCenterModel> trainingCentersVip =
           (contenu['Vip'] as List<dynamic>)
               .map(
-                (e) => TrainingCenterModel.fromJson(e as Map<String, dynamic>),
+                (e) => TrainingCenterModel.fromJson(
+                  e as Map<String, dynamic>,
+                ).copyWith(badge: TrainingCenterBadgeMapper.fromString('vip')),
               )
               .toList();
       final List<TrainingCenterModel> trainingCentersPremiun =
           (contenu['Premium'] as List<dynamic>)
               .map(
-                (e) => TrainingCenterModel.fromJson(e as Map<String, dynamic>),
+                (e) => TrainingCenterModel.fromJson(e as Map<String, dynamic>)
+                    .copyWith(
+                      badge: TrainingCenterBadgeMapper.fromString('premium'),
+                    ),
               )
               .toList();
       final Map<String, dynamic> contenuNormal = contenu['Normal'];
       final List<TrainingCenterModel> trainingCentersNormal =
           (contenuNormal['data'] as List<dynamic>)
               .map(
-                (e) => TrainingCenterModel.fromJson(e as Map<String, dynamic>),
+                (e) => TrainingCenterModel.fromJson(e as Map<String, dynamic>)
+                    .copyWith(
+                      badge: TrainingCenterBadgeMapper.fromString('normal'),
+                    ),
               )
               .toList();
       return TrainingCenterViewCategoryModel(

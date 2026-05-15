@@ -1,73 +1,40 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kianja/core/config/assets.dart';
+import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
-import 'package:kianja/features/jobs/presentation/widgets/enum/width_view_enum.dart';
-import 'package:kianja/features/jobs/presentation/widgets/item/card/training_center_card.dart';
 import 'package:kianja/routing/routes.dart';
 
-/// Displays up to 3 [TrainingCenter] items as VIP cards in a horizontal row.
+/// Displays up to 3 [TrainingCenter] vipCenters as VIP cards in a horizontal row.
 class TrainingCenterVipSection extends StatelessWidget {
   const TrainingCenterVipSection({super.key, required this.vipCenters});
-
   final List<TrainingCenter> vipCenters;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    // Only show max 3 VIP items
-    final items = vipCenters.take(3).toList();
+    final isDark = theme.brightness == Brightness.dark;
+    final centers = vipCenters.toList();
+    // centers.add(centers.first);
+    // centers.add(centers.first);
 
-    if (items.isEmpty) return const SizedBox.shrink();
+    if (centers.isEmpty) return const SizedBox.shrink();
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Section header
-        Padding(
-          padding: const EdgeInsets.only(
-            left: Constants.paddingMedium,
-            right: Constants.paddingMedium,
-            bottom: Constants.paddingSmall,
-          ),
-          child: Row(
-            children: [
-              Container(
-                width: 3,
-                height: 18,
-                decoration: BoxDecoration(
-                  color: AppColors.kara,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-              const SizedBox(width: Constants.spacingExtraSmall),
-              Text(
-                'VIP',
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.kara,
-                  letterSpacing: 1,
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        // VIP cards row — maximum 3
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
+        Container(
           padding: const EdgeInsets.symmetric(
             horizontal: Constants.paddingMedium,
           ),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: List.generate(items.length, (index) {
-              final center = items[index];
-              return Padding(
-                padding: EdgeInsets.only(
-                  right: index < items.length - 1 ? Constants.spacingSmall : 0,
-                ),
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: List.generate(centers.length, (index) {
+              final center = centers[index];
+              return Flexible(
+                fit: FlexFit.loose,
                 child: Stack(
                   children: [
                     InkWell(
@@ -80,9 +47,60 @@ class TrainingCenterVipSection extends StatelessWidget {
                           pathParameters: {'id': center.id.toString()},
                         );
                       },
-                      child: TrainingCenterCard(
-                        trainingCenter: center,
-                        widthViewEnum: WidthViewEnum.list,
+                      child: Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(
+                              Constants.borderRadiusSmall,
+                            ),
+                            child: SizedBox(
+                              width: 120,
+                              height: 75,
+                              child: CachedNetworkImage(
+                                imageUrl:
+                                    '${EnvConfig.baseApiUrl}${center.imageUrl}',
+                                fit: BoxFit.cover,
+                                errorWidget: (context, url, error) =>
+                                    Image.asset(
+                                      Assets.hiring,
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (ctx, e, st) => Container(
+                                        color: isDark
+                                            ? AppColors.darkBorder
+                                            : AppColors.lightBorder,
+                                        child: const Icon(
+                                          Icons.image,
+                                          size: 32,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    ),
+                                progressIndicatorBuilder:
+                                    (context, url, progress) => Container(
+                                      color: isDark
+                                          ? AppColors.darkBorder
+                                          : AppColors.lightBorder,
+                                      child: const Center(
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                        ),
+                                      ),
+                                    ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: Constants.paddingExtraSmall),
+                          SizedBox(
+                            width: 120,
+                            child: Text(
+                              center.name,
+                              maxLines: 2,
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              style: theme.textTheme.titleMedium,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     // VIP badge

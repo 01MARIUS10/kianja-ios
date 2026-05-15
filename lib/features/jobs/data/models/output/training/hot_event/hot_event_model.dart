@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:kianja/features/jobs/data/models/output/training/training_name/training_name_model.dart';
+import 'package:kianja/features/jobs/data/models/output/training/training_center/training_center_model.dart';
 import 'package:kianja/features/jobs/domain/entities/training/hot_event.dart';
 
 part 'hot_event_model.freezed.dart';
@@ -15,7 +15,7 @@ abstract class HotEventModel with _$HotEventModel implements HotEvent {
     @JsonKey(name: 'end_date', defaultValue: '') required String endDate,
     @JsonKey(defaultValue: '') required String type,
     @JsonKey(name: 'image', defaultValue: '') required String imageUrl,
-    @JsonKey(name: 'training_center') TrainingNameModel? trainingName,
+    @JsonKey(name: 'training_center') required TrainingCenterModel center,
   }) = _HotEventModel;
 
   const HotEventModel._();
