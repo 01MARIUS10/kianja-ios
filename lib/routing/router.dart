@@ -231,8 +231,10 @@ abstract class AppRouter {
                       path: Routes.trainingCenterViewCategory.path,
                       builder: (context, state) {
                         final params = state.pathParameters;
+                        final extra = state.extra as Map<String, String>? ?? {};
                         return TrainingCenterCategoryViewScreen(
-                          category: params['category'] ?? '',
+                          id: int.parse(params['id'] ?? '0'),
+                          category: extra['category'] ?? '',
                         );
                       },
                     ),

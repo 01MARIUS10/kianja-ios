@@ -406,12 +406,10 @@ class _TrainingCenterScreenState extends State<TrainingCenterScreen>
                     : AppColors.lightTextSecondary,
               ),
               onTap: () {
-                context.goNamed(
-                  Routes.jobApplicantViewAll.name,
-                  extra: {
-                    'title': category.name,
-                    'query': 'category_id=${category.id}',
-                  },
+                context.pushNamed(
+                  Routes.trainingCenterViewCategory.name,
+                  pathParameters: {'id': category.id.toString()},
+                  extra: {'category': category.name},
                 );
               },
             ),

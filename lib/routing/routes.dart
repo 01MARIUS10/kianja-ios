@@ -22,7 +22,7 @@ enum Routes {
   trainingCenterHotEventViewAll('training-center-hot-event-view-all'),
   trainingCenterHotEventDetail('training-center-hot-event-detail'),
   trainingCenterViewAll('training-center-view-all'),
-  trainingCenterViewCategory('training-center-view-category/:category'),
+  trainingCenterViewCategory('training-center-view-category/:id'),
   trainingCenterDetail('training-center-detail/:id'),
   // ------------- TRAINING CENTER ----------------
 
