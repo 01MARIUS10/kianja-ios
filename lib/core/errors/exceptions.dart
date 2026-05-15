@@ -61,6 +61,13 @@ class ConflictException extends AppException {
   const ConflictException({required super.message, super.statusCode = 409});
 }
 
+class UnprocessableEntityException extends AppException {
+  const UnprocessableEntityException({
+    required super.message,
+    super.statusCode = 422,
+  });
+}
+
 class CancelledException extends AppException {
   const CancelledException({required super.message});
 }

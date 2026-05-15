@@ -43,6 +43,9 @@ abstract interface class DioExceptionHandler {
       ),
       408 => const RequestTimeoutException(message: 'Request timeout'),
       409 => const ConflictException(message: 'Conflict'),
+      422 => const UnprocessableEntityException(
+        message: 'Unprocessable entity',
+      ),
       // Server side exceptions
       500 => const InternalServerErrorException(
         message: 'Internal server error',

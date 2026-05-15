@@ -13,6 +13,8 @@ class TextInputField extends StatelessWidget {
     this.onTap,
     this.maxLines = 1,
     this.maxLength,
+    this.validator,
+    this.autovalidateMode,
   });
 
   final TextEditingController controller;
@@ -25,12 +27,14 @@ class TextInputField extends StatelessWidget {
   final VoidCallback? onTap;
   final int? maxLines;
   final int? maxLength;
+  final String? Function(String?)? validator;
+  final AutovalidateMode? autovalidateMode;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return TextField(
+    return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
       onChanged: onChanged,
@@ -39,11 +43,13 @@ class TextInputField extends StatelessWidget {
       maxLines: maxLines,
       maxLength: maxLength,
       style: theme.textTheme.bodyMedium,
+      autovalidateMode: autovalidateMode,
       decoration: InputDecoration(
         hintText: hintText,
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
       ),
+      validator: validator,
     );
   }
 }
