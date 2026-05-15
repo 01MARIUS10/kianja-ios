@@ -132,6 +132,17 @@ class JobsGetJobOfferDetailSuccess extends JobsState {
   List<Object> get props => [jobOffer];
 }
 
+/// [GetTrainingCenterCategoriesUseCase] succeeded.
+class GetTrainingCenterCategoriesSuccess extends JobsState {
+  const GetTrainingCenterCategoriesSuccess({
+    required this.trainingCenterCategories,
+  });
+  final List<JobCategory> trainingCenterCategories;
+
+  @override
+  List<Object> get props => [trainingCenterCategories];
+}
+
 /// [GetJobApplicantPlanUsecase] succeeded.
 class JobsGetJobApplicantPlanSuccess extends JobsState {
   const JobsGetJobApplicantPlanSuccess({required this.jobApplicantPlans});
@@ -157,6 +168,73 @@ class JobsGetJobApplicantDetailSuccess extends JobsState {
 
   @override
   List<Object> get props => [jobApplicant];
+}
+
+/// [GetTrainingCenterHotEventUseCase] succeeded.
+class GetTrainingCenterHotEventSuccess extends JobsState {
+  const GetTrainingCenterHotEventSuccess({
+    required this.trainingCenterHotEvents,
+  });
+  final List<TrainingCenterHotEvent> trainingCenterHotEvents;
+
+  @override
+  List<Object> get props => [trainingCenterHotEvents];
+}
+
+/// [GetTrainingCenterFilterUseCase] succeeded.
+class GetTrainingCenterFilterSuccess extends JobsState {
+  const GetTrainingCenterFilterSuccess({required this.trainingCenterFilter});
+  final TrainingCenterFilter trainingCenterFilter;
+
+  @override
+  List<Object> get props => [trainingCenterFilter];
+}
+
+/// [ViewAllHotEventUseCase] succeeded.
+class ViewAllHotEventsSuccess extends JobsState {
+  const ViewAllHotEventsSuccess({required this.hotEvents});
+  final List<HotEvent> hotEvents;
+
+  @override
+  List<Object> get props => [hotEvents];
+}
+
+/// [ViewAllTrainingCenterUseCase] succeeded.
+class ViewAllTrainingCentersSuccess extends JobsState {
+  const ViewAllTrainingCentersSuccess({required this.trainingCenters});
+  final List<TrainingCenter> trainingCenters;
+
+  @override
+  List<Object> get props => [trainingCenters];
+}
+
+/// [GetHotEventDetailUseCase] succeeded.
+class GetHotEventDetailSuccess extends JobsState {
+  const GetHotEventDetailSuccess({required this.hotEvent});
+  final HotEvent hotEvent;
+
+  @override
+  List<Object> get props => [hotEvent];
+}
+
+/// [GetTrainingCenterDetailUsecase] succeeded.
+class GetTrainingCenterDetailSuccess extends JobsState {
+  const GetTrainingCenterDetailSuccess({required this.trainingCenter});
+  final TrainingCenter trainingCenter;
+
+  @override
+  List<Object> get props => [trainingCenter];
+}
+
+/// [GetTrainingCenterViewCategoryUseCase] succeeded.
+class GetTrainingCenterViewCategorySuccess extends JobsState {
+  const GetTrainingCenterViewCategorySuccess({
+    required this.trainingCenterViewCategory,
+  });
+  final TrainingCenterViewCategory trainingCenterViewCategory;
+
+  @override
+  List<Object> get props => [trainingCenterViewCategory];
 }
 
 /// Any request failed.

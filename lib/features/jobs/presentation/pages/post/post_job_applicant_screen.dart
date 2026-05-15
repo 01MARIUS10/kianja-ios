@@ -222,19 +222,19 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                         ),
                         const SizedBox(height: Constants.spacingMedium),
 
-                        // ── Photo ────────────────────────────────────────
-                        const LabelField(label: 'Recent photo (optional)'),
-                        const SizedBox(height: Constants.spacingSmall),
-                        SinglePhotoUploadWidget(
-                          onPhotoChanged: (photo) {
-                            if (photo != null) {
-                              BlocProvider.of<JobsBloc>(
-                                context,
-                              ).add(JobsUploadImageRequested(file: photo));
-                            }
-                          },
-                        ),
-                        const SizedBox(height: Constants.spacingMedium),
+                        // // ── Photo ────────────────────────────────────────
+                        // const LabelField(label: 'Recent photo (optional)'),
+                        // const SizedBox(height: Constants.spacingSmall),
+                        // SinglePhotoUploadWidget(
+                        //   onPhotoChanged: (photo) {
+                        //     if (photo != null) {
+                        //       BlocProvider.of<JobsBloc>(
+                        //         context,
+                        //       ).add(JobsUploadImageRequested(file: photo));
+                        //     }
+                        //   },
+                        // ),
+                        // const SizedBox(height: Constants.spacingMedium),
 
                         // ── Resume ───────────────────────────────────────
                         const LabelField(label: 'Resume (optional)'),

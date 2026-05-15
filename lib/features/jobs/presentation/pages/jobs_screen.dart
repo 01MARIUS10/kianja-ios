@@ -4,8 +4,8 @@ import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/logo_header.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/presentation/pages/job_applicant/job_applicants_screen.dart';
-import 'package:kianja/features/jobs/presentation/pages/job_categories/training_center_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/job_offer/job_offers_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/training_center/training_center_screen.dart';
 
 class JobsScreen extends StatefulWidget {
   const JobsScreen({super.key});
@@ -46,8 +46,8 @@ class _JobsScreenState extends State<JobsScreen> with TickerProviderStateMixin {
                 vertical: Constants.spacingZero,
               ),
               controller: _tabController,
-              isScrollable: true,
-              tabAlignment: TabAlignment.start,
+              // isScrollable: true,
+              tabAlignment: TabAlignment.fill,
               indicatorSize: TabBarIndicatorSize.tab,
 
               // indicatorColor: Colors.transparent,

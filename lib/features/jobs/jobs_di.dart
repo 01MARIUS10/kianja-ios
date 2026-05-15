@@ -5,6 +5,7 @@ import 'package:kianja/features/jobs/data/repositories/jobs_repository_impl.dart
 import 'package:kianja/features/jobs/domain/repositories/jobs_repository.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_offer_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_filters_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_plan_usecase.dart';
@@ -13,10 +14,17 @@ import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_
 import 'package:kianja/features/jobs/domain/usecases/get_job_features_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_offer_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_offers_group_by_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_training_center_categories_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_training_center_detail_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_training_center_filter_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_training_center_hot_event_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_training_center_view_category_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/upload_image_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/upload_pdf_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/view_all_hot_event_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_job_applicants/view_all_job_applicants_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_job_offers_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/view_all_training_centers_usecase.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 
 Future<void> initJobsDependencies(GetIt getIt, Dio dio) async {
@@ -73,6 +81,30 @@ Future<void> initJobsDependencies(GetIt getIt, Dio dio) async {
   getIt.registerLazySingleton<CreateJobApplicantUseCase>(
     () => CreateJobApplicantUseCase(jobsRepository: getIt()),
   );
+  getIt.registerLazySingleton<GetTrainingCenterCategoriesUseCase>(
+    () => GetTrainingCenterCategoriesUseCase(jobsRepository: getIt()),
+  );
+  getIt.registerLazySingleton<GetTrainingCenterFilterUseCase>(
+    () => GetTrainingCenterFilterUseCase(jobsRepository: getIt()),
+  );
+  getIt.registerLazySingleton<GetTrainingCenterHotEventUseCase>(
+    () => GetTrainingCenterHotEventUseCase(jobsRepository: getIt()),
+  );
+  getIt.registerLazySingleton<ViewAllHotEventUseCase>(
+    () => ViewAllHotEventUseCase(jobsRepository: getIt()),
+  );
+  getIt.registerLazySingleton<ViewAllTrainingCenterUseCase>(
+    () => ViewAllTrainingCenterUseCase(jobsRepository: getIt()),
+  );
+  getIt.registerLazySingleton<GetHotEventDetailUseCase>(
+    () => GetHotEventDetailUseCase(jobsRepository: getIt()),
+  );
+  getIt.registerLazySingleton<GetTrainingCenterDetailUseCase>(
+    () => GetTrainingCenterDetailUseCase(jobsRepository: getIt()),
+  );
+  getIt.registerLazySingleton<GetTrainingCenterViewCategoryUseCase>(
+    () => GetTrainingCenterViewCategoryUseCase(jobsRepository: getIt()),
+  );
 
   // Bloc
   getIt.registerFactory(
@@ -91,6 +123,14 @@ Future<void> initJobsDependencies(GetIt getIt, Dio dio) async {
       getJobOfferDetailUseCase: getIt(),
       getJobApplicantPlanUsecase: getIt(),
       createJobApplicantUseCase: getIt(),
+      getTrainingCenterCategoriesUseCase: getIt(),
+      getTrainingCenterFilterUseCase: getIt(),
+      getTrainingCenterHotEventUseCase: getIt(),
+      viewAllHotEventUseCase: getIt(),
+      viewAllTrainingCenterUseCase: getIt(),
+      getHotEventDetailUseCase: getIt(),
+      getTrainingCenterDetailUseCase: getIt(),
+      getTrainingCenterViewCategoryUseCase: getIt(),
     ),
   );
 }

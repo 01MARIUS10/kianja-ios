@@ -7,6 +7,7 @@ import 'package:kianja/core/services/service_helper.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/features/jobs/data/datasources/jobs_remote_data.dart';
 import 'package:kianja/features/jobs/data/models/input/create_job_applicant/create_job_applicant_input_model.dart';
+import 'package:kianja/features/jobs/data/models/output/training/training_center_view_category/training_center_view_category_model.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_image.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_pdf.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
@@ -17,14 +18,107 @@ import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer_filter.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_category.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
+import 'package:kianja/features/jobs/domain/entities/training/hot_event.dart';
+import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
+import 'package:kianja/features/jobs/domain/entities/training/training_center_filter.dart';
+import 'package:kianja/features/jobs/domain/entities/training/training_center_hot_event.dart';
 import 'package:kianja/features/jobs/domain/repositories/jobs_repository.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_job_applicants/view_all_job_applicants_params.dart';
 
 class JobsRepositoryImpl implements JobsRepository {
   const JobsRepositoryImpl({required this.remoteDataSource});
   final JobsRemoteDataSource remoteDataSource;
+
+  @override
+  Future<Either<Failure, TrainingCenterViewCategoryModel>>
+  getTrainingCenterViewCategory({required int id}) async {
+    try {
+      final response = await remoteDataSource.getTrainingCenterViewCategory(
+        id: id,
+      );
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<HotEvent>>> viewAllHotEvents({
+    required String query,
+  }) async {
+    try {
+      final response = await remoteDataSource.viewAllHotEvents(query: query);
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, HotEvent>> getHotEventDetail({
+    required GetHotEventDetailParams getHotEventDetailParams,
+  }) async {
+    try {
+      final response = await remoteDataSource.getHotEventDetail(
+        query: getHotEventDetailParams.query,
+        id: getHotEventDetailParams.id,
+      );
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, TrainingCenter>> getTrainingCenterDetail({
+    required int id,
+  }) async {
+    try {
+      final response = await remoteDataSource.getTrainingCenterDetail(id: id);
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<TrainingCenter>>> viewAllTrainingCenters({
+    required String query,
+  }) async {
+    try {
+      final response = await remoteDataSource.viewAllTrainingCenters(
+        query: query,
+      );
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<TrainingCenterHotEvent>>>
+  getTrainingCenterHotEvent() async {
+    try {
+      final response = await remoteDataSource.getTrainingCenterHotEvent();
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, TrainingCenterFilter>>
+  getTrainingCenterFilter() async {
+    try {
+      final response = await remoteDataSource.getTrainingCenterFilter();
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
 
   @override
   Future<Either<Failure, JobFeatures>> getJobFeatures() async {
@@ -104,6 +198,17 @@ class JobsRepositoryImpl implements JobsRepository {
       final response = await remoteDataSource.viewAllJobApplicants(
         query: viewAllJobApplicantsParams.query,
       );
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<JobCategory>>>
+  getTrainingCenterCategories() async {
+    try {
+      final response = await remoteDataSource.getTrainingCenterCategories();
       return right(response);
     } on AppException catch (e) {
       return left(failureHandler(e));

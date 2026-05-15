@@ -81,6 +81,14 @@ class _SubscribeExpertsExecutivesScreenState
       AppMessenger.showWarning(context, 'Please enter your address');
       return;
     }
+    if (_phoneController.text.trim().isEmpty) {
+      AppMessenger.showWarning(context, 'Please enter your phone number');
+      return;
+    }
+    if (_emailController.text.trim().isEmpty) {
+      AppMessenger.showWarning(context, 'Please enter your email');
+      return;
+    }
     if (_selectedDomainIds.isEmpty) {
       AppMessenger.showWarning(
         context,
@@ -112,8 +120,9 @@ class _SubscribeExpertsExecutivesScreenState
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GetIt.instance<JobsBloc>()
-        ..add(const JobApplicantProfessionsFetchRequested()),
+      create: (context) =>
+          GetIt.instance<JobsBloc>()
+            ..add(const JobApplicantProfessionsFetchRequested()),
       child: Builder(
         builder: (context) {
           return BlocConsumer<JobsBloc, JobsState>(
@@ -187,30 +196,31 @@ class _SubscribeExpertsExecutivesScreenState
                         const SizedBox(height: Constants.spacingMedium),
 
                         // ── Phone ───────────────────────────────────────
-                        const LabelField(label: 'Phone'),
+                        const LabelField(label: 'Phone *'),
                         const SizedBox(height: Constants.spacingSmall),
                         PhoneInputField(controller: _phoneController),
                         const SizedBox(height: Constants.spacingMedium),
 
                         // ── Email ───────────────────────────────────────
-                        Row(
-                          children: [
-                            Text(
-                              'Email ',
-                              style: theme.textTheme.titleSmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              '(optional)',
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                color: isDark
-                                    ? AppColors.darkTextSecondary
-                                    : AppColors.lightTextSecondary,
-                              ),
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   children: [
+                        //     Text(
+                        //       'Email ',
+                        //       style: theme.textTheme.titleSmall?.copyWith(
+                        //         fontWeight: FontWeight.bold,
+                        //       ),
+                        //     ),
+                        //     Text(
+                        //       '(optional)',
+                        //       style: theme.textTheme.bodyMedium?.copyWith(
+                        //         color: isDark
+                        //             ? AppColors.darkTextSecondary
+                        //             : AppColors.lightTextSecondary,
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        const LabelField(label: 'Email *'),
                         const SizedBox(height: Constants.spacingSmall),
                         TextInputField(
                           controller: _emailController,
@@ -283,7 +293,9 @@ class _SubscribeExpertsExecutivesScreenState
                         // ── Note info box ───────────────────────────────
                         Container(
                           width: double.infinity,
-                          padding: const EdgeInsets.all(Constants.paddingMedium),
+                          padding: const EdgeInsets.all(
+                            Constants.paddingMedium,
+                          ),
                           decoration: BoxDecoration(
                             color: isDark
                                 ? AppColors.darkBrandTint
@@ -332,10 +344,7 @@ class _SubscribeExpertsExecutivesScreenState
                         const SizedBox(height: Constants.spacingSmall),
                         Row(
                           children: [
-                            Text(
-                              'KARA : ',
-                              style: theme.textTheme.bodyMedium,
-                            ),
+                            Text('KARA : ', style: theme.textTheme.bodyMedium),
                             Image.asset(
                               Assets.kara,
                               height: 20,
