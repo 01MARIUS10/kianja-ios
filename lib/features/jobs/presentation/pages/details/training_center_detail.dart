@@ -265,24 +265,24 @@ class TrainingCenterDetail extends StatelessWidget {
     );
   }
 
-  Widget _buildFeatureRow(
-    BuildContext context, {
-    required String label,
-    required String value,
-  }) {
-    final theme = Theme.of(context);
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          '$label :',
-          style: theme.textTheme.bodySmall?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(width: Constants.spacingExtraSmall),
-        Expanded(child: Text(value, style: theme.textTheme.bodySmall)),
-      ],
-    );
-  }
+  // Widget _buildFeatureRow(
+  //   BuildContext context, {
+  //   required String label,
+  //   required String value,
+  // }) {
+  //   final theme = Theme.of(context);
+  //   return Row(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         '$label :',
+  //         style: theme.textTheme.bodySmall?.copyWith(
+  //           fontWeight: FontWeight.bold,
+  //         ),
+  //       ),
+  //       const SizedBox(width: Constants.spacingExtraSmall),
+  //       Expanded(child: Text(value, style: theme.textTheme.bodySmall)),
+  //     ],
+  //   );
+  // }
 }
