@@ -161,6 +161,8 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
                         const SizedBox(height: Constants.spacingMedium),
 
                         // ── Images (multi upload) ─────────────────────────
+                        const LabelField(label: 'Photo'),
+                        const SizedBox(height: Constants.spacingSmall),
                         MultiPhotoUploadWidget(
                           maxPhotos: 5,
                           onPhotosChanged: (photos) {

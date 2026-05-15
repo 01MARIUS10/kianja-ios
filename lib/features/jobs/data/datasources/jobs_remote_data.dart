@@ -14,6 +14,11 @@ import 'package:kianja/features/jobs/data/models/output/jobs/job_offer/job_offer
 import 'package:kianja/features/jobs/data/models/output/jobs/job_offer_filter/job_offer_filter_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_category/job_category_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_features/job_features_model.dart';
+import 'package:kianja/features/jobs/data/models/output/training/hot_event/hot_event_model.dart';
+import 'package:kianja/features/jobs/data/models/output/training/training_center/training_center_model.dart';
+import 'package:kianja/features/jobs/data/models/output/training/training_center_filter/training_center_filter_model.dart';
+import 'package:kianja/features/jobs/data/models/output/training/training_center_hot_event/training_center_hot_event_model.dart';
+import 'package:kianja/features/jobs/data/models/output/training/training_center_view_category/training_center_view_category_model.dart';
 
 abstract interface class JobsRemoteDataSource {
   Future<JobFeaturesModel> getJobFeatures();
@@ -46,11 +51,134 @@ abstract interface class JobsRemoteDataSource {
   });
   Future<JobOfferModel> getJobOfferDetail({required int id});
   Future<JobApplicantModel> getJobApplicantDetail({required int id});
+  Future<HotEventModel> getHotEventDetail({
+    required String query,
+    required int id,
+  });
+  Future<TrainingCenterModel> getTrainingCenterDetail({required int id});
+  Future<List<JobCategoryModel>> getTrainingCenterCategories();
+  Future<List<TrainingCenterHotEventModel>> getTrainingCenterHotEvent();
+  Future<TrainingCenterFilterModel> getTrainingCenterFilter();
+  Future<List<HotEventModel>> viewAllHotEvents({required String query});
+  Future<List<TrainingCenterModel>> viewAllTrainingCenters({
+    required String query,
+  });
+  Future<TrainingCenterViewCategoryModel> getTrainingCenterViewCategory({
+    required int id,
+  });
 }
 
 class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
   const JobsRemoteDataSourceImpl({required this.dio});
   final Dio dio;
+
+  @override
+  Future<HotEventModel> getHotEventDetail({
+    required String query,
+    required int id,
+  }) async {
+    return requestHandler(() async {
+      final response = await dio.get('/api/training-centers$query/$id');
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      return HotEventModel.fromJson(result['Contenu']);
+    });
+  }
+
+  @override
+  Future<TrainingCenterModel> getTrainingCenterDetail({required int id}) async {
+    return requestHandler(() async {
+      final response = await dio.get('/api/training-centers/$id');
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      return TrainingCenterModel.fromJson(result['Contenu']);
+    });
+  }
+
+  @override
+  Future<List<TrainingCenterHotEventModel>> getTrainingCenterHotEvent() async {
+    return requestHandler(() async {
+      final response = await dio.get('/api/training-centers');
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      return (result['Contenu'] as List<dynamic>)
+          .take(2)
+          .map(
+            (e) =>
+                TrainingCenterHotEventModel.fromJson(e as Map<String, dynamic>),
+          )
+          .toList();
+    });
+  }
+
+  @override
+  Future<TrainingCenterFilterModel> getTrainingCenterFilter() async {
+    return requestHandler(() async {
+      final response = await dio.get('/api/training-centers');
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      return TrainingCenterFilterModel.fromJson(
+        (result['Contenu'] as List<dynamic>).last as Map<String, dynamic>,
+      );
+    });
+  }
+
+  @override
+  Future<List<HotEventModel>> viewAllHotEvents({required String query}) async {
+    return requestHandler(() async {
+      final response = await dio.get('/api/training-centers$query');
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      final Map<String, dynamic> contenu = result['Contenu'];
+      return (contenu['data'] as List<dynamic>)
+          .map((e) => HotEventModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    });
+  }
+
+  @override
+  Future<List<TrainingCenterModel>> viewAllTrainingCenters({
+    required String query,
+  }) async {
+    return requestHandler(() async {
+      final response = await dio.get('/api/training-centers?$query');
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      final Map<String, dynamic> contenu = result['Contenu'];
+      return (contenu['data'] as List<dynamic>)
+          .map((e) => TrainingCenterModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    });
+  }
+
+  @override
+  Future<TrainingCenterViewCategoryModel> getTrainingCenterViewCategory({
+    required int id,
+  }) async {
+    return requestHandler(() async {
+      final response = await dio.get('/api/training-centers/categories/$id');
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      final Map<String, dynamic> contenu = result['Contenu'];
+      final List<TrainingCenterModel> trainingCentersVip =
+          (contenu['Vip'] as List<dynamic>)
+              .map(
+                (e) => TrainingCenterModel.fromJson(e as Map<String, dynamic>),
+              )
+              .toList();
+      final List<TrainingCenterModel> trainingCentersPremiun =
+          (contenu['Premium'] as List<dynamic>)
+              .map(
+                (e) => TrainingCenterModel.fromJson(e as Map<String, dynamic>),
+              )
+              .toList();
+      final Map<String, dynamic> contenuNormal = contenu['Normal'];
+      final List<TrainingCenterModel> trainingCentersNormal =
+          (contenuNormal['data'] as List<dynamic>)
+              .map(
+                (e) => TrainingCenterModel.fromJson(e as Map<String, dynamic>),
+              )
+              .toList();
+      return TrainingCenterViewCategoryModel(
+        vip: trainingCentersVip,
+        premium: trainingCentersPremiun,
+        normal: trainingCentersNormal,
+      );
+    });
+  }
 
   @override
   Future<JobFeaturesModel> getJobFeatures() async {
@@ -145,6 +273,18 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
 
       return (contenu['data'] as List<dynamic>)
           .map((e) => JobApplicantModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    });
+  }
+
+  @override
+  Future<List<JobCategoryModel>> getTrainingCenterCategories() async {
+    return requestHandler(() async {
+      final response = await dio.get('/api/training-centers/categories');
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      final Map<String, dynamic> content = result['Contenu'];
+      return (content['categories'] as List<dynamic>)
+          .map((e) => JobCategoryModel.fromJson(e as Map<String, dynamic>))
           .toList();
     });
   }

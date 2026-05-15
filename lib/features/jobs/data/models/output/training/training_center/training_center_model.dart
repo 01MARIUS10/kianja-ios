@@ -1,0 +1,31 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:kianja/core/shared/app_feature/data/models/user/user_model.dart';
+import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_actor/job_actor_model.dart';
+import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_category/job_category_model.dart';
+import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_location/job_location_model.dart';
+import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
+
+part 'training_center_model.freezed.dart';
+part 'training_center_model.g.dart';
+
+@freezed
+abstract class TrainingCenterModel
+    with _$TrainingCenterModel
+    implements TrainingCenter {
+  const factory TrainingCenterModel({
+    @JsonKey(defaultValue: -1) required int id,
+    @JsonKey(defaultValue: '') required String name,
+    @JsonKey(name: 'image_path', defaultValue: '') String? imageUrl,
+    @JsonKey(defaultValue: '') required String description,
+    JobCategoryModel? category,
+    JobActorModel? actor,
+    JobLocationModel? location,
+    @JsonKey(name: 'user') required UserModel user,
+    @JsonKey(name: 'created_at', defaultValue: '') required String createdAt,
+  }) = _TrainingCenterModel;
+
+  const TrainingCenterModel._();
+
+  factory TrainingCenterModel.fromJson(Map<String, dynamic> json) =>
+      _$TrainingCenterModelFromJson(json);
+}

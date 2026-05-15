@@ -11,19 +11,24 @@ import 'package:kianja/features/account/presentation/pages/personal_info/update_
 import 'package:kianja/features/auth/presentation/pages/signin_screen.dart';
 import 'package:kianja/features/auth/presentation/pages/signup_screen.dart';
 import 'package:kianja/features/choose_lang/presentation/pages/choose_lang_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/details/hot_event_detail_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/details/job_applicant_detail_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/details/job_offer_detail_screen.dart';
-import 'package:kianja/features/jobs/presentation/pages/job_applicants_view_all_screen.dart';
-import 'package:kianja/features/jobs/presentation/pages/job_category_view_all_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/details/training_center_detail.dart';
 import 'package:kianja/features/jobs/presentation/pages/jobs_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_experts_executives_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_job_applicant_screen.dart';
-import 'package:kianja/features/jobs/presentation/pages/post/post_job_applicant_successful_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_job_offer_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_screen.dart';
-import 'package:kianja/features/jobs/presentation/pages/post/post_successful_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_training_center_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/subscribe_experts_executives_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/post/successful/post_job_applicant_successful_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/post/successful/post_job_offer_successful_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/training_center/training_center_category_view_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/view_all/job_applicants_view_all_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/view_all/job_category_view_all_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/view_all/training_center_hot_event_view_all_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/view_all/training_center_view_all_screen.dart';
 import 'package:kianja/features/my_post/presentation/pages/my_post_screen.dart';
 import 'package:kianja/routing/navigation/navigation.dart';
 import 'package:kianja/routing/routes.dart';
@@ -173,6 +178,64 @@ abstract class AppRouter {
                         );
                       },
                     ),
+                    GoRoute(
+                      name: Routes.trainingCenterHotEventDetail.name,
+                      path: Routes.trainingCenterHotEventDetail.path,
+                      builder: (context, state) {
+                        final extra = state.extra as Map<String, String>? ?? {};
+                        return HotEventDetailScreen(
+                          id: int.parse(extra['id'] ?? '0'),
+                          name: extra['category'] ?? '',
+                          query: extra['query'] ?? '',
+                        );
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.trainingCenterDetail.name,
+                      path: Routes.trainingCenterDetail.path,
+                      builder: (context, state) {
+                        final params = state.pathParameters;
+                        return TrainingCenterDetail(
+                          id: int.parse(params['id'] ?? '0'),
+                        );
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.trainingCenterHotEventViewAll.name,
+                      path: Routes.trainingCenterHotEventViewAll.path,
+                      builder: (context, state) {
+                        final extra = state.extra as Map<String, String>? ?? {};
+                        AppDebug.showPrint('title ${extra['title']}');
+                        AppDebug.showPrint('query ${extra['query']}');
+                        return TrainingCenterHotEventViewAllScreen(
+                          title: extra['title'] ?? '',
+                          query: extra['query'] ?? '',
+                        );
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.trainingCenterViewAll.name,
+                      path: Routes.trainingCenterViewAll.path,
+                      builder: (context, state) {
+                        final extra = state.extra as Map<String, String>? ?? {};
+                        AppDebug.showPrint('title ${extra['title']}');
+                        AppDebug.showPrint('query ${extra['query']}');
+                        return TrainingCenterViewAllScreen(
+                          title: extra['title'] ?? '',
+                          query: extra['query'] ?? '',
+                        );
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.trainingCenterViewCategory.name,
+                      path: Routes.trainingCenterViewCategory.path,
+                      builder: (context, state) {
+                        final params = state.pathParameters;
+                        return TrainingCenterCategoryViewScreen(
+                          category: params['category'] ?? '',
+                        );
+                      },
+                    ),
                   ],
                 ),
               ],
@@ -203,11 +266,11 @@ abstract class AppRouter {
                       },
                       routes: [
                         GoRoute(
-                          name: Routes.postSuccessful.name,
-                          path: Routes.postSuccessful.path,
+                          name: Routes.postJobOfferSuccessful.name,
+                          path: Routes.postJobOfferSuccessful.path,
                           builder: (context, state) {
                             final params = state.pathParameters;
-                            return PostSuccessfulScreen(
+                            return PostJobOfferSuccessfulScreen(
                               id: int.parse(params['id'] ?? '0'),
                             );
                           },

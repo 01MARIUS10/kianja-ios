@@ -18,15 +18,24 @@ enum Routes {
   jobApplicantDetail('job-applicant-detail/:id'),
   // ------------- JOB APPLICANT ----------------
 
+  // ------------- TRAINING CENTER ----------------
+  trainingCenterHotEventViewAll('training-center-hot-event-view-all'),
+  trainingCenterHotEventDetail('training-center-hot-event-detail'),
+  trainingCenterViewAll('training-center-view-all'),
+  trainingCenterViewCategory('training-center-view-category/:category'),
+  trainingCenterDetail('training-center-detail/:id'),
+  // ------------- TRAINING CENTER ----------------
+
   // ------------- POST ----------------
   post('/post'),
   postJobApplicant('job-applicant'),
   postJobOffer('job-offer'),
-  postSuccessful('successfully-posted/:id'),
-  postJobApplicantSuccessful('job-applicantsuccessfully-posted/:id'),
   postTrainingCenter('training-center'),
   postExpertExecutive('expert-executive'),
   subscribeExpertExecutive('subscribe-expert-executive'),
+  postJobOfferSuccessful('job-offer-successfully-posted/:id'),
+  postJobApplicantSuccessful('job-applicant-successfully-posted/:id'),
+  postTrainingCenterSuccessful('training-center-successfully-posted/:id'),
   // ------------- POST ----------------
 
   // ------------- MY POST ----------------

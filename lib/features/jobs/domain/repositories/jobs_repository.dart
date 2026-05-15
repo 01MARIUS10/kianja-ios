@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/errors/failures.dart';
+import 'package:kianja/features/jobs/data/models/output/training/training_center_view_category/training_center_view_category_model.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_image.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_pdf.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
@@ -12,7 +13,12 @@ import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer_filter.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_category.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
+import 'package:kianja/features/jobs/domain/entities/training/hot_event.dart';
+import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
+import 'package:kianja/features/jobs/domain/entities/training/training_center_filter.dart';
+import 'package:kianja/features/jobs/domain/entities/training/training_center_hot_event.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_job_applicants/view_all_job_applicants_params.dart';
 
@@ -26,6 +32,14 @@ abstract interface class JobsRepository {
   Future<Either<Failure, List<JobOffer>>> viewAllJobOffers({
     required String query,
   });
+  Future<Either<Failure, List<HotEvent>>> viewAllHotEvents({
+    required String query,
+  });
+  Future<Either<Failure, List<TrainingCenter>>> viewAllTrainingCenters({
+    required String query,
+  });
+  Future<Either<Failure, TrainingCenterViewCategoryModel>>
+  getTrainingCenterViewCategory({required int id});
   Future<Either<Failure, List<JobApplicantZone>>> getJobApplicantsZone({
     required GetJobApplicantParams getJobApplicantParams,
   });
@@ -38,6 +52,10 @@ abstract interface class JobsRepository {
   Future<Either<Failure, JobApplicant>> createJobApplicant({
     required CreateJobApplicantParams createJobApplicantParams,
   });
+  Future<Either<Failure, List<TrainingCenterHotEvent>>>
+  getTrainingCenterHotEvent();
+  Future<Either<Failure, TrainingCenterFilter>> getTrainingCenterFilter();
+  Future<Either<Failure, List<JobCategory>>> getTrainingCenterCategories();
   Future<Either<Failure, JobOffer>> createJobOffer({
     required String title,
     required int imageId,
@@ -51,6 +69,12 @@ abstract interface class JobsRepository {
   });
   Future<Either<Failure, JobOffer>> getJobOfferDetail({required int id});
   Future<Either<Failure, JobApplicant>> getJobApplicantDetail({
+    required int id,
+  });
+  Future<Either<Failure, HotEvent>> getHotEventDetail({
+    required GetHotEventDetailParams getHotEventDetailParams,
+  });
+  Future<Either<Failure, TrainingCenter>> getTrainingCenterDetail({
     required int id,
   });
 }

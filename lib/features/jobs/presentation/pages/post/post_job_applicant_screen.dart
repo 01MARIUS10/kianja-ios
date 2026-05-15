@@ -15,7 +15,6 @@ import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/post_features_section.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/single_pdf_upload_widget.dart';
-import 'package:kianja/features/jobs/presentation/widgets/post/single_photo_upload_widget.dart';
 import 'package:kianja/routing/routes.dart';
 
 class PostJobApplicantScreen extends StatefulWidget {
@@ -222,19 +221,19 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                         ),
                         const SizedBox(height: Constants.spacingMedium),
 
-                        // ── Photo ────────────────────────────────────────
-                        const LabelField(label: 'Recent photo (optional)'),
-                        const SizedBox(height: Constants.spacingSmall),
-                        SinglePhotoUploadWidget(
-                          onPhotoChanged: (photo) {
-                            if (photo != null) {
-                              BlocProvider.of<JobsBloc>(
-                                context,
-                              ).add(JobsUploadImageRequested(file: photo));
-                            }
-                          },
-                        ),
-                        const SizedBox(height: Constants.spacingMedium),
+                        // // ── Photo ────────────────────────────────────────
+                        // const LabelField(label: 'Recent photo (optional)'),
+                        // const SizedBox(height: Constants.spacingSmall),
+                        // SinglePhotoUploadWidget(
+                        //   onPhotoChanged: (photo) {
+                        //     if (photo != null) {
+                        //       BlocProvider.of<JobsBloc>(
+                        //         context,
+                        //       ).add(JobsUploadImageRequested(file: photo));
+                        //     }
+                        //   },
+                        // ),
+                        // const SizedBox(height: Constants.spacingMedium),
 
                         // ── Resume ───────────────────────────────────────
                         const LabelField(label: 'Resume (optional)'),

@@ -178,3 +178,72 @@ class JobCreateJobApplicantRequested extends JobsEvent {
   @override
   List<Object> get props => [createJobApplicantParams];
 }
+
+/// Fetch training center hot events.
+class ViewAllHotEventsRequested extends JobsEvent {
+  const ViewAllHotEventsRequested({required this.viewAllHotEventParams});
+  final ViewAllHotEventParams viewAllHotEventParams;
+
+  @override
+  List<Object> get props => [viewAllHotEventParams];
+}
+
+/// Fetch training center filters.
+class ViewAllTrainingCentersRequested extends JobsEvent {
+  const ViewAllTrainingCentersRequested({
+    required this.viewAllTrainingCentersParams,
+  });
+  final ViewAllTrainingCentersParams viewAllTrainingCentersParams;
+
+  @override
+  List<Object> get props => [viewAllTrainingCentersParams];
+}
+
+/// Fetch training center hot events.
+class GetTrainingCenterHotEventRequested extends JobsEvent {
+  const GetTrainingCenterHotEventRequested();
+
+  @override
+  List<Object> get props => [];
+}
+
+/// Fetch training center filters.
+class GetTrainingCenterFilterRequested extends JobsEvent {
+  const GetTrainingCenterFilterRequested();
+
+  @override
+  List<Object> get props => [];
+}
+
+class GetTrainingCenterCategoriesRequested extends JobsEvent {
+  const GetTrainingCenterCategoriesRequested();
+
+  @override
+  List<Object> get props => [];
+}
+
+class GetHotEventDetailRequested extends JobsEvent {
+  const GetHotEventDetailRequested({required this.getHotEventDetailParams});
+  final GetHotEventDetailParams getHotEventDetailParams;
+
+  @override
+  List<Object> get props => [getHotEventDetailParams];
+}
+
+class GetTrainingCenterDetailRequested extends JobsEvent {
+  const GetTrainingCenterDetailRequested({
+    required this.trainingCenterDetailParams,
+  });
+  final TrainingCenterDetailParams trainingCenterDetailParams;
+
+  @override
+  List<Object> get props => [trainingCenterDetailParams];
+}
+
+class GetTrainingCenterViewCategoryRequested extends JobsEvent {
+  const GetTrainingCenterViewCategoryRequested({required this.params});
+  final GetTrainingCenterViewCategoryParams params;
+
+  @override
+  List<Object> get props => [params];
+}

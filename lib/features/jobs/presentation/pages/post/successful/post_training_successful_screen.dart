@@ -6,8 +6,8 @@ import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/routing/routes.dart';
 
-class PostSuccessfulScreen extends StatelessWidget {
-  const PostSuccessfulScreen({super.key, required this.id});
+class PostTrainingSuccessfulScreen extends StatelessWidget {
+  const PostTrainingSuccessfulScreen({super.key, required this.id});
   final int id;
 
   @override
@@ -41,7 +41,7 @@ class PostSuccessfulScreen extends StatelessWidget {
             TextButton(
               onPressed: () {
                 context.pushReplacementNamed(
-                  Routes.jobOfferDetail.name,
+                  Routes.trainingCenterDetail.name,
                   pathParameters: {'id': id.toString()},
                 );
               },

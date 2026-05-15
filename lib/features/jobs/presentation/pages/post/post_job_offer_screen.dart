@@ -164,7 +164,7 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
               } else if (state is JobsCreateJobOfferSuccess) {
                 _clearValues();
                 context.pushReplacementNamed(
-                  Routes.postSuccessful.name,
+                  Routes.postJobOfferSuccessful.name,
                   pathParameters: {'id': state.jobOffer.id.toString()},
                 );
               } else if (state is JobsRequestFailure) {

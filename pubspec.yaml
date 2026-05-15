@@ -75,6 +75,7 @@ flutter:
     - assets/images/sponsors/
     - assets/images/jobs/
     - assets/images/avatar/
+    - assets/images/training_center/
     - .env
 
   # To add custom fonts to your application, add a fonts section here,
