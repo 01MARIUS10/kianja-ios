@@ -18,6 +18,8 @@ import 'package:kianja/features/jobs/domain/entities/training/training_center.da
 import 'package:kianja/features/jobs/domain/entities/training/training_center_filter.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center_hot_event.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/create_job_offer/create_job_offer_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/create_training_center/create_training_center_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_job_applicants/view_all_job_applicants_params.dart';
@@ -57,15 +59,7 @@ abstract interface class JobsRepository {
   Future<Either<Failure, TrainingCenterFilter>> getTrainingCenterFilter();
   Future<Either<Failure, List<JobCategory>>> getTrainingCenterCategories();
   Future<Either<Failure, JobOffer>> createJobOffer({
-    required String title,
-    required int imageId,
-    required String description,
-    required List<int> categories,
-    required int location,
-    required int gender,
-    required int actor,
-    required String limitDate,
-    required String status,
+    required CreateJobOfferParams createJobOfferParams,
   });
   Future<Either<Failure, JobOffer>> getJobOfferDetail({required int id});
   Future<Either<Failure, JobApplicant>> getJobApplicantDetail({
@@ -76,5 +70,8 @@ abstract interface class JobsRepository {
   });
   Future<Either<Failure, TrainingCenter>> getTrainingCenterDetail({
     required int id,
+  });
+  Future<Either<Failure, TrainingCenter>> createTrainingCenter({
+    required CreateTrainingCenterParams createTrainingCenterParams,
   });
 }

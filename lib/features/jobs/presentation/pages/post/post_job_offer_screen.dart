@@ -12,6 +12,7 @@ import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
+import 'package:kianja/features/jobs/domain/usecases/create_job_offer/create_job_offer_params.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/single_photo_upload_widget.dart';
 import 'package:kianja/routing/routes.dart';
@@ -74,15 +75,17 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
     AppDebug.showPrint('imageUrl $_uploadImageId');
     BlocProvider.of<JobsBloc>(context).add(
       JobsCreateJobOfferRequested(
-        title: _titleController.text.trim(),
-        imageId: _uploadImageId!,
-        description: _descriptionController.text.trim(),
-        categories: _selectedCategories,
-        location: _selectedLocation!,
-        gender: _selectedGender!,
-        actor: _selectedActor!,
-        limitDate: _birthDateController.text.trim(),
-        status: 'published',
+        createJobOfferParams: CreateJobOfferParams(
+          title: _titleController.text.trim(),
+          imageId: _uploadImageId!,
+          description: _descriptionController.text.trim(),
+          categories: _selectedCategories,
+          location: _selectedLocation!,
+          gender: _selectedGender!,
+          actor: _selectedActor!,
+          limitDate: _birthDateController.text.trim(),
+          status: 'published',
+        ),
       ),
     );
   }

@@ -21,7 +21,8 @@ import 'package:kianja/features/jobs/domain/entities/training/training_center_ho
 import 'package:kianja/features/jobs/domain/entities/training/training_center_view_all_category.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_usecase.dart';
-import 'package:kianja/features/jobs/domain/usecases/create_job_offer_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/create_job_offer/create_job_offer_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/create_job_offer/create_job_offer_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_detail_usecase.dart';
@@ -535,19 +536,7 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     Emitter<JobsState> emit,
   ) async {
     emit(JobsRequestInProgress());
-    final result = await _createJobOfferUseCase(
-      CreateJobOfferParams(
-        title: event.title,
-        imageId: event.imageId,
-        description: event.description,
-        categories: event.categories,
-        location: event.location,
-        gender: event.gender,
-        actor: event.actor,
-        limitDate: event.limitDate,
-        status: event.status,
-      ),
-    );
+    final result = await _createJobOfferUseCase(event.createJobOfferParams);
     result.fold(
       (failure) => emit(JobsRequestFailure(message: failure.message)),
       (jobOffer) => emit(JobsCreateJobOfferSuccess(jobOffer: jobOffer)),

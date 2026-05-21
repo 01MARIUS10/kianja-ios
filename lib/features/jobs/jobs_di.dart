@@ -4,7 +4,7 @@ import 'package:kianja/features/jobs/data/datasources/jobs_remote_data.dart';
 import 'package:kianja/features/jobs/data/repositories/jobs_repository_impl.dart';
 import 'package:kianja/features/jobs/domain/repositories/jobs_repository.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_usecase.dart';
-import 'package:kianja/features/jobs/domain/usecases/create_job_offer_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/create_job_offer/create_job_offer_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_filters_usecase.dart';

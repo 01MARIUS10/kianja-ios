@@ -107,39 +107,11 @@ class JobsUploadImageRequested extends JobsEvent {
 
 /// Create a Job Offer.
 class JobsCreateJobOfferRequested extends JobsEvent {
-  const JobsCreateJobOfferRequested({
-    required this.title,
-    required this.imageId,
-    required this.description,
-    required this.categories,
-    required this.location,
-    required this.gender,
-    required this.actor,
-    required this.limitDate,
-    required this.status,
-  });
-  final String title;
-  final int imageId;
-  final String description;
-  final List<int> categories;
-  final int location;
-  final int gender;
-  final int actor;
-  final String limitDate;
-  final String status;
+  const JobsCreateJobOfferRequested({required this.createJobOfferParams});
+  final CreateJobOfferParams createJobOfferParams;
 
   @override
-  List<Object> get props => [
-    title,
-    imageId,
-    description,
-    categories,
-    location,
-    gender,
-    actor,
-    limitDate,
-    status,
-  ];
+  List<Object> get props => [createJobOfferParams];
 }
 
 /// Get a job offer detail.

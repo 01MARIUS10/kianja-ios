@@ -7,6 +7,8 @@ import 'package:kianja/core/services/service_helper.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/features/jobs/data/datasources/jobs_remote_data.dart';
 import 'package:kianja/features/jobs/data/models/input/create_job_applicant/create_job_applicant_input_model.dart';
+import 'package:kianja/features/jobs/data/models/input/create_job_offer/create_job_offer_input_model.dart';
+import 'package:kianja/features/jobs/data/models/input/create_training_center/create_training_center_input_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/training_center_view_category/training_center_view_category_model.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_image.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_pdf.dart';
@@ -24,6 +26,8 @@ import 'package:kianja/features/jobs/domain/entities/training/training_center_fi
 import 'package:kianja/features/jobs/domain/entities/training/training_center_hot_event.dart';
 import 'package:kianja/features/jobs/domain/repositories/jobs_repository.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/create_job_offer/create_job_offer_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/create_training_center/create_training_center_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_job_applicants/view_all_job_applicants_params.dart';
@@ -114,6 +118,29 @@ class JobsRepositoryImpl implements JobsRepository {
   getTrainingCenterFilter() async {
     try {
       final response = await remoteDataSource.getTrainingCenterFilter();
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, TrainingCenter>> createTrainingCenter({
+    required CreateTrainingCenterParams createTrainingCenterParams,
+  }) async {
+    try {
+      final response = await remoteDataSource.createTrainingCenter(
+        createTrainingCenterInputModel: CreateTrainingCenterInputModel(
+          name: createTrainingCenterParams.name,
+          description: createTrainingCenterParams.description,
+          locationId: createTrainingCenterParams.locationId,
+          actorId: createTrainingCenterParams.actorId,
+          typeId: createTrainingCenterParams.typeId,
+          tagId: createTrainingCenterParams.tagId,
+          durationId: createTrainingCenterParams.durationId,
+          status: createTrainingCenterParams.status,
+        ),
+      );
       return right(response);
     } on AppException catch (e) {
       return left(failureHandler(e));
@@ -274,27 +301,21 @@ class JobsRepositoryImpl implements JobsRepository {
 
   @override
   Future<Either<Failure, JobOffer>> createJobOffer({
-    required String title,
-    required int imageId,
-    required String description,
-    required List<int> categories,
-    required int location,
-    required int gender,
-    required int actor,
-    required String limitDate,
-    required String status,
+    required CreateJobOfferParams createJobOfferParams,
   }) async {
     try {
       final response = await remoteDataSource.createJobOffer(
-        title: title,
-        imageId: imageId,
-        description: description,
-        categories: categories,
-        location: location,
-        gender: gender,
-        actor: actor,
-        limitDate: limitDate,
-        status: status,
+        createJobOfferInputModel: CreateJobOfferInputModel(
+          title: createJobOfferParams.title,
+          description: createJobOfferParams.description,
+          imageId: createJobOfferParams.imageId,
+          categories: createJobOfferParams.categories,
+          locationId: createJobOfferParams.location,
+          genderId: createJobOfferParams.gender,
+          actorId: createJobOfferParams.actor,
+          limitDate: createJobOfferParams.limitDate,
+          status: createJobOfferParams.status,
+        ),
       );
       return right(response);
     } on AppException catch (e) {
