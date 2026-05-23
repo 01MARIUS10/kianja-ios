@@ -3,14 +3,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
+import 'package:kianja/core/shared/widgets/photos/photo_viewer_screen.dart';
 import 'package:kianja/core/utils/app_debug.dart';
+import 'package:kianja/features/about/presentation/pages/about_screen.dart';
 import 'package:kianja/features/account/presentation/pages/account_screen.dart';
 import 'package:kianja/features/account/presentation/pages/change_password/change_password_screen.dart';
 import 'package:kianja/features/account/presentation/pages/personal_info/personal_info_screen.dart';
 import 'package:kianja/features/account/presentation/pages/personal_info/update_personal_info_screen.dart';
+import 'package:kianja/features/account/presentation/pages/privacy_screen.dart';
 import 'package:kianja/features/auth/presentation/pages/signin_screen.dart';
 import 'package:kianja/features/auth/presentation/pages/signup_screen.dart';
 import 'package:kianja/features/choose_lang/presentation/pages/choose_lang_screen.dart';
+import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/features/jobs/presentation/pages/details/hot_event_detail_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/details/job_applicant_detail_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/details/job_offer_detail_screen.dart';
@@ -22,8 +26,10 @@ import 'package:kianja/features/jobs/presentation/pages/post/post_job_offer_scre
 import 'package:kianja/features/jobs/presentation/pages/post/post_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_training_center_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/subscribe_experts_executives_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/post/successful/post_executive_successful_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/successful/post_job_applicant_successful_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/successful/post_job_offer_successful_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/post/successful/post_training_successful_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/training_center/training_center_category_view_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/view_all/job_applicants_view_all_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/view_all/job_category_view_all_screen.dart';
@@ -110,6 +116,19 @@ abstract class AppRouter {
             return const ChooseLangScreen();
           },
         ),
+        // ================= CHOOSE LANG =================
+        GoRoute(
+          parentNavigatorKey: _rootNavigatorKey,
+          name: Routes.photoViewer.name,
+          path: Routes.photoViewer.path,
+          builder: (context, state) {
+            final extra = state.extra as Map<String, dynamic>? ?? {};
+            return PhotoViewerScreen(
+              imageUrls: extra['imageUrls'] as List<String>? ?? [],
+              initialIndex: int.tryParse(extra['initialIndex'] ?? '0') ?? 0,
+            );
+          },
+        ),
         // ================= NAVIGATION (SHELL) =================
         StatefulShellRoute.indexedStack(
           parentNavigatorKey: _rootNavigatorKey,
@@ -125,13 +144,13 @@ abstract class AppRouter {
                     return const JobsScreen();
                   },
                   routes: [
-                    // GoRoute(
-                    //   name: Routes.postExpertExecutive.name,
-                    //   path: Routes.postExpertExecutive.path,
-                    //   builder: (context, state) {
-                    //     return Container(color: Colors.blue);
-                    //   },
-                    // ),
+                    GoRoute(
+                      name: Routes.about.name,
+                      path: Routes.about.path,
+                      builder: (context, state) {
+                        return const AboutScreen();
+                      },
+                    ),
                     GoRoute(
                       name: Routes.jobOfferDetail.name,
                       path: Routes.jobOfferDetail.path,
@@ -259,6 +278,18 @@ abstract class AppRouter {
                       builder: (context, state) {
                         return const PostJobApplicantScreen();
                       },
+                      routes: [
+                        GoRoute(
+                          name: Routes.postJobApplicantSuccessful.name,
+                          path: Routes.postJobApplicantSuccessful.path,
+                          builder: (context, state) {
+                            final params = state.pathParameters;
+                            return PostJobApplicantSuccessfulScreen(
+                              id: int.parse(params['id'] ?? '0'),
+                            );
+                          },
+                        ),
+                      ],
                     ),
                     GoRoute(
                       name: Routes.postJobOffer.name,
@@ -277,16 +308,6 @@ abstract class AppRouter {
                             );
                           },
                         ),
-                        GoRoute(
-                          name: Routes.postJobApplicantSuccessful.name,
-                          path: Routes.postJobApplicantSuccessful.path,
-                          builder: (context, state) {
-                            final params = state.pathParameters;
-                            return PostJobApplicantSuccessfulScreen(
-                              id: int.parse(params['id'] ?? '0'),
-                            );
-                          },
-                        ),
                       ],
                     ),
                     GoRoute(
@@ -295,6 +316,18 @@ abstract class AppRouter {
                       builder: (context, state) {
                         return const PostTrainingCenterScreen();
                       },
+                      routes: [
+                        GoRoute(
+                          name: Routes.postTrainingCenterSuccessful.name,
+                          path: Routes.postTrainingCenterSuccessful.path,
+                          builder: (context, state) {
+                            final params = state.pathParameters;
+                            return PostTrainingSuccessfulScreen(
+                              id: int.parse(params['id'] ?? '0'),
+                            );
+                          },
+                        ),
+                      ],
                     ),
                     GoRoute(
                       name: Routes.postExpertExecutive.name,
@@ -309,6 +342,18 @@ abstract class AppRouter {
                           builder: (context, state) {
                             return const SubscribeExpertsExecutivesScreen();
                           },
+                          routes: [
+                            GoRoute(
+                              name: Routes.postExpertExecutiveSuccessful.name,
+                              path: Routes.postExpertExecutiveSuccessful.path,
+                              builder: (context, state) {
+                                final params = state.pathParameters;
+                                return PostExecutiveSuccessfulScreen(
+                                  id: int.parse(params['id'] ?? '0'),
+                                );
+                              },
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -361,6 +406,13 @@ abstract class AppRouter {
                       path: Routes.changePassword.path,
                       builder: (context, state) {
                         return const ChangePasswordScreen();
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.privacy.name,
+                      path: Routes.privacy.path,
+                      builder: (context, state) {
+                        return const PrivacyScreen();
                       },
                     ),
                   ],

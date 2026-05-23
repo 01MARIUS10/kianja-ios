@@ -7,6 +7,8 @@ import 'package:kianja/features/jobs/data/mappers/training_center_badge_mapper.d
 import 'package:kianja/features/jobs/data/models/input/create_job_applicant/create_job_applicant_input_model.dart';
 import 'package:kianja/features/jobs/data/models/input/create_job_offer/create_job_offer_input_model.dart';
 import 'package:kianja/features/jobs/data/models/input/create_training_center/create_training_center_input_model.dart';
+import 'package:kianja/features/jobs/data/models/input/subscribe_expert_executive/subscribe_expert_executive_input_model.dart';
+import 'package:kianja/features/jobs/data/models/output/expert/expert_executive_model.dart';
 import 'package:kianja/features/jobs/data/models/output/files/job_image/job_image_model.dart';
 import 'package:kianja/features/jobs/data/models/output/files/pdf_image/job_pdf_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_applicant/job_applicant_model.dart';
@@ -63,6 +65,10 @@ abstract interface class JobsRemoteDataSource {
   });
   Future<TrainingCenterModel> createTrainingCenter({
     required CreateTrainingCenterInputModel createTrainingCenterInputModel,
+  });
+  Future<ExpertExecutiveModel> subscribeExpertExecutive({
+    required SubscribeExpertExecutiveInputModel
+    subscribeExpertExecutiveInputModel,
   });
 }
 
@@ -197,6 +203,21 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
       );
       final Map<String, dynamic> result = jsonHandler(response.data);
       return TrainingCenterModel.fromJson(result);
+    });
+  }
+
+  @override
+  Future<ExpertExecutiveModel> subscribeExpertExecutive({
+    required SubscribeExpertExecutiveInputModel
+    subscribeExpertExecutiveInputModel,
+  }) async {
+    return requestHandler(() async {
+      final response = await dio.post(
+        '/api/expert-cadres',
+        data: subscribeExpertExecutiveInputModel.toJson(),
+      );
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      return ExpertExecutiveModel.fromJson(result);
     });
   }
 

@@ -36,14 +36,16 @@ class JobApplicantCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const SizedBox(height: Constants.spacingSmall),
                 Text(
                   jobApplicant.title,
-                  style: theme.textTheme.bodySmall?.copyWith(height: 1.2),
+                  style: theme.textTheme.titleSmall,
                   maxLines: 6,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: Constants.spacingSmall),
-
+                const Divider(),
+                const SizedBox(height: Constants.spacingSmall),
                 // Location
                 Row(
                   children: [

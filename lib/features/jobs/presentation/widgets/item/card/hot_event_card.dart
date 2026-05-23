@@ -32,19 +32,19 @@ class HotEventCard extends StatelessWidget {
         children: [
           // Cover Image
           Container(
-            height: 70,
+            height: Constants.size150,
             width: double.infinity,
             color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
             child: hotEvent.type == 'hot'
-                ? Image.asset(Assets.hot, fit: BoxFit.cover)
-                : Image.asset(Assets.events, fit: BoxFit.cover),
+                ? Image.asset(Assets.hot, fit: BoxFit.fill)
+                : Image.asset(Assets.events, fit: BoxFit.fill),
           ),
 
           Padding(
             padding: const EdgeInsets.all(Constants.paddingSmall),
             child: Text(
               hotEvent.description,
-              style: theme.textTheme.bodySmall?.copyWith(height: 1.2),
+              style: theme.textTheme.titleSmall,
               maxLines: 4,
               overflow: TextOverflow.ellipsis,
             ),

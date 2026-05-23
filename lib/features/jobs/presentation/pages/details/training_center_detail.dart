@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +10,7 @@ import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/shared/widgets/loading/shimmer_job_detail_indicator.dart';
+import 'package:kianja/core/shared/widgets/photos/photo_handler.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
@@ -89,29 +92,38 @@ class TrainingCenterDetail extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                         horizontal: Constants.paddingMedium,
                       ),
-                      child: ClipRRect(
-                        child: CachedNetworkImage(
-                          imageUrl:
-                              '${EnvConfig.baseApiUrl}${trainingCenter.imageUrl}',
-                          fit: BoxFit.cover,
-                          errorWidget: (context, url, error) {
-                            return Image.asset(
-                              Assets.hiring,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, url, error) => const Icon(
-                                Icons.image,
-                                size: 40,
-                                color: Colors.grey,
-                              ),
-                            );
-                          },
-                          progressIndicatorBuilder: (context, url, progress) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          },
-                        ),
+                      child: PhotoHandler(
+                        height: 300,
+                        width: double.infinity,
+                        imageUrls: trainingCenter.images
+                            .map(
+                              (image) => '${EnvConfig.baseApiUrl}${image.url}',
+                            )
+                            .toList(),
                       ),
+                      // child: ClipRRect(
+                      //   child: CachedNetworkImage(
+                      //     imageUrl:
+                      //         '${EnvConfig.baseApiUrl}${trainingCenter.imageUrl}',
+                      //     fit: BoxFit.cover,
+                      //     errorWidget: (context, url, error) {
+                      //       return Image.asset(
+                      //         Assets.hiring,
+                      //         fit: BoxFit.cover,
+                      //         errorBuilder: (context, url, error) => const Icon(
+                      //           Icons.image,
+                      //           size: 40,
+                      //           color: Colors.grey,
+                      //         ),
+                      //       );
+                      //     },
+                      //     progressIndicatorBuilder: (context, url, progress) {
+                      //       return const Center(
+                      //         child: CircularProgressIndicator(),
+                      //       );
+                      //     },
+                      //   ),
+                      // ),
                     ),
                     const SizedBox(height: Constants.spacingMedium),
                     Divider(
@@ -158,6 +170,36 @@ class TrainingCenterDetail extends StatelessWidget {
                     ),
                     const SizedBox(height: Constants.spacingMedium),
 
+                    // Job features
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Constants.paddingMedium,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Training center features',
+                            style: theme.textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: Constants.spacingMedium),
+                          _buildFeatureRow(
+                            context,
+                            label: 'Category',
+                            value: trainingCenter.category?.name ?? '',
+                          ),
+                          const SizedBox(height: Constants.spacingSmall),
+                          _buildFeatureRow(
+                            context,
+                            label: 'Location',
+                            value: trainingCenter.location?.name ?? '',
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: Constants.spacingMedium),
                     Divider(
                       color: borderColor,
                       thickness: 1,
@@ -265,24 +307,24 @@ class TrainingCenterDetail extends StatelessWidget {
     );
   }
 
-  // Widget _buildFeatureRow(
-  //   BuildContext context, {
-  //   required String label,
-  //   required String value,
-  // }) {
-  //   final theme = Theme.of(context);
-  //   return Row(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: [
-  //       Text(
-  //         '$label :',
-  //         style: theme.textTheme.bodySmall?.copyWith(
-  //           fontWeight: FontWeight.bold,
-  //         ),
-  //       ),
-  //       const SizedBox(width: Constants.spacingExtraSmall),
-  //       Expanded(child: Text(value, style: theme.textTheme.bodySmall)),
-  //     ],
-  //   );
-  // }
+  Widget _buildFeatureRow(
+    BuildContext context, {
+    required String label,
+    required String value,
+  }) {
+    final theme = Theme.of(context);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '$label :',
+          style: theme.textTheme.bodySmall?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(width: Constants.spacingExtraSmall),
+        Expanded(child: Text(value, style: theme.textTheme.bodySmall)),
+      ],
+    );
+  }
 }

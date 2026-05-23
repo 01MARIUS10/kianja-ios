@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/fields/label_field.dart';
@@ -10,8 +14,11 @@ import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
-import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_category.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_domain.dart';
+import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/subscribe_expert_executive_params.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
+import 'package:kianja/features/jobs/presentation/widgets/post/single_pdf_upload_widget.dart';
+import 'package:kianja/routing/routes.dart';
 
 class SubscribeExpertsExecutivesScreen extends StatefulWidget {
   const SubscribeExpertsExecutivesScreen({super.key});
@@ -35,7 +42,9 @@ class _SubscribeExpertsExecutivesScreenState
   final List<int> _selectedDomainIds = [];
 
   // ── Professions from bloc ────────────────────────────────────────────────
-  List<JobCategory> _professions = [];
+  List<JobDomain> _domains = [];
+
+  PlatformFile? _resumeFile;
 
   // ── Domain toggles ───────────────────────────────────────────────────────
   void _toggleDomain(int id) {
@@ -43,7 +52,9 @@ class _SubscribeExpertsExecutivesScreenState
       if (_selectedDomainIds.contains(id)) {
         _selectedDomainIds.remove(id);
       } else {
-        _selectedDomainIds.add(id);
+        if (_selectedDomainIds.isEmpty) {
+          _selectedDomainIds.add(id);
+        }
       }
     });
   }
@@ -100,9 +111,35 @@ class _SubscribeExpertsExecutivesScreenState
       AppMessenger.showWarning(context, 'Please add a brief presentation');
       return;
     }
+    if (_resumeFile == null) {
+      AppMessenger.showWarning(
+        context,
+        'Please upload your resume in PDF format',
+      );
+      return;
+    } else {
+      BlocProvider.of<JobsBloc>(
+        context,
+      ).add(JobsUploadPdfRequested(file: _resumeFile!));
+    }
+  }
 
-    // TODO: dispatch subscription event when backend is ready
-    AppMessenger.showSuccess(context, 'Subscription submitted successfully!');
+  void _submitSubscription(BuildContext context, int pdfId) {
+    BlocProvider.of<JobsBloc>(context).add(
+      SubscribeExpertExecutiveRequested(
+        subscribeExpertExecutiveParams: SubscribeExpertExecutiveParams(
+          firstName: _firstNameController.text.trim(),
+          lastName: _lastNameController.text.trim(),
+          dateOfBirth: _birthDateController.text.trim(),
+          email: _emailController.text.trim(),
+          phoneNumber: _phoneController.text.trim(),
+          address: _addressController.text.trim(),
+          biography: _presentationController.text.trim(),
+          domainId: _selectedDomainIds.first,
+          cvPdfId: pdfId,
+        ),
+      ),
+    );
   }
 
   @override
@@ -121,14 +158,21 @@ class _SubscribeExpertsExecutivesScreenState
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          GetIt.instance<JobsBloc>()
-            ..add(const JobApplicantProfessionsFetchRequested()),
+          GetIt.instance<JobsBloc>()..add(const JobFeaturesFetchRequested()),
       child: Builder(
         builder: (context) {
           return BlocConsumer<JobsBloc, JobsState>(
             listener: (context, state) {
-              if (state is JobApplicantProfessionsFetchSuccess) {
-                setState(() => _professions = state.jobCategories);
+              if (state is JobFeaturesFetchSuccess) {
+                setState(() => _domains = state.jobFeatures.domains);
+              } else if (state is JobsUploadPdfSuccess) {
+                _submitSubscription(context, state.jobPdf.id);
+              } else if (state is SubscribeExpertExecutiveSuccess) {
+                // _clearValues();
+                context.pushReplacementNamed(
+                  Routes.postExpertExecutive.name,
+                  pathParameters: {'id': state.expertExecutive.id.toString()},
+                );
               } else if (state is JobsRequestFailure) {
                 AppMessenger.showError(context, state.message);
               }
@@ -233,10 +277,10 @@ class _SubscribeExpertsExecutivesScreenState
                         //    category in PostJobApplicantScreen) ──────────
                         const LabelField(label: 'Professional domain *'),
                         const SizedBox(height: Constants.spacingSmall),
-                        if (_professions.isNotEmpty)
+                        if (_domains.isNotEmpty)
                           Wrap(
                             spacing: Constants.spacingMedium,
-                            children: _professions.map((profession) {
+                            children: _domains.map((profession) {
                               final isSelected = _selectedDomainIds.contains(
                                 profession.id,
                               );
@@ -290,47 +334,22 @@ class _SubscribeExpertsExecutivesScreenState
                         ),
                         const SizedBox(height: Constants.spacingMedium),
 
-                        // ── Note info box ───────────────────────────────
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(
-                            Constants.paddingMedium,
-                          ),
-                          decoration: BoxDecoration(
-                            color: isDark
-                                ? AppColors.darkBrandTint
-                                : AppColors.lightBrandTint,
-                            borderRadius: BorderRadius.circular(
-                              Constants.borderRadiusSmall,
-                            ),
-                          ),
-                          child: RichText(
-                            text: TextSpan(
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                color: isDark
-                                    ? AppColors.darkTextSecondary
-                                    : AppColors.lightTextSecondary,
-                              ),
-                              children: [
-                                const TextSpan(
-                                  text:
-                                      'Please send your CV, photo and other documents to ',
-                                ),
-                                TextSpan(
-                                  text: 'contact@mips.mg',
-                                  style: theme.textTheme.bodyMedium?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: isDark
-                                        ? AppColors.darkTextPrimary
-                                        : AppColors.lightTextPrimary,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                        // ── Resume ───────────────────────────────────────
+                        const LabelField(label: 'Resume *'),
+                        const SizedBox(height: Constants.spacingSmall),
+                        SinglePdfUploadWidget(
+                          text:
+                              'Upload your Resume and\nlet members look at it.\nIn PDF format.',
+                          onPdfChanged: (pdf) {
+                            if (pdf != null) {
+                              setState(() {
+                                _resumeFile = pdf;
+                              });
+                            }
+                          },
                         ),
-
                         const SizedBox(height: Constants.spacingLarge),
+
                         const Divider(),
                         const SizedBox(height: Constants.spacingMedium),
 
@@ -389,7 +408,6 @@ class _SubscribeExpertsExecutivesScreenState
                                   ),
                           ),
                         ),
-
                         const SizedBox(height: Constants.spacingLarge),
                       ],
                     ),

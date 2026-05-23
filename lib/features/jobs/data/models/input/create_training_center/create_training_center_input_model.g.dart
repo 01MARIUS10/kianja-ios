@@ -12,6 +12,11 @@ _CreateTrainingCenterInputModel _$CreateTrainingCenterInputModelFromJson(
   name: json['name'] as String? ?? '',
   description: json['description'] as String? ?? '',
   locationId: (json['locationId'] as num?)?.toInt() ?? -1,
+  imageIds:
+      (json['image_ids'] as List<dynamic>?)
+          ?.map((e) => (e as num).toInt())
+          .toList() ??
+      [],
   actorId: (json['actorId'] as num?)?.toInt() ?? -1,
   typeId: (json['typeId'] as num?)?.toInt() ?? -1,
   tagId: (json['tagId'] as num?)?.toInt() ?? -1,
@@ -25,6 +30,7 @@ Map<String, dynamic> _$CreateTrainingCenterInputModelToJson(
   'name': instance.name,
   'description': instance.description,
   'locationId': instance.locationId,
+  'image_ids': instance.imageIds,
   'actorId': instance.actorId,
   'typeId': instance.typeId,
   'tagId': instance.tagId,

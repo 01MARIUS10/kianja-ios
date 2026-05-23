@@ -9,7 +9,9 @@ import 'package:kianja/features/jobs/data/datasources/jobs_remote_data.dart';
 import 'package:kianja/features/jobs/data/models/input/create_job_applicant/create_job_applicant_input_model.dart';
 import 'package:kianja/features/jobs/data/models/input/create_job_offer/create_job_offer_input_model.dart';
 import 'package:kianja/features/jobs/data/models/input/create_training_center/create_training_center_input_model.dart';
+import 'package:kianja/features/jobs/data/models/input/subscribe_expert_executive/subscribe_expert_executive_input_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/training_center_view_category/training_center_view_category_model.dart';
+import 'package:kianja/features/jobs/domain/entities/expert_executive/expert_executive.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_image.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_pdf.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
@@ -30,6 +32,7 @@ import 'package:kianja/features/jobs/domain/usecases/create_job_offer/create_job
 import 'package:kianja/features/jobs/domain/usecases/create_training_center/create_training_center_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/subscribe_expert_executive_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_job_applicants/view_all_job_applicants_params.dart';
 
 class JobsRepositoryImpl implements JobsRepository {
@@ -134,6 +137,7 @@ class JobsRepositoryImpl implements JobsRepository {
           name: createTrainingCenterParams.name,
           description: createTrainingCenterParams.description,
           locationId: createTrainingCenterParams.locationId,
+          imageIds: createTrainingCenterParams.imageIds,
           actorId: createTrainingCenterParams.actorId,
           typeId: createTrainingCenterParams.typeId,
           tagId: createTrainingCenterParams.tagId,
@@ -268,6 +272,30 @@ class JobsRepositoryImpl implements JobsRepository {
   Future<Either<Failure, List<JobApplicantPlan>>> getJobApplicantPlans() async {
     try {
       final response = await remoteDataSource.getJobApplicantPlans();
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ExpertExecutive>> subscribeExpertExecutive({
+    required SubscribeExpertExecutiveParams subscribeExpertExecutiveParams,
+  }) async {
+    try {
+      final response = await remoteDataSource.subscribeExpertExecutive(
+        subscribeExpertExecutiveInputModel: SubscribeExpertExecutiveInputModel(
+          firstName: subscribeExpertExecutiveParams.firstName,
+          lastName: subscribeExpertExecutiveParams.lastName,
+          dateOfBirth: subscribeExpertExecutiveParams.dateOfBirth,
+          email: subscribeExpertExecutiveParams.email,
+          phoneNumber: subscribeExpertExecutiveParams.phoneNumber,
+          address: subscribeExpertExecutiveParams.address,
+          biography: subscribeExpertExecutiveParams.biography,
+          domainId: subscribeExpertExecutiveParams.domainId,
+          cvPdfId: subscribeExpertExecutiveParams.cvPdfId,
+        ),
+      );
       return right(response);
     } on AppException catch (e) {
       return left(failureHandler(e));

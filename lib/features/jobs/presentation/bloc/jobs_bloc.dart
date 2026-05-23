@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/usecase/no_params.dart';
+import 'package:kianja/features/jobs/domain/entities/expert_executive/expert_executive.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_image.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_pdf.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
@@ -23,6 +24,8 @@ import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_offer/create_job_offer_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_offer/create_job_offer_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/create_training_center/create_training_center_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/create_training_center/create_training_center_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_detail_usecase.dart';
@@ -39,6 +42,8 @@ import 'package:kianja/features/jobs/domain/usecases/get_training_center_detail_
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_filter_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_hot_event_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_view_category_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/subscribe_expert_executive_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/subscribe_expert_executive_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/upload_image_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/upload_pdf_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_hot_event_usecase.dart';
@@ -77,6 +82,8 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     required GetTrainingCenterDetailUseCase getTrainingCenterDetailUseCase,
     required GetTrainingCenterViewCategoryUseCase
     getTrainingCenterViewCategoryUseCase,
+    required CreateTrainingCenterUseCase createTrainingCenterUseCase,
+    required SubscribeExpertExecutiveUseCase subscribeExpertExecutiveUseCase,
   }) : _getJobOffersGroupByUseCase = getJobOffersGroupByUseCase,
        _viewAllJobOffersUseCase = viewAllJobOffersUseCase,
        _uploadPdfUseCase = uploadPdfUseCase,
@@ -100,6 +107,8 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
        _getTrainingCenterDetailUseCase = getTrainingCenterDetailUseCase,
        _getTrainingCenterViewCategoryUseCase =
            getTrainingCenterViewCategoryUseCase,
+       _createTrainingCenterUseCase = createTrainingCenterUseCase,
+       _subscribeExpertExecutiveUseCase = subscribeExpertExecutiveUseCase,
        super(JobsInitial()) {
     on<JobsGroupByTypeFetchRequested>(_onGroupByTypeFetchRequested);
     on<JobsGroupByDateFetchRequested>(_onGroupByDateFetchRequested);
@@ -107,6 +116,7 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     on<JobsViewAllFetchRequested>(_onViewAllFetchRequested);
     on<JobsUploadPdfRequested>(_onUploadPdfRequested);
     on<JobsUploadImageRequested>(_onUploadImageRequested);
+    on<JobsUploadMultipleImagesRequested>(_onUploadMultipleImagesRequested);
     on<JobsCreateJobOfferRequested>(_onCreateJobOfferRequested);
     on<JobsGetJobOfferDetailRequested>(_onGetJobOfferDetailRequested);
     on<JobsGetJobApplicantDetailRequested>(_onGetJobApplicantDetailRequested);
@@ -135,6 +145,8 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     on<GetTrainingCenterViewCategoryRequested>(
       _onGetTrainingCenterViewCategoryRequested,
     );
+    on<CreateTrainingCenterRequested>(_onCreateTrainingCenterRequested);
+    on<SubscribeExpertExecutiveRequested>(_onSubscribeExpertExecutiveRequested);
   }
 
   final GetJobOffersGroupByUseCase _getJobOffersGroupByUseCase;
@@ -160,6 +172,45 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
   final GetTrainingCenterDetailUseCase _getTrainingCenterDetailUseCase;
   final GetTrainingCenterViewCategoryUseCase
   _getTrainingCenterViewCategoryUseCase;
+  final CreateTrainingCenterUseCase _createTrainingCenterUseCase;
+  final SubscribeExpertExecutiveUseCase _subscribeExpertExecutiveUseCase;
+
+  Future<void> _onSubscribeExpertExecutiveRequested(
+    SubscribeExpertExecutiveRequested event,
+    Emitter<JobsState> emit,
+  ) async {
+    AppDebug.showPrint('Bloc Jobs - Subscribe expert executive request');
+
+    emit(JobsRequestInProgress());
+    final result = await _subscribeExpertExecutiveUseCase(
+      event.subscribeExpertExecutiveParams,
+    );
+    result.fold(
+      (failure) => emit(JobsRequestFailure(message: failure.message)),
+      (subscribeExpertExecutive) => emit(
+        SubscribeExpertExecutiveSuccess(
+          expertExecutive: subscribeExpertExecutive,
+        ),
+      ),
+    );
+  }
+
+  Future<void> _onCreateTrainingCenterRequested(
+    CreateTrainingCenterRequested event,
+    Emitter<JobsState> emit,
+  ) async {
+    AppDebug.showPrint('Bloc Jobs - Create training center request');
+
+    emit(JobsRequestInProgress());
+    final result = await _createTrainingCenterUseCase(
+      event.createtrainingCenterParams,
+    );
+    result.fold(
+      (failure) => emit(JobsRequestFailure(message: failure.message)),
+      (trainingCenter) =>
+          emit(JobsCreateTrainingCenterSuccess(trainingCenter: trainingCenter)),
+    );
+  }
 
   Future<void> _onGetHotEventDetailRequested(
     GetHotEventDetailRequested event,
@@ -529,6 +580,30 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
       (failure) => emit(JobsRequestFailure(message: failure.message)),
       (jobImage) => emit(JobsUploadImageSuccess(jobImage: jobImage)),
     );
+  }
+
+  Future<void> _onUploadMultipleImagesRequested(
+    JobsUploadMultipleImagesRequested event,
+    Emitter<JobsState> emit,
+  ) async {
+    emit(JobsRequestInProgress());
+    final List<JobImage> uploadedImages = [];
+
+    for (final file in event.files) {
+      final result = await _uploadImageUseCase(UploadImageParams(file: file));
+
+      // If one fails, we can either stop or continue. Stopping is safer to avoid incomplete submissions.
+      if (result.isLeft()) {
+        final failure = result.fold((l) => l, (r) => throw Exception());
+        emit(JobsRequestFailure(message: failure.message));
+        return;
+      }
+
+      final jobImage = result.fold((l) => throw Exception(), (r) => r);
+      uploadedImages.add(jobImage);
+    }
+
+    emit(JobsUploadMultipleImagesSuccess(jobImages: uploadedImages));
   }
 
   Future<void> _onCreateJobOfferRequested(

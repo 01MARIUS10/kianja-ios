@@ -7,6 +7,14 @@ enum Routes {
   chooseLang('/choose-lang'),
   // ------------- CHOOSE LANG ----------------
 
+  // ------------- ABOUT ----------------
+  about('/about'),
+  // ------------- ABOUT ----------------
+
+  // ------------- ABOUT ----------------
+  photoViewer('/photo-viewer'),
+  // ------------- ABOUT ----------------
+
   // ------------- HOME (Job offers) ----------------
   jobs('/'),
   jobCategoryViewAll('job-category-view-all'),
@@ -33,6 +41,7 @@ enum Routes {
   postTrainingCenter('training-center'),
   postExpertExecutive('expert-executive'),
   subscribeExpertExecutive('subscribe-expert-executive'),
+  postExpertExecutiveSuccessful('expert-executive-successfully-posted/:id'),
   postJobOfferSuccessful('job-offer-successfully-posted/:id'),
   postJobApplicantSuccessful('job-applicant-successfully-posted/:id'),
   postTrainingCenterSuccessful('training-center-successfully-posted/:id'),
@@ -47,6 +56,7 @@ enum Routes {
   personalInfo('personal-info'), // Personal Info
   updatePersonalInfo('edit'), // Update Personal Info
   changePassword('change-password'), // Change Password
+  privacy('privacy'), // Privacy
   // ------------- ACCOUNT ----------------
 
   // ------------- AUTH ----------------

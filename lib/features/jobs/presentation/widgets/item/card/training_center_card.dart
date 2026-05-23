@@ -37,16 +37,16 @@ class TrainingCenterCard extends StatelessWidget {
         children: [
           // Cover Image
           Container(
-            height: 70,
+            height: Constants.size150,
             width: double.infinity,
             color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
             child: CachedNetworkImage(
               imageUrl: '${EnvConfig.baseApiUrl}${trainingCenter.imageUrl}',
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
               errorWidget: (context, url, error) {
                 return Image.asset(
                   Assets.hiring,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                   errorBuilder: (context, url, error) =>
                       const Icon(Icons.image, size: 40, color: Colors.grey),
                 );
@@ -63,10 +63,9 @@ class TrainingCenterCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Description Text
                 Text(
                   trainingCenter.name,
-                  style: theme.textTheme.bodySmall?.copyWith(height: 1.2),
+                  style: theme.textTheme.titleSmall,
                   maxLines: 6,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -95,7 +94,7 @@ class TrainingCenterCard extends StatelessWidget {
                 ),
                 const SizedBox(height: Constants.spacingExtraSmall),
 
-                // Date
+                // Category
                 Row(
                   children: [
                     const Icon(

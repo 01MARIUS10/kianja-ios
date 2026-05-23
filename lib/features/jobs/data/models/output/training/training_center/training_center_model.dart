@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kianja/core/shared/app_feature/data/models/user/user_model.dart';
+import 'package:kianja/features/jobs/data/models/output/files/job_image/job_image_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_actor/job_actor_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_category/job_category_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_location/job_location_model.dart';
@@ -17,8 +18,10 @@ abstract class TrainingCenterModel
     @JsonKey(defaultValue: -1) required int id,
     @JsonKey(defaultValue: '') required String name,
     @JsonKey(name: 'image_path', defaultValue: '') String? imageUrl,
+    @JsonKey(name: 'images', defaultValue: [])
+    required List<JobImageModel> images,
     @JsonKey(defaultValue: '') required String description,
-    JobCategoryModel? category,
+    @JsonKey(name: 'categories') JobCategoryModel? category,
     JobActorModel? actor,
     JobLocationModel? location,
     TrainingCenterBadge? badge,

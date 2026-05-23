@@ -105,6 +105,15 @@ class JobsUploadImageRequested extends JobsEvent {
   List<Object> get props => [file];
 }
 
+/// Upload multiple image files.
+class JobsUploadMultipleImagesRequested extends JobsEvent {
+  const JobsUploadMultipleImagesRequested({required this.files});
+  final List<XFile> files;
+
+  @override
+  List<Object> get props => [files];
+}
+
 /// Create a Job Offer.
 class JobsCreateJobOfferRequested extends JobsEvent {
   const JobsCreateJobOfferRequested({required this.createJobOfferParams});
@@ -200,6 +209,26 @@ class GetHotEventDetailRequested extends JobsEvent {
 
   @override
   List<Object> get props => [getHotEventDetailParams];
+}
+
+class CreateTrainingCenterRequested extends JobsEvent {
+  const CreateTrainingCenterRequested({
+    required this.createtrainingCenterParams,
+  });
+  final CreateTrainingCenterParams createtrainingCenterParams;
+
+  @override
+  List<Object> get props => [createtrainingCenterParams];
+}
+
+class SubscribeExpertExecutiveRequested extends JobsEvent {
+  const SubscribeExpertExecutiveRequested({
+    required this.subscribeExpertExecutiveParams,
+  });
+  final SubscribeExpertExecutiveParams subscribeExpertExecutiveParams;
+
+  @override
+  List<Object> get props => [subscribeExpertExecutiveParams];
 }
 
 class GetTrainingCenterDetailRequested extends JobsEvent {

@@ -11,10 +11,17 @@ _TrainingCenterModel _$TrainingCenterModelFromJson(Map<String, dynamic> json) =>
       id: (json['id'] as num?)?.toInt() ?? -1,
       name: json['name'] as String? ?? '',
       imageUrl: json['image_path'] as String? ?? '',
+      images:
+          (json['images'] as List<dynamic>?)
+              ?.map((e) => JobImageModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       description: json['description'] as String? ?? '',
-      category: json['category'] == null
+      category: json['categories'] == null
           ? null
-          : JobCategoryModel.fromJson(json['category'] as Map<String, dynamic>),
+          : JobCategoryModel.fromJson(
+              json['categories'] as Map<String, dynamic>,
+            ),
       actor: json['actor'] == null
           ? null
           : JobActorModel.fromJson(json['actor'] as Map<String, dynamic>),
@@ -32,8 +39,9 @@ Map<String, dynamic> _$TrainingCenterModelToJson(
   'id': instance.id,
   'name': instance.name,
   'image_path': instance.imageUrl,
+  'images': instance.images,
   'description': instance.description,
-  'category': instance.category,
+  'categories': instance.category,
   'actor': instance.actor,
   'location': instance.location,
   'badge': _$TrainingCenterBadgeEnumMap[instance.badge],

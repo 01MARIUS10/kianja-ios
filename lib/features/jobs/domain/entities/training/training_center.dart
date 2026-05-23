@@ -1,4 +1,5 @@
 import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
+import 'package:kianja/features/jobs/domain/entities/files/job_image.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_actor.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_category.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_location.dart';
@@ -9,6 +10,7 @@ class TrainingCenter {
     required this.id,
     required this.name,
     this.imageUrl,
+    required this.images,
     required this.description,
     this.category,
     this.actor,
@@ -22,6 +24,7 @@ class TrainingCenter {
     this.id = -1,
     this.name = '',
     this.imageUrl,
+    this.images = const [],
     this.description = '',
     this.category,
     this.actor,
@@ -34,6 +37,7 @@ class TrainingCenter {
   final int id;
   final String name;
   final String? imageUrl;
+  final List<JobImage> images;
   final String description;
   final JobCategory? category;
   final JobActor? actor;

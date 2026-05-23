@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:kianja/core/services/dio/dio_client.dart';
 import 'package:kianja/core/shared/app_feature/app_di.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/features/about/about_di.dart';
 import 'package:kianja/features/account/account_di.dart';
 import 'package:kianja/features/auth/auth_di.dart';
 import 'package:kianja/features/jobs/jobs_di.dart';
@@ -25,12 +26,9 @@ Future<void> initDependencies() async {
   // Dio client instance
   final dioClient = getIt<DioClient>().getDioInstance();
 
-  // Auth
+  // Feature dependencies
   await initAuthDependencies(getIt, dioClient);
-
-  // Account
   await initAccountDependencies(getIt, dioClient);
-
-  // Jobs
   await initJobsDependencies(getIt, dioClient);
+  await initAboutDependencies(getIt, dioClient);
 }

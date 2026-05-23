@@ -114,6 +114,15 @@ class JobsUploadImageSuccess extends JobsState {
   List<Object> get props => [jobImage];
 }
 
+/// [UploadImageUseCase] succeeded for multiple images.
+class JobsUploadMultipleImagesSuccess extends JobsState {
+  const JobsUploadMultipleImagesSuccess({required this.jobImages});
+  final List<JobImage> jobImages;
+
+  @override
+  List<Object> get props => [jobImages];
+}
+
 /// [CreateJobOfferUseCase] succeeded.
 class JobsCreateJobOfferSuccess extends JobsState {
   const JobsCreateJobOfferSuccess({required this.jobOffer});
@@ -170,6 +179,15 @@ class JobsGetJobApplicantDetailSuccess extends JobsState {
   List<Object> get props => [jobApplicant];
 }
 
+/// [CreateTrainingCenterUseCase] succeeded.
+class JobsCreateTrainingCenterSuccess extends JobsState {
+  const JobsCreateTrainingCenterSuccess({required this.trainingCenter});
+  final TrainingCenter trainingCenter;
+
+  @override
+  List<Object> get props => [trainingCenter];
+}
+
 /// [GetTrainingCenterHotEventUseCase] succeeded.
 class GetTrainingCenterHotEventSuccess extends JobsState {
   const GetTrainingCenterHotEventSuccess({
@@ -224,6 +242,15 @@ class GetTrainingCenterDetailSuccess extends JobsState {
 
   @override
   List<Object> get props => [trainingCenter];
+}
+
+/// [SubscribeExpertExecutiveUseCase] succeeded.
+class SubscribeExpertExecutiveSuccess extends JobsState {
+  const SubscribeExpertExecutiveSuccess({required this.expertExecutive});
+  final ExpertExecutive expertExecutive;
+
+  @override
+  List<Object> get props => [expertExecutive];
 }
 
 /// [GetTrainingCenterViewCategoryUseCase] succeeded.

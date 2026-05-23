@@ -37,16 +37,16 @@ class JobOfferCard extends StatelessWidget {
         children: [
           // Cover Image
           Container(
-            height: 70,
+            height: Constants.size150,
             width: double.infinity,
             color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
             child: CachedNetworkImage(
               imageUrl: '${EnvConfig.baseApiUrl}${jobOffer.imageUrl}',
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
               errorWidget: (context, url, error) {
                 return Image.asset(
                   Assets.hiring,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                   errorBuilder: (context, url, error) =>
                       const Icon(Icons.image, size: 40, color: Colors.grey),
                 );
@@ -63,10 +63,9 @@ class JobOfferCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Description Text
                 Text(
                   jobOffer.title,
-                  style: theme.textTheme.bodySmall?.copyWith(height: 1.2),
+                  style: theme.textTheme.titleSmall,
                   maxLines: 6,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -98,17 +97,17 @@ class JobOfferCard extends StatelessWidget {
                 // Date
                 Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.access_time,
                       size: Constants.iconSizeExtraSmall,
-                      color: AppColors.danger,
+                      color: AppColors.danger.withValues(alpha: 0.7),
                     ),
                     const SizedBox(width: Constants.spacingExtraSmall),
                     Expanded(
                       child: Text(
                         AppFunction.getDate(jobOffer.dateLimit),
                         style: theme.textTheme.bodySmall?.copyWith(
-                          color: AppColors.danger,
+                          color: AppColors.danger.withValues(alpha: 0.7),
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,

@@ -3,6 +3,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/errors/failures.dart';
 import 'package:kianja/features/jobs/data/models/output/training/training_center_view_category/training_center_view_category_model.dart';
+import 'package:kianja/features/jobs/domain/entities/expert_executive/expert_executive.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_image.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_pdf.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
@@ -22,6 +23,7 @@ import 'package:kianja/features/jobs/domain/usecases/create_job_offer/create_job
 import 'package:kianja/features/jobs/domain/usecases/create_training_center/create_training_center_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/subscribe_expert_executive_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_job_applicants/view_all_job_applicants_params.dart';
 
 abstract interface class JobsRepository {
@@ -73,5 +75,8 @@ abstract interface class JobsRepository {
   });
   Future<Either<Failure, TrainingCenter>> createTrainingCenter({
     required CreateTrainingCenterParams createTrainingCenterParams,
+  });
+  Future<Either<Failure, ExpertExecutive>> subscribeExpertExecutive({
+    required SubscribeExpertExecutiveParams subscribeExpertExecutiveParams,
   });
 }

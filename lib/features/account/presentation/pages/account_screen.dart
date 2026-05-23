@@ -144,16 +144,16 @@ class AccountScreen extends StatelessWidget {
                     label: 'KARA',
                     iconColor: Colors.green,
                   ),
-                  AccountMenuItem(
-                    icon: Icons.bookmark_outline,
-                    label: 'Saved',
-                    iconColor: Colors.blueGrey,
-                  ),
-                  AccountMenuItem(
-                    icon: Icons.notifications_none_outlined,
-                    label: 'Notifications',
-                    iconColor: AppColors.warning,
-                  ),
+                  // AccountMenuItem(
+                  //   icon: Icons.bookmark_outline,
+                  //   label: 'Saved',
+                  //   iconColor: Colors.blueGrey,
+                  // ),
+                  // AccountMenuItem(
+                  //   icon: Icons.notifications_none_outlined,
+                  //   label: 'Notifications',
+                  //   iconColor: AppColors.warning,
+                  // ),
                   AccountMenuAccordionItem(iconColor: Colors.green),
                 ],
               ),
@@ -161,25 +161,27 @@ class AccountScreen extends StatelessWidget {
               // Card 3: Account Settings
               AccountMenuCard(
                 children: [
-                  const AccountMenuItem(
+                  AccountMenuItem(
                     icon: Icons.help_outline,
                     label: 'Privacy',
                     iconColor: AppColors.warning,
+                    onTap: () {
+                      context.goNamed(Routes.privacy.name);
+                    },
                   ),
                   AccountMenuItem(
                     icon: Icons.view_comfy_alt_outlined,
                     label: 'Change password',
                     iconColor: Colors.cyan,
                     onTap: () {
-                      // context.go('${Routes.account}/${Routes.changePassword}');
                       context.goNamed(Routes.changePassword.name);
                     },
                   ),
-                  const AccountMenuItem(
-                    icon: Icons.settings_outlined,
-                    label: 'Delete account',
-                    iconColor: Colors.indigo,
-                  ),
+                  // const AccountMenuItem(
+                  //   icon: Icons.settings_outlined,
+                  //   label: 'Delete account',
+                  //   iconColor: Colors.indigo,
+                  // ),
                 ],
               ),
 

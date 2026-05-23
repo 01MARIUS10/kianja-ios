@@ -2,11 +2,13 @@ import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_abon
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_abonnement_type.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_actor.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_category.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_domain.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_gender.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_location.dart';
 
 class JobFeatures {
   const JobFeatures({
+    required this.domains,
     required this.categories,
     required this.locations,
     required this.genders,
@@ -16,6 +18,7 @@ class JobFeatures {
   });
 
   const JobFeatures.empty({
+    this.domains = const [],
     this.categories = const [],
     this.locations = const [],
     this.genders = const [],
@@ -24,6 +27,7 @@ class JobFeatures {
     this.abonnementDurations = const [],
   });
 
+  final List<JobDomain> domains;
   final List<JobCategory> categories;
   final List<JobLocation> locations;
   final List<JobGender> genders;
