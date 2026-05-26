@@ -161,4 +161,14 @@ class MyPostRepositoryImpl implements MyPostRepository {
       return left(failureHandler(e));
     }
   }
+
+  @override
+  Future<Either<Failure, List<JobOffer>>> getAllJobOffers() async {
+    try {
+      final jobOffers = await myPostRemoteData.getAllJobOffers();
+      return right(jobOffers);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
 }

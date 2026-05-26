@@ -29,4 +29,10 @@ abstract interface class MyPostRemoteData {
   Future<ExpertExecutiveModel> updateExpertExecutive({
     required UpdateExpertExecutiveInputModel updateExpertExecutiveInputModel,
   });
+
+  // GET ALL LIST
+  Future<List<JobOfferModel>> getAllJobOffers();
+  // Future<List<JobApplicantModel>> getAllJobApplicants();
+  // Future<List<TrainingCenterModel>> getAllTrainingCenters();
+  // Future<List<ExpertExecutiveModel>> getAllExpertExecutives();
 }

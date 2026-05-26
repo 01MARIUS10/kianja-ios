@@ -46,4 +46,12 @@ class AccountRemoteDataSourceImpl implements AccountRemoteDataSource {
       return UserModel.fromJson(result);
     });
   }
+
+  @override
+  Future<String> cgu() async {
+    return requestHandler(() async {
+      final response = await dio.get(ApiEndpoint.cgu.path);
+      return response.data;
+    });
+  }
 }

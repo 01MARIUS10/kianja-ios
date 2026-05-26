@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/utils/constants.dart';
-import 'package:kianja/features/my_post/presentation/pages/categories/my_post_expert_executive_screen.dart';
 import 'package:kianja/features/my_post/presentation/pages/categories/my_post_job_applicant_screen.dart';
 import 'package:kianja/features/my_post/presentation/pages/categories/my_post_job_offer_screen.dart';
 import 'package:kianja/features/my_post/presentation/pages/categories/my_post_training_center_screen.dart';
@@ -50,7 +49,6 @@ class _MyPostScreenState extends State<MyPostScreen>
                 Tab(text: 'Job offers'),
                 Tab(text: 'Job applicants'),
                 Tab(text: 'Training centers'),
-                // Tab(text: 'Experts & executes'),
               ],
             ),
           ),
@@ -62,7 +60,6 @@ class _MyPostScreenState extends State<MyPostScreen>
                 MyPostJobOfferScreen(),
                 MyPostJobApplicantScreen(),
                 MyPostTrainingCenterScreen(),
-                // MyPostExpertExecutiveScreen(),
               ],
             ),
           ),

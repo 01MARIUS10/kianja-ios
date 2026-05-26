@@ -53,10 +53,11 @@ enum Routes {
 
   // ------------- ACCOUNT ----------------
   account('/account'),
+  kara('/kara'),
   personalInfo('personal-info'), // Personal Info
   updatePersonalInfo('edit'), // Update Personal Info
   changePassword('change-password'), // Change Password
-  privacy('privacy'), // Privacy
+  termsOfUse('termsOfUse'), // Terms of Use
   // ------------- ACCOUNT ----------------
 
   // ------------- AUTH ----------------

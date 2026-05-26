@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
 import 'package:kianja/core/utils/usecase/no_params.dart';
+import 'package:kianja/features/account/domain/usecases/cgu_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/change_password/change_password_params.dart';
 import 'package:kianja/features/account/domain/usecases/change_password/change_password_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/logout_usecase.dart';
@@ -16,18 +17,22 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     required LogoutUseCase logoutUseCase,
     required ChangePasswordUseCase changePasswordUseCase,
     required UpdateUserInfoUseCase updateUserInfoUseCase,
+    required CguUsecase cguUseCase,
   }) : _logoutUseCase = logoutUseCase,
        _changePasswordUseCase = changePasswordUseCase,
        _updateUserInfoUseCase = updateUserInfoUseCase,
+       _cguUseCase = cguUseCase,
        super(AccountInitial()) {
     on<AccountLogoutRequested>(_onLogoutRequested);
     on<AccountChangePasswordRequested>(_onChangePasswordRequested);
     on<AccountUpdateUserInfoRequested>(_onUpdateUserInfoRequested);
+    on<AccountCguRequested>(_onCguRequested);
   }
 
   final LogoutUseCase _logoutUseCase;
   final ChangePasswordUseCase _changePasswordUseCase;
   final UpdateUserInfoUseCase _updateUserInfoUseCase;
+  final CguUsecase _cguUseCase;
 
   Future<void> _onLogoutRequested(
     AccountLogoutRequested event,
@@ -66,6 +71,18 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     result.fold(
       (failure) => emit(AccountRequestFailure(message: failure.message)),
       (user) => emit(AccountUpdateUserInfoSuccess(user: user)),
+    );
+  }
+
+  Future<void> _onCguRequested(
+    AccountCguRequested event,
+    Emitter<AccountState> emit,
+  ) async {
+    emit(AccountRequestInProgress());
+    final result = await _cguUseCase(NoParams());
+    result.fold(
+      (failure) => emit(AccountRequestFailure(message: failure.message)),
+      (cgu) => emit(AccountCguSuccess(cgu: cgu)),
     );
   }
 }

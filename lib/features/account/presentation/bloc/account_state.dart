@@ -31,6 +31,14 @@ class AccountUpdateUserInfoSuccess extends AccountState {
   List<Object> get props => [user];
 }
 
+class AccountCguSuccess extends AccountState {
+  const AccountCguSuccess({required this.cgu});
+  final String cgu;
+
+  @override
+  List<Object> get props => [cgu];
+}
+
 class AccountRequestFailure extends AccountState {
   const AccountRequestFailure({required this.message});
   final String message;

@@ -19,6 +19,10 @@ class AccountChangePasswordRequested extends AccountEvent {
   List<Object> get props => [changePasswordParams];
 }
 
+class AccountCguRequested extends AccountEvent {
+  const AccountCguRequested();
+}
+
 class AccountUpdateUserInfoRequested extends AccountEvent {
   const AccountUpdateUserInfoRequested({required this.updateUserInfoParams});
   final UpdateUserInfoParams updateUserInfoParams;

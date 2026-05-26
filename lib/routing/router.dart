@@ -10,7 +10,8 @@ import 'package:kianja/features/account/presentation/pages/account_screen.dart';
 import 'package:kianja/features/account/presentation/pages/change_password/change_password_screen.dart';
 import 'package:kianja/features/account/presentation/pages/personal_info/personal_info_screen.dart';
 import 'package:kianja/features/account/presentation/pages/personal_info/update_personal_info_screen.dart';
-import 'package:kianja/features/account/presentation/pages/privacy_screen.dart';
+import 'package:kianja/features/account/presentation/pages/terms_of_use/terms_of_use_screen.dart';
+import 'package:kianja/features/account/presentation/pages/wallet/wallet_screen.dart';
 import 'package:kianja/features/auth/presentation/pages/signin_screen.dart';
 import 'package:kianja/features/auth/presentation/pages/signup_screen.dart';
 import 'package:kianja/features/choose_lang/presentation/pages/choose_lang_screen.dart';
@@ -402,6 +403,13 @@ abstract class AppRouter {
                       ],
                     ),
                     GoRoute(
+                      name: Routes.kara.name,
+                      path: Routes.kara.path,
+                      builder: (context, state) {
+                        return const WalletScreen();
+                      },
+                    ),
+                    GoRoute(
                       name: Routes.changePassword.name,
                       path: Routes.changePassword.path,
                       builder: (context, state) {
@@ -409,10 +417,10 @@ abstract class AppRouter {
                       },
                     ),
                     GoRoute(
-                      name: Routes.privacy.name,
-                      path: Routes.privacy.path,
+                      name: Routes.termsOfUse.name,
+                      path: Routes.termsOfUse.path,
                       builder: (context, state) {
-                        return const PrivacyScreen();
+                        return const TermsOfUseScreen();
                       },
                     ),
                   ],

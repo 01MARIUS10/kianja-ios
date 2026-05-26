@@ -5,21 +5,18 @@ import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
-import 'package:kianja/features/jobs/domain/entities/training/enum/training_center_badge.dart';
-import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 
 class MyPostJobOfferItemList extends StatelessWidget {
   const MyPostJobOfferItemList({
     super.key,
-    required this.trainingCenter,
-    this.badge = TrainingCenterBadge.normal,
+    required this.jobOffer,
     this.onTap,
     this.onEdit,
     this.onDelete,
   });
 
-  final TrainingCenter trainingCenter;
-  final TrainingCenterBadge badge;
+  final JobOffer jobOffer;
   final VoidCallback? onTap;
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
@@ -46,10 +43,10 @@ class MyPostJobOfferItemList extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(Constants.borderRadiusSmall),
               child: SizedBox(
-                width: 110,
-                height: 75,
+                width: 150,
+                height: 100,
                 child: CachedNetworkImage(
-                  imageUrl: '${EnvConfig.baseApiUrl}${trainingCenter.imageUrl}',
+                  imageUrl: '${EnvConfig.baseApiUrl}${jobOffer.imageUrl}',
                   fit: BoxFit.cover,
                   errorWidget: (context, url, error) => Image.asset(
                     Assets.hiring,
@@ -87,18 +84,18 @@ class MyPostJobOfferItemList extends StatelessWidget {
                 children: [
                   // Title
                   Text(
-                    trainingCenter.name,
-                    style: theme.textTheme.titleSmall?.copyWith(
+                    jobOffer.title,
+                    style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       height: 1.2,
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: Constants.spacingExtraSmall),
+                  const SizedBox(height: Constants.spacingSmall),
 
                   // Location
-                  if (trainingCenter.location != null)
+                  if (jobOffer.location != null)
                     Row(
                       children: [
                         Icon(
@@ -109,7 +106,7 @@ class MyPostJobOfferItemList extends StatelessWidget {
                         const SizedBox(width: 2),
                         Expanded(
                           child: Text(
-                            trainingCenter.location!.name,
+                            jobOffer.location!.name,
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: textSecondary,
                             ),
@@ -119,7 +116,7 @@ class MyPostJobOfferItemList extends StatelessWidget {
                         ),
                       ],
                     ),
-                  const SizedBox(height: Constants.spacingExtraSmall),
+                  const SizedBox(height: Constants.spacingSmall),
 
                   // User row + badge
                   Row(
@@ -129,11 +126,11 @@ class MyPostJobOfferItemList extends StatelessWidget {
                       ClipOval(
                         child: Image.asset(
                           Assets.rabbitAvatar,
-                          width: Constants.size30,
-                          height: Constants.size30,
+                          width: Constants.size45,
+                          height: Constants.size45,
                           fit: BoxFit.cover,
-                          cacheWidth: 60,
-                          cacheHeight: 60,
+                          cacheWidth: 80,
+                          cacheHeight: 80,
                           errorBuilder: (ctx, e, st) => Icon(
                             Icons.person,
                             size: Constants.iconSizeExtraSmall,
@@ -150,56 +147,22 @@ class MyPostJobOfferItemList extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              '${trainingCenter.user.firstName} ${trainingCenter.user.lastName}',
+                              '${jobOffer.user.firstName} ${jobOffer.user.lastName}',
                               style: theme.textTheme.bodySmall?.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
+                            const SizedBox(width: Constants.spacingMedium),
                             Text(
-                              '• ${AppFunction.dateTimeCounter(trainingCenter.createdAt)}',
-                              style: theme.textTheme.bodySmall?.copyWith(
+                              '• ${AppFunction.dateTimeCounter(jobOffer.createdAt)}',
+                              style: theme.textTheme.bodyMedium?.copyWith(
                                 color: textSecondary,
                               ),
                             ),
                           ],
                         ),
-                      ),
-
-                      // Badge
-                      if (badge != TrainingCenterBadge.normal) ...[
-                        _BadgeChip(badge: badge),
-                        const SizedBox(width: Constants.spacingExtraSmall),
-                      ],
-
-                      // Actions
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          InkWell(
-                            onTap: onEdit,
-                            child: const Padding(
-                              padding: EdgeInsets.all(4.0),
-                              child: Icon(
-                                Icons.edit_outlined,
-                                color: AppColors.success,
-                                size: 20,
-                              ),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: onDelete,
-                            child: const Padding(
-                              padding: EdgeInsets.all(4.0),
-                              child: Icon(
-                                Icons.delete_outline,
-                                color: AppColors.danger,
-                                size: 20,
-                              ),
-                            ),
-                          ),
-                        ],
                       ),
                     ],
                   ),
@@ -207,35 +170,6 @@ class MyPostJobOfferItemList extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _BadgeChip extends StatelessWidget {
-  const _BadgeChip({required this.badge});
-  final TrainingCenterBadge badge;
-
-  @override
-  Widget build(BuildContext context) {
-    final isVip = badge == TrainingCenterBadge.vip;
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: Constants.paddingSmall,
-        vertical: 3,
-      ),
-      decoration: BoxDecoration(
-        color: isVip ? AppColors.kara : AppColors.success,
-        borderRadius: BorderRadius.circular(Constants.borderRadiusLarge),
-      ),
-      child: Text(
-        isVip ? 'VIP' : 'Premium',
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 11,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 0.3,
         ),
       ),
     );

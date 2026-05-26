@@ -4,6 +4,7 @@ import 'package:kianja/features/account/data/datasources/remote/account_remote_d
 import 'package:kianja/features/account/data/datasources/remote/account_remote_data_impl.dart';
 import 'package:kianja/features/account/data/repositories/account_repository_impl.dart';
 import 'package:kianja/features/account/domain/repositories/account_repository.dart';
+import 'package:kianja/features/account/domain/usecases/cgu_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/change_password/change_password_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/logout_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/upate_user_info/update_user_info_usecase.dart';
@@ -33,6 +34,9 @@ Future<void> initAccountDependencies(GetIt getIt, Dio dio) async {
   getIt.registerLazySingleton<UpdateUserInfoUseCase>(
     () => UpdateUserInfoUseCase(accountRepository: getIt()),
   );
+  getIt.registerLazySingleton<CguUsecase>(
+    () => CguUsecase(accountRepository: getIt()),
+  );
 
   // Blocs
   getIt.registerFactory(
@@ -40,6 +44,7 @@ Future<void> initAccountDependencies(GetIt getIt, Dio dio) async {
       logoutUseCase: getIt(),
       changePasswordUseCase: getIt(),
       updateUserInfoUseCase: getIt(),
+      cguUseCase: getIt(),
     ),
   );
 }

@@ -97,4 +97,18 @@ class MyPostRemoteDataImpl implements MyPostRemoteData {
       return ExpertExecutiveModel.fromJson(result);
     });
   }
+
+  @override
+  Future<List<JobOfferModel>> getAllJobOffers() {
+    return requestHandler(() async {
+      final response = await dio.get('/api/mesAnnonces/jobOffers');
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      final Map<String, dynamic> content = result['Contenu'];
+      final Map<String, dynamic> jobOffers = content['jobOffers'];
+      final List<dynamic> jobOfferList = jobOffers['data'];
+      return jobOfferList
+          .map((jobOffer) => JobOfferModel.fromJson(jobOffer))
+          .toList();
+    });
+  }
 }

@@ -68,4 +68,14 @@ class AccountRepositoryImpl implements AccountRepository {
       return left(failureHandler(e));
     }
   }
+
+  @override
+  Future<Either<Failure, String>> cgu() async {
+    try {
+      final cgu = await remoteDataSource.cgu();
+      return right(cgu);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
 }

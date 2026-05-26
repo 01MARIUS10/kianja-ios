@@ -93,3 +93,9 @@ class MyPostDeleteExpertExecutiveRequested extends MyPostEvent {
 }
 
 // ----------------------------------------------------------- DELETE EVENT
+
+// GET ALL EVENT -----------------------------------------------------------
+class MyPostGetAllJobOffersRequested extends MyPostEvent {
+  const MyPostGetAllJobOffersRequested();
+}
+// ----------------------------------------------------------- GET ALL EVENT

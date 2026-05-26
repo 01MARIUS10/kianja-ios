@@ -10,4 +10,5 @@ abstract interface class AccountRemoteDataSource {
   Future<UserModel> updateUserInfo({
     required UpdateUserInfoInputModel updateUserInfoInputModel,
   });
+  Future<String> cgu();
 }

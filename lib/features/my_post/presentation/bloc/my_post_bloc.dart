@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kianja/core/utils/usecase/no_params.dart';
 import 'package:kianja/features/jobs/domain/entities/expert_executive/expert_executive.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
@@ -12,6 +13,7 @@ import 'package:kianja/features/my_post/domain/usecases/delete/delete_job_offer/
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_job_offer/delete_job_offer_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_training_center/delete_training_center_params.dart';
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_training_center/delete_training_center_usecase.dart';
+import 'package:kianja/features/my_post/domain/usecases/get_all/get_all_job_offers_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_expert_executive/update_expert_executive_params.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_expert_executive/update_expert_executive_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_job_applicant/update_job_applicant_params.dart';
@@ -39,6 +41,10 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
     required DeleteTrainingCenterUseCase deleteTrainingCenterUseCase,
     required DeleteExpertExecutiveUseCase deleteExpertExecutiveUseCase,
     // --------------------------------------------------------- DELETE USECASE
+
+    // GET ALL USECASE ---------------------------------------------------------
+    required GetAllJobOffersUseCase getAllJobOffersUseCase,
+    // --------------------------------------------------------- GET ALL USECASE
   }) : // UPDATE USECASE ------------------------------------------------------
        _updateJobOfferUseCase = updateJobOfferUseCase,
        _updateJobApplicantUseCase = updateJobApplicantUseCase,
@@ -52,6 +58,10 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
        _deleteTrainingCenterUseCase = deleteTrainingCenterUseCase,
        _deleteExpertExecutiveUseCase = deleteExpertExecutiveUseCase,
        // ------------------------------------------------------ DELETE USECASE
+
+       // GET ALL USECASE ------------------------------------------------------
+       _getAllJobOffersUseCase = getAllJobOffersUseCase,
+       // ------------------------------------------------------ GET ALL USECASE
        super(MyPostInitial()) {
     // UPDATE EVENT HANDLER -------------------------------------------------
     on<MyPostUpdateJobOfferRequested>(_onUpdateJobOfferRequested);
@@ -66,6 +76,10 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
     on<MyPostDeleteTrainingCenterRequested>(_onDeleteTrainingCenterRequested);
     on<MyPostDeleteExpertExecutiveRequested>(_onDeleteExpertExecutiveRequested);
     // --------------------------------------------------- DELETE EVENT HANDLER
+
+    // GET ALL EVENT HANDLER ---------------------------------------------------
+    on<MyPostGetAllJobOffersRequested>(_onGetAllJobOffersRequested);
+    // --------------------------------------------------- GET ALL EVENT HANDLER
   }
 
   // UPDATE USECASE -----------------------------------------------------------
@@ -81,6 +95,10 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
   final DeleteTrainingCenterUseCase _deleteTrainingCenterUseCase;
   final DeleteExpertExecutiveUseCase _deleteExpertExecutiveUseCase;
   // ----------------------------------------------------------- DELETE USECASE
+
+  // GET ALL USECASE -----------------------------------------------------------
+  final GetAllJobOffersUseCase _getAllJobOffersUseCase;
+  // ----------------------------------------------------------- GET ALL USECASE
 
   // UPDATE EVENT HANDLER ---------------------------------------------------
   Future<void> _onUpdateJobOfferRequested(
@@ -205,4 +223,25 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
   }
 
   // --------------------------------------------------- DELETE EVENT HANDLER
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  // GET ALL EVENT HANDLER ---------------------------------------------------
+  Future<void> _onGetAllJobOffersRequested(
+    MyPostGetAllJobOffersRequested event,
+    Emitter<MyPostState> emit,
+  ) async {
+    emit(MyPostRequestInProgress());
+    final result = await _getAllJobOffersUseCase(NoParams());
+    result.fold(
+      (failure) => emit(MyPostRequestFailure(message: failure.message)),
+      (jobOffers) => emit(MyPostGetAllJobOffersSuccess(jobOffers: jobOffers)),
+    );
+  }
+
+  // --------------------------------------------------- GET ALL EVENT HANDLER
 }

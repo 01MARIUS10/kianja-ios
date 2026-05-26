@@ -31,4 +31,9 @@ abstract class MyPostRepository {
   Future<Either<Failure, ExpertExecutive>> updateExpertExecutive({
     required UpdateExpertExecutiveParams updateExpertExecutiveParams,
   });
+
+  // Get all
+  Future<Either<Failure, List<JobOffer>>> getAllJobOffers();
+  // Future<Either<Failure, List<JobApplicant>>> getAllJobApplicants();
+  // Future<Either<Failure, List<TrainingCenter>>> getAllTrainingCenters();
 }

@@ -18,6 +18,7 @@ enum ApiEndpoint {
   // ============= App =============
   getUpdate(path: '/api/app/getUpdate/'),
   appVersions(path: '/api/app/versions/'),
+  cgu(path: '/cgu'),
 
   // ============= Training center =============
   trainingCenter(path: '/api/training-centers/');

@@ -137,12 +137,15 @@ class AccountScreen extends StatelessWidget {
               ),
 
               // Card 2: General Settings
-              const AccountMenuCard(
+              AccountMenuCard(
                 children: [
                   AccountMenuImageItem(
                     asset: Assets.kara,
                     label: 'KARA',
                     iconColor: Colors.green,
+                    onTap: () {
+                      context.goNamed(Routes.kara.name);
+                    },
                   ),
                   // AccountMenuItem(
                   //   icon: Icons.bookmark_outline,
@@ -154,7 +157,7 @@ class AccountScreen extends StatelessWidget {
                   //   label: 'Notifications',
                   //   iconColor: AppColors.warning,
                   // ),
-                  AccountMenuAccordionItem(iconColor: Colors.green),
+                  const AccountMenuAccordionItem(iconColor: Colors.green),
                 ],
               ),
 
@@ -163,10 +166,10 @@ class AccountScreen extends StatelessWidget {
                 children: [
                   AccountMenuItem(
                     icon: Icons.help_outline,
-                    label: 'Privacy',
+                    label: 'Terms of Use',
                     iconColor: AppColors.warning,
                     onTap: () {
-                      context.goNamed(Routes.privacy.name);
+                      context.goNamed(Routes.termsOfUse.name);
                     },
                   ),
                   AccountMenuItem(

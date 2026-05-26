@@ -12,4 +12,5 @@ abstract interface class AccountRepository {
   Future<Either<Failure, User>> updateProfile({
     required UpdateUserInfoParams updateUserInfoParams,
   });
+  Future<Either<Failure, String>> cgu();
 }

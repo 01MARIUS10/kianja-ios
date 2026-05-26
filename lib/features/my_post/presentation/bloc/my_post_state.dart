@@ -74,14 +74,24 @@ class MyPostDeleteTrainingCenterSuccess extends MyPostState {}
 class MyPostDeleteExpertExecutiveSuccess extends MyPostState {}
 // ----------------------------------------------------------------- DELETE
 
-// --------------------------------------------------------- SUCCESS STATE
+// GET ALL ----------------------------------------------------------------
+class MyPostGetAllJobOffersSuccess extends MyPostState {
+  const MyPostGetAllJobOffersSuccess({required this.jobOffers});
+  final List<JobOffer> jobOffers;
+
+  @override
+  List<Object> get props => [jobOffers];
+}
+// ---------------------------------------------------------------- GET ALL
+
+// ---------------------------------------------------------- SUCCESS STATE
 //
 //
 //
 //
 //
 //
-// FAILURE STATE ---------------------------------------------------------
+// FAILURE STATE ----------------------------------------------------------
 
 class MyPostRequestFailure extends MyPostState {
   const MyPostRequestFailure({required this.message});
@@ -91,4 +101,4 @@ class MyPostRequestFailure extends MyPostState {
   List<Object> get props => [message];
 }
 
-// --------------------------------------------------------- FAILURE STATE
+// ---------------------------------------------------------- FAILURE STATE
