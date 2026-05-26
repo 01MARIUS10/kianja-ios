@@ -76,23 +76,20 @@ class MyPostDeleteExpertExecutiveSuccess extends MyPostState {}
 
 // GET ALL ----------------------------------------------------------------
 class MyPostGetAllJobOffersSuccess extends MyPostState {
-  const MyPostGetAllJobOffersSuccess({required this.jobOffers});
+  const MyPostGetAllJobOffersSuccess({
+    required this.jobOffers,
+    required this.hasMore,
+    this.isLoadMore = false,
+  });
+
   final List<JobOffer> jobOffers;
+  final bool hasMore;
+  final bool isLoadMore;
 
   @override
-  List<Object> get props => [jobOffers];
+  List<Object> get props => [jobOffers, hasMore, isLoadMore];
 }
 // ---------------------------------------------------------------- GET ALL
-
-// LOAD MORE ITEM ---------------------------------------------------------
-class MyPostIsNextItemAvailableSuccess extends MyPostState {
-  const MyPostIsNextItemAvailableSuccess({required this.isNextItemAvailable});
-  final bool isNextItemAvailable;
-
-  @override
-  List<Object> get props => [isNextItemAvailable];
-}
-// --------------------------------------------------------- LOAD MORE ITEM
 
 // ---------------------------------------------------------- SUCCESS STATE
 //

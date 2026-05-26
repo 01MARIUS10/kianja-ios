@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
+import 'package:kianja/core/shared/app_feature/presentation/modify_app_lang_screen.dart';
 import 'package:kianja/core/shared/widgets/photos/photo_viewer_screen.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/features/about/presentation/pages/about_screen.dart';
@@ -151,6 +152,13 @@ abstract class AppRouter {
                       path: Routes.about.path,
                       builder: (context, state) {
                         return const AboutScreen();
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.modifyAppLang.name,
+                      path: Routes.modifyAppLang.path,
+                      builder: (context, state) {
+                        return const ModifyAppLangScreen();
                       },
                     ),
                     GoRoute(

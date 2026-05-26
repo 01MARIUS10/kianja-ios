@@ -5,6 +5,7 @@ enum Routes {
 
   // ------------- CHOOSE LANG ----------------
   chooseLang('/choose-lang'),
+  modifyAppLang('modify-app-lang'),
   // ------------- CHOOSE LANG ----------------
 
   // ------------- ABOUT ----------------

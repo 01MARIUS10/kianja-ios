@@ -61,6 +61,7 @@ class _MyPostJobOfferEditScreenState extends State<MyPostJobOfferEditScreen> {
   }
 
   void _populateForm(JobOffer jobOffer) {
+    AppDebug.showPrint('Date limite ${jobOffer.dateLimit}');
     _titleController.text = jobOffer.title;
     _descriptionController.text = jobOffer.description;
     _limitDateController.text = _formatDateLimit(jobOffer.dateLimit);
@@ -98,6 +99,7 @@ class _MyPostJobOfferEditScreenState extends State<MyPostJobOfferEditScreen> {
     AppDebug.showPrint(
       'Updating job offer with categories: $_selectedCategories',
     );
+    AppDebug.showPrint('Updating job offer with image : $_resolvedImageId');
     AppDebug.showPrint('Updating job offer with location: $_selectedLocation');
     AppDebug.showPrint('Updating job offer with gender : $_selectedGender');
     AppDebug.showPrint('Updating job offer with actor : $_selectedActor');
@@ -117,22 +119,22 @@ class _MyPostJobOfferEditScreenState extends State<MyPostJobOfferEditScreen> {
       return;
     }
 
-    BlocProvider.of<MyPostBloc>(context).add(
-      MyPostUpdateJobOfferRequested(
-        updateJobOfferParams: UpdateJobOfferParams(
-          id: widget.jobOfferId,
-          title: _titleController.text.trim(),
-          imageId: _resolvedImageId!,
-          description: _descriptionController.text.trim(),
-          categories: List<int>.from(_selectedCategories),
-          location: _selectedLocation!,
-          gender: _selectedGender!,
-          actor: _selectedActor!,
-          limitDate: _limitDateController.text.trim(),
-          status: _status,
-        ),
-      ),
-    );
+    // BlocProvider.of<MyPostBloc>(context).add(
+    //   MyPostUpdateJobOfferRequested(
+    //     updateJobOfferParams: UpdateJobOfferParams(
+    //       id: widget.jobOfferId,
+    //       title: _titleController.text.trim(),
+    //       imageId: _resolvedImageId!,
+    //       description: _descriptionController.text.trim(),
+    //       categories: List<int>.from(_selectedCategories),
+    //       location: _selectedLocation!,
+    //       gender: _selectedGender!,
+    //       actor: _selectedActor!,
+    //       limitDate: _limitDateController.text.trim(),
+    //       status: _status,
+    //     ),
+    //   ),
+    // );
   }
 
   void _toggleCategory(int categoryId) {
@@ -216,7 +218,14 @@ class _MyPostJobOfferEditScreenState extends State<MyPostJobOfferEditScreen> {
                 );
                 context.pop(true);
               } else if (state is MyPostRequestFailure) {
-                AppMessenger.showError(context, state.message);
+                if (state.message.contains('Unprocessable entity')) {
+                  AppMessenger.showWarning(
+                    context,
+                    "La date limite doit être aujourd'hui ou une date future.",
+                  );
+                } else {
+                  AppMessenger.showError(context, state.message);
+                }
               }
             },
           ),

@@ -40,6 +40,14 @@ class LogoHeader extends StatelessWidget implements PreferredSizeWidget {
       title: Text(title, style: theme.textTheme.headlineMedium),
       centerTitle: false,
       titleSpacing: Constants.spacingMedium,
+      actions: [
+        IconButton(
+          onPressed: () {
+            context.pushNamed(Routes.modifyAppLang.name);
+          },
+          icon: const Icon(Icons.language),
+        ),
+      ],
     );
   }
 

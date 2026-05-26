@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -9,6 +10,7 @@ import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_job_offer/delete_job_offer_params.dart';
 import 'package:kianja/features/my_post/presentation/bloc/my_post_bloc.dart';
 import 'package:kianja/features/my_post/presentation/widgets/my_post_job_offer_dismissible.dart';
+import 'package:kianja/features/my_post/presentation/widgets/my_post_refresh_screen.dart';
 import 'package:kianja/routing/routes.dart';
 
 class MyPostJobOfferScreen extends StatefulWidget {
@@ -20,13 +22,45 @@ class MyPostJobOfferScreen extends StatefulWidget {
 
 class _MyPostJobOfferScreenState extends State<MyPostJobOfferScreen>
     with AutomaticKeepAliveClientMixin {
+  final ScrollController _scrollController = ScrollController();
+
   List<JobOffer> _jobOffers = [];
   bool _hasLoadedOnce = false;
   String? _errorMessage;
   int? _processingJobOfferId;
+  Completer<void>? _refreshCompleter;
 
   @override
   bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController
+      ..removeListener(_onScroll)
+      ..dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (!_scrollController.hasClients) return;
+    final position = _scrollController.position;
+    if (position.maxScrollExtent - position.pixels > 300) return;
+
+    final state = BlocProvider.of<MyPostBloc>(context).state;
+    if (state is MyPostGetAllJobOffersSuccess &&
+        state.hasMore &&
+        !state.isLoadMore) {
+      BlocProvider.of<MyPostBloc>(
+        context,
+      ).add(const MyPostLoadMoreJobOffersRequested());
+    }
+  }
 
   void _onTap(JobOffer jobOffer) {
     context.pushNamed(
@@ -59,6 +93,22 @@ class _MyPostJobOfferScreenState extends State<MyPostJobOfferScreen>
     );
   }
 
+  Future<void> _refresh() async {
+    if (_refreshCompleter != null) return _refreshCompleter!.future;
+
+    _refreshCompleter = Completer<void>();
+    BlocProvider.of<MyPostBloc>(context).add(
+      const MyPostGetAllJobOffersRequested(
+        queryPageParams: QueryPageParams(page: 1),
+      ),
+    );
+    if (_scrollController.hasClients) {
+      _scrollController.jumpTo(0);
+    }
+
+    return _refreshCompleter!.future;
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -76,6 +126,10 @@ class _MyPostJobOfferScreenState extends State<MyPostJobOfferScreen>
             _errorMessage = null;
             _processingJobOfferId = null;
           });
+          if (_refreshCompleter != null) {
+            _refreshCompleter?.complete();
+            _refreshCompleter = null;
+          }
         } else if (state is MyPostDeleteJobOfferSuccess) {
           BlocProvider.of<MyPostBloc>(context).add(
             const MyPostGetAllJobOffersRequested(
@@ -91,6 +145,10 @@ class _MyPostJobOfferScreenState extends State<MyPostJobOfferScreen>
           } else {
             setState(() => _processingJobOfferId = null);
             AppMessenger.showError(context, state.message);
+          }
+          if (_refreshCompleter != null) {
+            _refreshCompleter?.complete();
+            _refreshCompleter = null;
           }
         }
       },
@@ -123,26 +181,47 @@ class _MyPostJobOfferScreenState extends State<MyPostJobOfferScreen>
             return const Center(child: Text('No job offers yet'));
           }
 
-          return ListView.separated(
-            padding: const EdgeInsets.symmetric(
-              vertical: Constants.paddingSmall,
+          final hasMore =
+              state is MyPostGetAllJobOffersSuccess && state.hasMore;
+
+          final itemCount = hasMore ? _jobOffers.length + 1 : _jobOffers.length;
+
+          return MyPostRefreshScreen(
+            onRefresh: _refresh,
+            child: ListView.separated(
+              controller: _scrollController,
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.symmetric(
+                vertical: Constants.paddingSmall,
+              ),
+              itemCount: itemCount,
+              itemBuilder: (context, index) {
+                if (hasMore && index >= _jobOffers.length) {
+                  return const Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: Constants.paddingMedium,
+                    ),
+                    child: Center(
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                  );
+                }
+
+                final jobOffer = _jobOffers[index];
+                return InkWell(
+                  onTap: () => _onTap(jobOffer),
+                  child: MyPostJobOfferDismissible(
+                    jobOffer: jobOffer,
+                    isProcessing: _processingJobOfferId == jobOffer.id,
+                    onEditConfirmed: () => _onEdit(jobOffer),
+                    onDeleteConfirmed: () => _onDelete(jobOffer),
+                  ),
+                );
+              },
+              separatorBuilder: (context, index) {
+                return const SizedBox(height: Constants.spacingExtraSmall);
+              },
             ),
-            itemCount: _jobOffers.length,
-            itemBuilder: (context, index) {
-              final jobOffer = _jobOffers[index];
-              return InkWell(
-                onTap: () => _onTap(jobOffer),
-                child: MyPostJobOfferDismissible(
-                  jobOffer: jobOffer,
-                  isProcessing: _processingJobOfferId == jobOffer.id,
-                  onEditConfirmed: () => _onEdit(jobOffer),
-                  onDeleteConfirmed: () => _onDelete(jobOffer),
-                ),
-              );
-            },
-            separatorBuilder: (context, index) {
-              return const SizedBox(height: Constants.spacingExtraSmall);
-            },
           );
         }
         return const SizedBox.shrink();

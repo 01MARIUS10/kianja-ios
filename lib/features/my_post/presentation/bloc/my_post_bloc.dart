@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kianja/core/utils/usecase/no_params.dart';
 import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/jobs/domain/entities/expert_executive/expert_executive.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
@@ -105,9 +104,13 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
   final GetAllJobOffersUseCase _getAllJobOffersUseCase;
   // ----------------------------------------------------------- GET ALL USECASE
 
-  // LOAD MORE ITEM PAGE -------------------------------------------------
+  // PAGINATION STATE ----------------------------------------------------------
+  static const int _pageSize = 15;
   int _currentPage = 1;
-  // ------------------------------------------------- LOAD MORE ITEM PAGE
+  List<JobOffer> _cachedJobOffers = [];
+  bool _hasMore = true;
+  bool _isLoadMoreInProgress = false;
+  // ---------------------------------------------------------- PAGINATION STATE
 
   // UPDATE EVENT HANDLER ---------------------------------------------------
   Future<void> _onUpdateJobOfferRequested(
@@ -244,11 +247,26 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
     MyPostGetAllJobOffersRequested event,
     Emitter<MyPostState> emit,
   ) async {
+    // Reset pagination for a fresh load
+    _currentPage = event.queryPageParams.page;
+    _cachedJobOffers = [];
+    _hasMore = true;
+    _isLoadMoreInProgress = false;
+
     emit(MyPostRequestInProgress());
     final result = await _getAllJobOffersUseCase(event.queryPageParams);
     result.fold(
       (failure) => emit(MyPostRequestFailure(message: failure.message)),
-      (jobOffers) => emit(MyPostGetAllJobOffersSuccess(jobOffers: jobOffers)),
+      (jobOffers) {
+        _cachedJobOffers = jobOffers;
+        _hasMore = jobOffers.length >= _pageSize;
+        emit(
+          MyPostGetAllJobOffersSuccess(
+            jobOffers: _cachedJobOffers,
+            hasMore: _hasMore,
+          ),
+        );
+      },
     );
   }
 
@@ -265,18 +283,39 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
     MyPostLoadMoreJobOffersRequested event,
     Emitter<MyPostState> emit,
   ) async {
-    emit(MyPostRequestInProgress());
+    if (!_hasMore || _isLoadMoreInProgress) {
+      return;
+    }
+
+    _isLoadMoreInProgress = true;
+    emit(
+      MyPostGetAllJobOffersSuccess(
+        jobOffers: _cachedJobOffers,
+        hasMore: _hasMore,
+        isLoadMore: true,
+      ),
+    );
+
     _currentPage++;
     final result = await _getAllJobOffersUseCase(
       QueryPageParams(page: _currentPage),
     );
     result.fold(
-      (failure) => emit(MyPostRequestFailure(message: failure.message)),
-      (jobOffers) => emit(
-        MyPostIsNextItemAvailableSuccess(
-          isNextItemAvailable: jobOffers.length >= 15,
-        ),
-      ),
+      (failure) {
+        _isLoadMoreInProgress = false;
+        emit(MyPostRequestFailure(message: failure.message));
+      },
+      (jobOffers) {
+        _cachedJobOffers = [..._cachedJobOffers, ...jobOffers];
+        _hasMore = jobOffers.length >= _pageSize;
+        _isLoadMoreInProgress = false;
+        emit(
+          MyPostGetAllJobOffersSuccess(
+            jobOffers: _cachedJobOffers,
+            hasMore: _hasMore,
+          ),
+        );
+      },
     );
   }
 
