@@ -13,6 +13,7 @@ import 'package:kianja/features/my_post/domain/usecases/delete/delete_job_offer/
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_job_offer/delete_job_offer_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_training_center/delete_training_center_params.dart';
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_training_center/delete_training_center_usecase.dart';
+import 'package:kianja/features/my_post/domain/usecases/get_all/get_all_job_applicants_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/get_all/get_all_job_offers_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_expert_executive/update_expert_executive_params.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_expert_executive/update_expert_executive_usecase.dart';
@@ -44,6 +45,7 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
 
     // GET ALL USECASE ---------------------------------------------------------
     required GetAllJobOffersUseCase getAllJobOffersUseCase,
+    required GetAllJobApplicantsUseCase getAllJobApplicantsUseCase,
     // --------------------------------------------------------- GET ALL USECASE
   }) : // UPDATE USECASE ------------------------------------------------------
        _updateJobOfferUseCase = updateJobOfferUseCase,
@@ -61,6 +63,7 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
 
        // GET ALL USECASE ------------------------------------------------------
        _getAllJobOffersUseCase = getAllJobOffersUseCase,
+       _getAllJobApplicantsUseCase = getAllJobApplicantsUseCase,
        // ------------------------------------------------------ GET ALL USECASE
        super(MyPostInitial()) {
     // UPDATE EVENT HANDLER -------------------------------------------------
@@ -81,8 +84,14 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
     on<MyPostGetAllJobOffersRequested>(_onGetAllJobOffersRequested);
     // --------------------------------------------------- GET ALL EVENT HANDLER
 
+    on<MyPostGetAllJobApplicantsRequested>(_onGetAllJobApplicantsRequested);
+    // --------------------------------------------------- GET ALL EVENT HANDLER
+
     // LOAD MORE ITEM EVENT HANDLER --------------------------------------------
     on<MyPostLoadMoreJobOffersRequested>(_onLoadMoreJobOffersRequested);
+    // -------------------------------------------- LOAD MORE ITEM EVENT HANDLER
+
+    on<MyPostLoadMoreJobApplicantsRequested>(_onLoadMoreJobApplicantsRequested);
     // -------------------------------------------- LOAD MORE ITEM EVENT HANDLER
   }
 
@@ -102,6 +111,7 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
 
   // GET ALL USECASE -----------------------------------------------------------
   final GetAllJobOffersUseCase _getAllJobOffersUseCase;
+  final GetAllJobApplicantsUseCase _getAllJobApplicantsUseCase;
   // ----------------------------------------------------------- GET ALL USECASE
 
   // PAGINATION STATE ----------------------------------------------------------
@@ -110,6 +120,12 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
   List<JobOffer> _cachedJobOffers = [];
   bool _hasMore = true;
   bool _isLoadMoreInProgress = false;
+  // ---------------------------------------------------------- PAGINATION STATE
+
+  int _currentApplicantsPage = 1;
+  List<JobApplicant> _cachedJobApplicants = [];
+  bool _hasMoreApplicants = true;
+  bool _isLoadMoreApplicantsInProgress = false;
   // ---------------------------------------------------------- PAGINATION STATE
 
   // UPDATE EVENT HANDLER ---------------------------------------------------
@@ -313,6 +329,73 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
           MyPostGetAllJobOffersSuccess(
             jobOffers: _cachedJobOffers,
             hasMore: _hasMore,
+          ),
+        );
+      },
+    );
+  }
+
+  // --------------------------------------------------- GET ALL JOB APPLICANTS
+  Future<void> _onGetAllJobApplicantsRequested(
+    MyPostGetAllJobApplicantsRequested event,
+    Emitter<MyPostState> emit,
+  ) async {
+    _currentApplicantsPage = event.queryPageParams.page;
+    _cachedJobApplicants = [];
+    _hasMoreApplicants = true;
+    _isLoadMoreApplicantsInProgress = false;
+
+    emit(MyPostRequestInProgress());
+    final result = await _getAllJobApplicantsUseCase(event.queryPageParams);
+    result.fold(
+      (failure) => emit(MyPostRequestFailure(message: failure.message)),
+      (jobApplicants) {
+        _cachedJobApplicants = jobApplicants;
+        _hasMoreApplicants = jobApplicants.length >= _pageSize;
+        emit(
+          MyPostGetAllJobApplicantsSuccess(
+            jobApplicants: _cachedJobApplicants,
+            hasMore: _hasMoreApplicants,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _onLoadMoreJobApplicantsRequested(
+    MyPostLoadMoreJobApplicantsRequested event,
+    Emitter<MyPostState> emit,
+  ) async {
+    if (!_hasMoreApplicants || _isLoadMoreApplicantsInProgress) {
+      return;
+    }
+
+    _isLoadMoreApplicantsInProgress = true;
+    emit(
+      MyPostGetAllJobApplicantsSuccess(
+        jobApplicants: _cachedJobApplicants,
+        hasMore: _hasMoreApplicants,
+        isLoadMore: true,
+      ),
+    );
+
+    _currentApplicantsPage++;
+    final result = await _getAllJobApplicantsUseCase(
+      QueryPageParams(page: _currentApplicantsPage),
+    );
+    result.fold(
+      (failure) {
+        _isLoadMoreApplicantsInProgress = false;
+        emit(MyPostRequestFailure(message: failure.message));
+      },
+      (jobApplicants) {
+        _cachedJobApplicants = [..._cachedJobApplicants, ...jobApplicants];
+        _hasMoreApplicants = jobApplicants.length >= _pageSize;
+        _isLoadMoreApplicantsInProgress = false;
+        emit(
+          MyPostGetAllJobApplicantsSuccess(
+            jobApplicants: _cachedJobApplicants,
+            hasMore: _hasMoreApplicants,
           ),
         );
       },

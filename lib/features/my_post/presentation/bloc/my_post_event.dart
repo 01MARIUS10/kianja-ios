@@ -102,6 +102,14 @@ class MyPostGetAllJobOffersRequested extends MyPostEvent {
   @override
   List<Object> get props => [queryPageParams];
 }
+
+class MyPostGetAllJobApplicantsRequested extends MyPostEvent {
+  const MyPostGetAllJobApplicantsRequested({required this.queryPageParams});
+  final QueryPageParams queryPageParams;
+
+  @override
+  List<Object> get props => [queryPageParams];
+}
 // ----------------------------------------------------------- GET ALL EVENT
 
 // LOAD MORE ITEM EVENT ----------------------------------------------------
@@ -109,3 +117,7 @@ class MyPostLoadMoreJobOffersRequested extends MyPostEvent {
   const MyPostLoadMoreJobOffersRequested();
 }
 // ---------------------------------------------------- LOAD MORE ITEM EVENT
+
+class MyPostLoadMoreJobApplicantsRequested extends MyPostEvent {
+  const MyPostLoadMoreJobApplicantsRequested();
+}

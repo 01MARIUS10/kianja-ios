@@ -37,6 +37,8 @@ abstract class MyPostRepository {
   Future<Either<Failure, List<JobOffer>>> getAllJobOffers({
     required QueryPageParams queryPageParams,
   });
-  // Future<Either<Failure, List<JobApplicant>>> getAllJobApplicants();
+  Future<Either<Failure, List<JobApplicant>>> getAllJobApplicants({
+    required QueryPageParams queryPageParams,
+  });
   // Future<Either<Failure, List<TrainingCenter>>> getAllTrainingCenters();
 }

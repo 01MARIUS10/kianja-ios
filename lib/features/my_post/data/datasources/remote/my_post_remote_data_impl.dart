@@ -111,4 +111,23 @@ class MyPostRemoteDataImpl implements MyPostRemoteData {
           .toList();
     });
   }
+
+  @override
+  Future<List<JobApplicantModel>> getAllJobApplicants({required int page}) {
+    return requestHandler(() async {
+      final response =
+          await dio.get('/api/mesAnnonces/jobApplicants?page=$page');
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      final Map<String, dynamic> content = result['Contenu'];
+      final Map<String, dynamic> jobApplicants = content['jobApplicants'];
+      final List<dynamic> jobApplicantList = jobApplicants['data'];
+      return jobApplicantList
+          .map(
+            (jobApplicant) => JobApplicantModel.fromJson(
+              jobApplicant as Map<String, dynamic>,
+            ),
+          )
+          .toList();
+    });
+  }
 }

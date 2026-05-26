@@ -8,6 +8,7 @@ import 'package:kianja/features/my_post/domain/usecases/delete/delete_expert_exe
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_job_applicant/delete_job_applicant_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_job_offer/delete_job_offer_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_training_center/delete_training_center_usecase.dart';
+import 'package:kianja/features/my_post/domain/usecases/get_all/get_all_job_applicants_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/get_all/get_all_job_offers_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_expert_executive/update_expert_executive_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_job_applicant/update_job_applicant_usecase.dart';
@@ -54,6 +55,9 @@ Future<void> initMyPostDependencies(GetIt getIt, Dio dio) async {
   getIt.registerLazySingleton<GetAllJobOffersUseCase>(
     () => GetAllJobOffersUseCase(myPostRepository: getIt()),
   );
+  getIt.registerLazySingleton<GetAllJobApplicantsUseCase>(
+    () => GetAllJobApplicantsUseCase(myPostRepository: getIt()),
+  );
 
   // Blocs
   getIt.registerFactory(
@@ -67,6 +71,7 @@ Future<void> initMyPostDependencies(GetIt getIt, Dio dio) async {
       deleteTrainingCenterUseCase: getIt(),
       deleteExpertExecutiveUseCase: getIt(),
       getAllJobOffersUseCase: getIt(),
+      getAllJobApplicantsUseCase: getIt(),
     ),
   );
 }

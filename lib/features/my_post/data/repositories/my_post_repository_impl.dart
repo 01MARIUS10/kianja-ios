@@ -176,4 +176,18 @@ class MyPostRepositoryImpl implements MyPostRepository {
       return left(failureHandler(e));
     }
   }
+
+  @override
+  Future<Either<Failure, List<JobApplicant>>> getAllJobApplicants({
+    required QueryPageParams queryPageParams,
+  }) async {
+    try {
+      final jobApplicants = await myPostRemoteData.getAllJobApplicants(
+        page: queryPageParams.page,
+      );
+      return right(jobApplicants);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
 }

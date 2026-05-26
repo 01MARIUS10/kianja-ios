@@ -40,6 +40,11 @@ class _MyPostScreenState extends State<MyPostScreen>
           const MyPostGetAllJobOffersRequested(
             queryPageParams: QueryPageParams(page: 1),
           ),
+        )
+        ..add(
+          const MyPostGetAllJobApplicantsRequested(
+            queryPageParams: QueryPageParams(page: 1),
+          ),
         ),
       child: BaseScreen(
         appBar: const TitleHeader(title: 'My post'),
