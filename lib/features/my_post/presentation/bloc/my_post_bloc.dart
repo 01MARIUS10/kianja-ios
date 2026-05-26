@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kianja/core/utils/usecase/no_params.dart';
+import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/jobs/domain/entities/expert_executive/expert_executive.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
@@ -80,6 +81,10 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
     // GET ALL EVENT HANDLER ---------------------------------------------------
     on<MyPostGetAllJobOffersRequested>(_onGetAllJobOffersRequested);
     // --------------------------------------------------- GET ALL EVENT HANDLER
+
+    // LOAD MORE ITEM EVENT HANDLER --------------------------------------------
+    on<MyPostLoadMoreJobOffersRequested>(_onLoadMoreJobOffersRequested);
+    // -------------------------------------------- LOAD MORE ITEM EVENT HANDLER
   }
 
   // UPDATE USECASE -----------------------------------------------------------
@@ -99,6 +104,10 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
   // GET ALL USECASE -----------------------------------------------------------
   final GetAllJobOffersUseCase _getAllJobOffersUseCase;
   // ----------------------------------------------------------- GET ALL USECASE
+
+  // LOAD MORE ITEM PAGE -------------------------------------------------
+  int _currentPage = 1;
+  // ------------------------------------------------- LOAD MORE ITEM PAGE
 
   // UPDATE EVENT HANDLER ---------------------------------------------------
   Future<void> _onUpdateJobOfferRequested(
@@ -236,7 +245,7 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
     Emitter<MyPostState> emit,
   ) async {
     emit(MyPostRequestInProgress());
-    final result = await _getAllJobOffersUseCase(NoParams());
+    final result = await _getAllJobOffersUseCase(event.queryPageParams);
     result.fold(
       (failure) => emit(MyPostRequestFailure(message: failure.message)),
       (jobOffers) => emit(MyPostGetAllJobOffersSuccess(jobOffers: jobOffers)),
@@ -244,4 +253,32 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
   }
 
   // --------------------------------------------------- GET ALL EVENT HANDLER
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  // LOAD MORE ITEM EVENT HANDLER --------------------------------------------
+  Future<void> _onLoadMoreJobOffersRequested(
+    MyPostLoadMoreJobOffersRequested event,
+    Emitter<MyPostState> emit,
+  ) async {
+    emit(MyPostRequestInProgress());
+    _currentPage++;
+    final result = await _getAllJobOffersUseCase(
+      QueryPageParams(page: _currentPage),
+    );
+    result.fold(
+      (failure) => emit(MyPostRequestFailure(message: failure.message)),
+      (jobOffers) => emit(
+        MyPostIsNextItemAvailableSuccess(
+          isNextItemAvailable: jobOffers.length >= 15,
+        ),
+      ),
+    );
+  }
+
+  // -------------------------------------------- LOAD MORE ITEM EVENT HANDLER
 }

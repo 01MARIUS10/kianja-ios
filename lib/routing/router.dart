@@ -15,7 +15,7 @@ import 'package:kianja/features/account/presentation/pages/wallet/wallet_screen.
 import 'package:kianja/features/auth/presentation/pages/signin_screen.dart';
 import 'package:kianja/features/auth/presentation/pages/signup_screen.dart';
 import 'package:kianja/features/choose_lang/presentation/pages/choose_lang_screen.dart';
-import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/jobs/presentation/pages/details/hot_event_detail_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/details/job_applicant_detail_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/details/job_offer_detail_screen.dart';
@@ -36,6 +36,7 @@ import 'package:kianja/features/jobs/presentation/pages/view_all/job_applicants_
 import 'package:kianja/features/jobs/presentation/pages/view_all/job_category_view_all_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/view_all/training_center_hot_event_view_all_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/view_all/training_center_view_all_screen.dart';
+import 'package:kianja/features/my_post/presentation/pages/edit/my_post_job_offer_edit.dart';
 import 'package:kianja/features/my_post/presentation/pages/my_post_screen.dart';
 import 'package:kianja/routing/navigation/navigation.dart';
 import 'package:kianja/routing/routes.dart';
@@ -372,6 +373,22 @@ abstract class AppRouter {
                   builder: (context, state) {
                     return const MyPostScreen();
                   },
+                  routes: [
+                    GoRoute(
+                      name: Routes.myPostJobOfferEdit.name,
+                      path: Routes.myPostJobOfferEdit.path,
+                      builder: (context, state) {
+                        final params = state.pathParameters;
+                        final jobOffer = state.extra;
+                        return MyPostJobOfferEditScreen(
+                          jobOfferId: int.parse(params['id'] ?? '0'),
+                          initialJobOffer: jobOffer is JobOffer
+                              ? jobOffer
+                              : null,
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),

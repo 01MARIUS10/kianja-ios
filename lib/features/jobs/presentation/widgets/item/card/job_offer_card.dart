@@ -41,7 +41,7 @@ class JobOfferCard extends StatelessWidget {
             width: double.infinity,
             color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
             child: CachedNetworkImage(
-              imageUrl: '${EnvConfig.baseApiUrl}${jobOffer.imageUrl}',
+              imageUrl: '${EnvConfig.baseApiUrl}${jobOffer.image?.url}',
               fit: BoxFit.fill,
               errorWidget: (context, url, error) {
                 return Image.asset(

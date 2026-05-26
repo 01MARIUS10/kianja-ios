@@ -49,6 +49,7 @@ enum Routes {
 
   // ------------- MY POST ----------------
   myPost('/my-post'),
+  myPostJobOfferEdit('edit-job-offer/:id'),
   // ------------- MY POST ----------------
 
   // ------------- ACCOUNT ----------------

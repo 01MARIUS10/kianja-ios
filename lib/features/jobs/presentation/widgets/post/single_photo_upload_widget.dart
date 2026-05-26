@@ -1,13 +1,21 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 
 class SinglePhotoUploadWidget extends StatefulWidget {
-  const SinglePhotoUploadWidget({super.key, required this.onPhotoChanged});
+  const SinglePhotoUploadWidget({
+    super.key,
+    required this.onPhotoChanged,
+    this.initialNetworkImageUrl,
+  });
+
   final ValueChanged<XFile?> onPhotoChanged;
+  final String? initialNetworkImageUrl;
 
   @override
   State<SinglePhotoUploadWidget> createState() =>
@@ -16,7 +24,17 @@ class SinglePhotoUploadWidget extends StatefulWidget {
 
 class _SinglePhotoUploadWidgetState extends State<SinglePhotoUploadWidget> {
   XFile? _photo;
+  bool _networkImageRemoved = false;
   final ImagePicker _picker = ImagePicker();
+
+  String? get _networkImageUrl {
+    if (_networkImageRemoved || widget.initialNetworkImageUrl == null) {
+      return null;
+    }
+    final path = widget.initialNetworkImageUrl!;
+    if (path.startsWith('http')) return path;
+    return '${EnvConfig.baseApiUrl}$path';
+  }
 
   Future<void> _pickImage() async {
     final pickedFile = await _picker.pickImage(
@@ -35,6 +53,7 @@ class _SinglePhotoUploadWidgetState extends State<SinglePhotoUploadWidget> {
   void _removePhoto() {
     setState(() {
       _photo = null;
+      _networkImageRemoved = true;
     });
     widget.onPhotoChanged(null);
   }
@@ -51,7 +70,48 @@ class _SinglePhotoUploadWidgetState extends State<SinglePhotoUploadWidget> {
           padding: const EdgeInsets.only(top: 8, right: 8),
           child: _photo != null
               ? _buildPhotoItem(theme)
+              : _networkImageUrl != null
+              ? _buildNetworkPhotoItem(theme)
               : _buildAddPhotoButton(theme),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildNetworkPhotoItem(ThemeData theme) {
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: SizedBox(
+            width: 80,
+            height: 80,
+            child: CachedNetworkImage(
+              imageUrl: _networkImageUrl!,
+              fit: BoxFit.cover,
+              errorWidget: (context, url, error) => _buildAddPhotoButton(theme),
+            ),
+          ),
+        ),
+        Positioned(
+          top: -8,
+          right: -8,
+          child: GestureDetector(
+            onTap: _removePhoto,
+            child: Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.error,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: theme.scaffoldBackgroundColor,
+                  width: 2,
+                ),
+              ),
+              child: const Icon(Icons.close, size: 14, color: Colors.white),
+            ),
+          ),
         ),
       ],
     );

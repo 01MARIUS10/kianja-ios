@@ -2,6 +2,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:kianja/core/errors/exceptions.dart';
 import 'package:kianja/core/errors/failures.dart';
 import 'package:kianja/core/services/service_helper.dart';
+import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/jobs/domain/entities/expert_executive/expert_executive.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
@@ -163,9 +164,13 @@ class MyPostRepositoryImpl implements MyPostRepository {
   }
 
   @override
-  Future<Either<Failure, List<JobOffer>>> getAllJobOffers() async {
+  Future<Either<Failure, List<JobOffer>>> getAllJobOffers({
+    required QueryPageParams queryPageParams,
+  }) async {
     try {
-      final jobOffers = await myPostRemoteData.getAllJobOffers();
+      final jobOffers = await myPostRemoteData.getAllJobOffers(
+        page: queryPageParams.page,
+      );
       return right(jobOffers);
     } on AppException catch (e) {
       return left(failureHandler(e));

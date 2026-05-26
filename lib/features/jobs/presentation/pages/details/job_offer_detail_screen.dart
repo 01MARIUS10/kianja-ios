@@ -111,7 +111,7 @@ class JobOfferDetailScreen extends StatelessWidget {
                       child: ClipRRect(
                         child: CachedNetworkImage(
                           imageUrl:
-                              '${EnvConfig.baseApiUrl}${jobOffer.imageUrl}',
+                              '${EnvConfig.baseApiUrl}${jobOffer.image?.url}',
                           fit: BoxFit.cover,
                           errorWidget: (context, url, error) {
                             return Image.asset(

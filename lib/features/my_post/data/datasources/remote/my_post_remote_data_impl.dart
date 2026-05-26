@@ -99,9 +99,9 @@ class MyPostRemoteDataImpl implements MyPostRemoteData {
   }
 
   @override
-  Future<List<JobOfferModel>> getAllJobOffers() {
+  Future<List<JobOfferModel>> getAllJobOffers({required int page}) {
     return requestHandler(() async {
-      final response = await dio.get('/api/mesAnnonces/jobOffers');
+      final response = await dio.get('/api/mesAnnonces/jobOffers?page=$page');
       final Map<String, dynamic> result = jsonHandler(response.data);
       final Map<String, dynamic> content = result['Contenu'];
       final Map<String, dynamic> jobOffers = content['jobOffers'];

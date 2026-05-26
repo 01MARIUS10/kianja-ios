@@ -1,5 +1,6 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:kianja/core/errors/failures.dart';
+import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/jobs/domain/entities/expert_executive/expert_executive.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
@@ -33,7 +34,9 @@ abstract class MyPostRepository {
   });
 
   // Get all
-  Future<Either<Failure, List<JobOffer>>> getAllJobOffers();
+  Future<Either<Failure, List<JobOffer>>> getAllJobOffers({
+    required QueryPageParams queryPageParams,
+  });
   // Future<Either<Failure, List<JobApplicant>>> getAllJobApplicants();
   // Future<Either<Failure, List<TrainingCenter>>> getAllTrainingCenters();
 }

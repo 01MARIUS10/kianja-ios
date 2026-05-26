@@ -43,10 +43,10 @@ class MyPostJobOfferItemList extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(Constants.borderRadiusSmall),
               child: SizedBox(
-                width: 150,
-                height: 100,
+                width: 120,
+                height: 120,
                 child: CachedNetworkImage(
-                  imageUrl: '${EnvConfig.baseApiUrl}${jobOffer.imageUrl}',
+                  imageUrl: '${EnvConfig.baseApiUrl}${jobOffer.image?.url}',
                   fit: BoxFit.cover,
                   errorWidget: (context, url, error) => Image.asset(
                     Assets.hiring,
@@ -78,95 +78,102 @@ class MyPostJobOfferItemList extends StatelessWidget {
 
             // Content
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Title
-                  Text(
-                    jobOffer.title,
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      height: 1.2,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: Constants.spacingSmall),
-
-                  // Location
-                  if (jobOffer.location != null)
-                    Row(
+              child: SizedBox(
+                height: 120,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Title + location
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(
-                          Icons.location_on_outlined,
-                          size: Constants.iconSizeExtraSmall,
-                          color: textSecondary,
+                        Text(
+                          jobOffer.title,
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            height: 1.2,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        const SizedBox(width: 2),
-                        Expanded(
-                          child: Text(
-                            jobOffer.location!.name,
-                            style: theme.textTheme.bodySmall?.copyWith(
+                        const SizedBox(height: Constants.spacingSmall),
+
+                        if (jobOffer.location != null)
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.location_on_outlined,
+                                size: Constants.iconSizeExtraSmall,
+                                color: textSecondary,
+                              ),
+                              const SizedBox(width: 2),
+                              Expanded(
+                                child: Text(
+                                  jobOffer.location!.name,
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: textSecondary,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                      ],
+                    ),
+
+                    // User row + badge
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        // User avatar
+                        ClipOval(
+                          child: Image.asset(
+                            Assets.rabbitAvatar,
+                            width: Constants.size40,
+                            height: Constants.size40,
+                            fit: BoxFit.cover,
+                            cacheWidth: 80,
+                            cacheHeight: 80,
+                            errorBuilder: (ctx, e, st) => Icon(
+                              Icons.person,
+                              size: Constants.iconSizeExtraSmall,
                               color: textSecondary,
                             ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const SizedBox(width: Constants.spacingExtraSmall),
+
+                        // Name + time
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                '${jobOffer.user.firstName} ${jobOffer.user.lastName}',
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const SizedBox(width: Constants.spacingMedium),
+                              Text(
+                                '• ${AppFunction.dateTimeCounter(jobOffer.createdAt)}',
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  color: textSecondary,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
-                  const SizedBox(height: Constants.spacingSmall),
-
-                  // User row + badge
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // User avatar
-                      ClipOval(
-                        child: Image.asset(
-                          Assets.rabbitAvatar,
-                          width: Constants.size45,
-                          height: Constants.size45,
-                          fit: BoxFit.cover,
-                          cacheWidth: 80,
-                          cacheHeight: 80,
-                          errorBuilder: (ctx, e, st) => Icon(
-                            Icons.person,
-                            size: Constants.iconSizeExtraSmall,
-                            color: textSecondary,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: Constants.spacingExtraSmall),
-
-                      // Name + time
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              '${jobOffer.user.firstName} ${jobOffer.user.lastName}',
-                              style: theme.textTheme.bodySmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            const SizedBox(width: Constants.spacingMedium),
-                            Text(
-                              '• ${AppFunction.dateTimeCounter(jobOffer.createdAt)}',
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                color: textSecondary,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],

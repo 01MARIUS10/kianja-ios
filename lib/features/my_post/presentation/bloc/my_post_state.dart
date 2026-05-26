@@ -84,6 +84,16 @@ class MyPostGetAllJobOffersSuccess extends MyPostState {
 }
 // ---------------------------------------------------------------- GET ALL
 
+// LOAD MORE ITEM ---------------------------------------------------------
+class MyPostIsNextItemAvailableSuccess extends MyPostState {
+  const MyPostIsNextItemAvailableSuccess({required this.isNextItemAvailable});
+  final bool isNextItemAvailable;
+
+  @override
+  List<Object> get props => [isNextItemAvailable];
+}
+// --------------------------------------------------------- LOAD MORE ITEM
+
 // ---------------------------------------------------------- SUCCESS STATE
 //
 //

@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kianja/core/shared/app_feature/data/models/user/user_model.dart';
+import 'package:kianja/features/jobs/data/models/output/files/job_image/job_image_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_actor/job_actor_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_category/job_category_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_gender/job_gender_model.dart';
@@ -14,10 +15,10 @@ abstract class JobOfferModel with _$JobOfferModel implements JobOffer {
   const factory JobOfferModel({
     @JsonKey(defaultValue: -1) required int id,
     @JsonKey(defaultValue: '') required String title,
-    @JsonKey(name: 'image_path', defaultValue: '') required String imageUrl,
     @JsonKey(defaultValue: '') required String description,
     @JsonKey(name: 'categories', defaultValue: <JobCategoryModel>[])
     required List<JobCategoryModel> categories,
+    JobImageModel? image,
     JobLocationModel? location,
     JobGenderModel? gender,
     JobActorModel? actor,

@@ -96,6 +96,16 @@ class MyPostDeleteExpertExecutiveRequested extends MyPostEvent {
 
 // GET ALL EVENT -----------------------------------------------------------
 class MyPostGetAllJobOffersRequested extends MyPostEvent {
-  const MyPostGetAllJobOffersRequested();
+  const MyPostGetAllJobOffersRequested({required this.queryPageParams});
+  final QueryPageParams queryPageParams;
+
+  @override
+  List<Object> get props => [queryPageParams];
 }
 // ----------------------------------------------------------- GET ALL EVENT
+
+// LOAD MORE ITEM EVENT ----------------------------------------------------
+class MyPostLoadMoreJobOffersRequested extends MyPostEvent {
+  const MyPostLoadMoreJobOffersRequested();
+}
+// ---------------------------------------------------- LOAD MORE ITEM EVENT

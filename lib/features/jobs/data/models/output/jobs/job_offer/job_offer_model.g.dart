@@ -10,13 +10,15 @@ _JobOfferModel _$JobOfferModelFromJson(Map<String, dynamic> json) =>
     _JobOfferModel(
       id: (json['id'] as num?)?.toInt() ?? -1,
       title: json['title'] as String? ?? '',
-      imageUrl: json['image_path'] as String? ?? '',
       description: json['description'] as String? ?? '',
       categories:
           (json['categories'] as List<dynamic>?)
               ?.map((e) => JobCategoryModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
+      image: json['image'] == null
+          ? null
+          : JobImageModel.fromJson(json['image'] as Map<String, dynamic>),
       location: json['location'] == null
           ? null
           : JobLocationModel.fromJson(json['location'] as Map<String, dynamic>),
@@ -36,9 +38,9 @@ Map<String, dynamic> _$JobOfferModelToJson(_JobOfferModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
-      'image_path': instance.imageUrl,
       'description': instance.description,
       'categories': instance.categories,
+      'image': instance.image,
       'location': instance.location,
       'gender': instance.gender,
       'actor': instance.actor,
