@@ -38,6 +38,19 @@ class _MyPostJobApplicantScreenState extends State<MyPostJobApplicantScreen>
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
+
+    final bloc = BlocProvider.of<MyPostBloc>(context);
+    final state = bloc.state;
+    if (state is MyPostGetAllJobApplicantsSuccess) {
+      _jobApplicants = state.jobApplicants;
+      _hasLoadedOnce = true;
+    } else {
+      bloc.add(
+        const MyPostGetAllJobApplicantsRequested(
+          queryPageParams: QueryPageParams(page: 1),
+        ),
+      );
+    }
   }
 
   @override
@@ -145,11 +158,17 @@ class _MyPostJobApplicantScreenState extends State<MyPostJobApplicantScreen>
         return true;
       },
       builder: (context, state) {
-        if (!_hasLoadedOnce && state is MyPostRequestInProgress) {
+        final hasLoaded =
+            _hasLoadedOnce || state is MyPostGetAllJobApplicantsSuccess;
+        final applicants = state is MyPostGetAllJobApplicantsSuccess
+            ? state.jobApplicants
+            : _jobApplicants;
+
+        if (!hasLoaded && state is MyPostRequestInProgress) {
           return const Center(child: CircularProgressIndicator());
         }
 
-        if (!_hasLoadedOnce && _errorMessage != null) {
+        if (!hasLoaded && _errorMessage != null) {
           return ServerFailureScreen(
             onRetry: () {
               BlocProvider.of<MyPostBloc>(context).add(
@@ -162,16 +181,15 @@ class _MyPostJobApplicantScreenState extends State<MyPostJobApplicantScreen>
           );
         }
 
-        if (_hasLoadedOnce) {
-          if (_jobApplicants.isEmpty) {
+        if (hasLoaded) {
+          if (applicants.isEmpty) {
             return const Center(child: Text('No job applicants yet'));
           }
 
           final hasMore =
               state is MyPostGetAllJobApplicantsSuccess && state.hasMore;
 
-          final itemCount =
-              hasMore ? _jobApplicants.length + 1 : _jobApplicants.length;
+          final itemCount = hasMore ? applicants.length + 1 : applicants.length;
 
           return MyPostRefreshScreen(
             onRefresh: _refresh,
@@ -180,10 +198,11 @@ class _MyPostJobApplicantScreenState extends State<MyPostJobApplicantScreen>
               physics: const AlwaysScrollableScrollPhysics(),
               padding: const EdgeInsets.symmetric(
                 vertical: Constants.paddingSmall,
+                horizontal: Constants.paddingMedium,
               ),
               itemCount: itemCount,
               itemBuilder: (context, index) {
-                if (hasMore && index >= _jobApplicants.length) {
+                if (hasMore && index >= applicants.length) {
                   return const Padding(
                     padding: EdgeInsets.symmetric(
                       vertical: Constants.paddingMedium,
@@ -194,19 +213,18 @@ class _MyPostJobApplicantScreenState extends State<MyPostJobApplicantScreen>
                   );
                 }
 
-                final jobApplicant = _jobApplicants[index];
+                final jobApplicant = applicants[index];
                 return InkWell(
                   onTap: () => _onTap(jobApplicant),
                   child: MyPostJobApplicantDismissible(
                     jobApplicant: jobApplicant,
-                    isProcessing:
-                        _processingJobApplicantId == jobApplicant.id,
+                    isProcessing: _processingJobApplicantId == jobApplicant.id,
                     onDeleteConfirmed: () => _onDelete(jobApplicant),
                   ),
                 );
               },
               separatorBuilder: (context, index) {
-                return const SizedBox(height: Constants.spacingExtraSmall);
+                return const Divider();
               },
             ),
           );
@@ -216,5 +234,3 @@ class _MyPostJobApplicantScreenState extends State<MyPostJobApplicantScreen>
     );
   }
 }
-
-

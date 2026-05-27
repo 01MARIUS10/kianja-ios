@@ -13,11 +13,13 @@ class PostFeaturesSection extends StatefulWidget {
     required this.onPlanSelected,
     this.onPost,
     this.isLoading = false,
+    this.postButtonLabel = 'POST',
   });
   final List<JobApplicantPlan> plans;
   final ValueChanged<JobApplicantPlan?> onPlanSelected;
   final VoidCallback? onPost;
   final bool isLoading;
+  final String postButtonLabel;
 
   @override
   State<PostFeaturesSection> createState() => _PostFeaturesSectionState();
@@ -216,7 +218,7 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
                 : Text(
-                    'POST',
+                    widget.postButtonLabel,
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       letterSpacing: 1.2,

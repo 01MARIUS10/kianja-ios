@@ -20,6 +20,7 @@ class MyPostScreen extends StatefulWidget {
 class _MyPostScreenState extends State<MyPostScreen>
     with TickerProviderStateMixin {
   late final TabController _tabController;
+
   @override
   void initState() {
     super.initState();
@@ -38,11 +39,6 @@ class _MyPostScreenState extends State<MyPostScreen>
       create: (_) => GetIt.instance<MyPostBloc>()
         ..add(
           const MyPostGetAllJobOffersRequested(
-            queryPageParams: QueryPageParams(page: 1),
-          ),
-        )
-        ..add(
-          const MyPostGetAllJobApplicantsRequested(
             queryPageParams: QueryPageParams(page: 1),
           ),
         ),

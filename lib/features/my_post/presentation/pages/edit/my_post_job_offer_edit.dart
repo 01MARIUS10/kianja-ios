@@ -119,22 +119,22 @@ class _MyPostJobOfferEditScreenState extends State<MyPostJobOfferEditScreen> {
       return;
     }
 
-    // BlocProvider.of<MyPostBloc>(context).add(
-    //   MyPostUpdateJobOfferRequested(
-    //     updateJobOfferParams: UpdateJobOfferParams(
-    //       id: widget.jobOfferId,
-    //       title: _titleController.text.trim(),
-    //       imageId: _resolvedImageId!,
-    //       description: _descriptionController.text.trim(),
-    //       categories: List<int>.from(_selectedCategories),
-    //       location: _selectedLocation!,
-    //       gender: _selectedGender!,
-    //       actor: _selectedActor!,
-    //       limitDate: _limitDateController.text.trim(),
-    //       status: _status,
-    //     ),
-    //   ),
-    // );
+    BlocProvider.of<MyPostBloc>(context).add(
+      MyPostUpdateJobOfferRequested(
+        updateJobOfferParams: UpdateJobOfferParams(
+          id: widget.jobOfferId,
+          title: _titleController.text.trim(),
+          imageId: _resolvedImageId!,
+          description: _descriptionController.text.trim(),
+          categories: List<int>.from(_selectedCategories),
+          location: _selectedLocation!,
+          gender: _selectedGender!,
+          actor: _selectedActor!,
+          limitDate: _limitDateController.text.trim(),
+          status: _status,
+        ),
+      ),
+    );
   }
 
   void _toggleCategory(int categoryId) {
