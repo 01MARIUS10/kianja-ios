@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
@@ -8,9 +9,11 @@ import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.da
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/shared/widgets/loading/shimmer_job_detail_indicator.dart';
 import 'package:kianja/core/themes/app_colors.dart';
+import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
+import 'package:kianja/routing/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class JobApplicantDetailScreen extends StatelessWidget {
@@ -114,44 +117,63 @@ class JobApplicantDetailScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: Constants.spacingMedium),
 
-                    // Resume
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Constants.paddingMedium,
-                      ),
-                      child: Column(
+                    if (jobApplicant.pdfUrl.isNotEmpty)
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Resume',
-                            style: theme.textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.bold,
+                          // Resume
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: Constants.paddingMedium,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Resume',
+                                  style: theme.textTheme.titleSmall?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: Constants.spacingMedium),
+                                InkWell(
+                                  onTap: () {
+                                    // AppDebug.showPrint(
+                                    //   'Opening PDF: ${jobApplicant.pdfUrl}',
+                                    // );
+                                    // final url = Uri.parse(
+                                    //   '${EnvConfig.baseApiUrl}${jobApplicant.pdfUrl}',
+                                    // );
+                                    // if (await canLaunchUrl(url)) {
+                                    //   await launchUrl(url);
+                                    // }
+                                    context.pushNamed(
+                                      Routes.jobApplicantViewPdf.name,
+                                      pathParameters: {
+                                        'id': jobApplicant.id.toString(),
+                                      },
+                                      extra: {
+                                        'pdfUrl':
+                                            '${EnvConfig.baseApiUrl}${jobApplicant.pdfUrl}',
+                                      },
+                                    );
+                                  },
+                                  child: Image.asset(Assets.pdf, height: 40),
+                                ),
+                              ],
                             ),
                           ),
                           const SizedBox(height: Constants.spacingMedium),
-                          InkWell(
-                            onTap: () async {
-                              final url = Uri.parse(
-                                '${EnvConfig.baseApiUrl}${jobApplicant.pdfUrl}',
-                              );
-                              if (await canLaunchUrl(url)) {
-                                await launchUrl(url);
-                              }
-                            },
-                            child: Image.asset(Assets.pdf, height: 40),
+                          Divider(
+                            color: borderColor,
+                            thickness: 1,
+                            height: 1,
+                            indent: Constants.paddingMedium,
+                            endIndent: Constants.paddingMedium,
                           ),
+                          const SizedBox(height: Constants.spacingMedium),
                         ],
                       ),
-                    ),
-                    const SizedBox(height: Constants.spacingMedium),
-                    Divider(
-                      color: borderColor,
-                      thickness: 1,
-                      height: 1,
-                      indent: Constants.paddingMedium,
-                      endIndent: Constants.paddingMedium,
-                    ),
-                    const SizedBox(height: Constants.spacingMedium),
 
                     // Job features
                     Padding(

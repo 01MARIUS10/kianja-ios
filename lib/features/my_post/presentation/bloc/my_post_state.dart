@@ -104,6 +104,21 @@ class MyPostGetAllJobApplicantsSuccess extends MyPostState {
   @override
   List<Object> get props => [jobApplicants, hasMore, isLoadMore];
 }
+
+class MyPostGetAllTrainingCentersSuccess extends MyPostState {
+  const MyPostGetAllTrainingCentersSuccess({
+    required this.trainingCenters,
+    required this.hasMore,
+    this.isLoadMore = false,
+  });
+
+  final List<TrainingCenter> trainingCenters;
+  final bool hasMore;
+  final bool isLoadMore;
+
+  @override
+  List<Object> get props => [trainingCenters, hasMore, isLoadMore];
+}
 // ---------------------------------------------------------------- GET ALL
 
 // ---------------------------------------------------------- SUCCESS STATE

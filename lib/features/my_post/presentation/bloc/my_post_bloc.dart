@@ -15,6 +15,7 @@ import 'package:kianja/features/my_post/domain/usecases/delete/delete_training_c
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_training_center/delete_training_center_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/get_all/get_all_job_applicants_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/get_all/get_all_job_offers_usecase.dart';
+import 'package:kianja/features/my_post/domain/usecases/get_all/get_all_training_centers_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_expert_executive/update_expert_executive_params.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_expert_executive/update_expert_executive_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_job_applicant/update_job_applicant_params.dart';
@@ -46,6 +47,7 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
     // GET ALL USECASE ---------------------------------------------------------
     required GetAllJobOffersUseCase getAllJobOffersUseCase,
     required GetAllJobApplicantsUseCase getAllJobApplicantsUseCase,
+    required GetAllTrainingCentersUseCase getAllTrainingCentersUseCase,
     // --------------------------------------------------------- GET ALL USECASE
   }) : // UPDATE USECASE ------------------------------------------------------
        _updateJobOfferUseCase = updateJobOfferUseCase,
@@ -64,6 +66,7 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
        // GET ALL USECASE ------------------------------------------------------
        _getAllJobOffersUseCase = getAllJobOffersUseCase,
        _getAllJobApplicantsUseCase = getAllJobApplicantsUseCase,
+       _getAllTrainingCentersUseCase = getAllTrainingCentersUseCase,
        // ------------------------------------------------------ GET ALL USECASE
        super(MyPostInitial()) {
     // UPDATE EVENT HANDLER -------------------------------------------------
@@ -87,11 +90,19 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
     on<MyPostGetAllJobApplicantsRequested>(_onGetAllJobApplicantsRequested);
     // --------------------------------------------------- GET ALL EVENT HANDLER
 
+    on<MyPostGetAllTrainingCentersRequested>(_onGetAllTrainingCentersRequested);
+    // --------------------------------------------------- GET ALL EVENT HANDLER
+
     // LOAD MORE ITEM EVENT HANDLER --------------------------------------------
     on<MyPostLoadMoreJobOffersRequested>(_onLoadMoreJobOffersRequested);
     // -------------------------------------------- LOAD MORE ITEM EVENT HANDLER
 
     on<MyPostLoadMoreJobApplicantsRequested>(_onLoadMoreJobApplicantsRequested);
+    // -------------------------------------------- LOAD MORE ITEM EVENT HANDLER
+
+    on<MyPostLoadMoreTrainingCentersRequested>(
+      _onLoadMoreTrainingCentersRequested,
+    );
     // -------------------------------------------- LOAD MORE ITEM EVENT HANDLER
   }
 
@@ -112,6 +123,7 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
   // GET ALL USECASE -----------------------------------------------------------
   final GetAllJobOffersUseCase _getAllJobOffersUseCase;
   final GetAllJobApplicantsUseCase _getAllJobApplicantsUseCase;
+  final GetAllTrainingCentersUseCase _getAllTrainingCentersUseCase;
   // ----------------------------------------------------------- GET ALL USECASE
 
   // PAGINATION STATE ----------------------------------------------------------
@@ -126,6 +138,12 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
   List<JobApplicant> _cachedJobApplicants = [];
   bool _hasMoreApplicants = true;
   bool _isLoadMoreApplicantsInProgress = false;
+  // ---------------------------------------------------------- PAGINATION STATE
+
+  int _currentTrainingCentersPage = 1;
+  List<TrainingCenter> _cachedTrainingCenters = [];
+  bool _hasMoreTrainingCenters = true;
+  bool _isLoadMoreTrainingCentersInProgress = false;
   // ---------------------------------------------------------- PAGINATION STATE
 
   // UPDATE EVENT HANDLER ---------------------------------------------------
@@ -396,6 +414,73 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
           MyPostGetAllJobApplicantsSuccess(
             jobApplicants: _cachedJobApplicants,
             hasMore: _hasMoreApplicants,
+          ),
+        );
+      },
+    );
+  }
+
+  // --------------------------------------------------- GET ALL TRAINING CENTERS
+  Future<void> _onGetAllTrainingCentersRequested(
+    MyPostGetAllTrainingCentersRequested event,
+    Emitter<MyPostState> emit,
+  ) async {
+    _currentTrainingCentersPage = event.queryPageParams.page;
+    _cachedTrainingCenters = [];
+    _hasMoreTrainingCenters = true;
+    _isLoadMoreTrainingCentersInProgress = false;
+
+    emit(MyPostRequestInProgress());
+    final result = await _getAllTrainingCentersUseCase(event.queryPageParams);
+    result.fold(
+      (failure) => emit(MyPostRequestFailure(message: failure.message)),
+      (trainingCenters) {
+        _cachedTrainingCenters = trainingCenters;
+        _hasMoreTrainingCenters = trainingCenters.length >= _pageSize;
+        emit(
+          MyPostGetAllTrainingCentersSuccess(
+            trainingCenters: _cachedTrainingCenters,
+            hasMore: _hasMoreTrainingCenters,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _onLoadMoreTrainingCentersRequested(
+    MyPostLoadMoreTrainingCentersRequested event,
+    Emitter<MyPostState> emit,
+  ) async {
+    if (!_hasMoreTrainingCenters || _isLoadMoreTrainingCentersInProgress) {
+      return;
+    }
+
+    _isLoadMoreTrainingCentersInProgress = true;
+    emit(
+      MyPostGetAllTrainingCentersSuccess(
+        trainingCenters: _cachedTrainingCenters,
+        hasMore: _hasMoreTrainingCenters,
+        isLoadMore: true,
+      ),
+    );
+
+    _currentTrainingCentersPage++;
+    final result = await _getAllTrainingCentersUseCase(
+      QueryPageParams(page: _currentTrainingCentersPage),
+    );
+    result.fold(
+      (failure) {
+        _isLoadMoreTrainingCentersInProgress = false;
+        emit(MyPostRequestFailure(message: failure.message));
+      },
+      (trainingCenters) {
+        _cachedTrainingCenters = [..._cachedTrainingCenters, ...trainingCenters];
+        _hasMoreTrainingCenters = trainingCenters.length >= _pageSize;
+        _isLoadMoreTrainingCentersInProgress = false;
+        emit(
+          MyPostGetAllTrainingCentersSuccess(
+            trainingCenters: _cachedTrainingCenters,
+            hasMore: _hasMoreTrainingCenters,
           ),
         );
       },

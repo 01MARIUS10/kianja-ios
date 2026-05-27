@@ -46,10 +46,11 @@ class MyPostTrainingCenterItemList extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(Constants.borderRadiusSmall),
               child: SizedBox(
-                width: 110,
-                height: 75,
+                width: 120,
+                height: 120,
                 child: CachedNetworkImage(
-                  imageUrl: '${EnvConfig.baseApiUrl}${trainingCenter.imageUrl}',
+                  imageUrl:
+                      '${EnvConfig.baseApiUrl}${trainingCenter.images.isNotEmpty ? trainingCenter.images.first.url : ''}',
                   fit: BoxFit.cover,
                   errorWidget: (context, url, error) => Image.asset(
                     Assets.hiring,
@@ -81,129 +82,109 @@ class MyPostTrainingCenterItemList extends StatelessWidget {
 
             // Content
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Title
-                  Text(
-                    trainingCenter.name,
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      height: 1.2,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: Constants.spacingExtraSmall),
-
-                  // Location
-                  if (trainingCenter.location != null)
-                    Row(
+              child: SizedBox(
+                height: 120,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(
-                          Icons.location_on_outlined,
-                          size: Constants.iconSizeExtraSmall,
-                          color: textSecondary,
-                        ),
-                        const SizedBox(width: 2),
-                        Expanded(
-                          child: Text(
-                            trainingCenter.location!.name,
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: textSecondary,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                        // Title
+                        Text(
+                          trainingCenter.name,
+                          style: theme.textTheme.titleSmall?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            height: 1.2,
                           ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                      ],
-                    ),
-                  const SizedBox(height: Constants.spacingExtraSmall),
+                        const SizedBox(height: Constants.spacingExtraSmall),
 
-                  // User row + badge
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // User avatar
-                      ClipOval(
-                        child: Image.asset(
-                          Assets.rabbitAvatar,
-                          width: Constants.size30,
-                          height: Constants.size30,
-                          fit: BoxFit.cover,
-                          cacheWidth: 60,
-                          cacheHeight: 60,
-                          errorBuilder: (ctx, e, st) => Icon(
-                            Icons.person,
-                            size: Constants.iconSizeExtraSmall,
-                            color: textSecondary,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: Constants.spacingExtraSmall),
-
-                      // Name + time
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              '${trainingCenter.user.firstName} ${trainingCenter.user.lastName}',
-                              style: theme.textTheme.bodySmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            Text(
-                              '• ${AppFunction.dateTimeCounter(trainingCenter.createdAt)}',
-                              style: theme.textTheme.bodySmall?.copyWith(
+                        // Location
+                        if (trainingCenter.location != null)
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.location_on_outlined,
+                                size: Constants.iconSizeExtraSmall,
                                 color: textSecondary,
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      // Badge
-                      if (badge != TrainingCenterBadge.normal) ...[
-                        _BadgeChip(badge: badge),
-                        const SizedBox(width: Constants.spacingExtraSmall),
+                              const SizedBox(width: 2),
+                              Expanded(
+                                child: Text(
+                                  trainingCenter.location!.name,
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: textSecondary,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                        const SizedBox(height: Constants.spacingExtraSmall),
                       ],
+                    ),
 
-                      // Actions
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          InkWell(
-                            onTap: onEdit,
-                            child: const Padding(
-                              padding: EdgeInsets.all(4.0),
-                              child: Icon(
-                                Icons.edit_outlined,
-                                color: AppColors.success,
-                                size: 20,
-                              ),
+                    // User row + badge
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        // User avatar
+                        ClipOval(
+                          child: Image.asset(
+                            Assets.rabbitAvatar,
+                            width: Constants.size40,
+                            height: Constants.size40,
+                            fit: BoxFit.cover,
+                            cacheWidth: 80,
+                            cacheHeight: 80,
+                            errorBuilder: (ctx, e, st) => Icon(
+                              Icons.person,
+                              size: Constants.iconSizeExtraSmall,
+                              color: textSecondary,
                             ),
                           ),
-                          InkWell(
-                            onTap: onDelete,
-                            child: const Padding(
-                              padding: EdgeInsets.all(4.0),
-                              child: Icon(
-                                Icons.delete_outline,
-                                color: AppColors.danger,
-                                size: 20,
+                        ),
+                        const SizedBox(width: Constants.spacingExtraSmall),
+
+                        // Name + time
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                '${trainingCenter.user.firstName} ${trainingCenter.user.lastName}',
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
-                            ),
+                              Text(
+                                '• ${AppFunction.dateTimeCounter(trainingCenter.createdAt)}',
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  color: textSecondary,
+                                ),
+                              ),
+                            ],
                           ),
+                        ),
+
+                        // Badge
+                        if (badge != TrainingCenterBadge.normal) ...[
+                          _BadgeChip(badge: badge),
+                          const SizedBox(width: Constants.spacingExtraSmall),
                         ],
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

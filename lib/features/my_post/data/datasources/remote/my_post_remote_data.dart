@@ -33,6 +33,6 @@ abstract interface class MyPostRemoteData {
   // GET ALL LIST
   Future<List<JobOfferModel>> getAllJobOffers({required int page});
   Future<List<JobApplicantModel>> getAllJobApplicants({required int page});
-  // Future<List<TrainingCenterModel>> getAllTrainingCenters();
+  Future<List<TrainingCenterModel>> getAllTrainingCenters({required int page});
   // Future<List<ExpertExecutiveModel>> getAllExpertExecutives();
 }

@@ -130,4 +130,23 @@ class MyPostRemoteDataImpl implements MyPostRemoteData {
           .toList();
     });
   }
+
+  @override
+  Future<List<TrainingCenterModel>> getAllTrainingCenters({required int page}) {
+    return requestHandler(() async {
+      final response =
+          await dio.get('/api/mesAnnonces/trainingCenters?page=$page');
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      final Map<String, dynamic> content = result['Contenu'];
+      final Map<String, dynamic> trainingCenters = content['trainingCenters'];
+      final List<dynamic> trainingCenterList = trainingCenters['data'];
+      return trainingCenterList
+          .map(
+            (trainingCenter) => TrainingCenterModel.fromJson(
+              trainingCenter as Map<String, dynamic>,
+            ),
+          )
+          .toList();
+    });
+  }
 }

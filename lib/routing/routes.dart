@@ -25,6 +25,7 @@ enum Routes {
   // ------------- JOB APPLICANT ----------------
   jobApplicantViewAll('job-applicant-view-all'),
   jobApplicantDetail('job-applicant-detail/:id'),
+  jobApplicantViewPdf('job-applicant-view-pdf'),
   // ------------- JOB APPLICANT ----------------
 
   // ------------- TRAINING CENTER ----------------
@@ -51,6 +52,8 @@ enum Routes {
   // ------------- MY POST ----------------
   myPost('/my-post'),
   myPostJobOfferEdit('edit-job-offer/:id'),
+  myPostJobApplicantEdit('edit-job-applicant/:id'),
+  myPostTrainingCenterEdit('edit-training-center/:id'),
   // ------------- MY POST ----------------
 
   // ------------- ACCOUNT ----------------

@@ -16,9 +16,12 @@ import 'package:kianja/features/account/presentation/pages/wallet/wallet_screen.
 import 'package:kianja/features/auth/presentation/pages/signin_screen.dart';
 import 'package:kianja/features/auth/presentation/pages/signup_screen.dart';
 import 'package:kianja/features/choose_lang/presentation/pages/choose_lang_screen.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
+import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
 import 'package:kianja/features/jobs/presentation/pages/details/hot_event_detail_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/details/job_applicant_detail_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/details/job_applicant_view_pdf_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/details/job_offer_detail_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/details/training_center_detail.dart';
 import 'package:kianja/features/jobs/presentation/pages/jobs_screen.dart';
@@ -37,7 +40,9 @@ import 'package:kianja/features/jobs/presentation/pages/view_all/job_applicants_
 import 'package:kianja/features/jobs/presentation/pages/view_all/job_category_view_all_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/view_all/training_center_hot_event_view_all_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/view_all/training_center_view_all_screen.dart';
+import 'package:kianja/features/my_post/presentation/pages/edit/my_post_job_applicant_edit.dart';
 import 'package:kianja/features/my_post/presentation/pages/edit/my_post_job_offer_edit.dart';
+import 'package:kianja/features/my_post/presentation/pages/edit/my_post_training_center_edit.dart';
 import 'package:kianja/features/my_post/presentation/pages/my_post_screen.dart';
 import 'package:kianja/routing/navigation/navigation.dart';
 import 'package:kianja/routing/routes.dart';
@@ -120,18 +125,7 @@ abstract class AppRouter {
           },
         ),
         // ================= CHOOSE LANG =================
-        GoRoute(
-          parentNavigatorKey: _rootNavigatorKey,
-          name: Routes.photoViewer.name,
-          path: Routes.photoViewer.path,
-          builder: (context, state) {
-            final extra = state.extra as Map<String, dynamic>? ?? {};
-            return PhotoViewerScreen(
-              imageUrls: extra['imageUrls'] as List<String>? ?? [],
-              initialIndex: int.tryParse(extra['initialIndex'] ?? '0') ?? 0,
-            );
-          },
-        ),
+
         // ================= NAVIGATION (SHELL) =================
         StatefulShellRoute.indexedStack(
           parentNavigatorKey: _rootNavigatorKey,
@@ -193,6 +187,20 @@ abstract class AppRouter {
                           id: int.parse(params['id'] ?? '0'),
                         );
                       },
+                      routes: [
+                        GoRoute(
+                          parentNavigatorKey: _rootNavigatorKey,
+                          name: Routes.jobApplicantViewPdf.name,
+                          path: Routes.jobApplicantViewPdf.path,
+                          builder: (context, state) {
+                            final extra =
+                                state.extra as Map<String, String>? ?? {};
+                            return JobApplicantViewPdfScreen(
+                              pdfUrl: extra['pdfUrl'] ?? '',
+                            );
+                          },
+                        ),
+                      ],
                     ),
                     GoRoute(
                       name: Routes.jobApplicantViewAll.name,
@@ -228,6 +236,24 @@ abstract class AppRouter {
                           id: int.parse(params['id'] ?? '0'),
                         );
                       },
+                      routes: [
+                        GoRoute(
+                          parentNavigatorKey: _rootNavigatorKey,
+                          name: Routes.photoViewer.name,
+                          path: Routes.photoViewer.path,
+                          builder: (context, state) {
+                            final extra =
+                                state.extra as Map<String, dynamic>? ?? {};
+                            return PhotoViewerScreen(
+                              imageUrls:
+                                  extra['imageUrls'] as List<String>? ?? [],
+                              initialIndex:
+                                  int.tryParse(extra['initialIndex'] ?? '0') ??
+                                  0,
+                            );
+                          },
+                        ),
+                      ],
                     ),
                     GoRoute(
                       name: Routes.trainingCenterHotEventViewAll.name,
@@ -392,6 +418,35 @@ abstract class AppRouter {
                           jobOfferId: int.parse(params['id'] ?? '0'),
                           initialJobOffer: jobOffer is JobOffer
                               ? jobOffer
+                              : null,
+                        );
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.myPostJobApplicantEdit.name,
+                      path: Routes.myPostJobApplicantEdit.path,
+                      builder: (context, state) {
+                        final params = state.pathParameters;
+                        final jobApplicant = state.extra;
+                        return MyPostJobApplicantEditScreen(
+                          jobApplicantId: int.parse(params['id'] ?? '0'),
+                          initialJobApplicant: jobApplicant is JobApplicant
+                              ? jobApplicant
+                              : null,
+                        );
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.myPostTrainingCenterEdit.name,
+                      path: Routes.myPostTrainingCenterEdit.path,
+                      builder: (context, state) {
+                        final params = state.pathParameters;
+                        final trainingCenter = state.extra;
+                        return MyPostTrainingCenterEditScreen(
+                          trainingCenterId: int.parse(params['id'] ?? '0'),
+                          initialTrainingCenter:
+                              trainingCenter is TrainingCenter
+                              ? trainingCenter
                               : null,
                         );
                       },

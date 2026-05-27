@@ -5,9 +5,11 @@ import 'package:kianja/core/services/service_helper.dart';
 import 'package:kianja/core/shared/app_feature/data/datasources/app_shared_prefs.dart';
 import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/account/data/datasources/remote/account_remote_data.dart';
 import 'package:kianja/features/account/data/models/input/change_password/change_password_input_model.dart';
 import 'package:kianja/features/account/data/models/input/update_user_info/update_user_info_input_model.dart';
+import 'package:kianja/features/account/domain/entities/kara_history.dart';
 import 'package:kianja/features/account/domain/repositories/account_repository.dart';
 import 'package:kianja/features/account/domain/usecases/change_password/change_password_params.dart';
 import 'package:kianja/features/account/domain/usecases/upate_user_info/update_user_info_params.dart';
@@ -74,6 +76,20 @@ class AccountRepositoryImpl implements AccountRepository {
     try {
       final cgu = await remoteDataSource.cgu();
       return right(cgu);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<KaraHistory>>> getAllKaraHistory({
+    required QueryPageParams queryPageParams,
+  }) async {
+    try {
+      final result = await remoteDataSource.getAllKaraHistory(
+        page: queryPageParams.page,
+      );
+      return right(result);
     } on AppException catch (e) {
       return left(failureHandler(e));
     }

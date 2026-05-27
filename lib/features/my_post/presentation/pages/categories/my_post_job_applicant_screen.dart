@@ -83,6 +83,21 @@ class _MyPostJobApplicantScreenState extends State<MyPostJobApplicantScreen>
     );
   }
 
+  Future<void> _onEdit(JobApplicant jobApplicant) async {
+    final updated = await context.pushNamed<bool>(
+      Routes.myPostJobApplicantEdit.name,
+      pathParameters: {'id': jobApplicant.id.toString()},
+      extra: jobApplicant,
+    );
+    if (updated == true && mounted) {
+      BlocProvider.of<MyPostBloc>(context).add(
+        const MyPostGetAllJobApplicantsRequested(
+          queryPageParams: QueryPageParams(page: 1),
+        ),
+      );
+    }
+  }
+
   void _onDelete(JobApplicant jobApplicant) {
     setState(() => _processingJobApplicantId = jobApplicant.id);
     BlocProvider.of<MyPostBloc>(context).add(
@@ -219,6 +234,7 @@ class _MyPostJobApplicantScreenState extends State<MyPostJobApplicantScreen>
                   child: MyPostJobApplicantDismissible(
                     jobApplicant: jobApplicant,
                     isProcessing: _processingJobApplicantId == jobApplicant.id,
+                    onEditConfirmed: () => _onEdit(jobApplicant),
                     onDeleteConfirmed: () => _onDelete(jobApplicant),
                   ),
                 );

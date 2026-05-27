@@ -90,6 +90,7 @@ class TrainingCenterDetail extends StatelessWidget {
                         horizontal: Constants.paddingMedium,
                       ),
                       child: PhotoHandler(
+                        trainingCenterId: trainingCenter.id,
                         height: 300,
                         width: double.infinity,
                         imageUrls: trainingCenter.images

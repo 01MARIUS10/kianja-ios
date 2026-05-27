@@ -190,4 +190,18 @@ class MyPostRepositoryImpl implements MyPostRepository {
       return left(failureHandler(e));
     }
   }
+
+  @override
+  Future<Either<Failure, List<TrainingCenter>>> getAllTrainingCenters({
+    required QueryPageParams queryPageParams,
+  }) async {
+    try {
+      final trainingCenters = await myPostRemoteData.getAllTrainingCenters(
+        page: queryPageParams.page,
+      );
+      return right(trainingCenters);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
 }

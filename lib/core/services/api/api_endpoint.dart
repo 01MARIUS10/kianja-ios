@@ -7,7 +7,7 @@ enum ApiEndpoint {
 
   // ============= Users =============
   profile(path: '/api/profil/'),
-  profileFakaHistorique(path: '/api/profil/faka/historique/'),
+  karaHistory(path: '/api/kara/historique/'),
 
   // ============= Job offers =============
   jobOffer(path: '/api/job-offers/'),

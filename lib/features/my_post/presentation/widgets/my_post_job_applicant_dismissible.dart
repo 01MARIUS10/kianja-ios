@@ -9,13 +9,24 @@ class MyPostJobApplicantDismissible extends StatelessWidget {
   const MyPostJobApplicantDismissible({
     super.key,
     required this.jobApplicant,
+    required this.onEditConfirmed,
     required this.onDeleteConfirmed,
     this.isProcessing = false,
   });
 
   final JobApplicant jobApplicant;
+  final VoidCallback onEditConfirmed;
   final VoidCallback onDeleteConfirmed;
   final bool isProcessing;
+
+  Future<bool> _confirmEdit(BuildContext context) {
+    return MyPostActionConfirmationDialog.show(
+      context,
+      title: 'Edit ?',
+      message: 'Do you want to edit this job applicant?',
+      confirmLabel: 'Edit',
+    );
+  }
 
   Future<bool> _confirmDelete(BuildContext context) {
     return MyPostActionConfirmationDialog.show(
@@ -30,19 +41,28 @@ class MyPostJobApplicantDismissible extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dismissible(
       key: ValueKey<int>(jobApplicant.id),
-      direction: DismissDirection.endToStart,
+      direction: DismissDirection.horizontal,
       resizeDuration: const Duration(milliseconds: 200),
       movementDuration: const Duration(milliseconds: 200),
       confirmDismiss: (direction) async {
         if (isProcessing) return false;
-        if (direction == DismissDirection.endToStart) {
+
+        if (direction == DismissDirection.startToEnd) {
+          final confirmed = await _confirmEdit(context);
+          if (confirmed) onEditConfirmed();
+        } else if (direction == DismissDirection.endToStart) {
           final confirmed = await _confirmDelete(context);
           if (confirmed) onDeleteConfirmed();
         }
         return false;
       },
-      background: const SizedBox.shrink(),
-      secondaryBackground: _DismissActionBackground(
+      background: const _DismissActionBackground(
+        alignment: Alignment.centerLeft,
+        icon: Icons.edit_outlined,
+        label: 'Edit',
+        color: AppColors.info,
+      ),
+      secondaryBackground: const _DismissActionBackground(
         alignment: Alignment.centerRight,
         icon: Icons.delete_outline,
         label: 'Remove',
@@ -121,4 +141,3 @@ class _DismissActionBackground extends StatelessWidget {
     );
   }
 }
-
