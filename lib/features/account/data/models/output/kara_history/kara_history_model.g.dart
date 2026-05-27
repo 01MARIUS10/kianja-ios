@@ -11,7 +11,7 @@ _KaraHistoryModel _$KaraHistoryModelFromJson(Map<String, dynamic> json) =>
       id: (json['id'] as num?)?.toInt() ?? -1,
       type: json['type'] as String? ?? '',
       message: json['message'] as String? ?? '',
-      montant: json['montant'] as String? ?? '',
+      montant: (json['montant'] as num?)?.toInt() ?? 0,
       isIncome: json['is_icome'] as bool? ?? false,
       date: json['created_at'] as String? ?? '',
     );

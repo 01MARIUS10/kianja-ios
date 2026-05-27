@@ -10,7 +10,7 @@ abstract class KaraHistoryModel with _$KaraHistoryModel implements KaraHistory {
     @JsonKey(name: 'id', defaultValue: -1) required int id,
     @JsonKey(defaultValue: '') required String type,
     @JsonKey(defaultValue: '') required String message,
-    @JsonKey(defaultValue: '') required String montant,
+    @JsonKey(defaultValue: 0) required int montant,
     @JsonKey(name: 'is_icome', defaultValue: false) required bool isIncome,
     @JsonKey(name: 'created_at', defaultValue: '') required String date,
   }) = _KaraHistoryModel;

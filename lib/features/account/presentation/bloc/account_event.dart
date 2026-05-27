@@ -30,3 +30,15 @@ class AccountUpdateUserInfoRequested extends AccountEvent {
   @override
   List<Object> get props => [updateUserInfoParams];
 }
+
+class AccountWalletHistoryRequested extends AccountEvent {
+  const AccountWalletHistoryRequested({required this.queryPageParams});
+  final QueryPageParams queryPageParams;
+
+  @override
+  List<Object> get props => [queryPageParams];
+}
+
+class AccountWalletLoadMoreRequested extends AccountEvent {
+  const AccountWalletLoadMoreRequested();
+}

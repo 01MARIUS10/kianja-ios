@@ -31,6 +31,21 @@ class AccountUpdateUserInfoSuccess extends AccountState {
   List<Object> get props => [user];
 }
 
+class AccountWalletHistorySuccess extends AccountState {
+  const AccountWalletHistorySuccess({
+    required this.history,
+    required this.hasMore,
+    this.isLoadMore = false,
+  });
+
+  final List<KaraHistory> history;
+  final bool hasMore;
+  final bool isLoadMore;
+
+  @override
+  List<Object> get props => [history, hasMore, isLoadMore];
+}
+
 class AccountCguSuccess extends AccountState {
   const AccountCguSuccess({required this.cgu});
   final String cgu;
