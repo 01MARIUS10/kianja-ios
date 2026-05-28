@@ -8,6 +8,7 @@ import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/account/presentation/widgets/account_menu/account_menu_card.dart';
 import 'package:kianja/features/account/presentation/widgets/personal_info_row.dart';
 import 'package:kianja/routing/routes.dart';
@@ -21,7 +22,7 @@ class PersonalInfoScreen extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
 
     return BaseScreen(
-      appBar: const TitleHeader(title: 'Personal Info'),
+      appBar: TitleHeader(title: context.appLoc.personal_info),
       child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(
           Constants.paddingMedium,
@@ -100,7 +101,7 @@ class PersonalInfoScreen extends StatelessWidget {
 
                 // ── Full name headline ─────────────────────────────────
                 Text(
-                  fullName.isEmpty ? 'Full Name' : fullName,
+                  fullName.isEmpty ? context.appLoc.full_name : fullName,
                   style: theme.textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: isDark
@@ -115,8 +116,10 @@ class PersonalInfoScreen extends StatelessWidget {
                   children: [
                     PersonalInfoRow(
                       icon: Icons.person_outline,
-                      label: 'Full Name',
-                      value: fullName.isEmpty ? 'Full name' : fullName,
+                      label: context.appLoc.full_name,
+                      value: fullName.isEmpty
+                          ? context.appLoc.full_name
+                          : fullName,
                       iconColor: AppColors.warning,
                     ),
                     const Divider(thickness: 0.5),
@@ -130,7 +133,7 @@ class PersonalInfoScreen extends StatelessWidget {
 
                     PersonalInfoRow(
                       icon: Icons.phone_outlined,
-                      label: 'Phone Number',
+                      label: context.appLoc.phone_number,
                       value:
                           '+261 ${AppFunction.formatPhoneNumber(user.phone)}',
                       iconColor: AppColors.success,
@@ -139,7 +142,7 @@ class PersonalInfoScreen extends StatelessWidget {
 
                     PersonalInfoRow(
                       icon: Icons.location_on_outlined,
-                      label: 'Residence',
+                      label: context.appLoc.residence,
                       value: user.residence,
                       iconColor: AppColors.danger,
                     ),

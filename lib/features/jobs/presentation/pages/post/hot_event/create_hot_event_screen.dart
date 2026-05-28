@@ -11,6 +11,7 @@ import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_hot_event/create_hot_event_params.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/single_photo_upload_widget.dart';
@@ -123,9 +124,9 @@ class _CreateHotEventScreenState extends State<CreateHotEventScreen> {
               final isLoading = state is JobsRequestInProgress;
 
               return BaseScreen(
-                appBar: widget.type == 'Hot'
-                    ? const TitleHeader(title: 'Post an hot')
-                    : const TitleHeader(title: 'Post an event'),
+                appBar: widget.type == context.appLoc.hot
+                    ? TitleHeader(title: context.appLoc.post_hot)
+                    : TitleHeader(title: context.appLoc.post_event),
                 child: GestureDetector(
                   onTap: () => FocusScope.of(context).unfocus(),
                   child: SingleChildScrollView(
@@ -136,17 +137,17 @@ class _CreateHotEventScreenState extends State<CreateHotEventScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const LabelField(label: 'Title *'),
+                        LabelField(label: '${context.appLoc.title} *'),
                         const SizedBox(height: Constants.spacingSmall),
                         TextInputField(
                           controller: _titleController,
-                          hintText: 'Add title',
+                          hintText: context.appLoc.add_title,
                           maxLines: 3,
                           maxLength: 130,
                         ),
                         const SizedBox(height: Constants.spacingMedium),
 
-                        const LabelField(label: 'Photo'),
+                        LabelField(label: context.appLoc.photo),
                         const SizedBox(height: Constants.spacingSmall),
                         SinglePhotoUploadWidget(
                           onPhotoChanged: (photo) {
@@ -159,18 +160,18 @@ class _CreateHotEventScreenState extends State<CreateHotEventScreen> {
                         ),
                         const SizedBox(height: Constants.spacingMedium),
 
-                        const LabelField(label: 'Description *'),
+                        LabelField(label: '${context.appLoc.description} *'),
                         const SizedBox(height: Constants.spacingSmall),
                         TextInputField(
                           controller: _descriptionController,
-                          hintText: 'Add description',
+                          hintText: context.appLoc.add_description,
                           maxLines: 10,
                           keyboardType: TextInputType.multiline,
                         ),
                         const SizedBox(height: Constants.spacingMedium),
 
                         Text(
-                          "Debut de l'offer *",
+                          '${context.appLoc.start_offer} *',
                           style: theme.textTheme.bodyMedium,
                         ),
                         const SizedBox(height: Constants.spacingSmall),
@@ -178,7 +179,7 @@ class _CreateHotEventScreenState extends State<CreateHotEventScreen> {
                         const SizedBox(height: Constants.spacingMedium),
 
                         Text(
-                          "Fin de l'offer *",
+                          '${context.appLoc.end_offer} *',
                           style: theme.textTheme.bodyMedium,
                         ),
                         const SizedBox(height: Constants.spacingSmall),
@@ -200,7 +201,7 @@ class _CreateHotEventScreenState extends State<CreateHotEventScreen> {
                                     ),
                                   )
                                 : Text(
-                                    'POST',
+                                    context.appLoc.post.toUpperCase(),
                                     style: theme.textTheme.titleMedium
                                         ?.copyWith(
                                           fontWeight: FontWeight.bold,

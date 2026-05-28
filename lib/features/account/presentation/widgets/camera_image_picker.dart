@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 
 class CameraImagePicker extends StatefulWidget {
   const CameraImagePicker({super.key, required this.onImagePicked});
@@ -83,7 +84,7 @@ class _CameraImagePickerState extends State<CameraImagePicker> {
               ListTile(
                 leading: const Icon(Icons.photo_library_outlined),
                 title: Text(
-                  'Choose from gallery',
+                  context.appLoc.choose_gallery,
                   style: theme.textTheme.bodyLarge,
                 ),
                 onTap: () {
@@ -93,7 +94,10 @@ class _CameraImagePickerState extends State<CameraImagePicker> {
               ),
               ListTile(
                 leading: const Icon(Icons.camera_alt_outlined),
-                title: Text('Take a photo', style: theme.textTheme.bodyLarge),
+                title: Text(
+                  context.appLoc.take_photo,
+                  style: theme.textTheme.bodyLarge,
+                ),
                 onTap: () {
                   context.pop();
                   _pickImage(ImageSource.camera);

@@ -12,6 +12,7 @@ import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_domain.dart';
 import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/subscribe_expert_executive_params.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
@@ -181,8 +182,8 @@ class _SubscribeExpertsExecutivesScreenState
               final isDark = theme.brightness == Brightness.dark;
 
               return BaseScreen(
-                appBar: const TitleHeader(
-                  title: 'Subscribe to Expert & Executive',
+                appBar: TitleHeader(
+                  title: context.appLoc.subscribe_expert_executive,
                 ),
                 child: GestureDetector(
                   onTap: () => FocusScope.of(context).unfocus(),
@@ -195,29 +196,29 @@ class _SubscribeExpertsExecutivesScreenState
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // ── First name ──────────────────────────────────
-                        const LabelField(label: 'First name *'),
+                        LabelField(label: '${context.appLoc.first_name} *'),
                         const SizedBox(height: Constants.spacingSmall),
                         TextInputField(
                           controller: _firstNameController,
-                          hintText: 'Add your first name',
+                          hintText: context.appLoc.add_first_name,
                         ),
                         const SizedBox(height: Constants.spacingMedium),
 
                         // ── Last name ───────────────────────────────────
-                        const LabelField(label: 'Last name *'),
+                        LabelField(label: '${context.appLoc.last_name} *'),
                         const SizedBox(height: Constants.spacingSmall),
                         TextInputField(
                           controller: _lastNameController,
-                          hintText: 'Add your last name',
+                          hintText: context.appLoc.add_last_name,
                         ),
                         const SizedBox(height: Constants.spacingMedium),
 
                         // ── Birth of date ───────────────────────────────
-                        const LabelField(label: 'Birth of date *'),
+                        LabelField(label: '${context.appLoc.birth_date} *'),
                         const SizedBox(height: Constants.spacingSmall),
                         TextInputField(
                           controller: _birthDateController,
-                          hintText: 'Select date',
+                          hintText: context.appLoc.select_date,
                           readOnly: true,
                           onTap: () => _selectBirthDate(context),
                           prefixIcon: const Icon(
@@ -229,16 +230,16 @@ class _SubscribeExpertsExecutivesScreenState
                         const SizedBox(height: Constants.spacingMedium),
 
                         // ── Address ─────────────────────────────────────
-                        const LabelField(label: 'Address *'),
+                        LabelField(label: '${context.appLoc.address} *'),
                         const SizedBox(height: Constants.spacingSmall),
                         TextInputField(
                           controller: _addressController,
-                          hintText: 'Add your address',
+                          hintText: context.appLoc.add_address,
                         ),
                         const SizedBox(height: Constants.spacingMedium),
 
                         // ── Phone ───────────────────────────────────────
-                        const LabelField(label: 'Phone *'),
+                        LabelField(label: '${context.appLoc.phone} *'),
                         const SizedBox(height: Constants.spacingSmall),
                         PhoneInputField(controller: _phoneController),
                         const SizedBox(height: Constants.spacingMedium),
@@ -273,7 +274,9 @@ class _SubscribeExpertsExecutivesScreenState
 
                         // ── Professional domain (checkbox wrap, same as
                         //    category in PostJobApplicantScreen) ──────────
-                        const LabelField(label: 'Professional domain *'),
+                        LabelField(
+                          label: '${context.appLoc.professional_domain} *',
+                        ),
                         const SizedBox(height: Constants.spacingSmall),
                         if (_domains.isNotEmpty)
                           Wrap(
@@ -322,11 +325,13 @@ class _SubscribeExpertsExecutivesScreenState
                         const SizedBox(height: Constants.spacingMedium),
 
                         // ── Brief presentation ──────────────────────────
-                        const LabelField(label: 'Brief presentation *'),
+                        LabelField(
+                          label: '${context.appLoc.brief_presentation} *',
+                        ),
                         const SizedBox(height: Constants.spacingSmall),
                         TextInputField(
                           controller: _presentationController,
-                          hintText: 'Add a brief presentation',
+                          hintText: context.appLoc.add_brief_presentation,
                           maxLines: 5,
                           keyboardType: TextInputType.multiline,
                         ),
@@ -336,8 +341,7 @@ class _SubscribeExpertsExecutivesScreenState
                         const LabelField(label: 'Resume *'),
                         const SizedBox(height: Constants.spacingSmall),
                         SinglePdfUploadWidget(
-                          text:
-                              'Upload your Resume and\nlet members look at it.\nIn PDF format.',
+                          text: context.appLoc.upload_resume_pdf,
                           onPdfChanged: (pdf) {
                             if (pdf != null) {
                               setState(() {
@@ -353,7 +357,7 @@ class _SubscribeExpertsExecutivesScreenState
 
                         // ── Subscription needs (static) ─────────────────
                         Text(
-                          'Subscription needs',
+                          context.appLoc.subscription_needs,
                           style: theme.textTheme.titleSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -398,7 +402,7 @@ class _SubscribeExpertsExecutivesScreenState
                                     ),
                                   )
                                 : Text(
-                                    'Subscribe',
+                                    context.appLoc.subscribe,
                                     style: theme.textTheme.titleSmall?.copyWith(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,

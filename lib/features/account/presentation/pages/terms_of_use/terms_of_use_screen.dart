@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/account/presentation/bloc/account_bloc.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -16,7 +17,7 @@ class TermsOfUseScreen extends StatelessWidget {
       create: (context) =>
           GetIt.instance<AccountBloc>()..add(const AccountCguRequested()),
       child: BaseScreen(
-        appBar: const TitleHeader(title: 'Terms of Use'),
+        appBar: TitleHeader(title: context.appLoc.terms_use),
         child: BlocBuilder<AccountBloc, AccountState>(
           builder: (context, state) {
             if (state is AccountRequestInProgress) {

@@ -8,6 +8,7 @@ import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.da
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_filter.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_zone.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_category.dart';
@@ -194,7 +195,7 @@ class _JobApplicantsScreenState extends State<JobApplicantsScreen>
                               onTap: (index) => _onTabTap(blocContext, index),
                               tabs: [
                                 _buildFilterTab(
-                                  label: 'Zone',
+                                  label: context.appLoc.zone,
                                   index: 0,
                                   selected: _selectedIndex,
                                   theme: theme,
@@ -202,7 +203,7 @@ class _JobApplicantsScreenState extends State<JobApplicantsScreen>
                                   isDark: isDark,
                                 ),
                                 _buildFilterTab(
-                                  label: 'Profession',
+                                  label: context.appLoc.profession,
                                   index: 1,
                                   selected: _selectedIndex,
                                   theme: theme,
@@ -210,7 +211,7 @@ class _JobApplicantsScreenState extends State<JobApplicantsScreen>
                                   isDark: isDark,
                                 ),
                                 _buildFilterTab(
-                                  label: 'Filter',
+                                  label: context.appLoc.filter,
                                   index: 2,
                                   selected: _selectedIndex,
                                   theme: theme,
@@ -458,7 +459,7 @@ class _JobApplicantsScreenState extends State<JobApplicantsScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Zone',
+                  context.appLoc.zone,
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -517,7 +518,7 @@ class _JobApplicantsScreenState extends State<JobApplicantsScreen>
                 ),
                 const SizedBox(height: Constants.spacingMedium),
                 Text(
-                  'Profession',
+                  context.appLoc.profession,
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -616,7 +617,10 @@ class _JobApplicantsScreenState extends State<JobApplicantsScreen>
                           _selectedFilterProfessions.isNotEmpty) {
                         context.goNamed(
                           Routes.jobApplicantViewAll.name,
-                          extra: {'title': 'Filter', 'query': query},
+                          extra: {
+                            'title': context.appLoc.filter,
+                            'query': query,
+                          },
                         );
                       }
                     },

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/training/hot_event.dart';
 import 'package:kianja/features/jobs/presentation/widgets/category/padding_separator.dart';
 import 'package:kianja/features/jobs/presentation/widgets/enum/width_view_enum.dart';
@@ -51,7 +52,7 @@ class TrainingCenterHorizontalSection extends StatelessWidget {
                   );
                 },
                 child: Text(
-                  'Voir plus',
+                  context.appLoc.view_more,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: isDark
                         ? AppColors.darkTextSecondary

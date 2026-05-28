@@ -19,4 +19,500 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get select_lang => 'Sélectionnez une langue';
+
+  @override
+  String get job_offers => 'Offres d\'emploi';
+
+  @override
+  String get job_applicants => 'Candidats';
+
+  @override
+  String get training_centers => 'Centres de formation';
+
+  @override
+  String get type => 'Type';
+
+  @override
+  String get date => 'Date';
+
+  @override
+  String get zone => 'Zone';
+
+  @override
+  String get view_more => 'Voir plus';
+
+  @override
+  String get now => 'Maintenant';
+
+  @override
+  String get jobs => 'Emplois';
+
+  @override
+  String get post => 'Publier';
+
+  @override
+  String get my_post => 'Mon message';
+
+  @override
+  String get account => 'Compte';
+
+  @override
+  String get profession => 'Profession';
+
+  @override
+  String get filter => 'Filtrer';
+
+  @override
+  String get actualities => 'Actualités';
+
+  @override
+  String get categories => 'Catégories';
+
+  @override
+  String get hot => 'Populaires';
+
+  @override
+  String get event => 'Événement';
+
+  @override
+  String get recent => 'Récents';
+
+  @override
+  String get sign_in => 'Se connecter';
+
+  @override
+  String get login => 'Connexion';
+
+  @override
+  String get please_sign_in_exist_account =>
+      'Veuillez vous connecter à votre compte existant';
+
+  @override
+  String get phone => 'Téléphone';
+
+  @override
+  String get password => 'Mot de passe';
+
+  @override
+  String get remember_me => 'Se souvenir de moi';
+
+  @override
+  String get forgot_password => 'Mot de passe oublié';
+
+  @override
+  String get dont_have_account => 'Vous n\'avez pas de compte ?';
+
+  @override
+  String get sign_up => 'S\'inscrire';
+
+  @override
+  String get please_contact_to_reset_password =>
+      'Veuillez nous contacter par téléphone ou par e-mail pour que nous puissions vous aider à réinitialiser votre mot de passe';
+
+  @override
+  String get via_phone => 'Par téléphone';
+
+  @override
+  String get via_email => 'Par e-mail';
+
+  @override
+  String get call => 'Appeler';
+
+  @override
+  String get send => 'Envoyer';
+
+  @override
+  String get please_sign_in_to_start => 'Veuillez vous inscrire pour commencer';
+
+  @override
+  String get first_name => 'Prénom';
+
+  @override
+  String get last_name => 'Nom';
+
+  @override
+  String get email_optional => 'E-mail (facultatif)';
+
+  @override
+  String get birth_date => 'Date de naissance';
+
+  @override
+  String get residence => 'Lieu de résidence';
+
+  @override
+  String get select_residence => 'Sélectionnez un lieu de résidence';
+
+  @override
+  String get gender => 'Sexe';
+
+  @override
+  String get select_gender => 'Sélectionnez un sexe';
+
+  @override
+  String get retype_password => 'Retapez le mot de passe';
+
+  @override
+  String get agree_terms_use => 'J\'accepte les conditions d\'utilisation';
+
+  @override
+  String get already_have_account => 'Vous avez déjà un compte ?';
+
+  @override
+  String get personal_info => 'Informations personnelles';
+
+  @override
+  String get theme => 'Thème';
+
+  @override
+  String get system => 'Système';
+
+  @override
+  String get light => 'Clair';
+
+  @override
+  String get dark => 'Sombre';
+
+  @override
+  String get change_password => 'Modifier le mot de passe';
+
+  @override
+  String get logout => 'Déconnexion';
+
+  @override
+  String get full_name => 'Nom complet';
+
+  @override
+  String get phone_number => 'Numéro de téléphone';
+
+  @override
+  String get choose_gallery => 'Choisissez une photo dans la galerie';
+
+  @override
+  String get take_photo => 'Prendre une photo';
+
+  @override
+  String get edit_profile => 'Modifier le profil';
+
+  @override
+  String get available_balance => 'Solde disponible';
+
+  @override
+  String get transfer => 'Transfert';
+
+  @override
+  String get kara_usage_history => 'Historique d\'utilisation de Kara';
+
+  @override
+  String get create_new_secure_password =>
+      'Créer un nouveau mot de passe sécurisé';
+
+  @override
+  String get old_password => 'Ancien mot de passe';
+
+  @override
+  String get new_password => 'Nouveau mot de passe';
+
+  @override
+  String get update_password => 'Mettre à jour le mot de passe';
+
+  @override
+  String get logout_question => 'Se déconnecter ?';
+
+  @override
+  String get really_want_logout => 'Voulez-vous vraiment vous déconnecter ?';
+
+  @override
+  String get ok => 'Ok';
+
+  @override
+  String get cancel => 'Annuler';
+
+  @override
+  String get hots => 'Hots';
+
+  @override
+  String get events => 'Événements';
+
+  @override
+  String get job_offer => 'Offre d\'emploi';
+
+  @override
+  String get create_job_offer =>
+      'Créez une nouvelle offre d\'emploi pour trouver les meilleurs candidats pour votre entreprise';
+
+  @override
+  String get job_applicant => 'Candidat';
+
+  @override
+  String get create_job_applicant =>
+      'Créez un profil de candidat pour postuler à des offres d\'emploi correspondant à vos compétences';
+
+  @override
+  String get training_center => 'Centre de formation';
+
+  @override
+  String get register_training_center =>
+      'Enregistrez votre centre de formation pour proposer des cours et développer des compétences';
+
+  @override
+  String get expert_executive => 'Expert et cadre';
+
+  @override
+  String get create => 'Créer';
+
+  @override
+  String get post_job_offer => 'Publier une offre d\'emploi';
+
+  @override
+  String get job_title => 'Intitulé du poste';
+
+  @override
+  String get add_job_title => 'Ajouter un intitulé de poste';
+
+  @override
+  String get photo => 'Photo';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get add_description => 'Ajouter une description';
+
+  @override
+  String get category_3_max => 'Catégorie * (3 max)';
+
+  @override
+  String get location => 'Lieu';
+
+  @override
+  String get actor => 'Acteur';
+
+  @override
+  String get post_features => 'Caractéristiques de l\'annonce';
+
+  @override
+  String get applicant_deadline => 'Date limite de candidature';
+
+  @override
+  String get select_date => 'Sélectionnez une date';
+
+  @override
+  String get please_fill_fields =>
+      'Veuillez remplir tous les champs obligatoires';
+
+  @override
+  String get motivation => 'Lettre de motivation';
+
+  @override
+  String get add_motivation => 'Ajouter une lettre de motivation';
+
+  @override
+  String get resume_optional => 'CV (facultatif)';
+
+  @override
+  String get upload => 'Télécharger';
+
+  @override
+  String get upload_resume_pdf =>
+      'Téléchargez votre CV au format PDF et permettez aux membres de le consulter.';
+
+  @override
+  String get price => 'Prix';
+
+  @override
+  String get center_name => 'Nom du centre';
+
+  @override
+  String get add_center_name => 'Ajouter le nom du centre';
+
+  @override
+  String get default_value => 'Par défaut';
+
+  @override
+  String get upload_5_photos => 'Vous pouvez télécharger jusqu\'à 5 photos';
+
+  @override
+  String get more_description => 'Description supplémentaire';
+
+  @override
+  String get add_more_description => 'Ajouter une description plus détaillée';
+
+  @override
+  String get domain_5_max => 'Domaine * (5 max)';
+
+  @override
+  String get post_job_applicant => 'Publier un candidat';
+
+  @override
+  String get post_training_center => 'Publier un centre de formation';
+
+  @override
+  String get post_expert_executive => 'Publier une offre d\'expert et de cadre';
+
+  @override
+  String get notice => 'Remarque';
+
+  @override
+  String get notice_expert_executive =>
+      'Pour publier en tant qu\'expert ou cadre, vous devez disposer d\'un abonnement actif. Abonnez-vous dès maintenant pour pouvoir créer et publier votre profil professionnel et atteindre des clients et des employeurs potentiels.';
+
+  @override
+  String get subscribe => 'S\'abonner';
+
+  @override
+  String get subscribe_expert_executive => 'Abonnez-vous à Expert et Cadre';
+
+  @override
+  String get add_first_name => 'Ajoutez votre prénom';
+
+  @override
+  String get add_last_name => 'Ajoutez votre nom';
+
+  @override
+  String get address => 'Adresse';
+
+  @override
+  String get add_address => 'Ajoutez votre adresse';
+
+  @override
+  String get professional_domain => 'Domaine d\'activité';
+
+  @override
+  String get brief_presentation => 'Brève présentation';
+
+  @override
+  String get add_brief_presentation => 'Ajoutez une brève présentation';
+
+  @override
+  String get subscription_needs => 'Besoins en matière d\'abonnement';
+
+  @override
+  String get select_language => 'Sélectionnez une langue';
+
+  @override
+  String get terms_use => 'Conditions d\'utilisation';
+
+  @override
+  String get job_offer_detail => 'Détail de l\'offre d\'emploi';
+
+  @override
+  String get job_applicant_detail => 'Détail du candidat';
+
+  @override
+  String get training_center_detail => 'Détail du centre de formation';
+
+  @override
+  String get hot_detail => 'Détail de l\'offre populaire';
+
+  @override
+  String get event_detail => 'Détail de l\'événement';
+
+  @override
+  String get deadline => 'Date limite';
+
+  @override
+  String get posted => 'Publié';
+
+  @override
+  String get job_features => 'Caractéristiques du poste';
+
+  @override
+  String get about_client => 'À propos du client';
+
+  @override
+  String get verified_phone_number => 'Numéro de téléphone vérifié';
+
+  @override
+  String get member_since => 'Membre depuis';
+
+  @override
+  String get job_features_preference => 'Préférences du poste';
+
+  @override
+  String get about_applicant => 'À propos du candidat';
+
+  @override
+  String get start => 'Début';
+
+  @override
+  String get end => 'Fin';
+
+  @override
+  String get view_center => 'Voir le centre';
+
+  @override
+  String get make_an_offer => 'Faire une offre';
+
+  @override
+  String get training_center_features =>
+      'Caractéristiques du centre de formation';
+
+  @override
+  String get about_center_publisher => 'À propos de l\'organisateur du centre';
+
+  @override
+  String get hot_offer => 'Offre populaire';
+
+  @override
+  String get create_hot_offer => 'Créer une offre courte durée';
+
+  @override
+  String get event_offer => 'Offre d\'événement';
+
+  @override
+  String get create_event_offer => 'Créer une offre d\'événement longue durée';
+
+  @override
+  String get title => 'Titre';
+
+  @override
+  String get add_title => 'Ajouter un titre';
+
+  @override
+  String get start_offer => 'Début de l\'offre';
+
+  @override
+  String get end_offer => 'Fin de l\'offre';
+
+  @override
+  String get post_hot => 'Publier un hot';
+
+  @override
+  String get post_event => 'Publier un événement';
+
+  @override
+  String get one_minute => '1 minute';
+
+  @override
+  String get minutes => 'Minutes';
+
+  @override
+  String get one_hour => '1 heure';
+
+  @override
+  String get hours => 'Heures';
+
+  @override
+  String get yesterday => 'Hier';
+
+  @override
+  String get days => 'Jours';
+
+  @override
+  String get one_week => '1 semaine';
+
+  @override
+  String get weeks => 'Semaines';
+
+  @override
+  String get one_month => '1 mois';
+
+  @override
+  String get months => 'Mois';
+
+  @override
+  String get one_year => '1 an';
+
+  @override
+  String get years => 'Ans';
 }

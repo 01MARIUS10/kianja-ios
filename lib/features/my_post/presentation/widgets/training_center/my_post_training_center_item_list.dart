@@ -167,7 +167,7 @@ class MyPostTrainingCenterItemList extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                               ),
                               Text(
-                                '• ${AppFunction.dateTimeCounter(trainingCenter.createdAt)}',
+                                '• ${AppFunction.dateTimeCounter(trainingCenter.createdAt, context)}',
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   color: textSecondary,
                                 ),

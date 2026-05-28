@@ -11,6 +11,7 @@ import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_offer/create_job_offer_params.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
@@ -178,7 +179,7 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
               final isLoading = state is JobsRequestInProgress;
 
               return BaseScreen(
-                appBar: const TitleHeader(title: 'Post a job offer'),
+                appBar: TitleHeader(title: context.appLoc.post_job_offer),
                 child: GestureDetector(
                   onTap: () => FocusScope.of(context).unfocus(),
                   child: SingleChildScrollView(
@@ -189,17 +190,17 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const LabelField(label: 'Job title *'),
+                        LabelField(label: '${context.appLoc.job_title} *'),
                         const SizedBox(height: Constants.spacingSmall),
                         TextInputField(
                           controller: _titleController,
-                          hintText: 'Add job title',
+                          hintText: context.appLoc.add_job_title,
                           maxLines: 3,
                           maxLength: 130,
                         ),
                         const SizedBox(height: Constants.spacingMedium),
 
-                        const LabelField(label: 'Photo'),
+                        LabelField(label: context.appLoc.photo),
                         const SizedBox(height: Constants.spacingSmall),
                         SinglePhotoUploadWidget(
                           onPhotoChanged: (photo) {
@@ -212,11 +213,11 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
                         ),
                         const SizedBox(height: Constants.spacingMedium),
 
-                        const LabelField(label: 'Description *'),
+                        LabelField(label: '${context.appLoc.description} *'),
                         const SizedBox(height: Constants.spacingSmall),
                         TextInputField(
                           controller: _descriptionController,
-                          hintText: 'Add description',
+                          hintText: context.appLoc.add_description,
                           maxLines: 10,
                           keyboardType: TextInputType.multiline,
                         ),
@@ -225,7 +226,7 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
                         Row(
                           children: [
                             Text(
-                              'Category * ',
+                              '${context.appLoc.categories} * ',
                               style: theme.textTheme.titleSmall!.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -286,7 +287,7 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
                           ),
                         const SizedBox(height: Constants.spacingMedium),
 
-                        const LabelField(label: 'Location *'),
+                        LabelField(label: '${context.appLoc.location} *'),
                         const SizedBox(height: Constants.spacingSmall),
                         if (_jobFeatures != null)
                           Wrap(
@@ -328,7 +329,7 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
                           ),
                         const SizedBox(height: Constants.spacingMedium),
 
-                        const LabelField(label: 'Gender *'),
+                        LabelField(label: '${context.appLoc.gender} *'),
                         const SizedBox(height: Constants.spacingSmall),
                         if (_jobFeatures != null)
                           Wrap(
@@ -369,7 +370,7 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
                           ),
                         const SizedBox(height: Constants.spacingMedium),
 
-                        const LabelField(label: 'Actor *'),
+                        LabelField(label: '${context.appLoc.actor} *'),
                         const SizedBox(height: Constants.spacingSmall),
                         if (_jobFeatures != null)
                           Wrap(
@@ -414,7 +415,7 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
                         const SizedBox(height: Constants.spacingMedium),
 
                         Text(
-                          'Post features',
+                          context.appLoc.post_features,
                           style: theme.textTheme.titleSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -422,7 +423,7 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
                         const SizedBox(height: Constants.spacingMedium),
 
                         Text(
-                          'Date limite de canditature *',
+                          '${context.appLoc.applicant_deadline} *',
                           style: theme.textTheme.bodyMedium,
                         ),
                         const SizedBox(height: Constants.spacingSmall),
@@ -444,7 +445,7 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
                                     ),
                                   )
                                 : Text(
-                                    'POST',
+                                    context.appLoc.post.toUpperCase(),
                                     style: theme.textTheme.titleMedium
                                         ?.copyWith(
                                           fontWeight: FontWeight.bold,

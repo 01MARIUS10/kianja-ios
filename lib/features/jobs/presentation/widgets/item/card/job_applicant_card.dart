@@ -111,7 +111,7 @@ class JobApplicantCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            '• ${AppFunction.dateTimeCounter(jobApplicant.createdAt)}',
+                            '• ${AppFunction.dateTimeCounter(jobApplicant.createdAt, context)}',
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: isDark
                                   ? AppColors.darkTextSecondary

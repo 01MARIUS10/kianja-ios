@@ -3,6 +3,7 @@ import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/logo_header.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/presentation/pages/job_applicant/job_applicants_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/job_offer/job_offers_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/training_center/training_center_screen.dart';
@@ -46,15 +47,15 @@ class _JobsScreenState extends State<JobsScreen> with TickerProviderStateMixin {
                 vertical: Constants.spacingZero,
               ),
               controller: _tabController,
-              // isScrollable: true,
-              tabAlignment: TabAlignment.fill,
+              isScrollable: true,
+              tabAlignment: TabAlignment.start,
               indicatorSize: TabBarIndicatorSize.tab,
 
               // indicatorColor: Colors.transparent,
-              tabs: const [
-                Tab(text: 'Job offers'),
-                Tab(text: 'Job applicants'),
-                Tab(text: 'Training center'),
+              tabs: [
+                Tab(text: context.appLoc.job_offers),
+                Tab(text: context.appLoc.job_applicants),
+                Tab(text: context.appLoc.training_centers),
                 // Tab(text: 'Experts & executes'),
               ],
             ),

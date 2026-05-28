@@ -4,6 +4,7 @@ import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/routing/routes.dart';
 
 enum PostType { jobOffer, jobApplicant, trainingCenter, expertExecutive }
@@ -20,23 +21,19 @@ class _PostScreenState extends State<PostScreen> {
 
   String get _title {
     return switch (_selectedType) {
-      PostType.jobOffer => 'Job Offer',
-      PostType.jobApplicant => 'Job Applicant',
-      PostType.trainingCenter => 'Training Center',
-      PostType.expertExecutive => 'Expert & Executive',
+      PostType.jobOffer => context.appLoc.job_offer,
+      PostType.jobApplicant => context.appLoc.job_applicant,
+      PostType.trainingCenter => context.appLoc.training_center,
+      PostType.expertExecutive => context.appLoc.expert_executive,
     };
   }
 
   String get _description {
     return switch (_selectedType) {
-      PostType.jobOffer =>
-        'Create a new job offer to find the best candidates for your company.',
-      PostType.jobApplicant =>
-        'Create an applicant profile to apply for jobs that match your skills.',
-      PostType.trainingCenter =>
-        'Register your training center to offer courses and build skills.',
-      PostType.expertExecutive =>
-        'Create an expert or executive profile to offer your services.',
+      PostType.jobOffer => context.appLoc.create_job_offer,
+      PostType.jobApplicant => context.appLoc.create_job_applicant,
+      PostType.trainingCenter => context.appLoc.register_training_center,
+      PostType.expertExecutive => context.appLoc.subscribe_expert_executive,
     };
   }
 
@@ -63,7 +60,7 @@ class _PostScreenState extends State<PostScreen> {
     final isDark = theme.brightness == Brightness.dark;
 
     return BaseScreen(
-      appBar: const TitleHeader(title: 'Post'),
+      appBar: TitleHeader(title: context.appLoc.post),
       child: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(
           vertical: Constants.paddingMedium,
@@ -95,7 +92,7 @@ class _PostScreenState extends State<PostScreen> {
                 const SizedBox(height: Constants.spacingLarge),
                 _PostOptionTile(
                   icon: Icons.work_outline,
-                  title: 'Job offer',
+                  title: context.appLoc.job_offer,
                   isSelected: _selectedType == PostType.jobOffer,
                   isDark: isDark,
                   theme: theme,
@@ -108,7 +105,7 @@ class _PostScreenState extends State<PostScreen> {
                 const SizedBox(height: Constants.spacingMedium),
                 _PostOptionTile(
                   icon: Icons.badge_outlined,
-                  title: 'Job applicant',
+                  title: context.appLoc.job_applicant,
                   isSelected: _selectedType == PostType.jobApplicant,
                   isDark: isDark,
                   theme: theme,
@@ -121,7 +118,7 @@ class _PostScreenState extends State<PostScreen> {
                 const SizedBox(height: Constants.spacingMedium),
                 _PostOptionTile(
                   icon: Icons.school_outlined,
-                  title: 'Training center',
+                  title: context.appLoc.training_center,
                   isSelected: _selectedType == PostType.trainingCenter,
                   isDark: isDark,
                   theme: theme,
@@ -134,7 +131,7 @@ class _PostScreenState extends State<PostScreen> {
                 const SizedBox(height: Constants.spacingMedium),
                 _PostOptionTile(
                   icon: Icons.work_outline,
-                  title: 'Expert & Executive',
+                  title: context.appLoc.expert_executive,
                   isSelected: _selectedType == PostType.expertExecutive,
                   isDark: isDark,
                   theme: theme,
@@ -153,7 +150,7 @@ class _PostScreenState extends State<PostScreen> {
               child: ElevatedButton(
                 onPressed: _handleCreate,
                 child: Text(
-                  'CREATE',
+                  context.appLoc.create.toUpperCase(),
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     letterSpacing: 1.2,

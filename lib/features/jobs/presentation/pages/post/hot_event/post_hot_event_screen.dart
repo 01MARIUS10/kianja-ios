@@ -4,6 +4,7 @@ import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/routing/routes.dart';
 
 enum PostHotEventType { hot, event }
@@ -21,15 +22,15 @@ class _PostHotEventScreenState extends State<PostHotEventScreen> {
 
   String get _title {
     return switch (_selectedType) {
-      PostHotEventType.hot => 'Hot offer',
-      PostHotEventType.event => 'Event offer',
+      PostHotEventType.hot => context.appLoc.hot_offer,
+      PostHotEventType.event => context.appLoc.event_offer,
     };
   }
 
   String get _description {
     return switch (_selectedType) {
-      PostHotEventType.hot => 'Create an hot offer for a less duration.',
-      PostHotEventType.event => 'Create an event offer for a long duration.',
+      PostHotEventType.hot => context.appLoc.create_hot_offer,
+      PostHotEventType.event => context.appLoc.create_event_offer,
     };
   }
 
@@ -41,7 +42,7 @@ class _PostHotEventScreenState extends State<PostHotEventScreen> {
           pathParameters: {
             'trainingCenterId': widget.trainingCenterId.toString(),
           },
-          extra: {'type': 'Hot'},
+          extra: {'type': context.appLoc.hot},
         );
         break;
       case PostHotEventType.event:
@@ -50,7 +51,7 @@ class _PostHotEventScreenState extends State<PostHotEventScreen> {
           pathParameters: {
             'trainingCenterId': widget.trainingCenterId.toString(),
           },
-          extra: {'type': 'Event'},
+          extra: {'type': context.appLoc.event},
         );
         break;
     }
@@ -62,7 +63,7 @@ class _PostHotEventScreenState extends State<PostHotEventScreen> {
     final isDark = theme.brightness == Brightness.dark;
 
     return BaseScreen(
-      appBar: const TitleHeader(title: 'Make an offer'),
+      appBar: TitleHeader(title: context.appLoc.make_an_offer),
       child: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(
           vertical: Constants.paddingMedium,
@@ -94,7 +95,7 @@ class _PostHotEventScreenState extends State<PostHotEventScreen> {
                 const SizedBox(height: Constants.spacingLarge),
                 _PostOptionTile(
                   icon: Icons.flash_on,
-                  title: 'Hot',
+                  title: context.appLoc.hot,
                   isSelected: _selectedType == PostHotEventType.hot,
                   isDark: isDark,
                   theme: theme,
@@ -107,7 +108,7 @@ class _PostHotEventScreenState extends State<PostHotEventScreen> {
                 const SizedBox(height: Constants.spacingMedium),
                 _PostOptionTile(
                   icon: Icons.calendar_month,
-                  title: 'Event',
+                  title: context.appLoc.event,
                   isSelected: _selectedType == PostHotEventType.event,
                   isDark: isDark,
                   theme: theme,
@@ -126,7 +127,7 @@ class _PostHotEventScreenState extends State<PostHotEventScreen> {
               child: ElevatedButton(
                 onPressed: _handleCreate,
                 child: Text(
-                  'CREATE',
+                  context.appLoc.create.toUpperCase(),
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     letterSpacing: 1.2,

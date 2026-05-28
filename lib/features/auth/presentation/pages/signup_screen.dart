@@ -15,6 +15,7 @@ import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/auth/domain/usecases/signup/signup_params.dart';
 import 'package:kianja/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:kianja/features/auth/presentation/widgets/gender_field.dart';
@@ -65,7 +66,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return BlocProvider(
       create: (context) => GetIt.instance<AuthBloc>(),
       child: BaseScreen(
-        appBar: const TitleHeader(title: 'Sign Up'),
+        appBar: TitleHeader(title: context.appLoc.sign_up),
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(Constants.paddingMedium),
@@ -74,16 +75,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Column(
                 children: [
                   const SizedBox(height: Constants.spacingMedium),
-                  Text('Sign Up', style: theme.textTheme.headlineLarge),
+                  Text(
+                    context.appLoc.sign_up,
+                    style: theme.textTheme.headlineLarge,
+                  ),
                   const SizedBox(height: Constants.spacingSmall),
                   Text(
-                    'Please sign up to get started',
+                    context.appLoc.please_sign_in_to_start,
                     style: theme.textTheme.titleMedium,
                   ),
                   const SizedBox(height: Constants.spacingLarge),
 
                   // First Name Field
-                  const LabelField(label: 'FIRST NAME'),
+                  LabelField(label: context.appLoc.first_name.toUpperCase()),
                   const SizedBox(height: Constants.spacingSmall),
                   TextInputField(
                     controller: _firstNameController,
@@ -92,7 +96,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(height: Constants.paddingMediumLarge),
 
                   // Last Name Field
-                  const LabelField(label: 'LAST NAME'),
+                  LabelField(label: context.appLoc.last_name.toUpperCase()),
                   const SizedBox(height: Constants.spacingSmall),
                   TextInputField(
                     controller: _lastNameController,
@@ -101,7 +105,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(height: Constants.paddingMediumLarge),
 
                   // Phone Field
-                  const LabelField(label: 'PHONE'),
+                  LabelField(label: context.appLoc.phone.toUpperCase()),
                   const SizedBox(height: Constants.spacingSmall),
                   PhoneInputField(
                     controller: _phoneController,
@@ -112,7 +116,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(height: Constants.paddingMediumLarge),
 
                   // Email Field
-                  const LabelField(label: 'EMAIL (OPTIONAL)'),
+                  LabelField(
+                    label: context.appLoc.email_optional.toUpperCase(),
+                  ),
                   const SizedBox(height: Constants.spacingSmall),
                   TextInputField(
                     controller: _emailController,
@@ -134,13 +140,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(height: Constants.paddingMediumLarge),
 
                   // Password Field
-                  const LabelField(label: 'PASSWORD'),
+                  LabelField(label: context.appLoc.password.toUpperCase()),
                   const SizedBox(height: Constants.spacingSmall),
                   PasswordInputField(controller: _passwordController),
                   const SizedBox(height: Constants.paddingMediumLarge),
 
                   // Re-type Password Field
-                  const LabelField(label: 'RE-TYPE PASSWORD'),
+                  LabelField(
+                    label: context.appLoc.retype_password.toUpperCase(),
+                  ),
                   const SizedBox(height: Constants.spacingSmall),
                   PasswordInputField(controller: _retypePasswordController),
                   const SizedBox(height: Constants.spacingLarge),
@@ -286,7 +294,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   ),
                                 )
                               : Text(
-                                  'SIGN UP',
+                                  context.appLoc.sign_up.toUpperCase(),
                                   style: theme.textTheme.titleMedium!.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -303,13 +311,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Already have an account? ',
+                        '${context.appLoc.already_have_account} ',
                         style: theme.textTheme.bodyMedium,
                       ),
                       GestureDetector(
                         onTap: () => context.goNamed(Routes.signIn.name),
                         child: Text(
-                          'LOG IN',
+                          context.appLoc.login.toUpperCase(),
                           style: theme.textTheme.bodyMedium!.copyWith(
                             color: isDark
                                 ? AppColors.darkPrimary

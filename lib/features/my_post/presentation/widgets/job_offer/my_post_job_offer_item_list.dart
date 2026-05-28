@@ -162,7 +162,7 @@ class MyPostJobOfferItemList extends StatelessWidget {
                               ),
                               const SizedBox(width: Constants.spacingMedium),
                               Text(
-                                '• ${AppFunction.dateTimeCounter(jobOffer.createdAt)}',
+                                '• ${AppFunction.dateTimeCounter(jobOffer.createdAt, context)}',
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   color: textSecondary,
                                 ),

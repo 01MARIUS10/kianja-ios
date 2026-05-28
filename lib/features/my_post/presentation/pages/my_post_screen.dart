@@ -5,6 +5,7 @@ import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/my_post/presentation/bloc/my_post_bloc.dart';
 import 'package:kianja/features/my_post/presentation/pages/categories/my_post_event_screen.dart';
@@ -46,7 +47,7 @@ class _MyPostScreenState extends State<MyPostScreen>
           ),
         ),
       child: BaseScreen(
-        appBar: const TitleHeader(title: 'My post'),
+        appBar: TitleHeader(title: context.appLoc.my_post),
         child: Column(
           children: [
             SizedBox(
@@ -64,12 +65,12 @@ class _MyPostScreenState extends State<MyPostScreen>
                 onTap: (value) {
                   AppDebug.showPrint('Page value : $value');
                 },
-                tabs: const [
-                  Tab(text: 'Job offers'),
-                  Tab(text: 'Job applicants'),
-                  Tab(text: 'Training centers'),
-                  Tab(text: 'Hots'),
-                  Tab(text: 'Events'),
+                tabs: [
+                  Tab(text: context.appLoc.job_offers),
+                  Tab(text: context.appLoc.job_applicants),
+                  Tab(text: context.appLoc.training_centers),
+                  Tab(text: context.appLoc.hots),
+                  Tab(text: context.appLoc.events),
                 ],
               ),
             ),

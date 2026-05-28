@@ -137,7 +137,7 @@ class JobOfferCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            '• ${AppFunction.dateTimeCounter(jobOffer.createdAt)}',
+                            '• ${AppFunction.dateTimeCounter(jobOffer.createdAt, context)}',
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: isDark
                                   ? AppColors.darkTextSecondary

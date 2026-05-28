@@ -10,6 +10,7 @@ import 'package:kianja/core/shared/widgets/loading/shimmer_job_detail_indicator.
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_params.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/routing/routes.dart';
@@ -82,7 +83,7 @@ class HotEventDetailScreen extends StatelessWidget {
                                     Row(
                                       children: [
                                         Text(
-                                          'Start : ',
+                                          '${context.appLoc.start} : ',
                                           style: theme.textTheme.bodySmall
                                               ?.copyWith(
                                                 color: textSecondary,
@@ -111,7 +112,7 @@ class HotEventDetailScreen extends StatelessWidget {
                                     Row(
                                       children: [
                                         Text(
-                                          'End : ',
+                                          '${context.appLoc.end} : ',
                                           style: theme.textTheme.bodyMedium
                                               ?.copyWith(
                                                 color: textSecondary,
@@ -156,7 +157,7 @@ class HotEventDetailScreen extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      'View center',
+                                      context.appLoc.view_center,
                                       style: theme.textTheme.bodySmall
                                           ?.copyWith(
                                             color: textSecondary,
@@ -219,7 +220,7 @@ class HotEventDetailScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Description',
+                            context.appLoc.description,
                             style: theme.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),

@@ -10,6 +10,7 @@ import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_plan.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_training_center/create_training_center_params.dart';
@@ -183,7 +184,7 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
               final isDark = theme.brightness == Brightness.dark;
 
               return BaseScreen(
-                appBar: const TitleHeader(title: 'Post a training center'),
+                appBar: TitleHeader(title: context.appLoc.post_training_center),
                 child: GestureDetector(
                   onTap: () => FocusScope.of(context).unfocus(),
                   child: SingleChildScrollView(
@@ -195,18 +196,18 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // ── Center name ──────────────────────────────────
-                        const LabelField(label: 'Center name *'),
+                        LabelField(label: '${context.appLoc.center_name} *'),
                         const SizedBox(height: Constants.spacingSmall),
                         TextInputField(
                           controller: _centerNameController,
-                          hintText: 'Add job title',
+                          hintText: context.appLoc.add_center_name,
                           maxLines: 3,
                           maxLength: 140,
                         ),
                         const SizedBox(height: Constants.spacingMedium),
 
                         // ── Images (multi upload) ─────────────────────────
-                        const LabelField(label: 'Photo'),
+                        LabelField(label: context.appLoc.photo),
                         const SizedBox(height: Constants.spacingSmall),
                         MultiPhotoUploadWidget(
                           maxPhotos: 5,
@@ -217,11 +218,13 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
                         const SizedBox(height: Constants.spacingMedium),
 
                         // ── More description ──────────────────────────────
-                        const LabelField(label: 'More description *'),
+                        LabelField(
+                          label: '${context.appLoc.more_description} *',
+                        ),
                         const SizedBox(height: Constants.spacingSmall),
                         TextInputField(
                           controller: _descriptionController,
-                          hintText: 'Add description',
+                          hintText: context.appLoc.add_more_description,
                           maxLines: 5,
                           keyboardType: TextInputType.multiline,
                         ),
@@ -293,7 +296,7 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
                         const SizedBox(height: Constants.spacingMedium),
 
                         // ── Location ─────────────────────────────────────
-                        const LabelField(label: 'Location *'),
+                        LabelField(label: '${context.appLoc.location} *'),
                         const SizedBox(height: Constants.spacingSmall),
                         if (_jobFeatures != null)
                           Wrap(
@@ -341,7 +344,9 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
                         const SizedBox(height: Constants.spacingMedium),
 
                         // ── Actor ────────────────────────────────────────
-                        const LabelField(label: 'Actor *'),
+                        LabelField(
+                          label: '${context.appLoc.about_center_publisher} *',
+                        ),
                         const SizedBox(height: Constants.spacingSmall),
                         if (_jobFeatures != null)
                           Wrap(

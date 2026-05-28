@@ -12,11 +12,508 @@ class AppLocalizationsMg extends AppLocalizations {
   String get continu => 'Tohizo';
 
   @override
-  String get hello_word => 'Salama izao tontolo izao';
+  String get hello_word => 'Salama Tontolo';
 
   @override
-  String get choose_lang => 'Mifidiana fiteny';
+  String get choose_lang => 'Misafidiana fiteny';
 
   @override
   String get select_lang => 'Safidio ny fiteny';
+
+  @override
+  String get job_offers => 'Tolotra asa';
+
+  @override
+  String get job_applicants => 'Mpangataka asa';
+
+  @override
+  String get training_centers => 'Foibe fampiofanana';
+
+  @override
+  String get type => 'Karazana';
+
+  @override
+  String get date => 'Daty';
+
+  @override
+  String get zone => 'Faritra';
+
+  @override
+  String get view_more => 'Jereo misimisy kokoa';
+
+  @override
+  String get now => 'Ankehitriny';
+
+  @override
+  String get jobs => 'Asa';
+
+  @override
+  String get post => 'Lahatsoratra';
+
+  @override
+  String get my_post => 'Ny lahatsoratro';
+
+  @override
+  String get account => 'Kaonty';
+
+  @override
+  String get profession => 'Asa';
+
+  @override
+  String get filter => 'Sivana';
+
+  @override
+  String get actualities => 'Vaovao farany';
+
+  @override
+  String get categories => 'Sokajy';
+
+  @override
+  String get hot => 'Mafana';
+
+  @override
+  String get event => 'Hetsika';
+
+  @override
+  String get recent => 'Vao haingana';
+
+  @override
+  String get sign_in => 'Midira';
+
+  @override
+  String get login => 'Fidirana';
+
+  @override
+  String get please_sign_in_exist_account =>
+      'Azafady midira amin\'ny kaontinao efa misy';
+
+  @override
+  String get phone => 'Finday';
+
+  @override
+  String get password => 'Teny miafina';
+
+  @override
+  String get remember_me => 'Tsarovy aho';
+
+  @override
+  String get forgot_password => 'Adino ny tenimiafina';
+
+  @override
+  String get dont_have_account => 'Tsy manana kaonty?';
+
+  @override
+  String get sign_up => 'Misorata anarana';
+
+  @override
+  String get please_contact_to_reset_password =>
+      'Azafady mifandraisa aminay amin\'ny alalan\'ny antso an-telefaonina na mailaka mba hanampiana anao hamerenana ny tenimiafinao';
+
+  @override
+  String get via_phone => 'Amin\'ny antso an-telefaonina';
+
+  @override
+  String get via_email => 'Amin\'ny mailaka';
+
+  @override
+  String get call => 'Antsoy';
+
+  @override
+  String get send => 'Mandefasa';
+
+  @override
+  String get please_sign_in_to_start =>
+      'Azafady misorata anarana mba hanombohana';
+
+  @override
+  String get first_name => 'Anarana';
+
+  @override
+  String get last_name => 'Anarana farany';
+
+  @override
+  String get email_optional => 'Mailaka (Safidy)';
+
+  @override
+  String get birth_date => 'Daty nahaterahana';
+
+  @override
+  String get residence => 'Toeram-ponenana';
+
+  @override
+  String get select_residence => 'Safidio ny fonenana';
+
+  @override
+  String get gender => 'Lahy na vavy';
+
+  @override
+  String get select_gender => 'Safidio ny maha-lahy na maha-vavy';
+
+  @override
+  String get retype_password => 'Avereno soratana ny tenimiafina';
+
+  @override
+  String get agree_terms_use => 'Manaiky ny Fepetran\'ny Fampiasana aho';
+
+  @override
+  String get already_have_account => 'Efa manana kaonty ve ianao?';
+
+  @override
+  String get personal_info => 'Fampahalalana manokana';
+
+  @override
+  String get theme => 'Lohahevitra';
+
+  @override
+  String get system => 'Rafitra';
+
+  @override
+  String get light => 'Maivana';
+
+  @override
+  String get dark => 'Maizina';
+
+  @override
+  String get change_password => 'Ovay ny tenimiafina';
+
+  @override
+  String get logout => 'Miala';
+
+  @override
+  String get full_name => 'Anarana feno';
+
+  @override
+  String get phone_number => 'Laharan-telefaona';
+
+  @override
+  String get choose_gallery => 'Misafidiana avy amin\'ny galeria';
+
+  @override
+  String get take_photo => 'Makà sary';
+
+  @override
+  String get edit_profile => 'Hanitsy ny mombamomba';
+
+  @override
+  String get available_balance => 'Salan-bola azo ampiasaina';
+
+  @override
+  String get transfer => 'Famindrana';
+
+  @override
+  String get kara_usage_history => 'Tantara fampiasana Kara';
+
+  @override
+  String get create_new_secure_password =>
+      'Mamorona tenimiafina vaovao azo antoka';
+
+  @override
+  String get old_password => 'Teny miafina taloha';
+
+  @override
+  String get new_password => 'Tsiambaratelo vaovao';
+
+  @override
+  String get update_password => 'Havaozina ny tenimiafina';
+
+  @override
+  String get logout_question => 'Hiala?';
+
+  @override
+  String get really_want_logout => 'Tena te hiala ve ianao?';
+
+  @override
+  String get ok => 'Eny';
+
+  @override
+  String get cancel => 'Fanafoanana';
+
+  @override
+  String get hots => 'Mafana';
+
+  @override
+  String get events => 'Hetsika';
+
+  @override
+  String get job_offer => 'Tolotra asa';
+
+  @override
+  String get create_job_offer =>
+      'Mamoròna tolotra asa vaovao mba hahitana ireo kandidà tsara indrindra ho an\'ny orinasanao';
+
+  @override
+  String get job_applicant => 'Mpitady asa';
+
+  @override
+  String get create_job_applicant =>
+      'Mamoròna mombamomba mpangataka asa mba hangataka asa mifanaraka amin\'ny fahaizanao';
+
+  @override
+  String get training_center => 'Foibe fampiofanana';
+
+  @override
+  String get register_training_center =>
+      'Misorata anarana ny foibe fampiofananao mba hanolotra taranja sy hanamafy ny fahaiza-manao';
+
+  @override
+  String get expert_executive => 'Manam-pahaizana sy mpanatanteraka';
+
+  @override
+  String get create => 'Mamorona';
+
+  @override
+  String get post_job_offer => 'Mandefasa tolotr\'asa';
+
+  @override
+  String get job_title => 'Lohatenin\'asa';
+
+  @override
+  String get add_job_title => 'Ampio ny lohatenin\'asa';
+
+  @override
+  String get photo => 'Sary';
+
+  @override
+  String get description => 'Famaritana';
+
+  @override
+  String get add_description => 'Ampio famaritana';
+
+  @override
+  String get category_3_max => 'Sokajy * (3 fara-fahabetsany)';
+
+  @override
+  String get location => 'Toerana';
+
+  @override
+  String get actor => 'Mpilalao';
+
+  @override
+  String get post_features => 'Endri-javatra';
+
+  @override
+  String get applicant_deadline => 'Fe-potoana farany fandefasana';
+
+  @override
+  String get select_date => 'Safidio ny daty';
+
+  @override
+  String get please_fill_fields => 'Fenoy azafady ny saha rehetra takiana';
+
+  @override
+  String get motivation => 'Antony manosika';
+
+  @override
+  String get add_motivation => 'Ampio ny antony manosika';
+
+  @override
+  String get resume_optional => 'CV (tsy voatery)';
+
+  @override
+  String get upload => 'Ampidiro';
+
+  @override
+  String get upload_resume_pdf =>
+      'Ampidiro ny CV-nao amin\'ny endrika PDF ary avelao hojerin\'ny mpikambana.';
+
+  @override
+  String get price => 'Vidiny';
+
+  @override
+  String get center_name => 'Anaran\'ny foibe';
+
+  @override
+  String get add_center_name => 'Ampio ny anaran\'ny foibe';
+
+  @override
+  String get default_value => 'Mahazatra';
+
+  @override
+  String get upload_5_photos => 'Afaka mampakatra sary hatramin\'ny 5 ianao';
+
+  @override
+  String get more_description => 'Famaritana fanampiny';
+
+  @override
+  String get add_more_description => 'Manampia famaritana fanampiny';
+
+  @override
+  String get domain_5_max => 'Anaran-tsehatra * (5 fara-fahabetsany)';
+
+  @override
+  String get post_job_applicant => 'Mandefasa mpangataka asa';
+
+  @override
+  String get post_training_center => 'Mandefasa foibe fampiofanana';
+
+  @override
+  String get post_expert_executive =>
+      'Mandefasa manam-pahaizana sy mpanatanteraka';
+
+  @override
+  String get notice => 'Fampandrenesana';
+
+  @override
+  String get notice_expert_executive =>
+      'Mba handefa maha-Manampahaizana na Mpanatanteraka, mila famandrihana mavitrika ianao. Misorata anarana izao mba hanokafana ny fahafahana mamorona sy mamoaka ny mombamomba anao arak\'asa ary hahatratra ireo mpanjifa sy mpampiasa mety ho liana aminao.';
+
+  @override
+  String get subscribe => 'Misorata anarana';
+
+  @override
+  String get subscribe_expert_executive =>
+      'Misorata anarana ho manam-pahaizana sy mpanatanteraka';
+
+  @override
+  String get add_first_name => 'Ampio ny anaranao';
+
+  @override
+  String get add_last_name => 'Ampio ny anaram-pianakaviana';
+
+  @override
+  String get address => 'Adiresy';
+
+  @override
+  String get add_address => 'Ampio ny adiresinao';
+
+  @override
+  String get professional_domain => 'Sehatra matihanina';
+
+  @override
+  String get brief_presentation => 'Fampahafantarana fohy';
+
+  @override
+  String get add_brief_presentation => 'Manampia fampahafantarana fohy';
+
+  @override
+  String get subscription_needs => 'Filàna famandrihana';
+
+  @override
+  String get select_language => 'Misafidiana fiteny';
+
+  @override
+  String get terms_use => 'Fepetra fampiasana';
+
+  @override
+  String get job_offer_detail => 'Antsipirian\'ny tolotra asa';
+
+  @override
+  String get job_applicant_detail => 'Antsipirian\'ny mpangataka asa';
+
+  @override
+  String get training_center_detail => 'Antsipirian\'ny foibe fampiofanana';
+
+  @override
+  String get hot_detail => 'Antsipirian\'ny tolotra mafana';
+
+  @override
+  String get event_detail => 'Antsipirian\'ny hetsika';
+
+  @override
+  String get deadline => 'Fe-potoana farany';
+
+  @override
+  String get posted => 'Navoaka';
+
+  @override
+  String get job_features => 'Toetran\'ny asa';
+
+  @override
+  String get about_client => 'Momba ny mpanjifa';
+
+  @override
+  String get verified_phone_number => 'Nomeraon-telefaona voamarina';
+
+  @override
+  String get member_since => 'Mpikambana hatramin\'ny';
+
+  @override
+  String get job_features_preference => 'Safidin\'ny asa';
+
+  @override
+  String get about_applicant => 'Momba ny mpangataka';
+
+  @override
+  String get start => 'Fanombohana';
+
+  @override
+  String get end => 'Fifaranana';
+
+  @override
+  String get view_center => 'Hijery ny foibe';
+
+  @override
+  String get make_an_offer => 'Hanao tolotra';
+
+  @override
+  String get training_center_features => 'Toetran\'ny foibe fampiofanana';
+
+  @override
+  String get about_center_publisher => 'Momba ny mpamoaka foibe';
+
+  @override
+  String get hot_offer => 'Tolotra mafana';
+
+  @override
+  String get create_hot_offer => 'Mamorona tolotra fohy';
+
+  @override
+  String get event_offer => 'Tolotra hetsika';
+
+  @override
+  String get create_event_offer => 'Mamorona tolotra hetsika maharitra';
+
+  @override
+  String get title => 'Lohateny';
+
+  @override
+  String get add_title => 'Ampio lohateny';
+
+  @override
+  String get start_offer => 'Fanombohan\'ny tolotra';
+
+  @override
+  String get end_offer => 'Faran\'ny tolotra';
+
+  @override
+  String get post_hot => 'Mandefa hot';
+
+  @override
+  String get post_event => 'Mandefa hetsika';
+
+  @override
+  String get one_minute => '1 minitra';
+
+  @override
+  String get minutes => 'Minitra';
+
+  @override
+  String get one_hour => '1 ora';
+
+  @override
+  String get hours => 'Ora';
+
+  @override
+  String get yesterday => 'Omaly';
+
+  @override
+  String get days => 'Andro';
+
+  @override
+  String get one_week => '1 herinandro';
+
+  @override
+  String get weeks => 'Herinandro';
+
+  @override
+  String get one_month => '1 volana';
+
+  @override
+  String get months => 'Volana';
+
+  @override
+  String get one_year => '1 taona';
+
+  @override
+  String get years => 'Taona';
 }

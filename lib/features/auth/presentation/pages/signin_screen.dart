@@ -11,6 +11,7 @@ import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/auth/domain/usecases/sigin/signin_params.dart';
 import 'package:kianja/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:kianja/features/auth/presentation/widgets/forgot_password_bottom_sheet.dart';
@@ -44,7 +45,7 @@ class _SignInScreenState extends State<SignInScreen> {
     return BlocProvider(
       create: (context) => GetIt.instance<AuthBloc>(),
       child: BaseScreen(
-        appBar: const TitleHeader(title: 'Sign In'),
+        appBar: TitleHeader(title: context.appLoc.sign_in),
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(Constants.paddingMedium),
@@ -52,19 +53,22 @@ class _SignInScreenState extends State<SignInScreen> {
               children: [
                 const SizedBox(height: Constants.spacingMedium),
 
-                Text('Log In', style: theme.textTheme.headlineLarge),
+                Text(
+                  context.appLoc.login,
+                  style: theme.textTheme.headlineLarge,
+                ),
 
                 const SizedBox(height: Constants.spacingSmall),
 
                 Text(
-                  'Please sign in to your existing account',
+                  context.appLoc.please_sign_in_exist_account,
                   style: theme.textTheme.titleMedium,
                 ),
 
                 const SizedBox(height: Constants.spacingLarge),
 
                 // Phone Field
-                const LabelField(label: 'PHONE'),
+                LabelField(label: context.appLoc.phone.toUpperCase()),
                 const SizedBox(height: Constants.spacingSmall),
                 PhoneInputField(
                   controller: _phoneController,
@@ -76,7 +80,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 const SizedBox(height: Constants.paddingMediumLarge),
 
                 // Password Field
-                const LabelField(label: 'PASSWORD'),
+                LabelField(label: context.appLoc.password.toUpperCase()),
                 const SizedBox(height: Constants.spacingSmall),
                 PasswordInputField(controller: _passwordController),
 
@@ -101,7 +105,10 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                         ),
                         const SizedBox(width: 8),
-                        Text('Remember me', style: theme.textTheme.bodyMedium),
+                        Text(
+                          context.appLoc.remember_me,
+                          style: theme.textTheme.bodyMedium,
+                        ),
                       ],
                     ),
                     TextButton(
@@ -118,7 +125,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         );
                       },
                       child: Text(
-                        'Forgot Password',
+                        context.appLoc.forgot_password,
                         style: theme.textTheme.bodyMedium!.copyWith(
                           color: isDark
                               ? AppColors.darkPrimary
@@ -175,7 +182,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 ),
                               )
                             : Text(
-                                'LOG IN',
+                                context.appLoc.login.toUpperCase(),
                                 style: theme.textTheme.titleMedium!.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -192,13 +199,13 @@ class _SignInScreenState extends State<SignInScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Don't have an account? ",
+                      '${context.appLoc.dont_have_account} ',
                       style: theme.textTheme.bodyMedium,
                     ),
                     GestureDetector(
                       onTap: () => context.pushNamed(Routes.signUp.name),
                       child: Text(
-                        'SIGN UP',
+                        context.appLoc.sign_up.toUpperCase(),
                         style: theme.textTheme.bodyMedium!.copyWith(
                           color: isDark
                               ? AppColors.darkPrimary

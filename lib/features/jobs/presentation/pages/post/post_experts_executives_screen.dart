@@ -4,6 +4,7 @@ import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/routing/routes.dart';
 
 class PostExpertsExecutivesScreen extends StatelessWidget {
@@ -15,7 +16,7 @@ class PostExpertsExecutivesScreen extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
 
     return BaseScreen(
-      appBar: const TitleHeader(title: 'Post Expert & Executive'),
+      appBar: TitleHeader(title: context.appLoc.post_expert_executive),
       child: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(
           horizontal: Constants.paddingMedium,
@@ -35,7 +36,7 @@ class PostExpertsExecutivesScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Notice',
+                context.appLoc.notice,
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: isDark
@@ -45,9 +46,7 @@ class PostExpertsExecutivesScreen extends StatelessWidget {
               ),
               const SizedBox(height: Constants.spacingMedium),
               Text(
-                'To post as an Expert or Executive, you need an active subscription. '
-                'Subscribe now to unlock the ability to create and publish your '
-                'professional profile and reach potential clients and employers.',
+                context.appLoc.notice_expert_executive,
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: isDark
                       ? AppColors.darkTextSecondary
@@ -62,7 +61,7 @@ class PostExpertsExecutivesScreen extends StatelessWidget {
                   onPressed: () =>
                       context.goNamed(Routes.subscribeExpertExecutive.name),
                   child: Text(
-                    'Subscribe',
+                    context.appLoc.subscribe,
                     style: theme.textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,

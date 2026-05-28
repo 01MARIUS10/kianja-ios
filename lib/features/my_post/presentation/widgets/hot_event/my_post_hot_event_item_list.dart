@@ -5,6 +5,7 @@ import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/training/hot_event.dart';
 
 class MyPostHotEventItemList extends StatelessWidget {
@@ -131,7 +132,7 @@ class MyPostHotEventItemList extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              'Start : ',
+                              '${context.appLoc.start} : ',
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: textSecondary,
                                 fontWeight: FontWeight.w600,
@@ -156,7 +157,7 @@ class MyPostHotEventItemList extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              'End : ',
+                              '${context.appLoc.end} : ',
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 color: textSecondary,
                                 fontWeight: FontWeight.w600,

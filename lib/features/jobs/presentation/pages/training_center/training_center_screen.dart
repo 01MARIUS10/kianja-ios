@@ -8,6 +8,7 @@ import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.da
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_category.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center_filter.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center_hot_event.dart';
@@ -191,7 +192,7 @@ class _TrainingCenterScreenState extends State<TrainingCenterScreen>
                               onTap: (index) => _onTabTap(blocContext, index),
                               tabs: [
                                 _buildFilterTab(
-                                  label: 'Actualites',
+                                  label: context.appLoc.actualities,
                                   index: 0,
                                   selected: _selectedIndex,
                                   theme: theme,
@@ -199,7 +200,7 @@ class _TrainingCenterScreenState extends State<TrainingCenterScreen>
                                   isDark: isDark,
                                 ),
                                 _buildFilterTab(
-                                  label: 'Categories',
+                                  label: context.appLoc.categories,
                                   index: 1,
                                   selected: _selectedIndex,
                                   theme: theme,

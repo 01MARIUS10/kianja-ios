@@ -116,7 +116,7 @@ class MyPostJobApplicantItemList extends StatelessWidget {
                       ),
                       const SizedBox(width: Constants.spacingMedium),
                       Text(
-                        '• ${AppFunction.dateTimeCounter(jobApplicant.createdAt)}',
+                        '• ${AppFunction.dateTimeCounter(jobApplicant.createdAt, context)}',
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: textSecondary,
                         ),

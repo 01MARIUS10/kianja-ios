@@ -4,13 +4,7 @@ import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/themes/mode/app_mode.dart';
 import 'package:kianja/core/utils/constants.dart';
-
-/// The three theme options presented in the accordion.
-const _kThemeOptions = [
-  (label: 'Light', icon: Icons.light_mode_outlined, mode: AppMode.light),
-  (label: 'Dark', icon: Icons.dark_mode_outlined, mode: AppMode.dark),
-  (label: 'System', icon: Icons.brightness_auto_outlined, mode: AppMode.system),
-];
+import 'package:kianja/core/utils/extensions.dart';
 
 /// An accordion-style account menu item that expands to show a radio list
 /// of theme options (Light / Dark / System) and collapses after selection.
@@ -93,8 +87,25 @@ class _AccountMenuAccordionItemState extends State<AccountMenuAccordionItem>
         : AppColors.lightPrimary;
     final borderColor = isDark ? AppColors.darkBorder : AppColors.lightBorder;
 
+    final kThemeOptions = [
+      (
+        label: context.appLoc.light,
+        icon: Icons.light_mode_outlined,
+        mode: AppMode.light,
+      ),
+      (
+        label: context.appLoc.dark,
+        icon: Icons.dark_mode_outlined,
+        mode: AppMode.dark,
+      ),
+      (
+        label: context.appLoc.system,
+        icon: Icons.brightness_auto_outlined,
+        mode: AppMode.system,
+      ),
+    ];
     // Derive current label for the subtitle
-    final currentLabel = _kThemeOptions
+    final currentLabel = kThemeOptions
         .firstWhere((o) => o.mode == currentMode)
         .label;
 
@@ -152,7 +163,7 @@ class _AccountMenuAccordionItemState extends State<AccountMenuAccordionItem>
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          'Theme',
+                          context.appLoc.theme,
                           style: theme.textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.w500,
                             color: labelColor,
@@ -199,7 +210,7 @@ class _AccountMenuAccordionItemState extends State<AccountMenuAccordionItem>
                 endIndent: Constants.spacingSmall,
                 color: borderColor,
               ),
-              ..._kThemeOptions.map(
+              ...kThemeOptions.map(
                 (option) => _ThemeRadioTile(
                   icon: option.icon,
                   label: option.label,

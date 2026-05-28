@@ -63,7 +63,7 @@ class JobApplicantDetailScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: Constants.spacingSmall),
                           Text(
-                            'Posted  •  ${AppFunction.dateTimeCounter(jobApplicant.createdAt)}',
+                            'Posted  •  ${AppFunction.dateTimeCounter(jobApplicant.createdAt, context)}',
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: textSecondary,
                             ),

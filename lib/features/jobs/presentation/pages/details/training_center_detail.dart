@@ -12,6 +12,7 @@ import 'package:kianja/core/shared/widgets/photos/photo_handler.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_detail_usecase.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/routing/routes.dart';
@@ -40,7 +41,7 @@ class TrainingCenterDetail extends StatelessWidget {
           ),
         ),
       child: BaseScreen(
-        appBar: const TitleHeader(title: 'Training center details'),
+        appBar: TitleHeader(title: context.appLoc.training_center_detail),
         child: BlocBuilder<JobsBloc, JobsState>(
           builder: (context, state) {
             if (state is GetTrainingCenterDetailSuccess) {
@@ -71,7 +72,7 @@ class TrainingCenterDetail extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Posted  •  ${AppFunction.dateTimeCounter(trainingCenter.createdAt)}',
+                                '${context.appLoc.posted}  •  ${AppFunction.dateTimeCounter(trainingCenter.createdAt, context)}',
                                 style: theme.textTheme.bodySmall?.copyWith(
                                   color: textSecondary,
                                 ),
@@ -97,7 +98,7 @@ class TrainingCenterDetail extends StatelessWidget {
                                       size: Constants.iconSizeExtraSmall,
                                     ),
                                     Text(
-                                      'Make an offer',
+                                      context.appLoc.make_an_offer,
                                       style: theme.textTheme.bodySmall
                                           ?.copyWith(
                                             color: isDark
@@ -188,7 +189,7 @@ class TrainingCenterDetail extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Description',
+                            context.appLoc.description,
                             style: theme.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -223,7 +224,7 @@ class TrainingCenterDetail extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Training center features',
+                            context.appLoc.training_center_features,
                             style: theme.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -231,13 +232,13 @@ class TrainingCenterDetail extends StatelessWidget {
                           const SizedBox(height: Constants.spacingMedium),
                           _buildFeatureRow(
                             context,
-                            label: 'Category',
+                            label: context.appLoc.categories,
                             value: trainingCenter.category?.name ?? '',
                           ),
                           const SizedBox(height: Constants.spacingSmall),
                           _buildFeatureRow(
                             context,
-                            label: 'Location',
+                            label: context.appLoc.location,
                             value: trainingCenter.location?.name ?? '',
                           ),
                         ],
@@ -262,7 +263,7 @@ class TrainingCenterDetail extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'About the client',
+                            context.appLoc.about_center_publisher,
                             style: theme.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -307,7 +308,7 @@ class TrainingCenterDetail extends StatelessWidget {
                                 width: Constants.spacingExtraSmall,
                               ),
                               Text(
-                                'Verified phone number',
+                                context.appLoc.verified_phone_number,
                                 style: theme.textTheme.bodySmall,
                               ),
                             ],
@@ -319,7 +320,7 @@ class TrainingCenterDetail extends StatelessWidget {
                           ),
                           const SizedBox(height: Constants.spacingSmall),
                           Text(
-                            'Member since ${AppFunction.getDate(trainingCenter.user.createdAt)}',
+                            '${context.appLoc.member_since} ${AppFunction.getDate(trainingCenter.user.createdAt)}',
                             style: theme.textTheme.bodySmall,
                           ),
                           const SizedBox(height: Constants.spacingLarge),
