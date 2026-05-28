@@ -1,6 +1,8 @@
+import 'package:kianja/features/jobs/data/models/input/hot_event/hot_event_input_model.dart';
 import 'package:kianja/features/jobs/data/models/output/expert/expert_executive_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_applicant/job_applicant_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_offer/job_offer_model.dart';
+import 'package:kianja/features/jobs/data/models/output/training/hot_event/hot_event_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/training_center/training_center_model.dart';
 import 'package:kianja/features/my_post/data/models/inputs/update_expert_executive/update_expert_executive_input_model.dart';
 import 'package:kianja/features/my_post/data/models/inputs/update_job_applicant/update_job_applicant_input_model.dart';
@@ -13,8 +15,7 @@ abstract interface class MyPostRemoteData {
   Future<void> deleteJobApplicant({required int id});
   Future<void> deleteTrainingCenter({required int id});
   Future<void> deleteExpertExecutive({required int id});
-  // Future<void> deleteHot({required int id});
-  // Future<void> deleteEvent({required int id});
+  Future<void> deleteHotEvent({required int id, required String type});
 
   // Update
   Future<JobOfferModel> updateJobOffer({
@@ -28,6 +29,9 @@ abstract interface class MyPostRemoteData {
   });
   Future<ExpertExecutiveModel> updateExpertExecutive({
     required UpdateExpertExecutiveInputModel updateExpertExecutiveInputModel,
+  });
+  Future<HotEventModel> updateHotEvent({
+    required HotEventInputModel hotEventInputModel,
   });
 
   // GET ALL LIST

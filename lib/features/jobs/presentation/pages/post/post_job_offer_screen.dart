@@ -27,7 +27,7 @@ class PostJobOfferScreen extends StatefulWidget {
 class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _birthDateController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
 
   final List<int> _selectedCategories = [];
   int? _selectedLocation;
@@ -40,7 +40,7 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
   void _clearValues() {
     _titleController.clear();
     _descriptionController.clear();
-    _birthDateController.clear();
+    _dateController.clear();
     setState(() {
       _selectedCategories.clear();
       _selectedLocation = null;
@@ -53,7 +53,7 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
   void _postJobOffer(BuildContext context) {
     if (_titleController.text.trim().isEmpty ||
         _descriptionController.text.trim().isEmpty ||
-        _birthDateController.text.trim().isEmpty ||
+        _dateController.text.trim().isEmpty ||
         _selectedCategories.isEmpty ||
         _selectedLocation == null ||
         _selectedGender == null ||
@@ -67,7 +67,7 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
     }
     AppDebug.showPrint('title ${_titleController.text.trim()}');
     AppDebug.showPrint('description ${_descriptionController.text.trim()}');
-    AppDebug.showPrint('limitDate ${_birthDateController.text.trim()}');
+    AppDebug.showPrint('limitDate ${_dateController.text.trim()}');
     AppDebug.showPrint('categories $_selectedCategories');
     AppDebug.showPrint('location $_selectedLocation');
     AppDebug.showPrint('gender $_selectedGender');
@@ -83,7 +83,7 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
           location: _selectedLocation!,
           gender: _selectedGender!,
           actor: _selectedActor!,
-          limitDate: _birthDateController.text.trim(),
+          limitDate: _dateController.text.trim(),
           status: 'published',
         ),
       ),
@@ -136,7 +136,7 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
   void dispose() {
     _titleController.dispose();
     _descriptionController.dispose();
-    _birthDateController.dispose();
+    _dateController.dispose();
     super.dispose();
   }
 
@@ -426,7 +426,7 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
                           style: theme.textTheme.bodyMedium,
                         ),
                         const SizedBox(height: Constants.spacingSmall),
-                        DateField(birthDateController: _birthDateController),
+                        DateField(dateController: _dateController),
                         const SizedBox(height: Constants.spacingMedium),
 
                         Align(

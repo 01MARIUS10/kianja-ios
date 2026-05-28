@@ -63,11 +63,10 @@ class TrainingCenterHotEventViewAllScreen extends StatelessWidget {
                       onTap: () {
                         context.pushNamed(
                           Routes.trainingCenterHotEventDetail.name,
-                          extra: {
+                          pathParameters: {
                             'id': hotEventsList[index].id.toString(),
-                            'category': title,
-                            'query': query,
                           },
+                          extra: {'category': title, 'query': query},
                         );
                       },
                       child: HotEventCard(

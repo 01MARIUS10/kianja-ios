@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:kianja/core/services/service_helper.dart';
+import 'package:kianja/features/jobs/data/models/input/hot_event/hot_event_input_model.dart';
 import 'package:kianja/features/jobs/data/models/output/expert/expert_executive_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_applicant/job_applicant_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_offer/job_offer_model.dart';
+import 'package:kianja/features/jobs/data/models/output/training/hot_event/hot_event_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/training_center/training_center_model.dart';
 import 'package:kianja/features/my_post/data/datasources/remote/my_post_remote_data.dart';
 import 'package:kianja/features/my_post/data/models/inputs/update_expert_executive/update_expert_executive_input_model.dart';
@@ -39,6 +41,17 @@ class MyPostRemoteDataImpl implements MyPostRemoteData {
   Future<void> deleteExpertExecutive({required int id}) async {
     return requestHandler(() async {
       await dio.delete('/api/expert-cadres/$id');
+    });
+  }
+
+  @override
+  Future<void> deleteHotEvent({required int id, required String type}) async {
+    return requestHandler(() async {
+      if (type == 'hot') {
+        await dio.delete('/api/training-centers/hots/$id');
+      } else {
+        await dio.delete('/api/training-centers/events/$id');
+      }
     });
   }
 
@@ -99,6 +112,23 @@ class MyPostRemoteDataImpl implements MyPostRemoteData {
   }
 
   @override
+  Future<HotEventModel> updateHotEvent({
+    required HotEventInputModel hotEventInputModel,
+  }) async {
+    return requestHandler(() async {
+      String apiUrl = '';
+      if (hotEventInputModel.type == 'hot') {
+        apiUrl = '/api/training-centers/hots/${hotEventInputModel.id}';
+      } else {
+        apiUrl = '/api/training-centers/events/${hotEventInputModel.id}';
+      }
+      final response = await dio.put(apiUrl, data: hotEventInputModel.toJson());
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      return HotEventModel.fromJson(result);
+    });
+  }
+
+  @override
   Future<List<JobOfferModel>> getAllJobOffers({required int page}) {
     return requestHandler(() async {
       final response = await dio.get('/api/mesAnnonces/jobOffers?page=$page');
@@ -115,8 +145,9 @@ class MyPostRemoteDataImpl implements MyPostRemoteData {
   @override
   Future<List<JobApplicantModel>> getAllJobApplicants({required int page}) {
     return requestHandler(() async {
-      final response =
-          await dio.get('/api/mesAnnonces/jobApplicants?page=$page');
+      final response = await dio.get(
+        '/api/mesAnnonces/jobApplicants?page=$page',
+      );
       final Map<String, dynamic> result = jsonHandler(response.data);
       final Map<String, dynamic> content = result['Contenu'];
       final Map<String, dynamic> jobApplicants = content['jobApplicants'];
@@ -134,8 +165,9 @@ class MyPostRemoteDataImpl implements MyPostRemoteData {
   @override
   Future<List<TrainingCenterModel>> getAllTrainingCenters({required int page}) {
     return requestHandler(() async {
-      final response =
-          await dio.get('/api/mesAnnonces/trainingCenters?page=$page');
+      final response = await dio.get(
+        '/api/mesAnnonces/trainingCenters?page=$page',
+      );
       final Map<String, dynamic> result = jsonHandler(response.data);
       final Map<String, dynamic> content = result['Contenu'];
       final Map<String, dynamic> trainingCenters = content['trainingCenters'];

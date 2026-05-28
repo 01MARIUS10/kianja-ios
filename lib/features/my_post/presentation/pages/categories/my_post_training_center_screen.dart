@@ -80,7 +80,7 @@ class _MyPostTrainingCenterScreenState extends State<MyPostTrainingCenterScreen>
   void _onTap(TrainingCenter trainingCenter) {
     context.pushNamed(
       Routes.trainingCenterDetail.name,
-      pathParameters: {'id': trainingCenter.id.toString()},
+      pathParameters: {'trainingCenterId': trainingCenter.id.toString()},
     );
   }
 

@@ -9,6 +9,7 @@ import 'package:kianja/features/jobs/data/datasources/jobs_remote_data.dart';
 import 'package:kianja/features/jobs/data/models/input/create_job_applicant/create_job_applicant_input_model.dart';
 import 'package:kianja/features/jobs/data/models/input/create_job_offer/create_job_offer_input_model.dart';
 import 'package:kianja/features/jobs/data/models/input/create_training_center/create_training_center_input_model.dart';
+import 'package:kianja/features/jobs/data/models/input/hot_event/hot_event_input_model.dart';
 import 'package:kianja/features/jobs/data/models/input/subscribe_expert_executive/subscribe_expert_executive_input_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/training_center_view_category/training_center_view_category_model.dart';
 import 'package:kianja/features/jobs/domain/entities/expert_executive/expert_executive.dart';
@@ -27,6 +28,7 @@ import 'package:kianja/features/jobs/domain/entities/training/training_center.da
 import 'package:kianja/features/jobs/domain/entities/training/training_center_filter.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center_hot_event.dart';
 import 'package:kianja/features/jobs/domain/repositories/jobs_repository.dart';
+import 'package:kianja/features/jobs/domain/usecases/create_hot_event/create_hot_event_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_offer/create_job_offer_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_training_center/create_training_center_params.dart';
@@ -367,6 +369,29 @@ class JobsRepositoryImpl implements JobsRepository {
   }) async {
     try {
       final response = await remoteDataSource.getJobApplicantDetail(id: id);
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, HotEvent>> createHotEvent({
+    required CreateHotEventParams createHotEventParams,
+  }) async {
+    try {
+      final response = await remoteDataSource.createHotEvent(
+        hotEventInputModel: HotEventInputModel(
+          trainingCenterId: createHotEventParams.trainingCenterId,
+          id: -1,
+          type: createHotEventParams.type,
+          title: createHotEventParams.title,
+          description: createHotEventParams.description,
+          imageId: createHotEventParams.imageId,
+          startDate: createHotEventParams.startDate,
+          endDate: createHotEventParams.endDate,
+        ),
+      );
       return right(response);
     } on AppException catch (e) {
       return left(failureHandler(e));

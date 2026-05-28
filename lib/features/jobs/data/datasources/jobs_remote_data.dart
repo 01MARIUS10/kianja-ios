@@ -7,6 +7,7 @@ import 'package:kianja/features/jobs/data/mappers/training_center_badge_mapper.d
 import 'package:kianja/features/jobs/data/models/input/create_job_applicant/create_job_applicant_input_model.dart';
 import 'package:kianja/features/jobs/data/models/input/create_job_offer/create_job_offer_input_model.dart';
 import 'package:kianja/features/jobs/data/models/input/create_training_center/create_training_center_input_model.dart';
+import 'package:kianja/features/jobs/data/models/input/hot_event/hot_event_input_model.dart';
 import 'package:kianja/features/jobs/data/models/input/subscribe_expert_executive/subscribe_expert_executive_input_model.dart';
 import 'package:kianja/features/jobs/data/models/output/expert/expert_executive_model.dart';
 import 'package:kianja/features/jobs/data/models/output/files/job_image/job_image_model.dart';
@@ -70,11 +71,34 @@ abstract interface class JobsRemoteDataSource {
     required SubscribeExpertExecutiveInputModel
     subscribeExpertExecutiveInputModel,
   });
+  Future<HotEventModel> createHotEvent({
+    required HotEventInputModel hotEventInputModel,
+  });
 }
 
 class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
   const JobsRemoteDataSourceImpl({required this.dio});
   final Dio dio;
+
+  @override
+  Future<HotEventModel> createHotEvent({
+    required HotEventInputModel hotEventInputModel,
+  }) async {
+    return requestHandler(() async {
+      String apiUrl = '';
+      if (hotEventInputModel.type == 'hot') {
+        apiUrl = '/api/training-centers/hots';
+      } else {
+        apiUrl = '/api/training-centers/events';
+      }
+      final response = await dio.post(
+        apiUrl,
+        data: hotEventInputModel.toJson(),
+      );
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      return HotEventModel.fromJson(result);
+    });
+  }
 
   @override
   Future<HotEventModel> getHotEventDetail({

@@ -30,9 +30,6 @@ class HotEventDetailScreen extends StatelessWidget {
         ? AppColors.darkTextSecondary
         : AppColors.lightTextSecondary;
     final borderColor = isDark ? AppColors.darkBorder : AppColors.lightBorder;
-    final surfaceColor = isDark
-        ? AppColors.darkSurface
-        : AppColors.lightSurface;
 
     return BlocProvider(
       create: (context) => GetIt.instance<JobsBloc>()
@@ -170,156 +167,6 @@ class HotEventDetailScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: Constants.spacingMedium),
-                    Divider(
-                      color: borderColor,
-                      thickness: 1,
-                      height: 1,
-                      indent: Constants.paddingMedium,
-                      endIndent: Constants.paddingMedium,
-                    ),
-                    const SizedBox(height: Constants.spacingMedium),
-
-                    // Hot features
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Constants.paddingMedium,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Hot features',
-                            style: theme.textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: Constants.spacingMedium),
-                          _buildFeatureRow(
-                            context,
-                            label: 'Location',
-                            value: 'Antananarivo',
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: Constants.spacingMedium),
-                    Divider(
-                      color: borderColor,
-                      thickness: 1,
-                      height: 1,
-                      indent: Constants.paddingMedium,
-                      endIndent: Constants.paddingMedium,
-                    ),
-                    const SizedBox(height: Constants.spacingMedium),
-
-                    // Actor
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Constants.paddingMedium,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Actor',
-                            style: theme.textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: Constants.spacingMedium),
-                          Text('ONG', style: theme.textTheme.bodySmall),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: Constants.spacingMedium),
-                    Divider(
-                      color: borderColor,
-                      thickness: 1,
-                      height: 1,
-                      indent: Constants.paddingMedium,
-                      endIndent: Constants.paddingMedium,
-                    ),
-                    const SizedBox(height: Constants.spacingMedium),
-
-                    // About the client
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Constants.paddingMedium,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'About the client',
-                            style: theme.textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: Constants.spacingMedium),
-                          Row(
-                            children: [
-                              Container(
-                                width: Constants.size35,
-                                height: Constants.size35,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: surfaceColor,
-                                  border: Border.all(
-                                    color: borderColor,
-                                    width: 1,
-                                  ),
-                                ),
-                                child: ClipOval(
-                                  child: Image.asset(
-                                    Assets.rabbitAvatar,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: Constants.spacingSmall),
-                              Text(
-                                'Full Name',
-                                style: theme.textTheme.bodySmall,
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: Constants.spacingSmall),
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.verified_user_outlined,
-                                size: Constants.iconSizeExtraSmall,
-                                color: AppColors.success,
-                              ),
-                              const SizedBox(
-                                width: Constants.spacingExtraSmall,
-                              ),
-                              Text(
-                                'Verified phone number',
-                                style: theme.textTheme.bodySmall,
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: Constants.spacingSmall),
-                          Text(
-                            '10 jobs posted',
-                            style: theme.textTheme.bodySmall,
-                          ),
-                          const SizedBox(height: Constants.spacingSmall),
-                          Text(
-                            'Antananarivo',
-                            style: theme.textTheme.bodySmall,
-                          ),
-                          const SizedBox(height: Constants.spacingSmall),
-                          Text(
-                            'Member since Jan 20, 2024',
-                            style: theme.textTheme.bodySmall,
-                          ),
-                          const SizedBox(height: Constants.spacingLarge),
-                        ],
-                      ),
-                    ),
                   ],
                 ),
               );
@@ -343,27 +190,6 @@ class HotEventDetailScreen extends StatelessWidget {
           },
         ),
       ),
-    );
-  }
-
-  Widget _buildFeatureRow(
-    BuildContext context, {
-    required String label,
-    required String value,
-  }) {
-    final theme = Theme.of(context);
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          '$label :',
-          style: theme.textTheme.bodySmall?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(width: Constants.spacingExtraSmall),
-        Expanded(child: Text(value, style: theme.textTheme.bodySmall)),
-      ],
     );
   }
 }

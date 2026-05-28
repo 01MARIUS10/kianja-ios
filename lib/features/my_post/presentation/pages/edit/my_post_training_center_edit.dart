@@ -15,8 +15,8 @@ import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
-import 'package:kianja/features/jobs/domain/usecases/get_training_center_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_training_center_detail_usecase.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/multi_photo_upload_widget.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_training_center/update_training_center_params.dart';
@@ -76,9 +76,7 @@ class _MyPostTrainingCenterEditScreenState
     _existingImageUrls
       ..clear()
       ..addAll(
-        trainingCenter.images
-            .map((e) => e.url)
-            .where((url) => url.isNotEmpty),
+        trainingCenter.images.map((e) => e.url).where((url) => url.isNotEmpty),
       );
 
     // Some training centers may only have a single cover `imageUrl`.
@@ -94,7 +92,8 @@ class _MyPostTrainingCenterEditScreenState
     final hasBasics =
         _nameController.text.trim().isNotEmpty &&
         _descriptionController.text.trim().isNotEmpty;
-    final hasSelections = _selectedLocationId != null && _selectedActorId != null;
+    final hasSelections =
+        _selectedLocationId != null && _selectedActorId != null;
     final hasAnyImage = _existingImageIds.isNotEmpty || _newPhotos.isNotEmpty;
 
     setState(() {
@@ -104,7 +103,9 @@ class _MyPostTrainingCenterEditScreenState
 
   void _toggleLocation(int locationId) {
     setState(() {
-      _selectedLocationId = _selectedLocationId == locationId ? null : locationId;
+      _selectedLocationId = _selectedLocationId == locationId
+          ? null
+          : locationId;
     });
     _checkFormReady();
   }
@@ -146,7 +147,10 @@ class _MyPostTrainingCenterEditScreenState
       return;
     }
     if (_existingImageIds.isEmpty && _newPhotos.isEmpty) {
-      AppMessenger.showWarning(context, 'Please keep or upload at least 1 photo');
+      AppMessenger.showWarning(
+        context,
+        'Please keep or upload at least 1 photo',
+      );
       return;
     }
 
@@ -253,7 +257,8 @@ class _MyPostTrainingCenterEditScreenState
           builder: (context, jobsState) {
             final isJobsLoading =
                 !_isFormReady &&
-                (jobsState is JobsRequestInProgress || jobsState is JobsInitial);
+                (jobsState is JobsRequestInProgress ||
+                    jobsState is JobsInitial);
 
             if (isJobsLoading) {
               return const BaseScreen(
@@ -297,9 +302,11 @@ class _MyPostTrainingCenterEditScreenState
                               scrollDirection: Axis.horizontal,
                               child: Row(
                                 children: [
-                                  for (int i = 0;
-                                      i < _existingImageUrls.length;
-                                      i++)
+                                  for (
+                                    int i = 0;
+                                    i < _existingImageUrls.length;
+                                    i++
+                                  )
                                     Padding(
                                       padding: const EdgeInsets.only(
                                         right: Constants.spacingSmall,
@@ -321,9 +328,9 @@ class _MyPostTrainingCenterEditScreenState
                                                 errorWidget:
                                                     (context, url, error) =>
                                                         Image.asset(
-                                                  Assets.hiring,
-                                                  fit: BoxFit.cover,
-                                                ),
+                                                          Assets.hiring,
+                                                          fit: BoxFit.cover,
+                                                        ),
                                               ),
                                             ),
                                           ),
@@ -333,12 +340,14 @@ class _MyPostTrainingCenterEditScreenState
                                             child: InkWell(
                                               onTap: isBusy
                                                   ? null
-                                                  : () => _removeExistingImageAt(
-                                                        i,
-                                                      ),
+                                                  : () =>
+                                                        _removeExistingImageAt(
+                                                          i,
+                                                        ),
                                               child: Container(
-                                                padding:
-                                                    const EdgeInsets.all(4),
+                                                padding: const EdgeInsets.all(
+                                                  4,
+                                                ),
                                                 decoration: BoxDecoration(
                                                   color:
                                                       theme.colorScheme.error,
@@ -399,8 +408,9 @@ class _MyPostTrainingCenterEditScreenState
                                       : () => _toggleLocation(location.id),
                                   borderRadius: BorderRadius.circular(4),
                                   child: Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 6),
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 6,
+                                    ),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
@@ -412,8 +422,8 @@ class _MyPostTrainingCenterEditScreenState
                                             onChanged: isBusy
                                                 ? null
                                                 : (_) => _toggleLocation(
-                                                      location.id,
-                                                    ),
+                                                    location.id,
+                                                  ),
                                           ),
                                         ),
                                         const SizedBox(
@@ -449,8 +459,9 @@ class _MyPostTrainingCenterEditScreenState
                                       : () => _toggleActor(actor.id),
                                   borderRadius: BorderRadius.circular(4),
                                   child: Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 6),
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 6,
+                                    ),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
@@ -502,12 +513,12 @@ class _MyPostTrainingCenterEditScreenState
                                       'SAVE',
                                       style: theme.textTheme.titleMedium
                                           ?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        letterSpacing: 1.2,
-                                        color: isDark
-                                            ? AppColors.darkTextPrimary
-                                            : AppColors.lightTextPrimary,
-                                      ),
+                                            fontWeight: FontWeight.bold,
+                                            letterSpacing: 1.2,
+                                            color: isDark
+                                                ? AppColors.darkTextPrimary
+                                                : AppColors.lightTextPrimary,
+                                          ),
                                     ),
                             ),
                           ),
@@ -525,4 +536,3 @@ class _MyPostTrainingCenterEditScreenState
     );
   }
 }
-

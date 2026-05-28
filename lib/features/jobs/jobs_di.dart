@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:kianja/features/jobs/data/datasources/jobs_remote_data.dart';
 import 'package:kianja/features/jobs/data/repositories/jobs_repository_impl.dart';
 import 'package:kianja/features/jobs/domain/repositories/jobs_repository.dart';
+import 'package:kianja/features/jobs/domain/usecases/create_hot_event/create_hot_event_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_offer/create_job_offer_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_training_center/create_training_center_usecase.dart';
@@ -113,6 +114,9 @@ Future<void> initJobsDependencies(GetIt getIt, Dio dio) async {
   getIt.registerLazySingleton<SubscribeExpertExecutiveUseCase>(
     () => SubscribeExpertExecutiveUseCase(jobsRepository: getIt()),
   );
+  getIt.registerLazySingleton<CreateHotEventUseCase>(
+    () => CreateHotEventUseCase(jobsRepository: getIt()),
+  );
 
   // Bloc
   getIt.registerFactory(
@@ -141,6 +145,7 @@ Future<void> initJobsDependencies(GetIt getIt, Dio dio) async {
       getTrainingCenterViewCategoryUseCase: getIt(),
       createTrainingCenterUseCase: getIt(),
       subscribeExpertExecutiveUseCase: getIt(),
+      createHotEventUseCase: getIt(),
     ),
   );
 }

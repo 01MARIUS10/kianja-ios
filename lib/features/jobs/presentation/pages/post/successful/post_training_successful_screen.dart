@@ -42,7 +42,7 @@ class PostTrainingSuccessfulScreen extends StatelessWidget {
               onPressed: () {
                 context.pushReplacementNamed(
                   Routes.trainingCenterDetail.name,
-                  pathParameters: {'id': id.toString()},
+                  pathParameters: {'trainingCenterId': id.toString()},
                 );
               },
               child: Text(

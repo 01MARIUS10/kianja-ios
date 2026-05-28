@@ -64,7 +64,7 @@ class TrainingCenterVerticalSection extends StatelessWidget {
                   context.goNamed(
                     Routes.trainingCenterDetail.name,
                     pathParameters: {
-                      'id': trainingCenters[index].id.toString(),
+                      'trainingCenterId': trainingCenters[index].id.toString(),
                     },
                   );
                 },

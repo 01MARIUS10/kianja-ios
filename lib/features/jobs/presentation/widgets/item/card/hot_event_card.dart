@@ -32,7 +32,7 @@ class HotEventCard extends StatelessWidget {
         children: [
           // Cover Image
           Container(
-            height: Constants.size150,
+            height: Constants.size100,
             width: double.infinity,
             color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
             child: hotEvent.type == 'hot'
@@ -43,7 +43,7 @@ class HotEventCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(Constants.paddingSmall),
             child: Text(
-              hotEvent.description,
+              hotEvent.title,
               style: theme.textTheme.titleSmall,
               maxLines: 4,
               overflow: TextOverflow.ellipsis,

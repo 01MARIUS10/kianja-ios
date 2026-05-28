@@ -499,7 +499,7 @@ class _MyPostJobOfferEditScreenState extends State<MyPostJobOfferEditScreen> {
                             style: theme.textTheme.bodyMedium,
                           ),
                           const SizedBox(height: Constants.spacingSmall),
-                          DateField(birthDateController: _limitDateController),
+                          DateField(dateController: _limitDateController),
                           const SizedBox(height: Constants.spacingMedium),
                           Align(
                             alignment: Alignment.centerRight,

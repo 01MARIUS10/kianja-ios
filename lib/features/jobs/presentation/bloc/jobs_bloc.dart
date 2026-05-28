@@ -20,6 +20,8 @@ import 'package:kianja/features/jobs/domain/entities/training/training_center.da
 import 'package:kianja/features/jobs/domain/entities/training/training_center_filter.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center_hot_event.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center_view_all_category.dart';
+import 'package:kianja/features/jobs/domain/usecases/create_hot_event/create_hot_event_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/create_hot_event/create_hot_event_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_offer/create_job_offer_params.dart';
@@ -84,6 +86,7 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     getTrainingCenterViewCategoryUseCase,
     required CreateTrainingCenterUseCase createTrainingCenterUseCase,
     required SubscribeExpertExecutiveUseCase subscribeExpertExecutiveUseCase,
+    required CreateHotEventUseCase createHotEventUseCase,
   }) : _getJobOffersGroupByUseCase = getJobOffersGroupByUseCase,
        _viewAllJobOffersUseCase = viewAllJobOffersUseCase,
        _uploadPdfUseCase = uploadPdfUseCase,
@@ -109,6 +112,7 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
            getTrainingCenterViewCategoryUseCase,
        _createTrainingCenterUseCase = createTrainingCenterUseCase,
        _subscribeExpertExecutiveUseCase = subscribeExpertExecutiveUseCase,
+       _createHotEventUseCase = createHotEventUseCase,
        super(JobsInitial()) {
     on<JobsGroupByTypeFetchRequested>(_onGroupByTypeFetchRequested);
     on<JobsGroupByDateFetchRequested>(_onGroupByDateFetchRequested);
@@ -147,6 +151,7 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     );
     on<CreateTrainingCenterRequested>(_onCreateTrainingCenterRequested);
     on<SubscribeExpertExecutiveRequested>(_onSubscribeExpertExecutiveRequested);
+    on<CreateHotEventRequested>(_onCreateHotEventRequested);
   }
 
   final GetJobOffersGroupByUseCase _getJobOffersGroupByUseCase;
@@ -174,6 +179,19 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
   _getTrainingCenterViewCategoryUseCase;
   final CreateTrainingCenterUseCase _createTrainingCenterUseCase;
   final SubscribeExpertExecutiveUseCase _subscribeExpertExecutiveUseCase;
+  final CreateHotEventUseCase _createHotEventUseCase;
+
+  Future<void> _onCreateHotEventRequested(
+    CreateHotEventRequested event,
+    Emitter<JobsState> emit,
+  ) async {
+    emit(JobsRequestInProgress());
+    final result = await _createHotEventUseCase(event.createHotEventParams);
+    result.fold(
+      (failure) => emit(JobsRequestFailure(message: failure.message)),
+      (hotEvent) => emit(CreateHotEventSuccess(hotEvent: hotEvent)),
+    );
+  }
 
   Future<void> _onSubscribeExpertExecutiveRequested(
     SubscribeExpertExecutiveRequested event,

@@ -129,7 +129,9 @@ class _CategoryContent extends StatelessWidget {
                     badge: premium[index].badge ?? TrainingCenterBadge.normal,
                     onTap: () => context.pushNamed(
                       Routes.trainingCenterDetail.name,
-                      pathParameters: {'id': premium[index].id.toString()},
+                      pathParameters: {
+                        'trainingCenterId': premium[index].id.toString(),
+                      },
                     ),
                   );
                 }
@@ -138,7 +140,8 @@ class _CategoryContent extends StatelessWidget {
                   onTap: () => context.pushNamed(
                     Routes.trainingCenterDetail.name,
                     pathParameters: {
-                      'id': normal[index - premium.length].id.toString(),
+                      'trainingCenterId': normal[index - premium.length].id
+                          .toString(),
                     },
                   ),
                 );

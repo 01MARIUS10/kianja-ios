@@ -188,6 +188,14 @@ class JobsCreateTrainingCenterSuccess extends JobsState {
   List<Object> get props => [trainingCenter];
 }
 
+class CreateHotEventSuccess extends JobsState {
+  const CreateHotEventSuccess({required this.hotEvent});
+  final HotEvent hotEvent;
+
+  @override
+  List<Object> get props => [hotEvent];
+}
+
 /// [GetTrainingCenterHotEventUseCase] succeeded.
 class GetTrainingCenterHotEventSuccess extends JobsState {
   const GetTrainingCenterHotEventSuccess({

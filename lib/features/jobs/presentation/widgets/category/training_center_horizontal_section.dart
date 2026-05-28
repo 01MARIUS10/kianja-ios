@@ -78,11 +78,8 @@ class TrainingCenterHorizontalSection extends StatelessWidget {
                   onTap: () {
                     context.goNamed(
                       Routes.trainingCenterHotEventDetail.name,
-                      extra: {
-                        'id': hotEvents[index].id.toString(),
-                        'category': category,
-                        'query': query,
-                      },
+                      pathParameters: {'id': hotEvents[index].id.toString()},
+                      extra: {'category': category, 'query': query},
                     );
                   },
                   child: HotEventCard(

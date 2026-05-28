@@ -18,6 +18,7 @@ import 'package:kianja/features/jobs/domain/entities/training/hot_event.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center_filter.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center_hot_event.dart';
+import 'package:kianja/features/jobs/domain/usecases/create_hot_event/create_hot_event_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_offer/create_job_offer_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_training_center/create_training_center_params.dart';
@@ -78,5 +79,8 @@ abstract interface class JobsRepository {
   });
   Future<Either<Failure, ExpertExecutive>> subscribeExpertExecutive({
     required SubscribeExpertExecutiveParams subscribeExpertExecutiveParams,
+  });
+  Future<Either<Failure, HotEvent>> createHotEvent({
+    required CreateHotEventParams createHotEventParams,
   });
 }

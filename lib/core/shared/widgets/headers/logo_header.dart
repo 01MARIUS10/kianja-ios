@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kianja/core/config/assets.dart';
+import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/routing/routes.dart';
 
@@ -45,7 +46,7 @@ class LogoHeader extends StatelessWidget implements PreferredSizeWidget {
           onPressed: () {
             context.pushNamed(Routes.modifyAppLang.name);
           },
-          icon: const Icon(Icons.language),
+          icon: const Icon(Icons.language, color: AppColors.icon),
         ),
       ],
     );

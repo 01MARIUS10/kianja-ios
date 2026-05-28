@@ -248,3 +248,11 @@ class GetTrainingCenterViewCategoryRequested extends JobsEvent {
   @override
   List<Object> get props => [params];
 }
+
+class CreateHotEventRequested extends JobsEvent {
+  const CreateHotEventRequested({required this.createHotEventParams});
+  final CreateHotEventParams createHotEventParams;
+
+  @override
+  List<Object> get props => [createHotEventParams];
+}

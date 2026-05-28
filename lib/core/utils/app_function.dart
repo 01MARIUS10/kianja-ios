@@ -156,4 +156,9 @@ abstract class AppFunction {
     final int years = (monthsDiff / 12).floor();
     return years == 1 ? '1 an' : '$years ans';
   }
+
+  String capitalize(String text) {
+    if (text.isEmpty) return text;
+    return text[0].toUpperCase() + text.substring(1);
+  }
 }

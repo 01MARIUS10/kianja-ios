@@ -66,7 +66,8 @@ class TrainingCenterViewAllScreen extends StatelessWidget {
                         context.pushNamed(
                           Routes.trainingCenterDetail.name,
                           pathParameters: {
-                            'id': trainingCenterList[index].id.toString(),
+                            'trainingCenterId': trainingCenterList[index].id
+                                .toString(),
                           },
                         );
                       },

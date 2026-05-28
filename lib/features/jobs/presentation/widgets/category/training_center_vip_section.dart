@@ -44,7 +44,9 @@ class TrainingCenterVipSection extends StatelessWidget {
                       onTap: () {
                         context.pushNamed(
                           Routes.trainingCenterDetail.name,
-                          pathParameters: {'id': center.id.toString()},
+                          pathParameters: {
+                            'trainingCenterId': center.id.toString(),
+                          },
                         );
                       },
                       child: Column(

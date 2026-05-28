@@ -25,6 +25,8 @@ import 'package:kianja/features/jobs/presentation/pages/details/job_applicant_vi
 import 'package:kianja/features/jobs/presentation/pages/details/job_offer_detail_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/details/training_center_detail.dart';
 import 'package:kianja/features/jobs/presentation/pages/jobs_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/post/hot_event/create_hot_event_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/post/hot_event/post_hot_event_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_experts_executives_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_job_applicant_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_job_offer_screen.dart';
@@ -32,6 +34,7 @@ import 'package:kianja/features/jobs/presentation/pages/post/post_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_training_center_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/subscribe_experts_executives_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/successful/post_executive_successful_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/post/successful/post_hot_event_successful_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/successful/post_job_applicant_successful_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/successful/post_job_offer_successful_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/successful/post_training_successful_screen.dart';
@@ -219,9 +222,10 @@ abstract class AppRouter {
                       name: Routes.trainingCenterHotEventDetail.name,
                       path: Routes.trainingCenterHotEventDetail.path,
                       builder: (context, state) {
+                        final params = state.pathParameters;
                         final extra = state.extra as Map<String, String>? ?? {};
                         return HotEventDetailScreen(
-                          id: int.parse(extra['id'] ?? '0'),
+                          id: int.parse(params['id'] ?? '0'),
                           name: extra['category'] ?? '',
                           query: extra['query'] ?? '',
                         );
@@ -233,7 +237,7 @@ abstract class AppRouter {
                       builder: (context, state) {
                         final params = state.pathParameters;
                         return TrainingCenterDetail(
-                          id: int.parse(params['id'] ?? '0'),
+                          id: int.parse(params['trainingCenterId'] ?? '0'),
                         );
                       },
                       routes: [
@@ -252,6 +256,47 @@ abstract class AppRouter {
                                   0,
                             );
                           },
+                        ),
+                        GoRoute(
+                          name: Routes.postHotEvent.name,
+                          path: Routes.postHotEvent.path,
+                          builder: (context, state) {
+                            final params = state.pathParameters;
+                            return PostHotEventScreen(
+                              trainingCenterId: int.parse(
+                                params['trainingCenterId'] ?? '0',
+                              ),
+                            );
+                          },
+                          routes: [
+                            GoRoute(
+                              name: Routes.createHotEvent.name,
+                              path: Routes.createHotEvent.path,
+                              builder: (context, state) {
+                                final extra =
+                                    state.extra as Map<String, dynamic>? ?? {};
+                                final params = state.pathParameters;
+                                return CreateHotEventScreen(
+                                  trainingCenterId: int.parse(
+                                    params['trainingCenterId'] ?? '0',
+                                  ),
+                                  type: extra['type'] ?? '',
+                                );
+                              },
+                              routes: [
+                                GoRoute(
+                                  name: Routes.createHotEventSuccessful.name,
+                                  path: Routes.createHotEventSuccessful.path,
+                                  builder: (context, state) {
+                                    final params = state.pathParameters;
+                                    return PostHotEventSuccessfulScreen(
+                                      id: int.parse(params['id'] ?? '0'),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ],
                     ),

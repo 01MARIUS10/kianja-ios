@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
@@ -13,6 +14,7 @@ import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_detail_usecase.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
+import 'package:kianja/routing/routes.dart';
 
 class TrainingCenterDetail extends StatelessWidget {
   const TrainingCenterDetail({super.key, required this.id});
@@ -65,11 +67,55 @@ class TrainingCenterDetail extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: Constants.spacingSmall),
-                          Text(
-                            'Posted  •  ${AppFunction.dateTimeCounter(trainingCenter.createdAt)}',
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: textSecondary,
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Posted  •  ${AppFunction.dateTimeCounter(trainingCenter.createdAt)}',
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: textSecondary,
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  context.pushNamed(
+                                    Routes.postHotEvent.name,
+                                    pathParameters: {
+                                      'trainingCenterId': trainingCenter.id
+                                          .toString(),
+                                    },
+                                  );
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.flash_on_outlined,
+                                      color: isDark
+                                          ? AppColors.darkPrimary
+                                          : AppColors.lightPrimary,
+                                      size: Constants.iconSizeExtraSmall,
+                                    ),
+                                    Text(
+                                      'Make an offer',
+                                      style: theme.textTheme.bodySmall
+                                          ?.copyWith(
+                                            color: isDark
+                                                ? AppColors.darkPrimary
+                                                : AppColors.lightPrimary,
+                                          ),
+                                    ),
+                                    Icon(
+                                      Icons.flash_on_outlined,
+                                      color: isDark
+                                          ? AppColors.darkPrimary
+                                          : AppColors.lightPrimary,
+                                      size: Constants.iconSizeExtraSmall,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
