@@ -7,7 +7,9 @@ import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
 import 'app_localizations_fr.dart';
+import 'app_localizations_ko.dart';
 import 'app_localizations_mg.dart';
+import 'app_localizations_zh.dart';
 
 // ignore_for_file: type=lint
 
@@ -19,7 +21,7 @@ import 'app_localizations_mg.dart';
 /// `supportedLocales` list. For example:
 ///
 /// ```dart
-/// import 'l10n/app_localizations.dart';
+/// import 'localization/app_localizations.dart';
 ///
 /// return MaterialApp(
 ///   localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -97,7 +99,9 @@ abstract class AppLocalizations {
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
     Locale('fr'),
+    Locale('ko'),
     Locale('mg'),
+    Locale('zh'),
   ];
 
   /// No description provided for @continu.
@@ -136,7 +140,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['en', 'fr', 'mg'].contains(locale.languageCode);
+      <String>['en', 'fr', 'ko', 'mg', 'zh'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -149,8 +153,12 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsEn();
     case 'fr':
       return AppLocalizationsFr();
+    case 'ko':
+      return AppLocalizationsKo();
     case 'mg':
       return AppLocalizationsMg();
+    case 'zh':
+      return AppLocalizationsZh();
   }
 
   throw FlutterError(

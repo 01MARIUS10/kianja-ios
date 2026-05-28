@@ -8,18 +8,33 @@ enum LanguageEnum {
     locale: Languages.localeMalagasy,
     langCode: 'mg',
   ),
+
   french(
     name: 'Français',
     flag: '🇫🇷',
     locale: Languages.localeFrench,
     langCode: 'fr',
   ),
+
   english(
     name: 'English',
     flag: '🇬🇧',
-    // flag: '🇺🇸',
     locale: Languages.localeEnglish,
     langCode: 'en',
+  ),
+
+  chinese(
+    name: '中文',
+    flag: '🇨🇳',
+    locale: Languages.localeChinese,
+    langCode: 'zh',
+  ),
+
+  korean(
+    name: '한국어',
+    flag: '🇰🇷',
+    locale: Languages.localeKorean,
+    langCode: 'ko',
   );
 
   const LanguageEnum({
@@ -28,6 +43,7 @@ enum LanguageEnum {
     required this.locale,
     required this.langCode,
   });
+
   final String name;
   final String flag;
   final Locale locale;

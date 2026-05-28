@@ -37,6 +37,19 @@ class _MyPostHotScreenState extends State<MyPostHotScreen>
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
+
+    final bloc = BlocProvider.of<MyPostBloc>(context);
+    final state = bloc.state;
+    if (state is MyPostGetAllHotsSuccess) {
+      _hots = state.hots;
+      _hasLoadedOnce = true;
+    } else {
+      bloc.add(
+        const MyPostGetAllHotsRequested(
+          queryPageParams: QueryPageParams(page: 1),
+        ),
+      );
+    }
   }
 
   @override

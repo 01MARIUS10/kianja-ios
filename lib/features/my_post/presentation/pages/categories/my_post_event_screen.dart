@@ -37,6 +37,19 @@ class _MyPostEventScreenState extends State<MyPostEventScreen>
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
+
+    final bloc = BlocProvider.of<MyPostBloc>(context);
+    final state = bloc.state;
+    if (state is MyPostGetAllEventsSuccess) {
+      _events = state.events;
+      _hasLoadedOnce = true;
+    } else {
+      bloc.add(
+        const MyPostGetAllEventsRequested(
+          queryPageParams: QueryPageParams(page: 1),
+        ),
+      );
+    }
   }
 
   @override
@@ -58,7 +71,7 @@ class _MyPostEventScreenState extends State<MyPostEventScreen>
         !state.isLoadMore) {
       BlocProvider.of<MyPostBloc>(
         context,
-      ).add(const MyPostLoadMoreHotsRequested());
+      ).add(const MyPostLoadMoreEventsRequested());
     }
   }
 
@@ -102,7 +115,7 @@ class _MyPostEventScreenState extends State<MyPostEventScreen>
 
     _refreshCompleter = Completer<void>();
     BlocProvider.of<MyPostBloc>(context).add(
-      const MyPostGetAllHotsRequested(
+      const MyPostGetAllEventsRequested(
         queryPageParams: QueryPageParams(page: 1),
       ),
     );
