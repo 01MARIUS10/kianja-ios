@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/shared/widgets/loading/shimmer_job_detail_indicator.dart';
 import 'package:kianja/core/themes/app_colors.dart';
+import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_params.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
+import 'package:kianja/routing/routes.dart';
 
 class HotEventDetailScreen extends StatelessWidget {
   const HotEventDetailScreen({
@@ -47,7 +50,6 @@ class HotEventDetailScreen extends StatelessWidget {
           builder: (context, state) {
             if (state is GetHotEventDetailSuccess) {
               final hotEvent = state.hotEvent;
-              final hotType = hotEvent.type == 'hot';
               return SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(
                   vertical: Constants.paddingMedium,
@@ -69,45 +71,110 @@ class HotEventDetailScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(height: Constants.spacingSmall),
+                          const SizedBox(height: Constants.paddingMedium),
                           Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text(
-                                hotType ? 'Hot date  ' : 'Event date  ',
-                                style: theme.textTheme.bodySmall?.copyWith(
-                                  color: hotType
-                                      ? AppColors.warning
-                                      : AppColors.success,
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Start : ',
+                                          style: theme.textTheme.bodySmall
+                                              ?.copyWith(
+                                                color: textSecondary,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            AppFunction.getDate(
+                                              hotEvent.startDate,
+                                            ),
+                                            style: theme.textTheme.bodySmall
+                                                ?.copyWith(
+                                                  color: hotEvent.type == 'hot'
+                                                      ? AppColors.warning
+                                                      : AppColors.darkPrimary,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'End : ',
+                                          style: theme.textTheme.bodyMedium
+                                              ?.copyWith(
+                                                color: textSecondary,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            AppFunction.getDate(
+                                              hotEvent.endDate,
+                                            ),
+                                            style: theme.textTheme.bodyMedium
+                                                ?.copyWith(
+                                                  color: hotEvent.type == 'hot'
+                                                      ? AppColors.danger
+                                                      : AppColors.endEvent,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Icon(
-                                hotType
-                                    ? Icons.offline_bolt_outlined
-                                    : Icons.event_outlined,
-                                size: Constants.iconSizeExtraSmall,
-                                color: hotType
-                                    ? AppColors.warning
-                                    : AppColors.success,
-                              ),
-                              const SizedBox(
-                                width: Constants.spacingExtraSmall,
-                              ),
-                              Text(
-                                '${hotEvent.startDate} to ${hotEvent.endDate}',
-                                style: theme.textTheme.bodySmall?.copyWith(
-                                  color: hotType
-                                      ? AppColors.warning
-                                      : AppColors.success,
+                              InkWell(
+                                onTap: () {
+                                  context.pushNamed(
+                                    Routes.trainingCenterDetail.name,
+                                    pathParameters: {
+                                      'trainingCenterId': hotEvent.center.id
+                                          .toString(),
+                                    },
+                                  );
+                                },
+                                borderRadius: BorderRadius.circular(
+                                  Constants.borderRadiusSmall,
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      'View center',
+                                      style: theme.textTheme.bodySmall
+                                          ?.copyWith(
+                                            color: textSecondary,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                    ),
+                                    const SizedBox(
+                                      width: Constants.spacingExtraSmall,
+                                    ),
+                                    Icon(
+                                      Icons.arrow_outward,
+                                      size: Constants.iconSizeExtraSmall,
+                                      color: textSecondary,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
-                          ),
-                          const SizedBox(height: Constants.spacingExtraSmall),
-                          Text(
-                            'Posted • 1h',
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: textSecondary,
-                            ),
                           ),
                         ],
                       ),
@@ -128,7 +195,7 @@ class HotEventDetailScreen extends StatelessWidget {
                         horizontal: Constants.paddingMedium,
                       ),
                       child: ClipRRect(
-                        child: hotType
+                        child: hotEvent.type == 'hot'
                             ? Image.asset(Assets.hot, fit: BoxFit.cover)
                             : Image.asset(Assets.events, fit: BoxFit.cover),
                       ),
