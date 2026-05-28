@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kianja/core/config/assets.dart';
-import 'package:kianja/core/shared/widgets/photos/photo_viewer_screen.dart';
 import 'package:kianja/routing/routes.dart';
 
 class PhotoHandler extends StatefulWidget {

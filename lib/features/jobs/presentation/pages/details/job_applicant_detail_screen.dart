@@ -9,12 +9,10 @@ import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.da
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/shared/widgets/loading/shimmer_job_detail_indicator.dart';
 import 'package:kianja/core/themes/app_colors.dart';
-import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/routing/routes.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class JobApplicantDetailScreen extends StatelessWidget {
   const JobApplicantDetailScreen({super.key, required this.id});
