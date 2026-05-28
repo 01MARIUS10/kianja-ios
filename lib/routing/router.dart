@@ -18,6 +18,7 @@ import 'package:kianja/features/auth/presentation/pages/signup_screen.dart';
 import 'package:kianja/features/choose_lang/presentation/pages/choose_lang_screen.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
+import 'package:kianja/features/jobs/domain/entities/training/hot_event.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
 import 'package:kianja/features/jobs/presentation/pages/details/hot_event_detail_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/details/job_applicant_detail_screen.dart';
@@ -43,6 +44,7 @@ import 'package:kianja/features/jobs/presentation/pages/view_all/job_applicants_
 import 'package:kianja/features/jobs/presentation/pages/view_all/job_category_view_all_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/view_all/training_center_hot_event_view_all_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/view_all/training_center_view_all_screen.dart';
+import 'package:kianja/features/my_post/presentation/pages/edit/my_post_hot_event_edit.dart';
 import 'package:kianja/features/my_post/presentation/pages/edit/my_post_job_applicant_edit.dart';
 import 'package:kianja/features/my_post/presentation/pages/edit/my_post_job_offer_edit.dart';
 import 'package:kianja/features/my_post/presentation/pages/edit/my_post_training_center_edit.dart';
@@ -493,6 +495,19 @@ abstract class AppRouter {
                               trainingCenter is TrainingCenter
                               ? trainingCenter
                               : null,
+                        );
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.myPostHotEventEdit.name,
+                      path: Routes.myPostHotEventEdit.path,
+                      builder: (context, state) {
+                        final params = state.pathParameters;
+                        final hotEvent = state.extra as HotEvent;
+                        return MyPostHotEventEditScreen(
+                          hotEventId: int.parse(params['id'] ?? '0'),
+                          type: hotEvent.type,
+                          initialHotEvent: hotEvent,
                         );
                       },
                     ),

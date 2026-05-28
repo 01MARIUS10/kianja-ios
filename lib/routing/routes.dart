@@ -57,6 +57,7 @@ enum Routes {
   myPostJobOfferEdit('edit-job-offer/:id'),
   myPostJobApplicantEdit('edit-job-applicant/:id'),
   myPostTrainingCenterEdit('edit-training-center/:id'),
+  myPostHotEventEdit('edit-hot-event/:id'),
   // ------------- MY POST ----------------
 
   // ------------- ACCOUNT ----------------

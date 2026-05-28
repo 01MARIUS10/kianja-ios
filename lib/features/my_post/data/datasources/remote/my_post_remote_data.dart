@@ -38,5 +38,7 @@ abstract interface class MyPostRemoteData {
   Future<List<JobOfferModel>> getAllJobOffers({required int page});
   Future<List<JobApplicantModel>> getAllJobApplicants({required int page});
   Future<List<TrainingCenterModel>> getAllTrainingCenters({required int page});
+  Future<List<HotEventModel>> getAllHots({required int page});
+  Future<List<HotEventModel>> getAllEvents({required int page});
   // Future<List<ExpertExecutiveModel>> getAllExpertExecutives();
 }

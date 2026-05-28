@@ -11,7 +11,7 @@ import 'package:kianja/features/jobs/domain/entities/training/training_center.da
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_training_center/delete_training_center_params.dart';
 import 'package:kianja/features/my_post/presentation/bloc/my_post_bloc.dart';
 import 'package:kianja/features/my_post/presentation/widgets/my_post_refresh_screen.dart';
-import 'package:kianja/features/my_post/presentation/widgets/my_post_training_center_dismissible.dart';
+import 'package:kianja/features/my_post/presentation/widgets/training_center/my_post_training_center_dismissible.dart';
 import 'package:kianja/routing/routes.dart';
 
 class MyPostTrainingCenterScreen extends StatefulWidget {
@@ -93,8 +93,9 @@ class _MyPostTrainingCenterScreenState extends State<MyPostTrainingCenterScreen>
     if (updatedTrainingCenter == null || !mounted) return;
 
     setState(() {
-      final index =
-          _trainingCenters.indexWhere((e) => e.id == updatedTrainingCenter.id);
+      final index = _trainingCenters.indexWhere(
+        (e) => e.id == updatedTrainingCenter.id,
+      );
       if (index != -1) {
         _trainingCenters[index] = updatedTrainingCenter;
       }

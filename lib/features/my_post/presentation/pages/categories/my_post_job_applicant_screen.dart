@@ -9,7 +9,7 @@ import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_job_applicant/delete_job_applicant_params.dart';
 import 'package:kianja/features/my_post/presentation/bloc/my_post_bloc.dart';
-import 'package:kianja/features/my_post/presentation/widgets/my_post_job_applicant_dismissible.dart';
+import 'package:kianja/features/my_post/presentation/widgets/job_applicant/my_post_job_applicant_dismissible.dart';
 import 'package:kianja/features/my_post/presentation/widgets/my_post_refresh_screen.dart';
 import 'package:kianja/routing/routes.dart';
 
@@ -92,8 +92,9 @@ class _MyPostJobApplicantScreenState extends State<MyPostJobApplicantScreen>
     if (updatedJobApplicant == null || !mounted) return;
 
     setState(() {
-      final index =
-          _jobApplicants.indexWhere((e) => e.id == updatedJobApplicant.id);
+      final index = _jobApplicants.indexWhere(
+        (e) => e.id == updatedJobApplicant.id,
+      );
       if (index != -1) {
         _jobApplicants[index] = updatedJobApplicant;
       }

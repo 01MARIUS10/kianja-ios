@@ -3,9 +3,11 @@ import 'package:kianja/core/errors/exceptions.dart';
 import 'package:kianja/core/errors/failures.dart';
 import 'package:kianja/core/services/service_helper.dart';
 import 'package:kianja/core/utils/usecase/query_page_params.dart';
+import 'package:kianja/features/jobs/data/models/input/hot_event/hot_event_input_model.dart';
 import 'package:kianja/features/jobs/domain/entities/expert_executive/expert_executive.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
+import 'package:kianja/features/jobs/domain/entities/training/hot_event.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
 import 'package:kianja/features/my_post/data/datasources/remote/my_post_remote_data.dart';
 import 'package:kianja/features/my_post/data/models/inputs/update_expert_executive/update_expert_executive_input_model.dart';
@@ -13,7 +15,9 @@ import 'package:kianja/features/my_post/data/models/inputs/update_job_applicant/
 import 'package:kianja/features/my_post/data/models/inputs/update_job_offer/update_job_offer_input_model.dart';
 import 'package:kianja/features/my_post/data/models/inputs/update_training_center/update_training_center_input_model.dart';
 import 'package:kianja/features/my_post/domain/repositories/my_post_repository.dart';
+import 'package:kianja/features/my_post/domain/usecases/delete/delete_hot_event/delete_hot_event_params.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_expert_executive/update_expert_executive_params.dart';
+import 'package:kianja/features/my_post/domain/usecases/update/update_hot_event/update_hot_event_params.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_job_applicant/update_job_applicant_params.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_job_offer/update_job_offer_params.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_training_center/update_training_center_params.dart';
@@ -56,6 +60,21 @@ class MyPostRepositoryImpl implements MyPostRepository {
   Future<Either<Failure, Unit>> deleteExpertExecutive({required int id}) async {
     try {
       await myPostRemoteData.deleteExpertExecutive(id: id);
+      return right(unit);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> deleteHotEvent({
+    required DeleteHotEventParams deleteHotEventParams,
+  }) async {
+    try {
+      await myPostRemoteData.deleteHotEvent(
+        id: deleteHotEventParams.id,
+        type: deleteHotEventParams.type,
+      );
       return right(unit);
     } on AppException catch (e) {
       return left(failureHandler(e));
@@ -164,6 +183,28 @@ class MyPostRepositoryImpl implements MyPostRepository {
   }
 
   @override
+  Future<Either<Failure, HotEvent>> updateHotEvent({
+    required UpdateHotEventParams updateHotEventParams,
+  }) async {
+    try {
+      final hotEvent = await myPostRemoteData.updateHotEvent(
+        hotEventInputModel: HotEventInputModel(
+          trainingCenterId: updateHotEventParams.trainingCenterId,
+          id: updateHotEventParams.id,
+          type: updateHotEventParams.type,
+          title: updateHotEventParams.title,
+          description: updateHotEventParams.description,
+          startDate: updateHotEventParams.startDate,
+          endDate: updateHotEventParams.endDate,
+        ),
+      );
+      return right(hotEvent);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
   Future<Either<Failure, List<JobOffer>>> getAllJobOffers({
     required QueryPageParams queryPageParams,
   }) async {
@@ -200,6 +241,34 @@ class MyPostRepositoryImpl implements MyPostRepository {
         page: queryPageParams.page,
       );
       return right(trainingCenters);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<HotEvent>>> getAllHots({
+    required QueryPageParams queryPageParams,
+  }) async {
+    try {
+      final hots = await myPostRemoteData.getAllHots(
+        page: queryPageParams.page,
+      );
+      return right(hots);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<HotEvent>>> getAllEvents({
+    required QueryPageParams queryPageParams,
+  }) async {
+    try {
+      final events = await myPostRemoteData.getAllEvents(
+        page: queryPageParams.page,
+      );
+      return right(events);
     } on AppException catch (e) {
       return left(failureHandler(e));
     }

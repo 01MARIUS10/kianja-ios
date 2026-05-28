@@ -3,9 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
+import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/my_post/presentation/bloc/my_post_bloc.dart';
+import 'package:kianja/features/my_post/presentation/pages/categories/my_post_event_screen.dart';
+import 'package:kianja/features/my_post/presentation/pages/categories/my_post_hot_screen.dart';
 import 'package:kianja/features/my_post/presentation/pages/categories/my_post_job_applicant_screen.dart';
 import 'package:kianja/features/my_post/presentation/pages/categories/my_post_job_offer_screen.dart';
 import 'package:kianja/features/my_post/presentation/pages/categories/my_post_training_center_screen.dart';
@@ -24,7 +27,7 @@ class _MyPostScreenState extends State<MyPostScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 5, vsync: this);
   }
 
   @override
@@ -55,12 +58,18 @@ class _MyPostScreenState extends State<MyPostScreen>
                   vertical: Constants.spacingZero,
                 ),
                 controller: _tabController,
-                tabAlignment: TabAlignment.fill,
+                isScrollable: true,
+                tabAlignment: TabAlignment.start,
                 indicatorSize: TabBarIndicatorSize.tab,
+                onTap: (value) {
+                  AppDebug.showPrint('Page value : $value');
+                },
                 tabs: const [
                   Tab(text: 'Job offers'),
                   Tab(text: 'Job applicants'),
                   Tab(text: 'Training centers'),
+                  Tab(text: 'Hots'),
+                  Tab(text: 'Events'),
                 ],
               ),
             ),
@@ -72,6 +81,8 @@ class _MyPostScreenState extends State<MyPostScreen>
                   MyPostJobOfferScreen(),
                   MyPostJobApplicantScreen(),
                   MyPostTrainingCenterScreen(),
+                  MyPostHotScreen(),
+                  MyPostEventScreen(),
                 ],
               ),
             ),

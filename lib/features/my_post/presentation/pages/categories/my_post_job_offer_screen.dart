@@ -9,7 +9,7 @@ import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_job_offer/delete_job_offer_params.dart';
 import 'package:kianja/features/my_post/presentation/bloc/my_post_bloc.dart';
-import 'package:kianja/features/my_post/presentation/widgets/my_post_job_offer_dismissible.dart';
+import 'package:kianja/features/my_post/presentation/widgets/job_offer/my_post_job_offer_dismissible.dart';
 import 'package:kianja/features/my_post/presentation/widgets/my_post_refresh_screen.dart';
 import 'package:kianja/routing/routes.dart';
 

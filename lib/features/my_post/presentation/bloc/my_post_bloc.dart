@@ -4,20 +4,27 @@ import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/jobs/domain/entities/expert_executive/expert_executive.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
+import 'package:kianja/features/jobs/domain/entities/training/hot_event.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_expert_executive/delete_expert_executive_params.dart';
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_expert_executive/delete_expert_executive_usecase.dart';
+import 'package:kianja/features/my_post/domain/usecases/delete/delete_hot_event/delete_hot_event_params.dart';
+import 'package:kianja/features/my_post/domain/usecases/delete/delete_hot_event/delete_hot_event_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_job_applicant/delete_job_applicant_params.dart';
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_job_applicant/delete_job_applicant_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_job_offer/delete_job_offer_params.dart';
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_job_offer/delete_job_offer_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_training_center/delete_training_center_params.dart';
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_training_center/delete_training_center_usecase.dart';
+import 'package:kianja/features/my_post/domain/usecases/get_all/get_all_events_usecase.dart';
+import 'package:kianja/features/my_post/domain/usecases/get_all/get_all_hots_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/get_all/get_all_job_applicants_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/get_all/get_all_job_offers_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/get_all/get_all_training_centers_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_expert_executive/update_expert_executive_params.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_expert_executive/update_expert_executive_usecase.dart';
+import 'package:kianja/features/my_post/domain/usecases/update/update_hot_event/update_hot_event_params.dart';
+import 'package:kianja/features/my_post/domain/usecases/update/update_hot_event/update_hot_event_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_job_applicant/update_job_applicant_params.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_job_applicant/update_job_applicant_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_job_offer/update_job_offer_params.dart';
@@ -35,6 +42,7 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
     required UpdateJobApplicantUseCase updateJobApplicantUseCase,
     required UpdateTrainingCenterUseCase updateTrainingCenterUseCase,
     required UpdateExpertExecutiveUseCase updateExpertExecutiveUseCase,
+    required UpdateHotEventUseCase updateHotEventUseCase,
     // --------------------------------------------------------- UPDATE USECASE
 
     // DELETE USECASE ---------------------------------------------------------
@@ -42,18 +50,22 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
     required DeleteJobApplicantUseCase deleteJobApplicantUseCase,
     required DeleteTrainingCenterUseCase deleteTrainingCenterUseCase,
     required DeleteExpertExecutiveUseCase deleteExpertExecutiveUseCase,
+    required DeleteHotEventUseCase deleteHotEventUseCase,
     // --------------------------------------------------------- DELETE USECASE
 
     // GET ALL USECASE ---------------------------------------------------------
     required GetAllJobOffersUseCase getAllJobOffersUseCase,
     required GetAllJobApplicantsUseCase getAllJobApplicantsUseCase,
     required GetAllTrainingCentersUseCase getAllTrainingCentersUseCase,
+    required GetAllHotsUseCase getAllHotsUseCase,
+    required GetAllEventsUseCase getAllEventsUseCase,
     // --------------------------------------------------------- GET ALL USECASE
   }) : // UPDATE USECASE ------------------------------------------------------
        _updateJobOfferUseCase = updateJobOfferUseCase,
        _updateJobApplicantUseCase = updateJobApplicantUseCase,
        _updateTrainingCenterUseCase = updateTrainingCenterUseCase,
        _updateExpertExecutiveUseCase = updateExpertExecutiveUseCase,
+       _updateHotEventUseCase = updateHotEventUseCase,
        // ------------------------------------------------------ UPDATE USECASE
 
        // DELETE USECASE ------------------------------------------------------
@@ -61,12 +73,15 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
        _deleteJobApplicantUseCase = deleteJobApplicantUseCase,
        _deleteTrainingCenterUseCase = deleteTrainingCenterUseCase,
        _deleteExpertExecutiveUseCase = deleteExpertExecutiveUseCase,
+       _deleteHotEventUseCase = deleteHotEventUseCase,
        // ------------------------------------------------------ DELETE USECASE
 
        // GET ALL USECASE ------------------------------------------------------
        _getAllJobOffersUseCase = getAllJobOffersUseCase,
        _getAllJobApplicantsUseCase = getAllJobApplicantsUseCase,
        _getAllTrainingCentersUseCase = getAllTrainingCentersUseCase,
+       _getAllHotsUseCase = getAllHotsUseCase,
+       _getAllEventsUseCase = getAllEventsUseCase,
        // ------------------------------------------------------ GET ALL USECASE
        super(MyPostInitial()) {
     // UPDATE EVENT HANDLER -------------------------------------------------
@@ -74,6 +89,7 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
     on<MyPostUpdateJobApplicantRequested>(_onUpdateJobApplicantRequested);
     on<MyPostUpdateTrainingCenterRequested>(_onUpdateTrainingCenterRequested);
     on<MyPostUpdateExpertExecutiveRequested>(_onUpdateExpertExecutiveRequested);
+    on<MyPostUpdateHotEventRequested>(_onUpdateHotEventRequested);
     // -------------------------------------------------- UPDATE EVENT HANDLER
 
     // DELETE EVENT HANDLER ---------------------------------------------------
@@ -81,28 +97,25 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
     on<MyPostDeleteJobApplicantRequested>(_onDeleteJobApplicantRequested);
     on<MyPostDeleteTrainingCenterRequested>(_onDeleteTrainingCenterRequested);
     on<MyPostDeleteExpertExecutiveRequested>(_onDeleteExpertExecutiveRequested);
+    on<MyPostDeleteHotEventRequested>(_onDeleteHotEventRequested);
     // --------------------------------------------------- DELETE EVENT HANDLER
 
     // GET ALL EVENT HANDLER ---------------------------------------------------
     on<MyPostGetAllJobOffersRequested>(_onGetAllJobOffersRequested);
-    // --------------------------------------------------- GET ALL EVENT HANDLER
-
     on<MyPostGetAllJobApplicantsRequested>(_onGetAllJobApplicantsRequested);
-    // --------------------------------------------------- GET ALL EVENT HANDLER
-
     on<MyPostGetAllTrainingCentersRequested>(_onGetAllTrainingCentersRequested);
+    on<MyPostGetAllHotsRequested>(_onGetAllHotsRequested);
+    on<MyPostGetAllEventsRequested>(_onGetAllEventsRequested);
     // --------------------------------------------------- GET ALL EVENT HANDLER
 
     // LOAD MORE ITEM EVENT HANDLER --------------------------------------------
     on<MyPostLoadMoreJobOffersRequested>(_onLoadMoreJobOffersRequested);
-    // -------------------------------------------- LOAD MORE ITEM EVENT HANDLER
-
     on<MyPostLoadMoreJobApplicantsRequested>(_onLoadMoreJobApplicantsRequested);
-    // -------------------------------------------- LOAD MORE ITEM EVENT HANDLER
-
     on<MyPostLoadMoreTrainingCentersRequested>(
       _onLoadMoreTrainingCentersRequested,
     );
+    on<MyPostLoadMoreHotsRequested>(_onLoadMoreHotsRequested);
+    on<MyPostLoadMoreEventsRequested>(_onLoadMoreEventsRequested);
     // -------------------------------------------- LOAD MORE ITEM EVENT HANDLER
   }
 
@@ -111,6 +124,7 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
   final UpdateJobApplicantUseCase _updateJobApplicantUseCase;
   final UpdateTrainingCenterUseCase _updateTrainingCenterUseCase;
   final UpdateExpertExecutiveUseCase _updateExpertExecutiveUseCase;
+  final UpdateHotEventUseCase _updateHotEventUseCase;
   // ----------------------------------------------------------- UPDATE USECASE
 
   // DELETE USECASE -----------------------------------------------------------
@@ -118,17 +132,20 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
   final DeleteJobApplicantUseCase _deleteJobApplicantUseCase;
   final DeleteTrainingCenterUseCase _deleteTrainingCenterUseCase;
   final DeleteExpertExecutiveUseCase _deleteExpertExecutiveUseCase;
+  final DeleteHotEventUseCase _deleteHotEventUseCase;
   // ----------------------------------------------------------- DELETE USECASE
 
   // GET ALL USECASE -----------------------------------------------------------
   final GetAllJobOffersUseCase _getAllJobOffersUseCase;
   final GetAllJobApplicantsUseCase _getAllJobApplicantsUseCase;
   final GetAllTrainingCentersUseCase _getAllTrainingCentersUseCase;
+  final GetAllHotsUseCase _getAllHotsUseCase;
+  final GetAllEventsUseCase _getAllEventsUseCase;
   // ----------------------------------------------------------- GET ALL USECASE
 
   // PAGINATION STATE ----------------------------------------------------------
   static const int _pageSize = 15;
-  int _currentPage = 1;
+  int _currentJobPage = 1;
   List<JobOffer> _cachedJobOffers = [];
   bool _hasMore = true;
   bool _isLoadMoreInProgress = false;
@@ -144,6 +161,18 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
   List<TrainingCenter> _cachedTrainingCenters = [];
   bool _hasMoreTrainingCenters = true;
   bool _isLoadMoreTrainingCentersInProgress = false;
+  // ---------------------------------------------------------- PAGINATION STATE
+
+  int _currentHotsPage = 1;
+  List<HotEvent> _cachedHots = [];
+  bool _hasMoreHots = true;
+  bool _isLoadMoreHotsInProgress = false;
+  // ---------------------------------------------------------- PAGINATION STATE
+
+  int _currentEventsPage = 1;
+  List<HotEvent> _cachedEvents = [];
+  bool _hasMoreEvents = true;
+  bool _isLoadMoreEventsInProgress = false;
   // ---------------------------------------------------------- PAGINATION STATE
 
   // UPDATE EVENT HANDLER ---------------------------------------------------
@@ -203,6 +232,18 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
       (expertExecutive) => emit(
         MyPostUpdateExpertExecutiveSuccess(expertExecutive: expertExecutive),
       ),
+    );
+  }
+
+  Future<void> _onUpdateHotEventRequested(
+    MyPostUpdateHotEventRequested event,
+    Emitter<MyPostState> emit,
+  ) async {
+    emit(MyPostRequestInProgress());
+    final result = await _updateHotEventUseCase(event.updateHotEventParams);
+    result.fold(
+      (failure) => emit(MyPostRequestFailure(message: failure.message)),
+      (hotEvent) => emit(MyPostUpdateHotEventSuccess(hotEvent: hotEvent)),
     );
   }
 
@@ -280,6 +321,22 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
     );
   }
 
+  Future<void> _onDeleteHotEventRequested(
+    MyPostDeleteHotEventRequested event,
+    Emitter<MyPostState> emit,
+  ) async {
+    emit(MyPostRequestInProgress());
+    final result = await _deleteHotEventUseCase(event.deleteHotEventParams);
+    result.fold(
+      (failure) => emit(MyPostRequestFailure(message: failure.message)),
+      (_) => emit(
+        MyPostDeleteHotEventSuccess(
+          deletedHotEventId: event.deleteHotEventParams.id,
+        ),
+      ),
+    );
+  }
+
   // --------------------------------------------------- DELETE EVENT HANDLER
   //
   //
@@ -294,7 +351,7 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
     Emitter<MyPostState> emit,
   ) async {
     // Reset pagination for a fresh load
-    _currentPage = event.queryPageParams.page;
+    _currentJobPage = event.queryPageParams.page;
     _cachedJobOffers = [];
     _hasMore = true;
     _isLoadMoreInProgress = false;
@@ -342,9 +399,9 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
       ),
     );
 
-    _currentPage++;
+    _currentJobPage++;
     final result = await _getAllJobOffersUseCase(
-      QueryPageParams(page: _currentPage),
+      QueryPageParams(page: _currentJobPage),
     );
     result.fold(
       (failure) {
@@ -486,13 +543,140 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
         emit(MyPostRequestFailure(message: failure.message));
       },
       (trainingCenters) {
-        _cachedTrainingCenters = [..._cachedTrainingCenters, ...trainingCenters];
+        _cachedTrainingCenters = [
+          ..._cachedTrainingCenters,
+          ...trainingCenters,
+        ];
         _hasMoreTrainingCenters = trainingCenters.length >= _pageSize;
         _isLoadMoreTrainingCentersInProgress = false;
         emit(
           MyPostGetAllTrainingCentersSuccess(
             trainingCenters: _cachedTrainingCenters,
             hasMore: _hasMoreTrainingCenters,
+          ),
+        );
+      },
+    );
+  }
+
+  // --------------------------------------------------- GET ALL HOTS
+  Future<void> _onGetAllHotsRequested(
+    MyPostGetAllHotsRequested event,
+    Emitter<MyPostState> emit,
+  ) async {
+    _currentHotsPage = event.queryPageParams.page;
+    _cachedHots = [];
+    _hasMoreHots = true;
+    _isLoadMoreHotsInProgress = false;
+
+    emit(MyPostRequestInProgress());
+    final result = await _getAllHotsUseCase(event.queryPageParams);
+    result.fold(
+      (failure) => emit(MyPostRequestFailure(message: failure.message)),
+      (hots) {
+        _cachedHots = hots;
+        _hasMoreHots = hots.length >= _pageSize;
+        emit(MyPostGetAllHotsSuccess(hots: _cachedHots, hasMore: _hasMoreHots));
+      },
+    );
+  }
+
+  Future<void> _onLoadMoreHotsRequested(
+    MyPostLoadMoreHotsRequested event,
+    Emitter<MyPostState> emit,
+  ) async {
+    if (!_hasMoreHots || _isLoadMoreHotsInProgress) {
+      return;
+    }
+
+    _isLoadMoreHotsInProgress = true;
+    emit(
+      MyPostGetAllHotsSuccess(
+        hots: _cachedHots,
+        hasMore: _hasMoreHots,
+        isLoadMore: true,
+      ),
+    );
+
+    _currentHotsPage++;
+    final result = await _getAllHotsUseCase(
+      QueryPageParams(page: _currentHotsPage),
+    );
+    result.fold(
+      (failure) {
+        _isLoadMoreHotsInProgress = false;
+        emit(MyPostRequestFailure(message: failure.message));
+      },
+      (hots) {
+        _cachedHots = [..._cachedHots, ...hots];
+        _hasMoreHots = hots.length >= _pageSize;
+        _isLoadMoreHotsInProgress = false;
+        emit(MyPostGetAllHotsSuccess(hots: _cachedHots, hasMore: _hasMoreHots));
+      },
+    );
+  }
+
+  // --------------------------------------------------- GET ALL EVENTS
+  Future<void> _onGetAllEventsRequested(
+    MyPostGetAllEventsRequested event,
+    Emitter<MyPostState> emit,
+  ) async {
+    _currentEventsPage = event.queryPageParams.page;
+    _cachedEvents = [];
+    _hasMoreEvents = true;
+    _isLoadMoreEventsInProgress = false;
+
+    emit(MyPostRequestInProgress());
+    final result = await _getAllEventsUseCase(event.queryPageParams);
+    result.fold(
+      (failure) => emit(MyPostRequestFailure(message: failure.message)),
+      (events) {
+        _cachedEvents = events;
+        _hasMoreEvents = events.length >= _pageSize;
+        emit(
+          MyPostGetAllEventsSuccess(
+            events: _cachedEvents,
+            hasMore: _hasMoreEvents,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _onLoadMoreEventsRequested(
+    MyPostLoadMoreEventsRequested event,
+    Emitter<MyPostState> emit,
+  ) async {
+    if (!_hasMoreEvents || _isLoadMoreEventsInProgress) {
+      return;
+    }
+
+    _isLoadMoreEventsInProgress = true;
+    emit(
+      MyPostGetAllEventsSuccess(
+        events: _cachedEvents,
+        hasMore: _hasMoreEvents,
+        isLoadMore: true,
+      ),
+    );
+
+    _currentEventsPage++;
+    final result = await _getAllEventsUseCase(
+      QueryPageParams(page: _currentEventsPage),
+    );
+    result.fold(
+      (failure) {
+        _isLoadMoreEventsInProgress = false;
+        emit(MyPostRequestFailure(message: failure.message));
+      },
+      (events) {
+        _cachedEvents = [..._cachedEvents, ...events];
+        _hasMoreEvents = events.length >= _pageSize;
+        _isLoadMoreEventsInProgress = false;
+        emit(
+          MyPostGetAllEventsSuccess(
+            events: _cachedEvents,
+            hasMore: _hasMoreEvents,
           ),
         );
       },

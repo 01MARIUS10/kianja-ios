@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:kianja/core/services/service_helper.dart';
+import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/features/jobs/data/models/input/hot_event/hot_event_input_model.dart';
 import 'package:kianja/features/jobs/data/models/output/expert/expert_executive_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_applicant/job_applicant_model.dart';
@@ -178,6 +179,36 @@ class MyPostRemoteDataImpl implements MyPostRemoteData {
               trainingCenter as Map<String, dynamic>,
             ),
           )
+          .toList();
+    });
+  }
+
+  @override
+  Future<List<HotEventModel>> getAllHots({required int page}) {
+    AppDebug.showPrint('Page Hot : $page');
+    return requestHandler(() async {
+      final response = await dio.get('/api/mesAnnonces/hots?page=$page');
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      final Map<String, dynamic> content = result['Contenu'];
+      final Map<String, dynamic> hots = content['hots'];
+      final List<dynamic> hotList = hots['data'];
+      return hotList
+          .map((hot) => HotEventModel.fromJson(hot as Map<String, dynamic>))
+          .toList();
+    });
+  }
+
+  @override
+  Future<List<HotEventModel>> getAllEvents({required int page}) {
+    AppDebug.showPrint('Page Event : $page');
+    return requestHandler(() async {
+      final response = await dio.get('/api/mesAnnonces/events?page=$page');
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      final Map<String, dynamic> content = result['Contenu'];
+      final Map<String, dynamic> events = content['events'];
+      final List<dynamic> eventList = events['data'];
+      return eventList
+          .map((event) => HotEventModel.fromJson(event as Map<String, dynamic>))
           .toList();
     });
   }

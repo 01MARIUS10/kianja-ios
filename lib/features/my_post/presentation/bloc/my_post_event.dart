@@ -46,6 +46,14 @@ class MyPostUpdateExpertExecutiveRequested extends MyPostEvent {
   List<Object> get props => [updateExpertExecutiveParams];
 }
 
+class MyPostUpdateHotEventRequested extends MyPostEvent {
+  const MyPostUpdateHotEventRequested({required this.updateHotEventParams});
+  final UpdateHotEventParams updateHotEventParams;
+
+  @override
+  List<Object> get props => [updateHotEventParams];
+}
+
 // ----------------------------------------------------------- UPDATE EVENT
 //
 //
@@ -92,6 +100,14 @@ class MyPostDeleteExpertExecutiveRequested extends MyPostEvent {
   List<Object> get props => [deleteExpertExecutiveParams];
 }
 
+class MyPostDeleteHotEventRequested extends MyPostEvent {
+  const MyPostDeleteHotEventRequested({required this.deleteHotEventParams});
+  final DeleteHotEventParams deleteHotEventParams;
+
+  @override
+  List<Object> get props => [deleteHotEventParams];
+}
+
 // ----------------------------------------------------------- DELETE EVENT
 
 // GET ALL EVENT -----------------------------------------------------------
@@ -118,13 +134,28 @@ class MyPostGetAllTrainingCentersRequested extends MyPostEvent {
   @override
   List<Object> get props => [queryPageParams];
 }
+
+class MyPostGetAllHotsRequested extends MyPostEvent {
+  const MyPostGetAllHotsRequested({required this.queryPageParams});
+  final QueryPageParams queryPageParams;
+
+  @override
+  List<Object> get props => [queryPageParams];
+}
+
+class MyPostGetAllEventsRequested extends MyPostEvent {
+  const MyPostGetAllEventsRequested({required this.queryPageParams});
+  final QueryPageParams queryPageParams;
+
+  @override
+  List<Object> get props => [queryPageParams];
+}
 // ----------------------------------------------------------- GET ALL EVENT
 
 // LOAD MORE ITEM EVENT ----------------------------------------------------
 class MyPostLoadMoreJobOffersRequested extends MyPostEvent {
   const MyPostLoadMoreJobOffersRequested();
 }
-// ---------------------------------------------------- LOAD MORE ITEM EVENT
 
 class MyPostLoadMoreJobApplicantsRequested extends MyPostEvent {
   const MyPostLoadMoreJobApplicantsRequested();
@@ -133,3 +164,13 @@ class MyPostLoadMoreJobApplicantsRequested extends MyPostEvent {
 class MyPostLoadMoreTrainingCentersRequested extends MyPostEvent {
   const MyPostLoadMoreTrainingCentersRequested();
 }
+
+class MyPostLoadMoreHotsRequested extends MyPostEvent {
+  const MyPostLoadMoreHotsRequested();
+}
+
+class MyPostLoadMoreEventsRequested extends MyPostEvent {
+  const MyPostLoadMoreEventsRequested();
+}
+
+// ---------------------------------------------------- LOAD MORE ITEM EVENT

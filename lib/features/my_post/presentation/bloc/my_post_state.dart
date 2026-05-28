@@ -62,6 +62,14 @@ class MyPostUpdateExpertExecutiveSuccess extends MyPostState {
   @override
   List<Object> get props => [expertExecutive];
 }
+
+class MyPostUpdateHotEventSuccess extends MyPostState {
+  const MyPostUpdateHotEventSuccess({required this.hotEvent});
+  final HotEvent hotEvent;
+
+  @override
+  List<Object> get props => [hotEvent];
+}
 // ----------------------------------------------------------------- UPDATE
 
 // DELETE -----------------------------------------------------------------
@@ -92,6 +100,14 @@ class MyPostDeleteTrainingCenterSuccess extends MyPostState {
 }
 
 class MyPostDeleteExpertExecutiveSuccess extends MyPostState {}
+
+class MyPostDeleteHotEventSuccess extends MyPostState {
+  const MyPostDeleteHotEventSuccess({required this.deletedHotEventId});
+  final int deletedHotEventId;
+
+  @override
+  List<Object> get props => [deletedHotEventId];
+}
 // ----------------------------------------------------------------- DELETE
 
 // GET ALL ----------------------------------------------------------------
@@ -138,6 +154,36 @@ class MyPostGetAllTrainingCentersSuccess extends MyPostState {
 
   @override
   List<Object> get props => [trainingCenters, hasMore, isLoadMore];
+}
+
+class MyPostGetAllHotsSuccess extends MyPostState {
+  const MyPostGetAllHotsSuccess({
+    required this.hots,
+    required this.hasMore,
+    this.isLoadMore = false,
+  });
+
+  final List<HotEvent> hots;
+  final bool hasMore;
+  final bool isLoadMore;
+
+  @override
+  List<Object> get props => [hots, hasMore, isLoadMore];
+}
+
+class MyPostGetAllEventsSuccess extends MyPostState {
+  const MyPostGetAllEventsSuccess({
+    required this.events,
+    required this.hasMore,
+    this.isLoadMore = false,
+  });
+
+  final List<HotEvent> events;
+  final bool hasMore;
+  final bool isLoadMore;
+
+  @override
+  List<Object> get props => [events, hasMore, isLoadMore];
 }
 // ---------------------------------------------------------------- GET ALL
 

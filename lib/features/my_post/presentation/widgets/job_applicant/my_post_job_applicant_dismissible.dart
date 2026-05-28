@@ -3,7 +3,7 @@ import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
 import 'package:kianja/features/my_post/presentation/widgets/my_post_action_confirmation_dialog.dart';
-import 'package:kianja/features/my_post/presentation/widgets/my_post_job_applicant_item_list.dart';
+import 'package:kianja/features/my_post/presentation/widgets/job_applicant/my_post_job_applicant_item_list.dart';
 
 class MyPostJobApplicantDismissible extends StatelessWidget {
   const MyPostJobApplicantDismissible({

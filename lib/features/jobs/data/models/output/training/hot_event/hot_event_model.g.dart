@@ -15,6 +15,9 @@ _HotEventModel _$HotEventModelFromJson(Map<String, dynamic> json) =>
       endDate: json['end_date'] as String? ?? '',
       type: json['type'] as String? ?? '',
       imageUrl: json['image'] as String? ?? '',
+      image: json['imageObjet'] == null
+          ? null
+          : JobImageModel.fromJson(json['imageObjet'] as Map<String, dynamic>),
       center: TrainingCenterModel.fromJson(
         json['training_center'] as Map<String, dynamic>,
       ),
@@ -29,5 +32,6 @@ Map<String, dynamic> _$HotEventModelToJson(_HotEventModel instance) =>
       'end_date': instance.endDate,
       'type': instance.type,
       'image': instance.imageUrl,
+      'imageObjet': instance.image,
       'training_center': instance.center,
     };
