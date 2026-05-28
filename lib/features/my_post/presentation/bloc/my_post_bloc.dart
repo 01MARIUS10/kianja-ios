@@ -222,7 +222,11 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
     final result = await _deleteJobOfferUseCase(event.deleteJobOfferParams);
     result.fold(
       (failure) => emit(MyPostRequestFailure(message: failure.message)),
-      (_) => emit(MyPostDeleteJobOfferSuccess()),
+      (_) => emit(
+        MyPostDeleteJobOfferSuccess(
+          deletedJobOfferId: event.deleteJobOfferParams.id,
+        ),
+      ),
     );
   }
 
@@ -236,7 +240,11 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
     );
     result.fold(
       (failure) => emit(MyPostRequestFailure(message: failure.message)),
-      (_) => emit(MyPostDeleteJobApplicantSuccess()),
+      (_) => emit(
+        MyPostDeleteJobApplicantSuccess(
+          deletedJobApplicantId: event.deleteJobApplicantParams.id,
+        ),
+      ),
     );
   }
 
@@ -250,7 +258,11 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
     );
     result.fold(
       (failure) => emit(MyPostRequestFailure(message: failure.message)),
-      (_) => emit(MyPostDeleteTrainingCenterSuccess()),
+      (_) => emit(
+        MyPostDeleteTrainingCenterSuccess(
+          deletedTrainingCenterId: event.deleteTrainingCenterParams.id,
+        ),
+      ),
     );
   }
 

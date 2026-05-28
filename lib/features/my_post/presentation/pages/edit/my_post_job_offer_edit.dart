@@ -216,7 +216,7 @@ class _MyPostJobOfferEditScreenState extends State<MyPostJobOfferEditScreen> {
                   context,
                   'Job offer updated successfully',
                 );
-                context.pop(true);
+                context.pop(state.jobOffer);
               } else if (state is MyPostRequestFailure) {
                 if (state.message.contains('Unprocessable entity')) {
                   AppMessenger.showWarning(

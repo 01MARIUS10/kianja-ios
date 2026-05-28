@@ -198,7 +198,7 @@ class _MyPostJobApplicantEditScreenState
                   context,
                   'Job applicant updated successfully',
                 );
-                context.pop(true);
+                context.pop(state.jobApplicant);
               } else if (state is MyPostRequestFailure) {
                 if (state.message.contains('Unprocessable entity')) {
                   AppMessenger.showWarning(context, state.message);

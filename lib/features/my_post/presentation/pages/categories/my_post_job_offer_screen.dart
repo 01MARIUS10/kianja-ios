@@ -70,18 +70,19 @@ class _MyPostJobOfferScreenState extends State<MyPostJobOfferScreen>
   }
 
   Future<void> _onEdit(JobOffer jobOffer) async {
-    final updated = await context.pushNamed<bool>(
+    final updatedJobOffer = await context.pushNamed<JobOffer>(
       Routes.myPostJobOfferEdit.name,
       pathParameters: {'id': jobOffer.id.toString()},
       extra: jobOffer,
     );
-    if (updated == true && mounted) {
-      BlocProvider.of<MyPostBloc>(context).add(
-        const MyPostGetAllJobOffersRequested(
-          queryPageParams: QueryPageParams(page: 1),
-        ),
-      );
-    }
+    if (updatedJobOffer == null || !mounted) return;
+
+    setState(() {
+      final index = _jobOffers.indexWhere((e) => e.id == updatedJobOffer.id);
+      if (index != -1) {
+        _jobOffers[index] = updatedJobOffer;
+      }
+    });
   }
 
   void _onDelete(JobOffer jobOffer) {
@@ -131,11 +132,10 @@ class _MyPostJobOfferScreenState extends State<MyPostJobOfferScreen>
             _refreshCompleter = null;
           }
         } else if (state is MyPostDeleteJobOfferSuccess) {
-          BlocProvider.of<MyPostBloc>(context).add(
-            const MyPostGetAllJobOffersRequested(
-              queryPageParams: QueryPageParams(page: 1),
-            ),
-          );
+          setState(() {
+            _jobOffers.removeWhere((e) => e.id == state.deletedJobOfferId);
+            _processingJobOfferId = null;
+          });
         } else if (state is MyPostRequestFailure) {
           if (!_hasLoadedOnce) {
             setState(() {

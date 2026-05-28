@@ -85,18 +85,20 @@ class _MyPostTrainingCenterScreenState extends State<MyPostTrainingCenterScreen>
   }
 
   Future<void> _onEdit(TrainingCenter trainingCenter) async {
-    final updated = await context.pushNamed<bool>(
+    final updatedTrainingCenter = await context.pushNamed<TrainingCenter>(
       Routes.myPostTrainingCenterEdit.name,
       pathParameters: {'id': trainingCenter.id.toString()},
       extra: trainingCenter,
     );
-    if (updated == true && mounted) {
-      BlocProvider.of<MyPostBloc>(context).add(
-        const MyPostGetAllTrainingCentersRequested(
-          queryPageParams: QueryPageParams(page: 1),
-        ),
-      );
-    }
+    if (updatedTrainingCenter == null || !mounted) return;
+
+    setState(() {
+      final index =
+          _trainingCenters.indexWhere((e) => e.id == updatedTrainingCenter.id);
+      if (index != -1) {
+        _trainingCenters[index] = updatedTrainingCenter;
+      }
+    });
   }
 
   void _onDelete(TrainingCenter trainingCenter) {
@@ -148,11 +150,12 @@ class _MyPostTrainingCenterScreenState extends State<MyPostTrainingCenterScreen>
             _refreshCompleter = null;
           }
         } else if (state is MyPostDeleteTrainingCenterSuccess) {
-          BlocProvider.of<MyPostBloc>(context).add(
-            const MyPostGetAllTrainingCentersRequested(
-              queryPageParams: QueryPageParams(page: 1),
-            ),
-          );
+          setState(() {
+            _trainingCenters.removeWhere(
+              (e) => e.id == state.deletedTrainingCenterId,
+            );
+            _processingTrainingCenterId = null;
+          });
         } else if (state is MyPostRequestFailure) {
           if (!_hasLoadedOnce) {
             setState(() {

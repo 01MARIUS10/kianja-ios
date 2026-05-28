@@ -84,18 +84,20 @@ class _MyPostJobApplicantScreenState extends State<MyPostJobApplicantScreen>
   }
 
   Future<void> _onEdit(JobApplicant jobApplicant) async {
-    final updated = await context.pushNamed<bool>(
+    final updatedJobApplicant = await context.pushNamed<JobApplicant>(
       Routes.myPostJobApplicantEdit.name,
       pathParameters: {'id': jobApplicant.id.toString()},
       extra: jobApplicant,
     );
-    if (updated == true && mounted) {
-      BlocProvider.of<MyPostBloc>(context).add(
-        const MyPostGetAllJobApplicantsRequested(
-          queryPageParams: QueryPageParams(page: 1),
-        ),
-      );
-    }
+    if (updatedJobApplicant == null || !mounted) return;
+
+    setState(() {
+      final index =
+          _jobApplicants.indexWhere((e) => e.id == updatedJobApplicant.id);
+      if (index != -1) {
+        _jobApplicants[index] = updatedJobApplicant;
+      }
+    });
   }
 
   void _onDelete(JobApplicant jobApplicant) {
@@ -145,11 +147,12 @@ class _MyPostJobApplicantScreenState extends State<MyPostJobApplicantScreen>
             _refreshCompleter = null;
           }
         } else if (state is MyPostDeleteJobApplicantSuccess) {
-          BlocProvider.of<MyPostBloc>(context).add(
-            const MyPostGetAllJobApplicantsRequested(
-              queryPageParams: QueryPageParams(page: 1),
-            ),
-          );
+          setState(() {
+            _jobApplicants.removeWhere(
+              (e) => e.id == state.deletedJobApplicantId,
+            );
+            _processingJobApplicantId = null;
+          });
         } else if (state is MyPostRequestFailure) {
           if (!_hasLoadedOnce) {
             setState(() {

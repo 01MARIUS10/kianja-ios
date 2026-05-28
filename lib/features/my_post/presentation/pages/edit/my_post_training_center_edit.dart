@@ -246,7 +246,7 @@ class _MyPostTrainingCenterEditScreenState
                   context,
                   'Training center updated successfully',
                 );
-                context.pop(true);
+                context.pop(state.trainingCenter);
               } else if (state is MyPostRequestFailure) {
                 AppMessenger.showError(context, state.message);
               }

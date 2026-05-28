@@ -65,11 +65,31 @@ class MyPostUpdateExpertExecutiveSuccess extends MyPostState {
 // ----------------------------------------------------------------- UPDATE
 
 // DELETE -----------------------------------------------------------------
-class MyPostDeleteJobOfferSuccess extends MyPostState {}
+class MyPostDeleteJobOfferSuccess extends MyPostState {
+  const MyPostDeleteJobOfferSuccess({required this.deletedJobOfferId});
+  final int deletedJobOfferId;
 
-class MyPostDeleteJobApplicantSuccess extends MyPostState {}
+  @override
+  List<Object> get props => [deletedJobOfferId];
+}
 
-class MyPostDeleteTrainingCenterSuccess extends MyPostState {}
+class MyPostDeleteJobApplicantSuccess extends MyPostState {
+  const MyPostDeleteJobApplicantSuccess({required this.deletedJobApplicantId});
+  final int deletedJobApplicantId;
+
+  @override
+  List<Object> get props => [deletedJobApplicantId];
+}
+
+class MyPostDeleteTrainingCenterSuccess extends MyPostState {
+  const MyPostDeleteTrainingCenterSuccess({
+    required this.deletedTrainingCenterId,
+  });
+  final int deletedTrainingCenterId;
+
+  @override
+  List<Object> get props => [deletedTrainingCenterId];
+}
 
 class MyPostDeleteExpertExecutiveSuccess extends MyPostState {}
 // ----------------------------------------------------------------- DELETE
