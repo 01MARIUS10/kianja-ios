@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 
 class MultiPhotoUploadWidget extends StatefulWidget {
   const MultiPhotoUploadWidget({
@@ -77,7 +78,7 @@ class _MultiPhotoUploadWidgetState extends State<MultiPhotoUploadWidget> {
         ),
         const SizedBox(height: Constants.spacingMedium),
         Text(
-          "Vous pouvez télécharger jusqu'à ${widget.maxPhotos} photos.",
+          context.appLoc.upload_5_photos,
           style: theme.textTheme.bodyMedium?.copyWith(
             color: isDark ? Colors.white70 : Colors.black87,
           ),
@@ -165,7 +166,7 @@ class _MultiPhotoUploadWidgetState extends State<MultiPhotoUploadWidget> {
         borderRadius: BorderRadius.circular(4),
       ),
       child: Text(
-        'Default',
+        context.appLoc.default_value,
         style: theme.textTheme.labelSmall?.copyWith(
           color: Colors.white,
           fontWeight: FontWeight.w500,

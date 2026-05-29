@@ -23,6 +23,10 @@ class AccountCguRequested extends AccountEvent {
   const AccountCguRequested();
 }
 
+class AccountKaraRequested extends AccountEvent {
+  const AccountKaraRequested();
+}
+
 class AccountUpdateUserInfoRequested extends AccountEvent {
   const AccountUpdateUserInfoRequested({required this.updateUserInfoParams});
   final UpdateUserInfoParams updateUserInfoParams;

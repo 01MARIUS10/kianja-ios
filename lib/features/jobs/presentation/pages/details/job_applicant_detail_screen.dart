@@ -11,6 +11,7 @@ import 'package:kianja/core/shared/widgets/loading/shimmer_job_detail_indicator.
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/routing/routes.dart';
 
@@ -35,7 +36,7 @@ class JobApplicantDetailScreen extends StatelessWidget {
           GetIt.instance<JobsBloc>()
             ..add(JobsGetJobApplicantDetailRequested(id: id)),
       child: BaseScreen(
-        appBar: const TitleHeader(title: 'Job applicant detail'),
+        appBar: TitleHeader(title: context.appLoc.job_applicant_detail),
         child: BlocBuilder<JobsBloc, JobsState>(
           builder: (context, state) {
             if (state is JobsGetJobApplicantDetailSuccess) {
@@ -63,7 +64,7 @@ class JobApplicantDetailScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: Constants.spacingSmall),
                           Text(
-                            'Posted  •  ${AppFunction.dateTimeCounter(jobApplicant.createdAt, context)}',
+                            '${context.appLoc.posted}  •  ${AppFunction.dateTimeCounter(jobApplicant.createdAt, context)}',
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: textSecondary,
                             ),
@@ -90,7 +91,7 @@ class JobApplicantDetailScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Description',
+                            context.appLoc.description,
                             style: theme.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -128,7 +129,7 @@ class JobApplicantDetailScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Resume',
+                                  context.appLoc.resume,
                                   style: theme.textTheme.titleSmall?.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -182,7 +183,7 @@ class JobApplicantDetailScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Job features',
+                            context.appLoc.job_features_preference,
                             style: theme.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -190,19 +191,19 @@ class JobApplicantDetailScreen extends StatelessWidget {
                           const SizedBox(height: Constants.spacingMedium),
                           _buildFeatureRow(
                             context,
-                            label: 'Category',
+                            label: context.appLoc.category,
                             value: jobApplicant.category?.name ?? '',
                           ),
                           const SizedBox(height: Constants.spacingSmall),
                           _buildFeatureRow(
                             context,
-                            label: 'Location',
+                            label: context.appLoc.location,
                             value: jobApplicant.location.name,
                           ),
                           const SizedBox(height: Constants.spacingSmall),
                           _buildFeatureRow(
                             context,
-                            label: 'Gender',
+                            label: context.appLoc.gender,
                             value: jobApplicant.gender?.name ?? '',
                           ),
                         ],
@@ -227,7 +228,7 @@ class JobApplicantDetailScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'About the applicant',
+                            context.appLoc.about_applicant,
                             style: theme.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -272,7 +273,7 @@ class JobApplicantDetailScreen extends StatelessWidget {
                                 width: Constants.spacingExtraSmall,
                               ),
                               Text(
-                                'Verified phone number',
+                                context.appLoc.verified_phone_number,
                                 style: theme.textTheme.bodySmall,
                               ),
                             ],
@@ -284,7 +285,7 @@ class JobApplicantDetailScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: Constants.spacingSmall),
                           Text(
-                            'Member since ${AppFunction.getDate(jobApplicant.user.createdAt)}',
+                            '${context.appLoc.member_since} ${AppFunction.getDate(jobApplicant.user.createdAt)}',
                             style: theme.textTheme.bodySmall,
                           ),
                           const SizedBox(height: Constants.spacingLarge),

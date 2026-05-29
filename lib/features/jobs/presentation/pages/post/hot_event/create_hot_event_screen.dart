@@ -115,6 +115,7 @@ class _CreateHotEventScreenState extends State<CreateHotEventScreen> {
                     'trainingCenterId': widget.trainingCenterId.toString(),
                     'id': state.hotEvent.id.toString(),
                   },
+                  extra: {'type': state.hotEvent.type},
                 );
               } else if (state is JobsRequestFailure) {
                 AppMessenger.showError(context, state.message);

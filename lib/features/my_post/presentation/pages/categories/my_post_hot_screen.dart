@@ -79,6 +79,7 @@ class _MyPostHotScreenState extends State<MyPostHotScreen>
     context.pushNamed(
       Routes.trainingCenterHotEventDetail.name,
       pathParameters: {'id': hot.id.toString()},
+      extra: {'category': hot.type.toUpperCase(), 'query': '/hots'},
     );
   }
 

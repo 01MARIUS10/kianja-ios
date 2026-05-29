@@ -291,8 +291,12 @@ abstract class AppRouter {
                                   path: Routes.createHotEventSuccessful.path,
                                   builder: (context, state) {
                                     final params = state.pathParameters;
+                                    final extra =
+                                        state.extra as Map<String, dynamic>? ??
+                                        {};
                                     return PostHotEventSuccessfulScreen(
                                       id: int.parse(params['id'] ?? '0'),
+                                      type: extra['type'] ?? '',
                                     );
                                   },
                                 ),

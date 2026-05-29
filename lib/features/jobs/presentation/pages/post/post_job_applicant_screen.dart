@@ -239,7 +239,7 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
 
                         // ── Category (single select) ─────────────────────
                         Text(
-                          'Category *',
+                          '${context.appLoc.category} *',
                           style: theme.textTheme.titleSmall!.copyWith(
                             fontWeight: FontWeight.bold,
                           ),

@@ -12,6 +12,7 @@ import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
@@ -238,9 +239,9 @@ class _MyPostJobOfferEditScreenState extends State<MyPostJobOfferEditScreen> {
                     jobsState is JobsInitial);
 
             if (isJobsLoading) {
-              return const BaseScreen(
-                appBar: TitleHeader(title: 'Edit job offer'),
-                child: ShimmerJobDetailIndicator(),
+              return BaseScreen(
+                appBar: TitleHeader(title: context.appLoc.edit_job_offer),
+                child: const ShimmerJobDetailIndicator(),
               );
             }
 
@@ -249,7 +250,7 @@ class _MyPostJobOfferEditScreenState extends State<MyPostJobOfferEditScreen> {
                 final isSaving = myPostState is MyPostRequestInProgress;
 
                 return BaseScreen(
-                  appBar: const TitleHeader(title: 'Edit job offer'),
+                  appBar: TitleHeader(title: context.appLoc.edit_job_offer),
                   child: GestureDetector(
                     onTap: () => FocusScope.of(context).unfocus(),
                     child: SingleChildScrollView(
@@ -260,16 +261,16 @@ class _MyPostJobOfferEditScreenState extends State<MyPostJobOfferEditScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const LabelField(label: 'Job title *'),
+                          LabelField(label: '${context.appLoc.job_title} *'),
                           const SizedBox(height: Constants.spacingSmall),
                           TextInputField(
                             controller: _titleController,
-                            hintText: 'Add job title',
+                            hintText: context.appLoc.add_job_title,
                             maxLines: 3,
                             maxLength: 130,
                           ),
                           const SizedBox(height: Constants.spacingMedium),
-                          const LabelField(label: 'Photo'),
+                          LabelField(label: context.appLoc.photo),
                           const SizedBox(height: Constants.spacingSmall),
                           SinglePhotoUploadWidget(
                             initialNetworkImageUrl: _initialImageUrl,
@@ -288,11 +289,11 @@ class _MyPostJobOfferEditScreenState extends State<MyPostJobOfferEditScreen> {
                             },
                           ),
                           const SizedBox(height: Constants.spacingMedium),
-                          const LabelField(label: 'Description *'),
+                          LabelField(label: '${context.appLoc.description} *'),
                           const SizedBox(height: Constants.spacingSmall),
                           TextInputField(
                             controller: _descriptionController,
-                            hintText: 'Add description',
+                            hintText: context.appLoc.add_description,
                             maxLines: 10,
                             keyboardType: TextInputType.multiline,
                           ),
@@ -300,13 +301,13 @@ class _MyPostJobOfferEditScreenState extends State<MyPostJobOfferEditScreen> {
                           Row(
                             children: [
                               Text(
-                                'Category * ',
+                                '${context.appLoc.categories} * ',
                                 style: theme.textTheme.titleSmall!.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
-                                '(3 max)',
+                                '(${context.appLoc.max_3})',
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: isDark
@@ -364,7 +365,7 @@ class _MyPostJobOfferEditScreenState extends State<MyPostJobOfferEditScreen> {
                               child: CircularProgressIndicator(),
                             ),
                           const SizedBox(height: Constants.spacingMedium),
-                          const LabelField(label: 'Location *'),
+                          LabelField(label: '${context.appLoc.location} *'),
                           const SizedBox(height: Constants.spacingSmall),
                           if (_jobFeatures != null)
                             Wrap(
@@ -405,7 +406,7 @@ class _MyPostJobOfferEditScreenState extends State<MyPostJobOfferEditScreen> {
                               }).toList(),
                             ),
                           const SizedBox(height: Constants.spacingMedium),
-                          const LabelField(label: 'Gender *'),
+                          LabelField(label: '${context.appLoc.gender} *'),
                           const SizedBox(height: Constants.spacingSmall),
                           if (_jobFeatures != null)
                             Wrap(
@@ -445,7 +446,7 @@ class _MyPostJobOfferEditScreenState extends State<MyPostJobOfferEditScreen> {
                               }).toList(),
                             ),
                           const SizedBox(height: Constants.spacingMedium),
-                          const LabelField(label: 'Actor *'),
+                          LabelField(label: '${context.appLoc.actor} *'),
                           const SizedBox(height: Constants.spacingSmall),
                           if (_jobFeatures != null)
                             Wrap(
@@ -488,14 +489,14 @@ class _MyPostJobOfferEditScreenState extends State<MyPostJobOfferEditScreen> {
                           const Divider(),
                           const SizedBox(height: Constants.spacingMedium),
                           Text(
-                            'Post features',
+                            context.appLoc.job_features,
                             style: theme.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           const SizedBox(height: Constants.spacingMedium),
                           Text(
-                            'Date limite de canditature *',
+                            '${context.appLoc.applicant_deadline} *',
                             style: theme.textTheme.bodyMedium,
                           ),
                           const SizedBox(height: Constants.spacingSmall),
@@ -516,7 +517,7 @@ class _MyPostJobOfferEditScreenState extends State<MyPostJobOfferEditScreen> {
                                       ),
                                     )
                                   : Text(
-                                      'SAVE',
+                                      context.appLoc.save.toUpperCase(),
                                       style: theme.textTheme.titleMedium
                                           ?.copyWith(
                                             fontWeight: FontWeight.bold,

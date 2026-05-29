@@ -14,6 +14,7 @@ import 'package:kianja/core/shared/widgets/loading/shimmer_job_detail_indicator.
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_detail_usecase.dart';
@@ -261,9 +262,9 @@ class _MyPostTrainingCenterEditScreenState
                     jobsState is JobsInitial);
 
             if (isJobsLoading) {
-              return const BaseScreen(
-                appBar: TitleHeader(title: 'Edit training center'),
-                child: ShimmerJobDetailIndicator(),
+              return BaseScreen(
+                appBar: TitleHeader(title: context.appLoc.edit_training_center),
+                child: const ShimmerJobDetailIndicator(),
               );
             }
 
@@ -273,7 +274,9 @@ class _MyPostTrainingCenterEditScreenState
                 final isBusy = isSaving || _isUploadingImages;
 
                 return BaseScreen(
-                  appBar: const TitleHeader(title: 'Edit training center'),
+                  appBar: TitleHeader(
+                    title: context.appLoc.edit_training_center,
+                  ),
                   child: GestureDetector(
                     onTap: () => FocusScope.of(context).unfocus(),
                     child: SingleChildScrollView(
@@ -284,18 +287,18 @@ class _MyPostTrainingCenterEditScreenState
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const LabelField(label: 'Center name *'),
+                          LabelField(label: '${context.appLoc.center_name} *'),
                           const SizedBox(height: Constants.spacingSmall),
                           TextInputField(
                             controller: _nameController,
-                            hintText: 'Add center name',
+                            hintText: context.appLoc.add_center_name,
                             maxLines: 3,
                             maxLength: 140,
                             onChanged: (_) => _checkFormReady(),
                           ),
                           const SizedBox(height: Constants.spacingMedium),
 
-                          const LabelField(label: 'Photos *'),
+                          LabelField(label: '${context.appLoc.photo} *'),
                           const SizedBox(height: Constants.spacingSmall),
                           if (_existingImageUrls.isNotEmpty) ...[
                             SingleChildScrollView(
@@ -383,18 +386,18 @@ class _MyPostTrainingCenterEditScreenState
                           ),
                           const SizedBox(height: Constants.spacingMedium),
 
-                          const LabelField(label: 'Description *'),
+                          LabelField(label: '${context.appLoc.description} *'),
                           const SizedBox(height: Constants.spacingSmall),
                           TextInputField(
                             controller: _descriptionController,
-                            hintText: 'Add description',
+                            hintText: context.appLoc.add_description,
                             maxLines: 8,
                             keyboardType: TextInputType.multiline,
                             onChanged: (_) => _checkFormReady(),
                           ),
                           const SizedBox(height: Constants.spacingMedium),
 
-                          const LabelField(label: 'Location *'),
+                          LabelField(label: '${context.appLoc.location} *'),
                           const SizedBox(height: Constants.spacingSmall),
                           if (_jobFeatures != null)
                             Wrap(
@@ -446,7 +449,7 @@ class _MyPostTrainingCenterEditScreenState
                             ),
                           const SizedBox(height: Constants.spacingMedium),
 
-                          const LabelField(label: 'Actor *'),
+                          LabelField(label: '${context.appLoc.actor} *'),
                           const SizedBox(height: Constants.spacingSmall),
                           if (_jobFeatures != null)
                             Wrap(
@@ -510,7 +513,7 @@ class _MyPostTrainingCenterEditScreenState
                                       ),
                                     )
                                   : Text(
-                                      'SAVE',
+                                      context.appLoc.save.toUpperCase(),
                                       style: theme.textTheme.titleMedium
                                           ?.copyWith(
                                             fontWeight: FontWeight.bold,

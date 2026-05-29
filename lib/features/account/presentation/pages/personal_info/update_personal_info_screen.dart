@@ -17,6 +17,7 @@ import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/account/domain/usecases/upate_user_info/update_user_info_params.dart';
 import 'package:kianja/features/account/presentation/bloc/account_bloc.dart';
 import 'package:kianja/features/account/presentation/widgets/camera_image_picker.dart';
@@ -110,7 +111,7 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
         builder: (context, state) {
           final user = state.user;
           return BaseScreen(
-            appBar: const TitleHeader(title: 'Edit profile'),
+            appBar: TitleHeader(title: context.appLoc.edit_profile),
             child: SingleChildScrollView(
               padding: const EdgeInsets.fromLTRB(
                 Constants.paddingMedium,
@@ -176,7 +177,7 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
                   const SizedBox(height: Constants.spacingLarge),
 
                   // ── FIRST NAME ─────────────────────────────────────
-                  const LabelField(label: 'FIRST NAME'),
+                  LabelField(label: 'FIRST NAME'),
                   const SizedBox(height: Constants.spacingSmall),
                   TextInputField(
                     controller: _firstNameController,
@@ -186,7 +187,7 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
                   const SizedBox(height: Constants.spacingMedium),
 
                   // ── LAST NAME ──────────────────────────────────────
-                  const LabelField(label: 'LAST NAME'),
+                  LabelField(label: 'LAST NAME'),
                   const SizedBox(height: Constants.spacingSmall),
                   TextInputField(
                     controller: _lastNameController,
@@ -196,7 +197,7 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
                   const SizedBox(height: Constants.spacingMedium),
 
                   // ── EMAIL ──────────────────────────────────────────
-                  const LabelField(label: 'EMAIL'),
+                  LabelField(label: 'EMAIL'),
                   const SizedBox(height: Constants.spacingSmall),
                   TextInputField(
                     controller: _emailController,
@@ -206,7 +207,7 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
                   const SizedBox(height: Constants.spacingMedium),
 
                   // ── PHONE ──────────────────────────────────────────
-                  const LabelField(label: 'PHONE'),
+                  LabelField(label: context.appLoc.phone),
                   const SizedBox(height: Constants.spacingSmall),
                   GestureDetector(
                     onTap: () {
@@ -261,7 +262,7 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
                                   ),
                                 )
                               : Text(
-                                  'SAVE',
+                                  context.appLoc.save,
                                   style: theme.textTheme.titleMedium?.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),

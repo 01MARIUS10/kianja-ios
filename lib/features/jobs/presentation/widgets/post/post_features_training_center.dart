@@ -158,7 +158,7 @@ class _PostFeaturesTrainingCenterState
         const SizedBox(height: 12),
         _buildFeatureRow(
           context,
-          label: 'Duration :',
+          label: '${context.appLoc.duration} :',
           children: _availableDurations.map((duration) {
             final isSelected = _selectedDuration?.id == duration.id;
             return InkWell(

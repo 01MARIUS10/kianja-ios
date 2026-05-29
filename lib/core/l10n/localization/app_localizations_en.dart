@@ -51,7 +51,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get post => 'Post';
 
   @override
-  String get my_post => 'My post';
+  String get my_post => 'My posts';
 
   @override
   String get account => 'Account';
@@ -512,4 +512,116 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get years => 'Years';
+
+  @override
+  String get update => 'Update';
+
+  @override
+  String get remove_photo => 'Remove photo';
+
+  @override
+  String get resume => 'Resume';
+
+  @override
+  String get duration => 'Duration';
+
+  @override
+  String get domain => 'Domain';
+
+  @override
+  String get category => 'Category';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get edit_question => 'Edit ?';
+
+  @override
+  String get remove => 'Remove';
+
+  @override
+  String get remove_question => 'Remove ?';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get view_pdf => 'View PDF';
+
+  @override
+  String get edit_offer => 'Edit offer';
+
+  @override
+  String get edit_job_offer => 'Edit job offer';
+
+  @override
+  String get edit_job_applicant => 'Edit job applicant';
+
+  @override
+  String get edit_training_center => 'Edit training center';
+
+  @override
+  String get edit_job_offer_question => 'Do you want to edit this job offer ?';
+
+  @override
+  String get edit_job_applicant_question =>
+      'Do you want to edit this job applicant ?';
+
+  @override
+  String get edit_training_center_qestion =>
+      'Do you want to edit this training center ?';
+
+  @override
+  String get edit_offer_qestion => 'Do you want to edit this offer ?';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get service_unavailable => 'Service unavailable';
+
+  @override
+  String get not_found => 'Not found';
+
+  @override
+  String get page_failed_load => 'Page failed to load';
+
+  @override
+  String get please_check_connection_before_trying =>
+      'Please check your connection before trying again';
+
+  @override
+  String get agree_with => 'I agree with';
+
+  @override
+  String get max_3 => '3 max';
+
+  @override
+  String get max_5 => '5 max';
+
+  @override
+  String get email => 'E-mail';
+
+  @override
+  String get remove_job_offer_question =>
+      'Do you want to remove this job offer ?';
+
+  @override
+  String get remove_job_applicant_question =>
+      'Do you want to remove this job applicant ?';
+
+  @override
+  String get remove_training_center_question =>
+      'Do you want to remove this training ?';
+
+  @override
+  String get remove_offer_question => 'Do you want to remove this offer ?';
+
+  @override
+  String get remove_history_question => 'Do you want to remove this history ?';
+
+  @override
+  String get server_under_maintenance =>
+      'The server is under maintenance or encountered an error. Please try again later.';
 }

@@ -7,8 +7,13 @@ import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/routing/routes.dart';
 
 class PostHotEventSuccessfulScreen extends StatelessWidget {
-  const PostHotEventSuccessfulScreen({super.key, required this.id});
+  const PostHotEventSuccessfulScreen({
+    super.key,
+    required this.id,
+    required this.type,
+  });
   final int id;
+  final String type;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +48,10 @@ class PostHotEventSuccessfulScreen extends StatelessWidget {
                 context.pushReplacementNamed(
                   Routes.trainingCenterHotEventDetail.name,
                   pathParameters: {'id': id.toString()},
+                  extra: {
+                    'category': type.toUpperCase(),
+                    'query': type == 'hot' ? '/hots' : '/events',
+                  },
                 );
               },
               child: Text(

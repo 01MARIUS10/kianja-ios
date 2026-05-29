@@ -11,6 +11,7 @@ import 'package:kianja/core/shared/widgets/loading/shimmer_job_detail_indicator.
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 
 class JobOfferDetailScreen extends StatelessWidget {
@@ -34,7 +35,7 @@ class JobOfferDetailScreen extends StatelessWidget {
           GetIt.instance<JobsBloc>()
             ..add(JobsGetJobOfferDetailRequested(id: id)),
       child: BaseScreen(
-        appBar: const TitleHeader(title: 'Job details'),
+        appBar: TitleHeader(title: context.appLoc.job_offer_detail),
         child: BlocBuilder<JobsBloc, JobsState>(
           builder: (context, state) {
             if (state is JobsGetJobOfferDetailSuccess) {
@@ -64,7 +65,7 @@ class JobOfferDetailScreen extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                'Limite date  ',
+                                '${context.appLoc.deadline}  ',
                                 style: theme.textTheme.bodySmall,
                               ),
                               const Icon(
@@ -85,7 +86,7 @@ class JobOfferDetailScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: Constants.spacingExtraSmall),
                           Text(
-                            'Posted  •  ${AppFunction.dateTimeCounter(jobOffer.createdAt, context)}',
+                            '${context.appLoc.posted}  •  ${AppFunction.dateTimeCounter(jobOffer.createdAt, context)}',
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: textSecondary,
                             ),
@@ -151,7 +152,7 @@ class JobOfferDetailScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Description',
+                            context.appLoc.description,
                             style: theme.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -185,7 +186,7 @@ class JobOfferDetailScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Job features',
+                            context.appLoc.job_features,
                             style: theme.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -193,7 +194,7 @@ class JobOfferDetailScreen extends StatelessWidget {
                           const SizedBox(height: Constants.spacingMedium),
                           _buildFeatureRow(
                             context,
-                            label: 'Category',
+                            label: context.appLoc.categories,
                             value: jobOffer.categories
                                 .map((category) => category.name)
                                 .join(', '),
@@ -201,13 +202,13 @@ class JobOfferDetailScreen extends StatelessWidget {
                           const SizedBox(height: Constants.spacingSmall),
                           _buildFeatureRow(
                             context,
-                            label: 'Location',
+                            label: context.appLoc.location,
                             value: jobOffer.location?.name ?? '',
                           ),
                           const SizedBox(height: Constants.spacingSmall),
                           _buildFeatureRow(
                             context,
-                            label: 'Gender',
+                            label: context.appLoc.gender,
                             value: jobOffer.gender?.name ?? '',
                           ),
                         ],
@@ -232,7 +233,7 @@ class JobOfferDetailScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Actor',
+                            context.appLoc.actor,
                             style: theme.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -264,7 +265,7 @@ class JobOfferDetailScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'About the client',
+                            context.appLoc.about_client,
                             style: theme.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -309,24 +310,24 @@ class JobOfferDetailScreen extends StatelessWidget {
                                 width: Constants.spacingExtraSmall,
                               ),
                               Text(
-                                'Verified phone number',
+                                context.appLoc.verified_phone_number,
                                 style: theme.textTheme.bodySmall,
                               ),
                             ],
                           ),
                           const SizedBox(height: Constants.spacingSmall),
-                          Text(
-                            '10 jobs posted',
-                            style: theme.textTheme.bodySmall,
-                          ),
-                          const SizedBox(height: Constants.spacingSmall),
+                          // Text(
+                          //   '10 jobs posted',
+                          //   style: theme.textTheme.bodySmall,
+                          // ),
+                          // const SizedBox(height: Constants.spacingSmall),
                           Text(
                             jobOffer.user.residence,
                             style: theme.textTheme.bodySmall,
                           ),
                           const SizedBox(height: Constants.spacingSmall),
                           Text(
-                            'Member since ${AppFunction.getDate(jobOffer.user.createdAt)}',
+                            '${context.appLoc.member_since} ${AppFunction.getDate(jobOffer.user.createdAt)}',
                             style: theme.textTheme.bodySmall,
                           ),
                           const SizedBox(height: Constants.spacingLarge),

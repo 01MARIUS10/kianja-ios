@@ -8,6 +8,7 @@ import 'package:kianja/features/account/domain/usecases/cgu_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/change_password/change_password_params.dart';
 import 'package:kianja/features/account/domain/usecases/change_password/change_password_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/get_all_kara_history_usecase.dart';
+import 'package:kianja/features/account/domain/usecases/get_kara_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/logout_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/upate_user_info/update_user_info_params.dart';
 import 'package:kianja/features/account/domain/usecases/upate_user_info/update_user_info_usecase.dart';
@@ -22,11 +23,13 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     required UpdateUserInfoUseCase updateUserInfoUseCase,
     required CguUsecase cguUseCase,
     required GetAllKaraHistoryUsecase getAllKaraHistoryUsecase,
+    required GetKaraUseCase getKaraUseCase,
   }) : _logoutUseCase = logoutUseCase,
        _changePasswordUseCase = changePasswordUseCase,
        _updateUserInfoUseCase = updateUserInfoUseCase,
        _cguUseCase = cguUseCase,
        _getAllKaraHistoryUsecase = getAllKaraHistoryUsecase,
+       _getKaraUseCase = getKaraUseCase,
        super(AccountInitial()) {
     on<AccountLogoutRequested>(_onLogoutRequested);
     on<AccountChangePasswordRequested>(_onChangePasswordRequested);
@@ -34,6 +37,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     on<AccountCguRequested>(_onCguRequested);
     on<AccountWalletHistoryRequested>(_onAccountWalletHistoryRequested);
     on<AccountWalletLoadMoreRequested>(_onAccountWalletLoadMoreRequested);
+    on<AccountKaraRequested>(_onAccountKaraRequested);
   }
 
   final LogoutUseCase _logoutUseCase;
@@ -41,13 +45,13 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   final UpdateUserInfoUseCase _updateUserInfoUseCase;
   final CguUsecase _cguUseCase;
   final GetAllKaraHistoryUsecase _getAllKaraHistoryUsecase;
+  final GetKaraUseCase _getKaraUseCase;
 
   static const int _pageSize = 15;
   int _currentPage = 1;
   bool _hasMore = true;
   bool _isLoadMoreInProgress = false;
-  List<KaraHistory> _allHistory = [];
-  List<KaraHistory> _visibleHistory = [];
+  List<KaraHistory> _cachedHistory = [];
 
   Future<void> _onAccountWalletHistoryRequested(
     AccountWalletHistoryRequested event,
@@ -56,20 +60,18 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     _currentPage = event.queryPageParams.page;
     _hasMore = true;
     _isLoadMoreInProgress = false;
-    _allHistory = [];
-    _visibleHistory = [];
+    _cachedHistory = [];
 
     emit(AccountRequestInProgress());
     final result = await _getAllKaraHistoryUsecase(event.queryPageParams);
     result.fold(
       (failure) => emit(AccountRequestFailure(message: failure.message)),
       (history) {
-        _allHistory = history;
-        _visibleHistory = _slice(page: _currentPage);
-        _hasMore = _visibleHistory.length < _allHistory.length;
+        _cachedHistory = history;
+        _hasMore = history.length >= _pageSize;
         emit(
           AccountWalletHistorySuccess(
-            history: _visibleHistory,
+            history: _cachedHistory,
             hasMore: _hasMore,
           ),
         );
@@ -82,34 +84,38 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     Emitter<AccountState> emit,
   ) async {
     if (!_hasMore || _isLoadMoreInProgress) return;
-    if (_allHistory.isEmpty) return;
 
     _isLoadMoreInProgress = true;
     emit(
       AccountWalletHistorySuccess(
-        history: _visibleHistory,
+        history: _cachedHistory,
         hasMore: _hasMore,
         isLoadMore: true,
       ),
     );
 
     _currentPage++;
-    final next = _slice(page: _currentPage);
-    _visibleHistory = [..._visibleHistory, ...next];
-    _hasMore = _visibleHistory.length < _allHistory.length;
-    _isLoadMoreInProgress = false;
-
-    emit(
-      AccountWalletHistorySuccess(history: _visibleHistory, hasMore: _hasMore),
+    final result = await _getAllKaraHistoryUsecase(
+      QueryPageParams(page: _currentPage),
     );
-  }
-
-  List<KaraHistory> _slice({required int page}) {
-    if (_allHistory.isEmpty) return [];
-    final start = (page - 1) * _pageSize;
-    if (start >= _allHistory.length) return [];
-    final end = (start + _pageSize).clamp(0, _allHistory.length);
-    return _allHistory.sublist(start, end);
+    result.fold(
+      (failure) {
+        _isLoadMoreInProgress = false;
+        _currentPage--;
+        emit(AccountRequestFailure(message: failure.message));
+      },
+      (history) {
+        _cachedHistory = [..._cachedHistory, ...history];
+        _hasMore = history.length >= _pageSize;
+        _isLoadMoreInProgress = false;
+        emit(
+          AccountWalletHistorySuccess(
+            history: _cachedHistory,
+            hasMore: _hasMore,
+          ),
+        );
+      },
+    );
   }
 
   Future<void> _onLogoutRequested(
@@ -161,6 +167,18 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     result.fold(
       (failure) => emit(AccountRequestFailure(message: failure.message)),
       (cgu) => emit(AccountCguSuccess(cgu: cgu)),
+    );
+  }
+
+  Future<void> _onAccountKaraRequested(
+    AccountKaraRequested event,
+    Emitter<AccountState> emit,
+  ) async {
+    emit(AccountKaraRequestInProgress());
+    final result = await _getKaraUseCase(NoParams());
+    result.fold(
+      (failure) => emit(AccountKaraFailure(message: failure.message)),
+      (kara) => emit(AccountKaraSuccess(kara: kara)),
     );
   }
 }

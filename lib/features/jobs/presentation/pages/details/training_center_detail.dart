@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/config/env_config.dart';
+import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
@@ -33,322 +34,331 @@ class TrainingCenterDetail extends StatelessWidget {
         ? AppColors.darkSurface
         : AppColors.lightSurface;
 
-    return BlocProvider(
-      create: (context) => GetIt.instance<JobsBloc>()
-        ..add(
-          GetTrainingCenterDetailRequested(
-            trainingCenterDetailParams: TrainingCenterDetailParams(id: id),
-          ),
-        ),
-      child: BaseScreen(
-        appBar: TitleHeader(title: context.appLoc.training_center_detail),
-        child: BlocBuilder<JobsBloc, JobsState>(
-          builder: (context, state) {
-            if (state is GetTrainingCenterDetailSuccess) {
-              final trainingCenter = state.trainingCenter;
-              return SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(
-                  vertical: Constants.paddingMedium,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Header Info
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Constants.paddingMedium,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            trainingCenter.name,
-                            style: theme.textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+    return BlocBuilder<AppBloc, AppState>(
+      builder: (context, appState) {
+        return BlocProvider(
+          create: (context) => GetIt.instance<JobsBloc>()
+            ..add(
+              GetTrainingCenterDetailRequested(
+                trainingCenterDetailParams: TrainingCenterDetailParams(id: id),
+              ),
+            ),
+          child: BaseScreen(
+            appBar: TitleHeader(title: context.appLoc.training_center_detail),
+            child: BlocBuilder<JobsBloc, JobsState>(
+              builder: (context, state) {
+                if (state is GetTrainingCenterDetailSuccess) {
+                  final trainingCenter = state.trainingCenter;
+                  return SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: Constants.paddingMedium,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Header Info
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: Constants.paddingMedium,
                           ),
-                          const SizedBox(height: Constants.spacingSmall),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${context.appLoc.posted}  •  ${AppFunction.dateTimeCounter(trainingCenter.createdAt, context)}',
-                                style: theme.textTheme.bodySmall?.copyWith(
-                                  color: textSecondary,
+                                trainingCenter.name,
+                                style: theme.textTheme.titleSmall?.copyWith(
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              InkWell(
-                                onTap: () {
-                                  context.pushNamed(
-                                    Routes.postHotEvent.name,
-                                    pathParameters: {
-                                      'trainingCenterId': trainingCenter.id
-                                          .toString(),
-                                    },
-                                  );
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.flash_on_outlined,
-                                      color: isDark
-                                          ? AppColors.darkPrimary
-                                          : AppColors.lightPrimary,
-                                      size: Constants.iconSizeExtraSmall,
+                              const SizedBox(height: Constants.spacingSmall),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '${context.appLoc.posted}  •  ${AppFunction.dateTimeCounter(trainingCenter.createdAt, context)}',
+                                    style: theme.textTheme.bodySmall?.copyWith(
+                                      color: textSecondary,
                                     ),
-                                    Text(
-                                      context.appLoc.make_an_offer,
-                                      style: theme.textTheme.bodySmall
-                                          ?.copyWith(
+                                  ),
+                                  if (appState.user.id ==
+                                      state.trainingCenter.user.id)
+                                    InkWell(
+                                      onTap: () {
+                                        context.pushNamed(
+                                          Routes.postHotEvent.name,
+                                          pathParameters: {
+                                            'trainingCenterId': trainingCenter
+                                                .id
+                                                .toString(),
+                                          },
+                                        );
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.flash_on_outlined,
                                             color: isDark
                                                 ? AppColors.darkPrimary
                                                 : AppColors.lightPrimary,
+                                            size: Constants.iconSizeExtraSmall,
                                           ),
+                                          Text(
+                                            context.appLoc.make_an_offer,
+                                            style: theme.textTheme.bodySmall
+                                                ?.copyWith(
+                                                  color: isDark
+                                                      ? AppColors.darkPrimary
+                                                      : AppColors.lightPrimary,
+                                                ),
+                                          ),
+                                          Icon(
+                                            Icons.flash_on_outlined,
+                                            color: isDark
+                                                ? AppColors.darkPrimary
+                                                : AppColors.lightPrimary,
+                                            size: Constants.iconSizeExtraSmall,
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    Icon(
-                                      Icons.flash_on_outlined,
-                                      color: isDark
-                                          ? AppColors.darkPrimary
-                                          : AppColors.lightPrimary,
-                                      size: Constants.iconSizeExtraSmall,
-                                    ),
-                                  ],
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: Constants.spacingMedium),
+                        Divider(
+                          color: borderColor,
+                          thickness: 1,
+                          height: 1,
+                          indent: Constants.paddingMedium,
+                          endIndent: Constants.paddingMedium,
+                        ),
+                        const SizedBox(height: Constants.spacingMedium),
+
+                        // Image
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: Constants.paddingMedium,
+                          ),
+                          child: PhotoHandler(
+                            trainingCenterId: trainingCenter.id,
+                            height: 300,
+                            width: double.infinity,
+                            imageUrls: trainingCenter.images
+                                .map(
+                                  (image) =>
+                                      '${EnvConfig.baseApiUrl}${image.url}',
+                                )
+                                .toList(),
+                          ),
+                          // child: ClipRRect(
+                          //   child: CachedNetworkImage(
+                          //     imageUrl:
+                          //         '${EnvConfig.baseApiUrl}${trainingCenter.imageUrl}',
+                          //     fit: BoxFit.cover,
+                          //     errorWidget: (context, url, error) {
+                          //       return Image.asset(
+                          //         Assets.hiring,
+                          //         fit: BoxFit.cover,
+                          //         errorBuilder: (context, url, error) => const Icon(
+                          //           Icons.image,
+                          //           size: 40,
+                          //           color: Colors.grey,
+                          //         ),
+                          //       );
+                          //     },
+                          //     progressIndicatorBuilder: (context, url, progress) {
+                          //       return const Center(
+                          //         child: CircularProgressIndicator(),
+                          //       );
+                          //     },
+                          //   ),
+                          // ),
+                        ),
+                        const SizedBox(height: Constants.spacingMedium),
+                        Divider(
+                          color: borderColor,
+                          thickness: 1,
+                          height: 1,
+                          indent: Constants.paddingMedium,
+                          endIndent: Constants.paddingMedium,
+                        ),
+                        const SizedBox(height: Constants.spacingMedium),
+
+                        // Description
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: Constants.paddingMedium,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                context.appLoc.description,
+                                style: theme.textTheme.titleSmall?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: Constants.spacingMedium),
+                              Text(
+                                trainingCenter.description,
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  height: 1.5,
                                 ),
                               ),
                             ],
                           ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: Constants.spacingMedium),
-                    Divider(
-                      color: borderColor,
-                      thickness: 1,
-                      height: 1,
-                      indent: Constants.paddingMedium,
-                      endIndent: Constants.paddingMedium,
-                    ),
-                    const SizedBox(height: Constants.spacingMedium),
+                        ),
+                        const SizedBox(height: Constants.spacingMedium),
 
-                    // Image
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Constants.paddingMedium,
-                      ),
-                      child: PhotoHandler(
-                        trainingCenterId: trainingCenter.id,
-                        height: 300,
-                        width: double.infinity,
-                        imageUrls: trainingCenter.images
-                            .map(
-                              (image) => '${EnvConfig.baseApiUrl}${image.url}',
-                            )
-                            .toList(),
-                      ),
-                      // child: ClipRRect(
-                      //   child: CachedNetworkImage(
-                      //     imageUrl:
-                      //         '${EnvConfig.baseApiUrl}${trainingCenter.imageUrl}',
-                      //     fit: BoxFit.cover,
-                      //     errorWidget: (context, url, error) {
-                      //       return Image.asset(
-                      //         Assets.hiring,
-                      //         fit: BoxFit.cover,
-                      //         errorBuilder: (context, url, error) => const Icon(
-                      //           Icons.image,
-                      //           size: 40,
-                      //           color: Colors.grey,
-                      //         ),
-                      //       );
-                      //     },
-                      //     progressIndicatorBuilder: (context, url, progress) {
-                      //       return const Center(
-                      //         child: CircularProgressIndicator(),
-                      //       );
-                      //     },
-                      //   ),
-                      // ),
-                    ),
-                    const SizedBox(height: Constants.spacingMedium),
-                    Divider(
-                      color: borderColor,
-                      thickness: 1,
-                      height: 1,
-                      indent: Constants.paddingMedium,
-                      endIndent: Constants.paddingMedium,
-                    ),
-                    const SizedBox(height: Constants.spacingMedium),
+                        Divider(
+                          color: borderColor,
+                          thickness: 1,
+                          height: 1,
+                          indent: Constants.paddingMedium,
+                          endIndent: Constants.paddingMedium,
+                        ),
+                        const SizedBox(height: Constants.spacingMedium),
 
-                    // Description
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Constants.paddingMedium,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            context.appLoc.description,
-                            style: theme.textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+                        // Job features
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: Constants.paddingMedium,
                           ),
-                          const SizedBox(height: Constants.spacingMedium),
-                          Text(
-                            trainingCenter.description,
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              height: 1.5,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: Constants.spacingMedium),
-
-                    Divider(
-                      color: borderColor,
-                      thickness: 1,
-                      height: 1,
-                      indent: Constants.paddingMedium,
-                      endIndent: Constants.paddingMedium,
-                    ),
-                    const SizedBox(height: Constants.spacingMedium),
-
-                    // Job features
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Constants.paddingMedium,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            context.appLoc.training_center_features,
-                            style: theme.textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: Constants.spacingMedium),
-                          _buildFeatureRow(
-                            context,
-                            label: context.appLoc.categories,
-                            value: trainingCenter.category?.name ?? '',
-                          ),
-                          const SizedBox(height: Constants.spacingSmall),
-                          _buildFeatureRow(
-                            context,
-                            label: context.appLoc.location,
-                            value: trainingCenter.location?.name ?? '',
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: Constants.spacingMedium),
-                    Divider(
-                      color: borderColor,
-                      thickness: 1,
-                      height: 1,
-                      indent: Constants.paddingMedium,
-                      endIndent: Constants.paddingMedium,
-                    ),
-                    const SizedBox(height: Constants.spacingMedium),
-
-                    // About the client
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Constants.paddingMedium,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            context.appLoc.about_center_publisher,
-                            style: theme.textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: Constants.spacingMedium),
-                          Row(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                width: Constants.size35,
-                                height: Constants.size35,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: surfaceColor,
-                                  border: Border.all(
-                                    color: borderColor,
-                                    width: 1,
-                                  ),
-                                ),
-                                child: ClipOval(
-                                  child: Image.asset(
-                                    Assets.rabbitAvatar,
-                                    fit: BoxFit.cover,
-                                  ),
+                              Text(
+                                context.appLoc.training_center_features,
+                                style: theme.textTheme.titleSmall?.copyWith(
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(width: Constants.spacingSmall),
+                              const SizedBox(height: Constants.spacingMedium),
+                              _buildFeatureRow(
+                                context,
+                                label: context.appLoc.categories,
+                                value: trainingCenter.category?.name ?? '',
+                              ),
+                              const SizedBox(height: Constants.spacingSmall),
+                              _buildFeatureRow(
+                                context,
+                                label: context.appLoc.location,
+                                value: trainingCenter.location?.name ?? '',
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: Constants.spacingMedium),
+                        Divider(
+                          color: borderColor,
+                          thickness: 1,
+                          height: 1,
+                          indent: Constants.paddingMedium,
+                          endIndent: Constants.paddingMedium,
+                        ),
+                        const SizedBox(height: Constants.spacingMedium),
+
+                        // About the client
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: Constants.paddingMedium,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
                               Text(
-                                '${trainingCenter.user.firstName} ${trainingCenter.user.lastName}',
+                                context.appLoc.about_center_publisher,
+                                style: theme.textTheme.titleSmall?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: Constants.spacingMedium),
+                              Row(
+                                children: [
+                                  Container(
+                                    width: Constants.size35,
+                                    height: Constants.size35,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: surfaceColor,
+                                      border: Border.all(
+                                        color: borderColor,
+                                        width: 1,
+                                      ),
+                                    ),
+                                    child: ClipOval(
+                                      child: Image.asset(
+                                        Assets.rabbitAvatar,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: Constants.spacingSmall),
+                                  Text(
+                                    '${trainingCenter.user.firstName} ${trainingCenter.user.lastName}',
+                                    style: theme.textTheme.bodySmall,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: Constants.spacingSmall),
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.verified_user_outlined,
+                                    size: Constants.iconSizeExtraSmall,
+                                    color: AppColors.success,
+                                  ),
+                                  const SizedBox(
+                                    width: Constants.spacingExtraSmall,
+                                  ),
+                                  Text(
+                                    context.appLoc.verified_phone_number,
+                                    style: theme.textTheme.bodySmall,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: Constants.spacingSmall),
+                              Text(
+                                trainingCenter.user.residence,
                                 style: theme.textTheme.bodySmall,
                               ),
-                            ],
-                          ),
-                          const SizedBox(height: Constants.spacingSmall),
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.verified_user_outlined,
-                                size: Constants.iconSizeExtraSmall,
-                                color: AppColors.success,
-                              ),
-                              const SizedBox(
-                                width: Constants.spacingExtraSmall,
-                              ),
+                              const SizedBox(height: Constants.spacingSmall),
                               Text(
-                                context.appLoc.verified_phone_number,
+                                '${context.appLoc.member_since} ${AppFunction.getDate(trainingCenter.user.createdAt)}',
                                 style: theme.textTheme.bodySmall,
                               ),
+                              const SizedBox(height: Constants.spacingLarge),
                             ],
                           ),
-                          const SizedBox(height: Constants.spacingSmall),
-                          Text(
-                            trainingCenter.user.residence,
-                            style: theme.textTheme.bodySmall,
-                          ),
-                          const SizedBox(height: Constants.spacingSmall),
-                          Text(
-                            '${context.appLoc.member_since} ${AppFunction.getDate(trainingCenter.user.createdAt)}',
-                            style: theme.textTheme.bodySmall,
-                          ),
-                          const SizedBox(height: Constants.spacingLarge),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            } else if (state is JobsRequestFailure) {
-              return ServerFailureScreen(
-                onRetry: () {
-                  BlocProvider.of<JobsBloc>(context).add(
-                    GetTrainingCenterDetailRequested(
-                      trainingCenterDetailParams: TrainingCenterDetailParams(
-                        id: id,
-                      ),
+                        ),
+                      ],
                     ),
                   );
-                },
-                message: state.message,
-              );
-            } else {
-              return const ShimmerJobDetailIndicator();
-            }
-          },
-        ),
-      ),
+                } else if (state is JobsRequestFailure) {
+                  return ServerFailureScreen(
+                    onRetry: () {
+                      BlocProvider.of<JobsBloc>(context).add(
+                        GetTrainingCenterDetailRequested(
+                          trainingCenterDetailParams:
+                              TrainingCenterDetailParams(id: id),
+                        ),
+                      );
+                    },
+                    message: state.message,
+                  );
+                } else {
+                  return const ShimmerJobDetailIndicator();
+                }
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 

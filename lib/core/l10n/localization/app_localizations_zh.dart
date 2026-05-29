@@ -506,4 +506,109 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get years => '年';
+
+  @override
+  String get update => '更新';
+
+  @override
+  String get remove_photo => '删除照片';
+
+  @override
+  String get resume => '简历';
+
+  @override
+  String get duration => '时长';
+
+  @override
+  String get domain => '领域';
+
+  @override
+  String get category => '分类';
+
+  @override
+  String get edit => '编辑';
+
+  @override
+  String get edit_question => '编辑？';
+
+  @override
+  String get remove => '删除';
+
+  @override
+  String get remove_question => '删除?';
+
+  @override
+  String get save => '保存';
+
+  @override
+  String get view_pdf => '查看 PDF';
+
+  @override
+  String get edit_offer => '编辑优惠';
+
+  @override
+  String get edit_job_offer => '编辑招聘信息';
+
+  @override
+  String get edit_job_applicant => '编辑求职者';
+
+  @override
+  String get edit_training_center => '编辑培训中心';
+
+  @override
+  String get edit_job_offer_question => '您想编辑此招聘信息吗？';
+
+  @override
+  String get edit_job_applicant_question => '您想编辑此求职者吗？';
+
+  @override
+  String get edit_training_center_qestion => '您想编辑此培训中心吗？';
+
+  @override
+  String get edit_offer_qestion => '您想编辑此优惠吗？';
+
+  @override
+  String get retry => '重试';
+
+  @override
+  String get service_unavailable => '服务不可用';
+
+  @override
+  String get not_found => '未找到';
+
+  @override
+  String get page_failed_load => '页面加载失败';
+
+  @override
+  String get please_check_connection_before_trying => '请检查您的网络连接后重试';
+
+  @override
+  String get agree_with => '我同意';
+
+  @override
+  String get max_3 => '最多 3 个';
+
+  @override
+  String get max_5 => '最多 5 个';
+
+  @override
+  String get email => '电子邮箱';
+
+  @override
+  String get remove_job_offer_question => '您想删除此招聘信息吗？';
+
+  @override
+  String get remove_job_applicant_question => '您想删除此求职者吗？';
+
+  @override
+  String get remove_training_center_question => '您想删除此培训中心吗？';
+
+  @override
+  String get remove_offer_question => '您想删除此优惠吗？';
+
+  @override
+  String get remove_history_question => '您想删除此记录吗？';
+
+  @override
+  String get server_under_maintenance => '服务器正在维护中或发生错误，请稍后再试。';
 }

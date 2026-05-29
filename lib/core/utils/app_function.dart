@@ -204,8 +204,26 @@ abstract class AppFunction {
         : '$years ${context.appLoc.years}';
   }
 
-  String capitalize(String text) {
+  static String capitalize(String text) {
     if (text.isEmpty) return text;
     return text[0].toUpperCase() + text.substring(1);
+  }
+
+  static String formatNumberWithSpaces(int number) {
+    final numberString = number.toString();
+    final buffer = StringBuffer();
+
+    int counter = 0;
+
+    for (int i = numberString.length - 1; i >= 0; i--) {
+      buffer.write(numberString[i]);
+      counter++;
+
+      if (counter % 3 == 0 && i != 0) {
+        buffer.write(' ');
+      }
+    }
+
+    return buffer.toString().split('').reversed.join();
   }
 }

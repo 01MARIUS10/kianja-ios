@@ -13,4 +13,5 @@ abstract interface class AccountRemoteDataSource {
   });
   Future<String> cgu();
   Future<List<KaraHistoryModel>> getAllKaraHistory({required int page});
+  Future<int> getKaraCount();
 }

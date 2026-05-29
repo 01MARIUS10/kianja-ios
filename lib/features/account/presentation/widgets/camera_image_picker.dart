@@ -110,7 +110,7 @@ class _CameraImagePickerState extends State<CameraImagePicker> {
                     color: AppColors.danger,
                   ),
                   title: Text(
-                    'Remove photo',
+                    context.appLoc.remove_photo,
                     style: theme.textTheme.bodyLarge?.copyWith(
                       color: AppColors.danger,
                     ),

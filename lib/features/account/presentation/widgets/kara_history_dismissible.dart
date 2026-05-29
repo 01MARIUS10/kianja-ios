@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/account/domain/entities/kara_history.dart';
 import 'package:kianja/features/account/presentation/widgets/kara_history_item.dart';
 import 'package:kianja/features/my_post/presentation/widgets/my_post_action_confirmation_dialog.dart';
@@ -18,9 +19,9 @@ class KaraHistoryDismissible extends StatelessWidget {
   Future<bool> _confirmDelete(BuildContext context) {
     return MyPostActionConfirmationDialog.show(
       context,
-      title: 'Remove ?',
-      message: 'Do you want to remove this history?',
-      confirmLabel: 'Remove',
+      title: context.appLoc.remove_question,
+      message: context.appLoc.remove_history_question,
+      confirmLabel: context.appLoc.remove,
     );
   }
 
@@ -28,7 +29,7 @@ class KaraHistoryDismissible extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dismissible(
       key: ValueKey<int>(history.id),
-      direction: DismissDirection.endToStart,
+      direction: DismissDirection.none,
       resizeDuration: const Duration(milliseconds: 200),
       movementDuration: const Duration(milliseconds: 200),
       confirmDismiss: (direction) async {
@@ -39,10 +40,10 @@ class KaraHistoryDismissible extends StatelessWidget {
         return false;
       },
       background: const SizedBox.shrink(),
-      secondaryBackground: const _DismissActionBackground(
+      secondaryBackground: _DismissActionBackground(
         alignment: Alignment.centerRight,
         icon: Icons.delete_outline,
-        label: 'Remove',
+        label: context.appLoc.remove,
         color: AppColors.danger,
       ),
       child: KaraHistoryItem(history: history),

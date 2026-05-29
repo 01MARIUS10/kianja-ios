@@ -18,4 +18,5 @@ abstract interface class AccountRepository {
   Future<Either<Failure, List<KaraHistory>>> getAllKaraHistory({
     required QueryPageParams queryPageParams,
   });
+  Future<Either<Failure, int>> getKaraCount();
 }

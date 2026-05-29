@@ -191,7 +191,7 @@ abstract class AppLocalizations {
   /// No description provided for @my_post.
   ///
   /// In en, this message translates to:
-  /// **'My post'**
+  /// **'My posts'**
   String get my_post;
 
   /// No description provided for @account.
@@ -1099,6 +1099,216 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Years'**
   String get years;
+
+  /// No description provided for @update.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get update;
+
+  /// No description provided for @remove_photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove photo'**
+  String get remove_photo;
+
+  /// No description provided for @resume.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get resume;
+
+  /// No description provided for @duration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get duration;
+
+  /// No description provided for @domain.
+  ///
+  /// In en, this message translates to:
+  /// **'Domain'**
+  String get domain;
+
+  /// No description provided for @category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get category;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @edit_question.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit ?'**
+  String get edit_question;
+
+  /// No description provided for @remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get remove;
+
+  /// No description provided for @remove_question.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove ?'**
+  String get remove_question;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @view_pdf.
+  ///
+  /// In en, this message translates to:
+  /// **'View PDF'**
+  String get view_pdf;
+
+  /// No description provided for @edit_offer.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit offer'**
+  String get edit_offer;
+
+  /// No description provided for @edit_job_offer.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit job offer'**
+  String get edit_job_offer;
+
+  /// No description provided for @edit_job_applicant.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit job applicant'**
+  String get edit_job_applicant;
+
+  /// No description provided for @edit_training_center.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit training center'**
+  String get edit_training_center;
+
+  /// No description provided for @edit_job_offer_question.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you want to edit this job offer ?'**
+  String get edit_job_offer_question;
+
+  /// No description provided for @edit_job_applicant_question.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you want to edit this job applicant ?'**
+  String get edit_job_applicant_question;
+
+  /// No description provided for @edit_training_center_qestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you want to edit this training center ?'**
+  String get edit_training_center_qestion;
+
+  /// No description provided for @edit_offer_qestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you want to edit this offer ?'**
+  String get edit_offer_qestion;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// No description provided for @service_unavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Service unavailable'**
+  String get service_unavailable;
+
+  /// No description provided for @not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'Not found'**
+  String get not_found;
+
+  /// No description provided for @page_failed_load.
+  ///
+  /// In en, this message translates to:
+  /// **'Page failed to load'**
+  String get page_failed_load;
+
+  /// No description provided for @please_check_connection_before_trying.
+  ///
+  /// In en, this message translates to:
+  /// **'Please check your connection before trying again'**
+  String get please_check_connection_before_trying;
+
+  /// No description provided for @agree_with.
+  ///
+  /// In en, this message translates to:
+  /// **'I agree with'**
+  String get agree_with;
+
+  /// No description provided for @max_3.
+  ///
+  /// In en, this message translates to:
+  /// **'3 max'**
+  String get max_3;
+
+  /// No description provided for @max_5.
+  ///
+  /// In en, this message translates to:
+  /// **'5 max'**
+  String get max_5;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'E-mail'**
+  String get email;
+
+  /// No description provided for @remove_job_offer_question.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you want to remove this job offer ?'**
+  String get remove_job_offer_question;
+
+  /// No description provided for @remove_job_applicant_question.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you want to remove this job applicant ?'**
+  String get remove_job_applicant_question;
+
+  /// No description provided for @remove_training_center_question.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you want to remove this training ?'**
+  String get remove_training_center_question;
+
+  /// No description provided for @remove_offer_question.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you want to remove this offer ?'**
+  String get remove_offer_question;
+
+  /// No description provided for @remove_history_question.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you want to remove this history ?'**
+  String get remove_history_question;
+
+  /// No description provided for @server_under_maintenance.
+  ///
+  /// In en, this message translates to:
+  /// **'The server is under maintenance or encountered an error. Please try again later.'**
+  String get server_under_maintenance;
 }
 
 class _AppLocalizationsDelegate

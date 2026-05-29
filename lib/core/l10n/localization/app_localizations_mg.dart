@@ -516,4 +516,117 @@ class AppLocalizationsMg extends AppLocalizations {
 
   @override
   String get years => 'Taona';
+
+  @override
+  String get update => 'Havaozy';
+
+  @override
+  String get remove_photo => 'Esory ny sary';
+
+  @override
+  String get resume => 'CV';
+
+  @override
+  String get duration => 'Faharetana';
+
+  @override
+  String get domain => 'Sehatra';
+
+  @override
+  String get category => 'Sokajy';
+
+  @override
+  String get edit => 'Hanova';
+
+  @override
+  String get edit_question => 'Hanova ?';
+
+  @override
+  String get remove => 'Esory';
+
+  @override
+  String get remove_question => 'Esory ?';
+
+  @override
+  String get save => 'Tehirizo';
+
+  @override
+  String get view_pdf => 'Hijery PDF';
+
+  @override
+  String get edit_offer => 'Hanova tolotra';
+
+  @override
+  String get edit_job_offer => 'Hanova tolotra asa';
+
+  @override
+  String get edit_job_applicant => 'Hanova mpangataka asa';
+
+  @override
+  String get edit_training_center => 'Hanova foibe fampiofanana';
+
+  @override
+  String get edit_job_offer_question =>
+      'Te hanova ity tolotra asa ity ve ianao ?';
+
+  @override
+  String get edit_job_applicant_question =>
+      'Te hanova ity mpangataka asa ity ve ianao ?';
+
+  @override
+  String get edit_training_center_qestion =>
+      'Te hanova ity foibe fampiofanana ity ve ianao ?';
+
+  @override
+  String get edit_offer_qestion => 'Te hanova ity tolotra ity ve ianao ?';
+
+  @override
+  String get retry => 'Andramo indray';
+
+  @override
+  String get service_unavailable => 'Tsy misy ny serivisy';
+
+  @override
+  String get not_found => 'Tsy hita';
+
+  @override
+  String get page_failed_load => 'Tsy afaka nampiditra ny pejy';
+
+  @override
+  String get please_check_connection_before_trying =>
+      'Azafady jereo ny fifandraisanao alohan\'ny hanandramana indray';
+
+  @override
+  String get agree_with => 'Manaiky ny';
+
+  @override
+  String get max_3 => '3 fara-fahabetsany';
+
+  @override
+  String get max_5 => '5 fara-fahabetsany';
+
+  @override
+  String get email => 'Mailaka';
+
+  @override
+  String get remove_job_offer_question =>
+      'Te hanala ity tolotra asa ity ve ianao ?';
+
+  @override
+  String get remove_job_applicant_question =>
+      'Te hanala ity mpangataka asa ity ve ianao ?';
+
+  @override
+  String get remove_training_center_question =>
+      'Te hanala ity foibe fampiofanana ity ve ianao ?';
+
+  @override
+  String get remove_offer_question => 'Te hanala ity tolotra ity ve ianao ?';
+
+  @override
+  String get remove_history_question => 'Te hanala ity tantara ity ve ianao ?';
+
+  @override
+  String get server_under_maintenance =>
+      'Ao anatin\'ny fikojakojana ny serveur na nahitana olana. Azafady andramo indray any aoriana.';
 }

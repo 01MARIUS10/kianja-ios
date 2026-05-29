@@ -59,12 +59,25 @@ class AccountRemoteDataSourceImpl implements AccountRemoteDataSource {
   @override
   Future<List<KaraHistoryModel>> getAllKaraHistory({required int page}) async {
     return requestHandler(() async {
-      final response = await dio.get(ApiEndpoint.karaHistory.path);
+      final response = await dio.get(
+        '${ApiEndpoint.karaHistory.path}?page=$page&nbPerPage=15',
+      );
       final Map<String, dynamic> result = jsonHandler(response.data);
-      final List<dynamic> historyList = result['historique'];
+      final Map<String, dynamic> historiques = result['historiques'];
+      final List<dynamic> historyList = historiques['data'];
       return historyList
           .map((e) => KaraHistoryModel.fromJson(e as Map<String, dynamic>))
           .toList();
+    });
+  }
+
+  @override
+  Future<int> getKaraCount() async {
+    return requestHandler(() async {
+      final response = await dio.get(ApiEndpoint.karaHistory.path);
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      AppDebug.showPrint('Solde : ${result['solde']}');
+      return result['solde'] ?? 0;
     });
   }
 }

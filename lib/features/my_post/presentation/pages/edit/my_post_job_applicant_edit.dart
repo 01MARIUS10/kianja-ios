@@ -9,6 +9,7 @@ import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/shared/widgets/loading/shimmer_job_detail_indicator.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_plan.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
@@ -217,9 +218,9 @@ class _MyPostJobApplicantEditScreenState
                     jobsState is JobsInitial);
 
             if (isJobsLoading) {
-              return const BaseScreen(
-                appBar: TitleHeader(title: 'Edit job applicant'),
-                child: ShimmerJobDetailIndicator(),
+              return BaseScreen(
+                appBar: TitleHeader(title: context.appLoc.edit_job_applicant),
+                child: const ShimmerJobDetailIndicator(),
               );
             }
 
@@ -228,7 +229,7 @@ class _MyPostJobApplicantEditScreenState
                 final isSaving = myPostState is MyPostRequestInProgress;
 
                 return BaseScreen(
-                  appBar: const TitleHeader(title: 'Edit job applicant'),
+                  appBar: TitleHeader(title: context.appLoc.edit_job_applicant),
                   child: GestureDetector(
                     onTap: () => FocusScope.of(context).unfocus(),
                     child: SingleChildScrollView(
@@ -239,31 +240,30 @@ class _MyPostJobApplicantEditScreenState
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const LabelField(label: 'Job title *'),
+                          LabelField(label: '${context.appLoc.job_title} *'),
                           const SizedBox(height: Constants.spacingSmall),
                           TextInputField(
                             controller: _titleController,
-                            hintText: 'Add job title',
+                            hintText: context.appLoc.add_job_title,
                             maxLines: 3,
                             maxLength: 130,
                           ),
                           const SizedBox(height: Constants.spacingMedium),
 
-                          const LabelField(label: 'Motivation *'),
+                          LabelField(label: '${context.appLoc.motivation} *'),
                           const SizedBox(height: Constants.spacingSmall),
                           TextInputField(
                             controller: _motivationController,
-                            hintText: 'Add motivation',
+                            hintText: context.appLoc.add_motivation,
                             maxLines: 10,
                             keyboardType: TextInputType.multiline,
                           ),
                           const SizedBox(height: Constants.spacingMedium),
 
-                          const LabelField(label: 'Resume (optional)'),
+                          LabelField(label: context.appLoc.resume_optional),
                           const SizedBox(height: Constants.spacingSmall),
                           SinglePdfUploadWidget(
-                            text:
-                                'Upload your Resume and\nlet members look at it.\nIn PDF format.',
+                            text: context.appLoc.upload_resume_pdf,
                             onPdfChanged: (pdf) {
                               if (pdf != null) {
                                 BlocProvider.of<JobsBloc>(
@@ -281,7 +281,7 @@ class _MyPostJobApplicantEditScreenState
 
                           // ── Category (single select) ─────────────────────
                           Text(
-                            'Category *',
+                            '${context.appLoc.category} *',
                             style: Theme.of(context).textTheme.titleSmall!
                                 .copyWith(fontWeight: FontWeight.bold),
                           ),
@@ -336,7 +336,7 @@ class _MyPostJobApplicantEditScreenState
                           const SizedBox(height: Constants.spacingMedium),
 
                           // ── Location ─────────────────────────────────────
-                          const LabelField(label: 'Location *'),
+                          LabelField(label: '${context.appLoc.location} *'),
                           const SizedBox(height: Constants.spacingSmall),
                           if (_jobFeatures != null)
                             Wrap(
@@ -381,7 +381,7 @@ class _MyPostJobApplicantEditScreenState
                           const SizedBox(height: Constants.spacingMedium),
 
                           // ── Gender ───────────────────────────────────────
-                          const LabelField(label: 'Gender *'),
+                          LabelField(label: '${context.appLoc.gender} *'),
                           const SizedBox(height: Constants.spacingSmall),
                           if (_jobFeatures != null)
                             Wrap(
@@ -433,7 +433,7 @@ class _MyPostJobApplicantEditScreenState
                               _selectedPlan = plan;
                             },
                             onPost: () => _updateJobApplicant(context),
-                            postButtonLabel: 'UPDATE',
+                            postButtonLabel: context.appLoc.update,
                           ),
                           const SizedBox(height: Constants.spacingLarge),
                         ],

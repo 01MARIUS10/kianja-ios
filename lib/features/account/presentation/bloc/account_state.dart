@@ -54,6 +54,24 @@ class AccountCguSuccess extends AccountState {
   List<Object> get props => [cgu];
 }
 
+class AccountKaraRequestInProgress extends AccountState {}
+
+class AccountKaraSuccess extends AccountState {
+  const AccountKaraSuccess({required this.kara});
+  final int kara;
+
+  @override
+  List<Object> get props => [kara];
+}
+
+class AccountKaraFailure extends AccountState {
+  const AccountKaraFailure({required this.message});
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}
+
 class AccountRequestFailure extends AccountState {
   const AccountRequestFailure({required this.message});
   final String message;

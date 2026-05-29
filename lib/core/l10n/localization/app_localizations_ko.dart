@@ -507,4 +507,111 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get years => '년';
+
+  @override
+  String get update => '업데이트';
+
+  @override
+  String get remove_photo => '사진 삭제';
+
+  @override
+  String get resume => '이력서';
+
+  @override
+  String get duration => '기간';
+
+  @override
+  String get domain => '분야';
+
+  @override
+  String get category => '카테고리';
+
+  @override
+  String get edit => '수정';
+
+  @override
+  String get edit_question => '수정하시겠습니까?';
+
+  @override
+  String get remove => '삭제';
+
+  @override
+  String get remove_question => '삭제?';
+
+  @override
+  String get save => '저장';
+
+  @override
+  String get view_pdf => 'PDF 보기';
+
+  @override
+  String get edit_offer => '제안 수정';
+
+  @override
+  String get edit_job_offer => '채용 공고 수정';
+
+  @override
+  String get edit_job_applicant => '구직자 수정';
+
+  @override
+  String get edit_training_center => '교육 센터 수정';
+
+  @override
+  String get edit_job_offer_question => '이 채용 공고를 수정하시겠습니까?';
+
+  @override
+  String get edit_job_applicant_question => '이 구직자를 수정하시겠습니까?';
+
+  @override
+  String get edit_training_center_qestion => '이 교육 센터를 수정하시겠습니까?';
+
+  @override
+  String get edit_offer_qestion => '이 제안을 수정하시겠습니까?';
+
+  @override
+  String get retry => '다시 시도';
+
+  @override
+  String get service_unavailable => '서비스를 사용할 수 없습니다';
+
+  @override
+  String get not_found => '찾을 수 없음';
+
+  @override
+  String get page_failed_load => '페이지를 불러오지 못했습니다';
+
+  @override
+  String get please_check_connection_before_trying =>
+      '다시 시도하기 전에 인터넷 연결을 확인해 주세요';
+
+  @override
+  String get agree_with => '동의합니다';
+
+  @override
+  String get max_3 => '최대 3개';
+
+  @override
+  String get max_5 => '최대 5개';
+
+  @override
+  String get email => '이메일';
+
+  @override
+  String get remove_job_offer_question => '이 채용 공고를 삭제하시겠습니까?';
+
+  @override
+  String get remove_job_applicant_question => '이 구직자를 삭제하시겠습니까?';
+
+  @override
+  String get remove_training_center_question => '이 교육 센터를 삭제하시겠습니까?';
+
+  @override
+  String get remove_offer_question => '이 제안을 삭제하시겠습니까?';
+
+  @override
+  String get remove_history_question => '이 기록을 삭제하시겠습니까?';
+
+  @override
+  String get server_under_maintenance =>
+      '서버가 점검 중이거나 오류가 발생했습니다. 나중에 다시 시도해 주세요.';
 }

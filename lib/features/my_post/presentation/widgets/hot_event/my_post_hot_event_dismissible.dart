@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/training/hot_event.dart';
 import 'package:kianja/features/my_post/presentation/widgets/hot_event/my_post_hot_event_item_list.dart';
 import 'package:kianja/features/my_post/presentation/widgets/my_post_action_confirmation_dialog.dart';
@@ -22,18 +23,18 @@ class MyPostHotEventDismissible extends StatelessWidget {
   Future<bool> _confirmEdit(BuildContext context) {
     return MyPostActionConfirmationDialog.show(
       context,
-      title: 'Edit ?',
-      message: 'Do you want to edit this job offer?',
-      confirmLabel: 'Edit',
+      title: context.appLoc.edit_question,
+      message: context.appLoc.edit_job_offer_question,
+      confirmLabel: context.appLoc.edit,
     );
   }
 
   Future<bool> _confirmDelete(BuildContext context) {
     return MyPostActionConfirmationDialog.show(
       context,
-      title: 'Remove ?',
-      message: 'Do you want to remove this job offer?',
-      confirmLabel: 'Remove',
+      title: context.appLoc.remove,
+      message: context.appLoc.remove_offer_question,
+      confirmLabel: context.appLoc.remove,
     );
   }
 
@@ -56,16 +57,16 @@ class MyPostHotEventDismissible extends StatelessWidget {
         }
         return false;
       },
-      background: const _DismissActionBackground(
+      background: _DismissActionBackground(
         alignment: Alignment.centerLeft,
         icon: Icons.edit_outlined,
-        label: 'Edit',
+        label: context.appLoc.edit,
         color: AppColors.info,
       ),
-      secondaryBackground: const _DismissActionBackground(
+      secondaryBackground: _DismissActionBackground(
         alignment: Alignment.centerRight,
         icon: Icons.delete_outline,
-        label: 'Remove',
+        label: context.appLoc.remove,
         color: AppColors.danger,
       ),
       child: Stack(

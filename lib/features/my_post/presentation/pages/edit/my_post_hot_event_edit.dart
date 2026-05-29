@@ -12,6 +12,7 @@ import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/training/hot_event.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_params.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
@@ -190,9 +191,9 @@ class _MyPostHotEventEditScreenState extends State<MyPostHotEventEditScreen> {
                     jobsState is JobsInitial);
 
             if (isJobsLoading) {
-              return const BaseScreen(
-                appBar: TitleHeader(title: 'Edit offer'),
-                child: ShimmerJobDetailIndicator(),
+              return BaseScreen(
+                appBar: TitleHeader(title: context.appLoc.edit_offer),
+                child: const ShimmerJobDetailIndicator(),
               );
             }
 
@@ -201,7 +202,7 @@ class _MyPostHotEventEditScreenState extends State<MyPostHotEventEditScreen> {
                 final isSaving = myPostState is MyPostRequestInProgress;
 
                 return BaseScreen(
-                  appBar: const TitleHeader(title: 'Edit offer'),
+                  appBar: TitleHeader(title: context.appLoc.edit_offer),
                   child: GestureDetector(
                     onTap: () => FocusScope.of(context).unfocus(),
                     child: SingleChildScrollView(
@@ -212,16 +213,16 @@ class _MyPostHotEventEditScreenState extends State<MyPostHotEventEditScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const LabelField(label: 'Title *'),
+                          LabelField(label: '${context.appLoc.title} *'),
                           const SizedBox(height: Constants.spacingSmall),
                           TextInputField(
                             controller: _titleController,
-                            hintText: 'Add title',
+                            hintText: context.appLoc.add_title,
                             maxLines: 3,
                             maxLength: 130,
                           ),
                           const SizedBox(height: Constants.spacingMedium),
-                          const LabelField(label: 'Photo'),
+                          LabelField(label: context.appLoc.photo),
                           const SizedBox(height: Constants.spacingSmall),
                           SinglePhotoUploadWidget(
                             initialNetworkImageUrl: _initialImageUrl,
@@ -240,18 +241,18 @@ class _MyPostHotEventEditScreenState extends State<MyPostHotEventEditScreen> {
                             },
                           ),
                           const SizedBox(height: Constants.spacingMedium),
-                          const LabelField(label: 'Description *'),
+                          LabelField(label: '${context.appLoc.description} *'),
                           const SizedBox(height: Constants.spacingSmall),
                           TextInputField(
                             controller: _descriptionController,
-                            hintText: 'Add description',
+                            hintText: context.appLoc.add_description,
                             maxLines: 10,
                             keyboardType: TextInputType.multiline,
                           ),
                           const SizedBox(height: Constants.spacingMedium),
 
                           Text(
-                            "Debut de l'offer *",
+                            '${context.appLoc.start_offer} *',
                             style: theme.textTheme.bodyMedium,
                           ),
                           const SizedBox(height: Constants.spacingSmall),
@@ -259,7 +260,7 @@ class _MyPostHotEventEditScreenState extends State<MyPostHotEventEditScreen> {
                           const SizedBox(height: Constants.spacingMedium),
 
                           Text(
-                            "Fin de l'offer *",
+                            '${context.appLoc.end_offer} *',
                             style: theme.textTheme.bodyMedium,
                           ),
                           const SizedBox(height: Constants.spacingSmall),
@@ -281,7 +282,7 @@ class _MyPostHotEventEditScreenState extends State<MyPostHotEventEditScreen> {
                                       ),
                                     )
                                   : Text(
-                                      'SAVE',
+                                      context.appLoc.save.toUpperCase(),
                                       style: theme.textTheme.titleMedium
                                           ?.copyWith(
                                             fontWeight: FontWeight.bold,

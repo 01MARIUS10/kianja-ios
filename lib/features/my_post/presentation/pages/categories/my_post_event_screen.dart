@@ -79,6 +79,7 @@ class _MyPostEventScreenState extends State<MyPostEventScreen>
     context.pushNamed(
       Routes.trainingCenterHotEventDetail.name,
       pathParameters: {'id': event.id.toString()},
+      extra: {'category': event.type.toUpperCase(), 'query': '/events'},
     );
   }
 

@@ -94,4 +94,14 @@ class AccountRepositoryImpl implements AccountRepository {
       return left(failureHandler(e));
     }
   }
+
+  @override
+  Future<Either<Failure, int>> getKaraCount() async {
+    try {
+      final kara = await remoteDataSource.getKaraCount();
+      return right(kara);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
 }

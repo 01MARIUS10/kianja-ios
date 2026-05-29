@@ -51,7 +51,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get post => 'Publier';
 
   @override
-  String get my_post => 'Mon message';
+  String get my_post => 'Mes publications';
 
   @override
   String get account => 'Compte';
@@ -515,4 +515,118 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get years => 'Ans';
+
+  @override
+  String get update => 'Mettre à jour';
+
+  @override
+  String get remove_photo => 'Supprimer la photo';
+
+  @override
+  String get resume => 'CV';
+
+  @override
+  String get duration => 'Durée';
+
+  @override
+  String get domain => 'Domaine';
+
+  @override
+  String get category => 'Catégorie';
+
+  @override
+  String get edit => 'Modifier';
+
+  @override
+  String get edit_question => 'Modifier ?';
+
+  @override
+  String get remove => 'Supprimer';
+
+  @override
+  String get remove_question => 'Supprimer ?';
+
+  @override
+  String get save => 'Enregistrer';
+
+  @override
+  String get view_pdf => 'Voir le PDF';
+
+  @override
+  String get edit_offer => 'Modifier l\'offre';
+
+  @override
+  String get edit_job_offer => 'Modifier l\'offre d\'emploi';
+
+  @override
+  String get edit_job_applicant => 'Modifier le candidat';
+
+  @override
+  String get edit_training_center => 'Modifier le centre de formation';
+
+  @override
+  String get edit_job_offer_question =>
+      'Voulez-vous modifier cette offre d\'emploi ?';
+
+  @override
+  String get edit_job_applicant_question =>
+      'Voulez-vous modifier ce candidat ?';
+
+  @override
+  String get edit_training_center_qestion =>
+      'Voulez-vous modifier ce centre de formation ?';
+
+  @override
+  String get edit_offer_qestion => 'Voulez-vous modifier cette offre ?';
+
+  @override
+  String get retry => 'Réessayer';
+
+  @override
+  String get service_unavailable => 'Service indisponible';
+
+  @override
+  String get not_found => 'Introuvable';
+
+  @override
+  String get page_failed_load => 'Échec du chargement de la page';
+
+  @override
+  String get please_check_connection_before_trying =>
+      'Veuillez vérifier votre connexion avant de réessayer';
+
+  @override
+  String get agree_with => 'J\'accepte les';
+
+  @override
+  String get max_3 => '3 max';
+
+  @override
+  String get max_5 => '5 max';
+
+  @override
+  String get email => 'E-mail';
+
+  @override
+  String get remove_job_offer_question =>
+      'Voulez-vous supprimer cette offre d\'emploi ?';
+
+  @override
+  String get remove_job_applicant_question =>
+      'Voulez-vous supprimer ce candidat ?';
+
+  @override
+  String get remove_training_center_question =>
+      'Voulez-vous supprimer ce centre de formation ?';
+
+  @override
+  String get remove_offer_question => 'Voulez-vous supprimer cette offre ?';
+
+  @override
+  String get remove_history_question =>
+      'Voulez-vous supprimer cet historique ?';
+
+  @override
+  String get server_under_maintenance =>
+      'Le serveur est en maintenance ou a rencontré une erreur. Veuillez réessayer plus tard.';
 }

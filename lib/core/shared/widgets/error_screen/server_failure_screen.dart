@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 
 class ServerFailureScreen extends StatelessWidget {
   const ServerFailureScreen({super.key, required this.onRetry, this.message});
@@ -23,7 +24,7 @@ class ServerFailureScreen extends StatelessWidget {
           SvgPicture.asset(Assets.serverIllustration, height: 250),
           // const SizedBox(height: Constants.spacingMedium),
           Text(
-            'Service Unavailable',
+            context.appLoc.service_unavailable,
             style: theme.textTheme.headlineSmall?.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -43,7 +44,7 @@ class ServerFailureScreen extends StatelessWidget {
             child: ElevatedButton(
               onPressed: onRetry,
               child: Text(
-                'Retry',
+                context.appLoc.retry,
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
