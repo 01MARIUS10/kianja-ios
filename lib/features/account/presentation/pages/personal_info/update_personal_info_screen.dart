@@ -177,7 +177,7 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
                   const SizedBox(height: Constants.spacingLarge),
 
                   // ── FIRST NAME ─────────────────────────────────────
-                  LabelField(label: 'FIRST NAME'),
+                  LabelField(label: context.appLoc.first_name.toUpperCase()),
                   const SizedBox(height: Constants.spacingSmall),
                   TextInputField(
                     controller: _firstNameController,
@@ -187,7 +187,7 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
                   const SizedBox(height: Constants.spacingMedium),
 
                   // ── LAST NAME ──────────────────────────────────────
-                  LabelField(label: 'LAST NAME'),
+                  LabelField(label: context.appLoc.last_name.toUpperCase()),
                   const SizedBox(height: Constants.spacingSmall),
                   TextInputField(
                     controller: _lastNameController,
@@ -197,7 +197,7 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
                   const SizedBox(height: Constants.spacingMedium),
 
                   // ── EMAIL ──────────────────────────────────────────
-                  LabelField(label: 'EMAIL'),
+                  LabelField(label: context.appLoc.email.toUpperCase()),
                   const SizedBox(height: Constants.spacingSmall),
                   TextInputField(
                     controller: _emailController,
@@ -262,7 +262,7 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
                                   ),
                                 )
                               : Text(
-                                  context.appLoc.save,
+                                  context.appLoc.save.toUpperCase(),
                                   style: theme.textTheme.titleMedium?.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),

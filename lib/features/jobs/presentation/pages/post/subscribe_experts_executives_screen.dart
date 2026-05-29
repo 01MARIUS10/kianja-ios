@@ -263,7 +263,7 @@ class _SubscribeExpertsExecutivesScreenState
                         //     ),
                         //   ],
                         // ),
-                        const LabelField(label: 'Email *'),
+                        LabelField(label: '${context.appLoc.email} *'),
                         const SizedBox(height: Constants.spacingSmall),
                         TextInputField(
                           controller: _emailController,
@@ -338,7 +338,7 @@ class _SubscribeExpertsExecutivesScreenState
                         const SizedBox(height: Constants.spacingMedium),
 
                         // ── Resume ───────────────────────────────────────
-                        const LabelField(label: 'Resume *'),
+                        LabelField(label: '${context.appLoc.resume} *'),
                         const SizedBox(height: Constants.spacingSmall),
                         SinglePdfUploadWidget(
                           text: context.appLoc.upload_resume_pdf,

@@ -125,7 +125,7 @@ class PersonalInfoScreen extends StatelessWidget {
                     const Divider(thickness: 0.5),
                     PersonalInfoRow(
                       icon: Icons.mail_outline,
-                      label: 'Email',
+                      label: context.appLoc.email,
                       value: user.email,
                       iconColor: AppColors.info,
                     ),
