@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
-import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/core/utils/extensions.dart';

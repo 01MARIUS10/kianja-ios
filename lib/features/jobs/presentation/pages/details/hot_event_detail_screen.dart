@@ -1,9 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.dart';
