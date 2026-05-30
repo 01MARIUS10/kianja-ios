@@ -611,4 +611,19 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get server_under_maintenance => '服务器正在维护中或发生错误，请稍后再试。';
+
+  @override
+  String get no_enough_kara => '您的 Kara 余额不足';
+
+  @override
+  String get phone_already_exists => '该手机号码已存在。';
+
+  @override
+  String get domains => '领域';
+
+  @override
+  String get deadline_must_be_today_or_future => '截止日期必须是今天或未来的日期。';
+
+  @override
+  String get phone_number_cannot_be_changed => '电话号码无法修改。';
 }

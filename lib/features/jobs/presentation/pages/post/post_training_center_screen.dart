@@ -133,6 +133,7 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
           name: _centerNameController.text.trim(),
           description: _descriptionController.text.trim(),
           imageIds: imageIds,
+          domainIds: _selectedDomains,
           actorId: _selectedActorId!,
           locationId: _selectedLocationId!,
           typeId: 1,
@@ -175,7 +176,14 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
                   pathParameters: {'id': state.trainingCenter.id.toString()},
                 );
               } else if (state is JobsRequestFailure) {
-                AppMessenger.showError(context, state.message);
+                if (state.message == 'Unprocessable entity') {
+                  AppMessenger.showError(
+                    context,
+                    context.appLoc.no_enough_kara,
+                  );
+                } else {
+                  AppMessenger.showError(context, state.message);
+                }
               }
             },
             builder: (context, state) {

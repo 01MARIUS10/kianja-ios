@@ -222,7 +222,7 @@ class _MyPostJobOfferEditScreenState extends State<MyPostJobOfferEditScreen> {
                 if (state.message.contains('Unprocessable entity')) {
                   AppMessenger.showWarning(
                     context,
-                    "La date limite doit être aujourd'hui ou une date future.",
+                    context.appLoc.deadline_must_be_today_or_future,
                   );
                 } else {
                   AppMessenger.showError(context, state.message);

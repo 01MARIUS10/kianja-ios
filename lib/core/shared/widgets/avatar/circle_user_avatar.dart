@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
 import 'package:kianja/core/shared/widgets/avatar/default_avatar.dart';
 import 'package:kianja/core/themes/app_colors.dart';
@@ -25,7 +26,7 @@ class CircleUserAvatar extends StatelessWidget {
       child: ClipOval(
         child: user.photoUrl.isNotEmpty
             ? Image.network(
-                user.photoUrl,
+                '${EnvConfig.baseApiUrl}${user.photoUrl}',
                 fit: BoxFit.cover,
                 width: Constants.size100,
                 height: Constants.size100,

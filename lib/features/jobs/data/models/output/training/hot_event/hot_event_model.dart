@@ -15,8 +15,8 @@ abstract class HotEventModel with _$HotEventModel implements HotEvent {
     @JsonKey(name: 'start_date', defaultValue: '') required String startDate,
     @JsonKey(name: 'end_date', defaultValue: '') required String endDate,
     @JsonKey(defaultValue: '') required String type,
-    @JsonKey(name: 'image', defaultValue: '') required String imageUrl,
-    @JsonKey(name: 'imageObjet') JobImageModel? image,
+    @JsonKey(defaultValue: '') required String imageUrl,
+    JobImageModel? image,
     @JsonKey(name: 'training_center') required TrainingCenterModel center,
   }) = _HotEventModel;
 

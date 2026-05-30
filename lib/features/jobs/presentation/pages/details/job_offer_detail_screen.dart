@@ -8,6 +8,7 @@ import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/shared/widgets/loading/shimmer_job_detail_indicator.dart';
+import 'package:kianja/core/shared/widgets/photos/photo_handler.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
@@ -109,30 +110,16 @@ class JobOfferDetailScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                         horizontal: Constants.paddingMedium,
                       ),
-                      child: ClipRRect(
-                        child: CachedNetworkImage(
-                          imageUrl:
-                              '${EnvConfig.baseApiUrl}${jobOffer.image?.url}',
-                          fit: BoxFit.cover,
-                          errorWidget: (context, url, error) {
-                            return Image.asset(
-                              Assets.hiring,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, url, error) => const Icon(
-                                Icons.image,
-                                size: 40,
-                                color: Colors.grey,
-                              ),
-                            );
-                          },
-                          progressIndicatorBuilder: (context, url, progress) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          },
-                        ),
+                      child: PhotoHandler(
+                        width: double.infinity,
+                        imageUrls: [jobOffer.image]
+                            .map(
+                              (image) => '${EnvConfig.baseApiUrl}${image?.url}',
+                            )
+                            .toList(),
                       ),
                     ),
+
                     const SizedBox(height: Constants.spacingMedium),
                     Divider(
                       color: borderColor,

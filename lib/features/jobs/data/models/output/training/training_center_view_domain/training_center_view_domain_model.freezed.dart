@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'training_center_view_category_model.dart';
+part of 'training_center_view_domain_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,22 +13,22 @@ part of 'training_center_view_category_model.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$TrainingCenterViewCategoryModel {
+mixin _$TrainingCenterViewDomainModel {
 
 @JsonKey(name: 'Vip', defaultValue: []) List<TrainingCenterModel> get vip;@JsonKey(name: 'Premium', defaultValue: []) List<TrainingCenterModel> get premium;@JsonKey(name: 'Normal', defaultValue: []) List<TrainingCenterModel> get normal;
-/// Create a copy of TrainingCenterViewCategoryModel
+/// Create a copy of TrainingCenterViewDomainModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$TrainingCenterViewCategoryModelCopyWith<TrainingCenterViewCategoryModel> get copyWith => _$TrainingCenterViewCategoryModelCopyWithImpl<TrainingCenterViewCategoryModel>(this as TrainingCenterViewCategoryModel, _$identity);
+$TrainingCenterViewDomainModelCopyWith<TrainingCenterViewDomainModel> get copyWith => _$TrainingCenterViewDomainModelCopyWithImpl<TrainingCenterViewDomainModel>(this as TrainingCenterViewDomainModel, _$identity);
 
-  /// Serializes this TrainingCenterViewCategoryModel to a JSON map.
+  /// Serializes this TrainingCenterViewDomainModel to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TrainingCenterViewCategoryModel&&const DeepCollectionEquality().equals(other.vip, vip)&&const DeepCollectionEquality().equals(other.premium, premium)&&const DeepCollectionEquality().equals(other.normal, normal));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TrainingCenterViewDomainModel&&const DeepCollectionEquality().equals(other.vip, vip)&&const DeepCollectionEquality().equals(other.premium, premium)&&const DeepCollectionEquality().equals(other.normal, normal));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -37,15 +37,15 @@ int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(
 
 @override
 String toString() {
-  return 'TrainingCenterViewCategoryModel(vip: $vip, premium: $premium, normal: $normal)';
+  return 'TrainingCenterViewDomainModel(vip: $vip, premium: $premium, normal: $normal)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $TrainingCenterViewCategoryModelCopyWith<$Res>  {
-  factory $TrainingCenterViewCategoryModelCopyWith(TrainingCenterViewCategoryModel value, $Res Function(TrainingCenterViewCategoryModel) _then) = _$TrainingCenterViewCategoryModelCopyWithImpl;
+abstract mixin class $TrainingCenterViewDomainModelCopyWith<$Res>  {
+  factory $TrainingCenterViewDomainModelCopyWith(TrainingCenterViewDomainModel value, $Res Function(TrainingCenterViewDomainModel) _then) = _$TrainingCenterViewDomainModelCopyWithImpl;
 @useResult
 $Res call({
 @JsonKey(name: 'Vip', defaultValue: []) List<TrainingCenterModel> vip,@JsonKey(name: 'Premium', defaultValue: []) List<TrainingCenterModel> premium,@JsonKey(name: 'Normal', defaultValue: []) List<TrainingCenterModel> normal
@@ -56,14 +56,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$TrainingCenterViewCategoryModelCopyWithImpl<$Res>
-    implements $TrainingCenterViewCategoryModelCopyWith<$Res> {
-  _$TrainingCenterViewCategoryModelCopyWithImpl(this._self, this._then);
+class _$TrainingCenterViewDomainModelCopyWithImpl<$Res>
+    implements $TrainingCenterViewDomainModelCopyWith<$Res> {
+  _$TrainingCenterViewDomainModelCopyWithImpl(this._self, this._then);
 
-  final TrainingCenterViewCategoryModel _self;
-  final $Res Function(TrainingCenterViewCategoryModel) _then;
+  final TrainingCenterViewDomainModel _self;
+  final $Res Function(TrainingCenterViewDomainModel) _then;
 
-/// Create a copy of TrainingCenterViewCategoryModel
+/// Create a copy of TrainingCenterViewDomainModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? vip = null,Object? premium = null,Object? normal = null,}) {
   return _then(_self.copyWith(
@@ -77,8 +77,8 @@ as List<TrainingCenterModel>,
 }
 
 
-/// Adds pattern-matching-related methods to [TrainingCenterViewCategoryModel].
-extension TrainingCenterViewCategoryModelPatterns on TrainingCenterViewCategoryModel {
+/// Adds pattern-matching-related methods to [TrainingCenterViewDomainModel].
+extension TrainingCenterViewDomainModelPatterns on TrainingCenterViewDomainModel {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -91,10 +91,10 @@ extension TrainingCenterViewCategoryModelPatterns on TrainingCenterViewCategoryM
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _TrainingCenterViewCategoryModel value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _TrainingCenterViewDomainModel value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _TrainingCenterViewCategoryModel() when $default != null:
+case _TrainingCenterViewDomainModel() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -113,10 +113,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _TrainingCenterViewCategoryModel value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _TrainingCenterViewDomainModel value)  $default,){
 final _that = this;
 switch (_that) {
-case _TrainingCenterViewCategoryModel():
+case _TrainingCenterViewDomainModel():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -134,10 +134,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _TrainingCenterViewCategoryModel value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _TrainingCenterViewDomainModel value)?  $default,){
 final _that = this;
 switch (_that) {
-case _TrainingCenterViewCategoryModel() when $default != null:
+case _TrainingCenterViewDomainModel() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -157,7 +157,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'Vip', defaultValue: [])  List<TrainingCenterModel> vip, @JsonKey(name: 'Premium', defaultValue: [])  List<TrainingCenterModel> premium, @JsonKey(name: 'Normal', defaultValue: [])  List<TrainingCenterModel> normal)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _TrainingCenterViewCategoryModel() when $default != null:
+case _TrainingCenterViewDomainModel() when $default != null:
 return $default(_that.vip,_that.premium,_that.normal);case _:
   return orElse();
 
@@ -178,7 +178,7 @@ return $default(_that.vip,_that.premium,_that.normal);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'Vip', defaultValue: [])  List<TrainingCenterModel> vip, @JsonKey(name: 'Premium', defaultValue: [])  List<TrainingCenterModel> premium, @JsonKey(name: 'Normal', defaultValue: [])  List<TrainingCenterModel> normal)  $default,) {final _that = this;
 switch (_that) {
-case _TrainingCenterViewCategoryModel():
+case _TrainingCenterViewDomainModel():
 return $default(_that.vip,_that.premium,_that.normal);case _:
   throw StateError('Unexpected subclass');
 
@@ -198,7 +198,7 @@ return $default(_that.vip,_that.premium,_that.normal);case _:
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'Vip', defaultValue: [])  List<TrainingCenterModel> vip, @JsonKey(name: 'Premium', defaultValue: [])  List<TrainingCenterModel> premium, @JsonKey(name: 'Normal', defaultValue: [])  List<TrainingCenterModel> normal)?  $default,) {final _that = this;
 switch (_that) {
-case _TrainingCenterViewCategoryModel() when $default != null:
+case _TrainingCenterViewDomainModel() when $default != null:
 return $default(_that.vip,_that.premium,_that.normal);case _:
   return null;
 
@@ -210,9 +210,9 @@ return $default(_that.vip,_that.premium,_that.normal);case _:
 /// @nodoc
 @JsonSerializable()
 
-class _TrainingCenterViewCategoryModel extends TrainingCenterViewCategoryModel {
-  const _TrainingCenterViewCategoryModel({@JsonKey(name: 'Vip', defaultValue: []) required final  List<TrainingCenterModel> vip, @JsonKey(name: 'Premium', defaultValue: []) required final  List<TrainingCenterModel> premium, @JsonKey(name: 'Normal', defaultValue: []) required final  List<TrainingCenterModel> normal}): _vip = vip,_premium = premium,_normal = normal,super._();
-  factory _TrainingCenterViewCategoryModel.fromJson(Map<String, dynamic> json) => _$TrainingCenterViewCategoryModelFromJson(json);
+class _TrainingCenterViewDomainModel extends TrainingCenterViewDomainModel {
+  const _TrainingCenterViewDomainModel({@JsonKey(name: 'Vip', defaultValue: []) required final  List<TrainingCenterModel> vip, @JsonKey(name: 'Premium', defaultValue: []) required final  List<TrainingCenterModel> premium, @JsonKey(name: 'Normal', defaultValue: []) required final  List<TrainingCenterModel> normal}): _vip = vip,_premium = premium,_normal = normal,super._();
+  factory _TrainingCenterViewDomainModel.fromJson(Map<String, dynamic> json) => _$TrainingCenterViewDomainModelFromJson(json);
 
  final  List<TrainingCenterModel> _vip;
 @override@JsonKey(name: 'Vip', defaultValue: []) List<TrainingCenterModel> get vip {
@@ -236,20 +236,20 @@ class _TrainingCenterViewCategoryModel extends TrainingCenterViewCategoryModel {
 }
 
 
-/// Create a copy of TrainingCenterViewCategoryModel
+/// Create a copy of TrainingCenterViewDomainModel
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$TrainingCenterViewCategoryModelCopyWith<_TrainingCenterViewCategoryModel> get copyWith => __$TrainingCenterViewCategoryModelCopyWithImpl<_TrainingCenterViewCategoryModel>(this, _$identity);
+_$TrainingCenterViewDomainModelCopyWith<_TrainingCenterViewDomainModel> get copyWith => __$TrainingCenterViewDomainModelCopyWithImpl<_TrainingCenterViewDomainModel>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$TrainingCenterViewCategoryModelToJson(this, );
+  return _$TrainingCenterViewDomainModelToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TrainingCenterViewCategoryModel&&const DeepCollectionEquality().equals(other._vip, _vip)&&const DeepCollectionEquality().equals(other._premium, _premium)&&const DeepCollectionEquality().equals(other._normal, _normal));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TrainingCenterViewDomainModel&&const DeepCollectionEquality().equals(other._vip, _vip)&&const DeepCollectionEquality().equals(other._premium, _premium)&&const DeepCollectionEquality().equals(other._normal, _normal));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -258,15 +258,15 @@ int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(
 
 @override
 String toString() {
-  return 'TrainingCenterViewCategoryModel(vip: $vip, premium: $premium, normal: $normal)';
+  return 'TrainingCenterViewDomainModel(vip: $vip, premium: $premium, normal: $normal)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$TrainingCenterViewCategoryModelCopyWith<$Res> implements $TrainingCenterViewCategoryModelCopyWith<$Res> {
-  factory _$TrainingCenterViewCategoryModelCopyWith(_TrainingCenterViewCategoryModel value, $Res Function(_TrainingCenterViewCategoryModel) _then) = __$TrainingCenterViewCategoryModelCopyWithImpl;
+abstract mixin class _$TrainingCenterViewDomainModelCopyWith<$Res> implements $TrainingCenterViewDomainModelCopyWith<$Res> {
+  factory _$TrainingCenterViewDomainModelCopyWith(_TrainingCenterViewDomainModel value, $Res Function(_TrainingCenterViewDomainModel) _then) = __$TrainingCenterViewDomainModelCopyWithImpl;
 @override @useResult
 $Res call({
 @JsonKey(name: 'Vip', defaultValue: []) List<TrainingCenterModel> vip,@JsonKey(name: 'Premium', defaultValue: []) List<TrainingCenterModel> premium,@JsonKey(name: 'Normal', defaultValue: []) List<TrainingCenterModel> normal
@@ -277,17 +277,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$TrainingCenterViewCategoryModelCopyWithImpl<$Res>
-    implements _$TrainingCenterViewCategoryModelCopyWith<$Res> {
-  __$TrainingCenterViewCategoryModelCopyWithImpl(this._self, this._then);
+class __$TrainingCenterViewDomainModelCopyWithImpl<$Res>
+    implements _$TrainingCenterViewDomainModelCopyWith<$Res> {
+  __$TrainingCenterViewDomainModelCopyWithImpl(this._self, this._then);
 
-  final _TrainingCenterViewCategoryModel _self;
-  final $Res Function(_TrainingCenterViewCategoryModel) _then;
+  final _TrainingCenterViewDomainModel _self;
+  final $Res Function(_TrainingCenterViewDomainModel) _then;
 
-/// Create a copy of TrainingCenterViewCategoryModel
+/// Create a copy of TrainingCenterViewDomainModel
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? vip = null,Object? premium = null,Object? normal = null,}) {
-  return _then(_TrainingCenterViewCategoryModel(
+  return _then(_TrainingCenterViewDomainModel(
 vip: null == vip ? _self._vip : vip // ignore: cast_nullable_to_non_nullable
 as List<TrainingCenterModel>,premium: null == premium ? _self._premium : premium // ignore: cast_nullable_to_non_nullable
 as List<TrainingCenterModel>,normal: null == normal ? _self._normal : normal // ignore: cast_nullable_to_non_nullable

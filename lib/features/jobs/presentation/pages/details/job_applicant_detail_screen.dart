@@ -137,15 +137,6 @@ class JobApplicantDetailScreen extends StatelessWidget {
                                 const SizedBox(height: Constants.spacingMedium),
                                 InkWell(
                                   onTap: () {
-                                    // AppDebug.showPrint(
-                                    //   'Opening PDF: ${jobApplicant.pdfUrl}',
-                                    // );
-                                    // final url = Uri.parse(
-                                    //   '${EnvConfig.baseApiUrl}${jobApplicant.pdfUrl}',
-                                    // );
-                                    // if (await canLaunchUrl(url)) {
-                                    //   await launchUrl(url);
-                                    // }
                                     context.pushNamed(
                                       Routes.jobApplicantViewPdf.name,
                                       pathParameters: {

@@ -141,15 +141,13 @@ class JobsGetJobOfferDetailSuccess extends JobsState {
   List<Object> get props => [jobOffer];
 }
 
-/// [GetTrainingCenterCategoriesUseCase] succeeded.
-class GetTrainingCenterCategoriesSuccess extends JobsState {
-  const GetTrainingCenterCategoriesSuccess({
-    required this.trainingCenterCategories,
-  });
-  final List<JobCategory> trainingCenterCategories;
+/// [GetTrainingCenterDomainsUseCase] succeeded.
+class GetTrainingCenterDomainsSuccess extends JobsState {
+  const GetTrainingCenterDomainsSuccess({required this.trainingCenterDomains});
+  final List<JobDomain> trainingCenterDomains;
 
   @override
-  List<Object> get props => [trainingCenterCategories];
+  List<Object> get props => [trainingCenterDomains];
 }
 
 /// [GetJobApplicantPlanUsecase] succeeded.
@@ -261,15 +259,15 @@ class SubscribeExpertExecutiveSuccess extends JobsState {
   List<Object> get props => [expertExecutive];
 }
 
-/// [GetTrainingCenterViewCategoryUseCase] succeeded.
-class GetTrainingCenterViewCategorySuccess extends JobsState {
-  const GetTrainingCenterViewCategorySuccess({
-    required this.trainingCenterViewCategory,
+/// [GetTrainingCenterViewDomainUseCase] succeeded.
+class GetTrainingCenterViewDomainSuccess extends JobsState {
+  const GetTrainingCenterViewDomainSuccess({
+    required this.trainingCenterViewDomain,
   });
-  final TrainingCenterViewCategory trainingCenterViewCategory;
+  final TrainingCenterViewDomain trainingCenterViewDomain;
 
   @override
-  List<Object> get props => [trainingCenterViewCategory];
+  List<Object> get props => [trainingCenterViewDomain];
 }
 
 /// Any request failed.

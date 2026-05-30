@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$HotEventModel {
 
-@JsonKey(defaultValue: -1) int get id;@JsonKey(defaultValue: '') String get title;@JsonKey(defaultValue: '') String get description;@JsonKey(name: 'start_date', defaultValue: '') String get startDate;@JsonKey(name: 'end_date', defaultValue: '') String get endDate;@JsonKey(defaultValue: '') String get type;@JsonKey(name: 'image', defaultValue: '') String get imageUrl;@JsonKey(name: 'imageObjet') JobImageModel? get image;@JsonKey(name: 'training_center') TrainingCenterModel get center;
+@JsonKey(defaultValue: -1) int get id;@JsonKey(defaultValue: '') String get title;@JsonKey(defaultValue: '') String get description;@JsonKey(name: 'start_date', defaultValue: '') String get startDate;@JsonKey(name: 'end_date', defaultValue: '') String get endDate;@JsonKey(defaultValue: '') String get type;@JsonKey(defaultValue: '') String get imageUrl; JobImageModel? get image;@JsonKey(name: 'training_center') TrainingCenterModel get center;
 /// Create a copy of HotEventModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $HotEventModelCopyWith<$Res>  {
   factory $HotEventModelCopyWith(HotEventModel value, $Res Function(HotEventModel) _then) = _$HotEventModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(defaultValue: -1) int id,@JsonKey(defaultValue: '') String title,@JsonKey(defaultValue: '') String description,@JsonKey(name: 'start_date', defaultValue: '') String startDate,@JsonKey(name: 'end_date', defaultValue: '') String endDate,@JsonKey(defaultValue: '') String type,@JsonKey(name: 'image', defaultValue: '') String imageUrl,@JsonKey(name: 'imageObjet') JobImageModel? image,@JsonKey(name: 'training_center') TrainingCenterModel center
+@JsonKey(defaultValue: -1) int id,@JsonKey(defaultValue: '') String title,@JsonKey(defaultValue: '') String description,@JsonKey(name: 'start_date', defaultValue: '') String startDate,@JsonKey(name: 'end_date', defaultValue: '') String endDate,@JsonKey(defaultValue: '') String type,@JsonKey(defaultValue: '') String imageUrl, JobImageModel? image,@JsonKey(name: 'training_center') TrainingCenterModel center
 });
 
 
@@ -182,7 +182,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String description, @JsonKey(name: 'start_date', defaultValue: '')  String startDate, @JsonKey(name: 'end_date', defaultValue: '')  String endDate, @JsonKey(defaultValue: '')  String type, @JsonKey(name: 'image', defaultValue: '')  String imageUrl, @JsonKey(name: 'imageObjet')  JobImageModel? image, @JsonKey(name: 'training_center')  TrainingCenterModel center)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String description, @JsonKey(name: 'start_date', defaultValue: '')  String startDate, @JsonKey(name: 'end_date', defaultValue: '')  String endDate, @JsonKey(defaultValue: '')  String type, @JsonKey(defaultValue: '')  String imageUrl,  JobImageModel? image, @JsonKey(name: 'training_center')  TrainingCenterModel center)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _HotEventModel() when $default != null:
 return $default(_that.id,_that.title,_that.description,_that.startDate,_that.endDate,_that.type,_that.imageUrl,_that.image,_that.center);case _:
@@ -203,7 +203,7 @@ return $default(_that.id,_that.title,_that.description,_that.startDate,_that.end
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String description, @JsonKey(name: 'start_date', defaultValue: '')  String startDate, @JsonKey(name: 'end_date', defaultValue: '')  String endDate, @JsonKey(defaultValue: '')  String type, @JsonKey(name: 'image', defaultValue: '')  String imageUrl, @JsonKey(name: 'imageObjet')  JobImageModel? image, @JsonKey(name: 'training_center')  TrainingCenterModel center)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String description, @JsonKey(name: 'start_date', defaultValue: '')  String startDate, @JsonKey(name: 'end_date', defaultValue: '')  String endDate, @JsonKey(defaultValue: '')  String type, @JsonKey(defaultValue: '')  String imageUrl,  JobImageModel? image, @JsonKey(name: 'training_center')  TrainingCenterModel center)  $default,) {final _that = this;
 switch (_that) {
 case _HotEventModel():
 return $default(_that.id,_that.title,_that.description,_that.startDate,_that.endDate,_that.type,_that.imageUrl,_that.image,_that.center);case _:
@@ -223,7 +223,7 @@ return $default(_that.id,_that.title,_that.description,_that.startDate,_that.end
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String description, @JsonKey(name: 'start_date', defaultValue: '')  String startDate, @JsonKey(name: 'end_date', defaultValue: '')  String endDate, @JsonKey(defaultValue: '')  String type, @JsonKey(name: 'image', defaultValue: '')  String imageUrl, @JsonKey(name: 'imageObjet')  JobImageModel? image, @JsonKey(name: 'training_center')  TrainingCenterModel center)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String description, @JsonKey(name: 'start_date', defaultValue: '')  String startDate, @JsonKey(name: 'end_date', defaultValue: '')  String endDate, @JsonKey(defaultValue: '')  String type, @JsonKey(defaultValue: '')  String imageUrl,  JobImageModel? image, @JsonKey(name: 'training_center')  TrainingCenterModel center)?  $default,) {final _that = this;
 switch (_that) {
 case _HotEventModel() when $default != null:
 return $default(_that.id,_that.title,_that.description,_that.startDate,_that.endDate,_that.type,_that.imageUrl,_that.image,_that.center);case _:
@@ -238,7 +238,7 @@ return $default(_that.id,_that.title,_that.description,_that.startDate,_that.end
 @JsonSerializable()
 
 class _HotEventModel extends HotEventModel {
-  const _HotEventModel({@JsonKey(defaultValue: -1) required this.id, @JsonKey(defaultValue: '') required this.title, @JsonKey(defaultValue: '') required this.description, @JsonKey(name: 'start_date', defaultValue: '') required this.startDate, @JsonKey(name: 'end_date', defaultValue: '') required this.endDate, @JsonKey(defaultValue: '') required this.type, @JsonKey(name: 'image', defaultValue: '') required this.imageUrl, @JsonKey(name: 'imageObjet') this.image, @JsonKey(name: 'training_center') required this.center}): super._();
+  const _HotEventModel({@JsonKey(defaultValue: -1) required this.id, @JsonKey(defaultValue: '') required this.title, @JsonKey(defaultValue: '') required this.description, @JsonKey(name: 'start_date', defaultValue: '') required this.startDate, @JsonKey(name: 'end_date', defaultValue: '') required this.endDate, @JsonKey(defaultValue: '') required this.type, @JsonKey(defaultValue: '') required this.imageUrl, this.image, @JsonKey(name: 'training_center') required this.center}): super._();
   factory _HotEventModel.fromJson(Map<String, dynamic> json) => _$HotEventModelFromJson(json);
 
 @override@JsonKey(defaultValue: -1) final  int id;
@@ -247,8 +247,8 @@ class _HotEventModel extends HotEventModel {
 @override@JsonKey(name: 'start_date', defaultValue: '') final  String startDate;
 @override@JsonKey(name: 'end_date', defaultValue: '') final  String endDate;
 @override@JsonKey(defaultValue: '') final  String type;
-@override@JsonKey(name: 'image', defaultValue: '') final  String imageUrl;
-@override@JsonKey(name: 'imageObjet') final  JobImageModel? image;
+@override@JsonKey(defaultValue: '') final  String imageUrl;
+@override final  JobImageModel? image;
 @override@JsonKey(name: 'training_center') final  TrainingCenterModel center;
 
 /// Create a copy of HotEventModel
@@ -284,7 +284,7 @@ abstract mixin class _$HotEventModelCopyWith<$Res> implements $HotEventModelCopy
   factory _$HotEventModelCopyWith(_HotEventModel value, $Res Function(_HotEventModel) _then) = __$HotEventModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(defaultValue: -1) int id,@JsonKey(defaultValue: '') String title,@JsonKey(defaultValue: '') String description,@JsonKey(name: 'start_date', defaultValue: '') String startDate,@JsonKey(name: 'end_date', defaultValue: '') String endDate,@JsonKey(defaultValue: '') String type,@JsonKey(name: 'image', defaultValue: '') String imageUrl,@JsonKey(name: 'imageObjet') JobImageModel? image,@JsonKey(name: 'training_center') TrainingCenterModel center
+@JsonKey(defaultValue: -1) int id,@JsonKey(defaultValue: '') String title,@JsonKey(defaultValue: '') String description,@JsonKey(name: 'start_date', defaultValue: '') String startDate,@JsonKey(name: 'end_date', defaultValue: '') String endDate,@JsonKey(defaultValue: '') String type,@JsonKey(defaultValue: '') String imageUrl, JobImageModel? image,@JsonKey(name: 'training_center') TrainingCenterModel center
 });
 
 

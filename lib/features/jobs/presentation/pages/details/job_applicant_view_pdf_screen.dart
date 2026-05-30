@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class JobApplicantViewPdfScreen extends StatelessWidget {
@@ -9,7 +10,7 @@ class JobApplicantViewPdfScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('View PDF')),
+      appBar: AppBar(title: Text(context.appLoc.view_pdf)),
       body: SfPdfViewer.network(
         pdfUrl,
         canShowPaginationDialog: false,

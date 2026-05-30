@@ -19,12 +19,13 @@ import 'package:kianja/features/jobs/data/models/output/jobs/job_applicant_zone/
 import 'package:kianja/features/jobs/data/models/output/jobs/job_offer/job_offer_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_offer_filter/job_offer_filter_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_category/job_category_model.dart';
+import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_domain/job_domain_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_features/job_features_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/hot_event/hot_event_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/training_center/training_center_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/training_center_filter/training_center_filter_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/training_center_hot_event/training_center_hot_event_model.dart';
-import 'package:kianja/features/jobs/data/models/output/training/training_center_view_category/training_center_view_category_model.dart';
+import 'package:kianja/features/jobs/data/models/output/training/training_center_view_domain/training_center_view_domain_model.dart';
 
 abstract interface class JobsRemoteDataSource {
   Future<JobFeaturesModel> getJobFeatures();
@@ -54,14 +55,14 @@ abstract interface class JobsRemoteDataSource {
     required int id,
   });
   Future<TrainingCenterModel> getTrainingCenterDetail({required int id});
-  Future<List<JobCategoryModel>> getTrainingCenterCategories();
+  Future<List<JobDomainModel>> getTrainingCenterDomains();
   Future<List<TrainingCenterHotEventModel>> getTrainingCenterHotEvent();
   Future<TrainingCenterFilterModel> getTrainingCenterFilter();
   Future<List<HotEventModel>> viewAllHotEvents({required String query});
   Future<List<TrainingCenterModel>> viewAllTrainingCenters({
     required String query,
   });
-  Future<TrainingCenterViewCategoryModel> getTrainingCenterViewCategory({
+  Future<TrainingCenterViewDomainModel> getTrainingCenterViewDomain({
     required int id,
   });
   Future<TrainingCenterModel> createTrainingCenter({
@@ -174,7 +175,7 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
   }
 
   @override
-  Future<TrainingCenterViewCategoryModel> getTrainingCenterViewCategory({
+  Future<TrainingCenterViewDomainModel> getTrainingCenterViewDomain({
     required int id,
   }) async {
     return requestHandler(() async {
@@ -208,7 +209,7 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
                     ),
               )
               .toList();
-      return TrainingCenterViewCategoryModel(
+      return TrainingCenterViewDomainModel(
         vip: trainingCentersVip,
         premium: trainingCentersPremiun,
         normal: trainingCentersNormal,
@@ -343,13 +344,13 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
   }
 
   @override
-  Future<List<JobCategoryModel>> getTrainingCenterCategories() async {
+  Future<List<JobDomainModel>> getTrainingCenterDomains() async {
     return requestHandler(() async {
       final response = await dio.get('/api/training-centers/categories');
       final Map<String, dynamic> result = jsonHandler(response.data);
       final Map<String, dynamic> content = result['Contenu'];
       return (content['categories'] as List<dynamic>)
-          .map((e) => JobCategoryModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => JobDomainModel.fromJson(e as Map<String, dynamic>))
           .toList();
     });
   }

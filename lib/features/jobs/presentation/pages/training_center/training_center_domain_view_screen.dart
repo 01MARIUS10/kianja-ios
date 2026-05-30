@@ -9,23 +9,23 @@ import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/domain/entities/training/enum/training_center_badge.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
-import 'package:kianja/features/jobs/domain/usecases/get_training_center_view_category_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_training_center_view_domain_usecase.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/features/jobs/presentation/widgets/category/training_center_vip_section.dart';
 import 'package:kianja/features/jobs/presentation/widgets/item/training_center_item_list.dart';
 import 'package:kianja/routing/routes.dart';
 
-class TrainingCenterCategoryViewScreen extends StatelessWidget {
-  const TrainingCenterCategoryViewScreen({
+class TrainingCenterDomainViewScreen extends StatelessWidget {
+  const TrainingCenterDomainViewScreen({
     super.key,
-    required this.category,
+    required this.domain,
     required this.id,
   });
 
-  /// The display title for the category (e.g. "Auto-école").
-  final String category;
+  /// The display title for the domain (e.g. "Auto-école").
+  final String domain;
 
-  /// The category ID used to fetch VIP / Premium / Normal splits.
+  /// The domain ID used to fetch VIP / Premium / Normal splits.
   final int id;
 
   @override
@@ -33,28 +33,28 @@ class TrainingCenterCategoryViewScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => GetIt.instance<JobsBloc>()
         ..add(
-          GetTrainingCenterViewCategoryRequested(
-            params: GetTrainingCenterViewCategoryParams(id: id),
+          GetTrainingCenterViewDomainRequested(
+            params: GetTrainingCenterViewDomainParams(id: id),
           ),
         ),
       child: BaseScreen(
-        appBar: TitleHeader(title: category),
+        appBar: TitleHeader(title: domain),
         child: BlocBuilder<JobsBloc, JobsState>(
           builder: (context, state) {
-            if (state is GetTrainingCenterViewCategorySuccess) {
-              return _CategoryContent(
+            if (state is GetTrainingCenterViewDomainSuccess) {
+              return _DomainContent(
                 id: id,
-                category: category,
-                vip: state.trainingCenterViewCategory.vip,
-                premium: state.trainingCenterViewCategory.premium,
-                normal: state.trainingCenterViewCategory.normal,
+                domain: domain,
+                vip: state.trainingCenterViewDomain.vip,
+                premium: state.trainingCenterViewDomain.premium,
+                normal: state.trainingCenterViewDomain.normal,
               );
             } else if (state is JobsRequestFailure) {
               return ServerFailureScreen(
                 onRetry: () {
                   BlocProvider.of<JobsBloc>(context).add(
-                    GetTrainingCenterViewCategoryRequested(
-                      params: GetTrainingCenterViewCategoryParams(id: id),
+                    GetTrainingCenterViewDomainRequested(
+                      params: GetTrainingCenterViewDomainParams(id: id),
                     ),
                   );
                 },
@@ -74,17 +74,17 @@ class TrainingCenterCategoryViewScreen extends StatelessWidget {
 // Content
 // ─────────────────────────────────────────────
 
-class _CategoryContent extends StatelessWidget {
-  const _CategoryContent({
+class _DomainContent extends StatelessWidget {
+  const _DomainContent({
     required this.id,
-    required this.category,
+    required this.domain,
     required this.vip,
     required this.premium,
     required this.normal,
   });
 
   final int id;
-  final String category;
+  final String domain;
   final List<TrainingCenter> vip;
   final List<TrainingCenter> premium;
   final List<TrainingCenter> normal;
@@ -99,8 +99,8 @@ class _CategoryContent extends StatelessWidget {
       displacement: 10,
       onRefresh: () async {
         BlocProvider.of<JobsBloc>(context).add(
-          GetTrainingCenterViewCategoryRequested(
-            params: GetTrainingCenterViewCategoryParams(id: id),
+          GetTrainingCenterViewDomainRequested(
+            params: GetTrainingCenterViewDomainParams(id: id),
           ),
         );
       },

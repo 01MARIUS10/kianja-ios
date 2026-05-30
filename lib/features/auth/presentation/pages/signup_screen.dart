@@ -219,7 +219,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           if (state.message.contains('Unprocessable entity')) {
                             AppMessenger.showInfo(
                               context,
-                              'The phone number already exists.',
+                              context.appLoc.phone_already_exists,
                             );
                           } else {
                             AppMessenger.showError(context, state.message);

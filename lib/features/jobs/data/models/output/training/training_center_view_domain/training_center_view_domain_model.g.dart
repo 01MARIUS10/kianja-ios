@@ -1,14 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'training_center_view_category_model.dart';
+part of 'training_center_view_domain_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_TrainingCenterViewCategoryModel _$TrainingCenterViewCategoryModelFromJson(
+_TrainingCenterViewDomainModel _$TrainingCenterViewDomainModelFromJson(
   Map<String, dynamic> json,
-) => _TrainingCenterViewCategoryModel(
+) => _TrainingCenterViewDomainModel(
   vip:
       (json['Vip'] as List<dynamic>?)
           ?.map((e) => TrainingCenterModel.fromJson(e as Map<String, dynamic>))
@@ -26,8 +26,8 @@ _TrainingCenterViewCategoryModel _$TrainingCenterViewCategoryModelFromJson(
       [],
 );
 
-Map<String, dynamic> _$TrainingCenterViewCategoryModelToJson(
-  _TrainingCenterViewCategoryModel instance,
+Map<String, dynamic> _$TrainingCenterViewDomainModelToJson(
+  _TrainingCenterViewDomainModel instance,
 ) => <String, dynamic>{
   'Vip': instance.vip,
   'Premium': instance.premium,

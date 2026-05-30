@@ -192,6 +192,7 @@ class MyPostRepositoryImpl implements MyPostRepository {
           trainingCenterId: updateHotEventParams.trainingCenterId,
           id: updateHotEventParams.id,
           type: updateHotEventParams.type,
+          imageId: updateHotEventParams.imageId,
           title: updateHotEventParams.title,
           description: updateHotEventParams.description,
           startDate: updateHotEventParams.startDate,

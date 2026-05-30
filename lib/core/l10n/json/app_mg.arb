@@ -199,5 +199,10 @@
   "remove_training_center_question": "Te hanala ity foibe fampiofanana ity ve ianao ?",
   "remove_offer_question": "Te hanala ity tolotra ity ve ianao ?",
   "server_under_maintenance": "Ao anatin'ny fikojakojana ny serveur na nahitana olana. Azafady andramo indray any aoriana.",
-  "remove_history_question": "Te hanala ity tantara ity ve ianao ?"
+  "remove_history_question": "Te hanala ity tantara ity ve ianao ?",
+  "no_enough_kara": "Tsy ampy ny Kara anananao",
+  "phone_already_exists": "Efa misy io laharan-telefaona io.",
+  "domains": "Sehatra",
+  "deadline_must_be_today_or_future": "Ny fe-potoana farany dia tsy maintsy anio na daty any aoriana.",
+  "phone_number_cannot_be_changed": "Tsy azo ovaina ny laharan-telefaona."
 }

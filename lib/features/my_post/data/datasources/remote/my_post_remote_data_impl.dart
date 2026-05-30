@@ -123,6 +123,7 @@ class MyPostRemoteDataImpl implements MyPostRemoteData {
       } else {
         apiUrl = '/api/training-centers/events/${hotEventInputModel.id}';
       }
+      AppDebug.showPrint('UPDATE HOT : ${hotEventInputModel.toJson()}');
       final response = await dio.put(apiUrl, data: hotEventInputModel.toJson());
       final Map<String, dynamic> result = jsonHandler(response.data);
       return HotEventModel.fromJson(result);

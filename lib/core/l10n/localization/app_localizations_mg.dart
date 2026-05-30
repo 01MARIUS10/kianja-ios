@@ -629,4 +629,21 @@ class AppLocalizationsMg extends AppLocalizations {
   @override
   String get server_under_maintenance =>
       'Ao anatin\'ny fikojakojana ny serveur na nahitana olana. Azafady andramo indray any aoriana.';
+
+  @override
+  String get no_enough_kara => 'Tsy ampy ny Kara anananao';
+
+  @override
+  String get phone_already_exists => 'Efa misy io laharan-telefaona io.';
+
+  @override
+  String get domains => 'Sehatra';
+
+  @override
+  String get deadline_must_be_today_or_future =>
+      'Ny fe-potoana farany dia tsy maintsy anio na daty any aoriana.';
+
+  @override
+  String get phone_number_cannot_be_changed =>
+      'Tsy azo ovaina ny laharan-telefaona.';
 }

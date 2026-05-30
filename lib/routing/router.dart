@@ -39,7 +39,7 @@ import 'package:kianja/features/jobs/presentation/pages/post/successful/post_hot
 import 'package:kianja/features/jobs/presentation/pages/post/successful/post_job_applicant_successful_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/successful/post_job_offer_successful_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/successful/post_training_successful_screen.dart';
-import 'package:kianja/features/jobs/presentation/pages/training_center/training_center_category_view_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/training_center/training_center_domain_view_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/view_all/job_applicants_view_all_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/view_all/job_category_view_all_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/view_all/training_center_hot_event_view_all_screen.dart';
@@ -129,7 +129,23 @@ abstract class AppRouter {
             return const ChooseLangScreen();
           },
         ),
+
         // ================= CHOOSE LANG =================
+
+        // ================= PHOTO VIEWER =================
+        GoRoute(
+          parentNavigatorKey: _rootNavigatorKey,
+          name: Routes.photoViewer.name,
+          path: Routes.photoViewer.path,
+          builder: (context, state) {
+            final extra = state.extra as Map<String, dynamic>? ?? {};
+            return PhotoViewerScreen(
+              imageUrls: extra['imageUrls'] as List<String>? ?? [],
+              initialIndex: int.tryParse(extra['initialIndex'] ?? '0') ?? 0,
+            );
+          },
+        ),
+        // ================= PHOTO VIEWER =================
 
         // ================= NAVIGATION (SHELL) =================
         StatefulShellRoute.indexedStack(
@@ -238,73 +254,13 @@ abstract class AppRouter {
                       path: Routes.trainingCenterDetail.path,
                       builder: (context, state) {
                         final params = state.pathParameters;
+                        final extra = state.extra as Map<String, String>? ?? {};
                         return TrainingCenterDetail(
                           id: int.parse(params['trainingCenterId'] ?? '0'),
+                          matchedLocationBefore:
+                              extra['matchedLocationBefore'] ?? '',
                         );
                       },
-                      routes: [
-                        GoRoute(
-                          parentNavigatorKey: _rootNavigatorKey,
-                          name: Routes.photoViewer.name,
-                          path: Routes.photoViewer.path,
-                          builder: (context, state) {
-                            final extra =
-                                state.extra as Map<String, dynamic>? ?? {};
-                            return PhotoViewerScreen(
-                              imageUrls:
-                                  extra['imageUrls'] as List<String>? ?? [],
-                              initialIndex:
-                                  int.tryParse(extra['initialIndex'] ?? '0') ??
-                                  0,
-                            );
-                          },
-                        ),
-                        GoRoute(
-                          name: Routes.postHotEvent.name,
-                          path: Routes.postHotEvent.path,
-                          builder: (context, state) {
-                            final params = state.pathParameters;
-                            return PostHotEventScreen(
-                              trainingCenterId: int.parse(
-                                params['trainingCenterId'] ?? '0',
-                              ),
-                            );
-                          },
-                          routes: [
-                            GoRoute(
-                              name: Routes.createHotEvent.name,
-                              path: Routes.createHotEvent.path,
-                              builder: (context, state) {
-                                final extra =
-                                    state.extra as Map<String, dynamic>? ?? {};
-                                final params = state.pathParameters;
-                                return CreateHotEventScreen(
-                                  trainingCenterId: int.parse(
-                                    params['trainingCenterId'] ?? '0',
-                                  ),
-                                  type: extra['type'] ?? '',
-                                );
-                              },
-                              routes: [
-                                GoRoute(
-                                  name: Routes.createHotEventSuccessful.name,
-                                  path: Routes.createHotEventSuccessful.path,
-                                  builder: (context, state) {
-                                    final params = state.pathParameters;
-                                    final extra =
-                                        state.extra as Map<String, dynamic>? ??
-                                        {};
-                                    return PostHotEventSuccessfulScreen(
-                                      id: int.parse(params['id'] ?? '0'),
-                                      type: extra['type'] ?? '',
-                                    );
-                                  },
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
                     ),
                     GoRoute(
                       name: Routes.trainingCenterHotEventViewAll.name,
@@ -333,16 +289,44 @@ abstract class AppRouter {
                       },
                     ),
                     GoRoute(
-                      name: Routes.trainingCenterViewCategory.name,
-                      path: Routes.trainingCenterViewCategory.path,
+                      name: Routes.trainingCenterViewDomain.name,
+                      path: Routes.trainingCenterViewDomain.path,
                       builder: (context, state) {
                         final params = state.pathParameters;
                         final extra = state.extra as Map<String, String>? ?? {};
-                        return TrainingCenterCategoryViewScreen(
+                        return TrainingCenterDomainViewScreen(
                           id: int.parse(params['id'] ?? '0'),
-                          category: extra['category'] ?? '',
+                          domain: extra['domain'] ?? '',
                         );
                       },
+                    ),
+                    GoRoute(
+                      name: Routes.postExpertExecutive.name,
+                      path: Routes.postExpertExecutive.path,
+                      builder: (context, state) {
+                        return const PostExpertsExecutivesScreen();
+                      },
+                      routes: [
+                        GoRoute(
+                          name: Routes.subscribeExpertExecutive.name,
+                          path: Routes.subscribeExpertExecutive.path,
+                          builder: (context, state) {
+                            return const SubscribeExpertsExecutivesScreen();
+                          },
+                          routes: [
+                            GoRoute(
+                              name: Routes.postExpertExecutiveSuccessful.name,
+                              path: Routes.postExpertExecutiveSuccessful.path,
+                              builder: (context, state) {
+                                final params = state.pathParameters;
+                                return PostExecutiveSuccessfulScreen(
+                                  id: int.parse(params['id'] ?? '0'),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -416,34 +400,6 @@ abstract class AppRouter {
                         ),
                       ],
                     ),
-                    GoRoute(
-                      name: Routes.postExpertExecutive.name,
-                      path: Routes.postExpertExecutive.path,
-                      builder: (context, state) {
-                        return const PostExpertsExecutivesScreen();
-                      },
-                      routes: [
-                        GoRoute(
-                          name: Routes.subscribeExpertExecutive.name,
-                          path: Routes.subscribeExpertExecutive.path,
-                          builder: (context, state) {
-                            return const SubscribeExpertsExecutivesScreen();
-                          },
-                          routes: [
-                            GoRoute(
-                              name: Routes.postExpertExecutiveSuccessful.name,
-                              path: Routes.postExpertExecutiveSuccessful.path,
-                              builder: (context, state) {
-                                final params = state.pathParameters;
-                                return PostExecutiveSuccessfulScreen(
-                                  id: int.parse(params['id'] ?? '0'),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ],
@@ -514,6 +470,50 @@ abstract class AppRouter {
                           initialHotEvent: hotEvent,
                         );
                       },
+                    ),
+                    GoRoute(
+                      name: Routes.postHotEvent.name,
+                      path: Routes.postHotEvent.path,
+                      builder: (context, state) {
+                        final params = state.pathParameters;
+                        return PostHotEventScreen(
+                          trainingCenterId: int.parse(
+                            params['trainingCenterId'] ?? '0',
+                          ),
+                        );
+                      },
+                      routes: [
+                        GoRoute(
+                          name: Routes.createHotEvent.name,
+                          path: Routes.createHotEvent.path,
+                          builder: (context, state) {
+                            final extra =
+                                state.extra as Map<String, dynamic>? ?? {};
+                            final params = state.pathParameters;
+                            return CreateHotEventScreen(
+                              trainingCenterId: int.parse(
+                                params['trainingCenterId'] ?? '0',
+                              ),
+                              type: extra['type'] ?? '',
+                            );
+                          },
+                          routes: [
+                            GoRoute(
+                              name: Routes.createHotEventSuccessful.name,
+                              path: Routes.createHotEventSuccessful.path,
+                              builder: (context, state) {
+                                final params = state.pathParameters;
+                                final extra =
+                                    state.extra as Map<String, dynamic>? ?? {};
+                                return PostHotEventSuccessfulScreen(
+                                  id: int.parse(params['id'] ?? '0'),
+                                  type: extra['type'] ?? '',
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ],
                 ),

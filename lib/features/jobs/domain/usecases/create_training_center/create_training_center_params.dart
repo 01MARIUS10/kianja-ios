@@ -3,6 +3,7 @@ class CreateTrainingCenterParams {
     required this.name,
     required this.description,
     required this.imageIds,
+    required this.domainIds,
     required this.actorId,
     required this.locationId,
     required this.typeId,
@@ -13,6 +14,7 @@ class CreateTrainingCenterParams {
   final String name;
   final String description;
   final List<int> imageIds;
+  final List<int> domainIds;
   final int actorId;
   final int locationId;
   final int typeId;

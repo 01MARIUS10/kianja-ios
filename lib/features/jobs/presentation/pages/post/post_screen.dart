@@ -7,7 +7,7 @@ import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/routing/routes.dart';
 
-enum PostType { jobOffer, jobApplicant, trainingCenter, expertExecutive }
+enum PostType { jobOffer, jobApplicant, trainingCenter }
 
 class PostScreen extends StatefulWidget {
   const PostScreen({super.key});
@@ -24,7 +24,7 @@ class _PostScreenState extends State<PostScreen> {
       PostType.jobOffer => context.appLoc.job_offer,
       PostType.jobApplicant => context.appLoc.job_applicant,
       PostType.trainingCenter => context.appLoc.training_center,
-      PostType.expertExecutive => context.appLoc.expert_executive,
+      // PostType.expertExecutive => context.appLoc.expert_executive,
     };
   }
 
@@ -33,7 +33,7 @@ class _PostScreenState extends State<PostScreen> {
       PostType.jobOffer => context.appLoc.create_job_offer,
       PostType.jobApplicant => context.appLoc.create_job_applicant,
       PostType.trainingCenter => context.appLoc.register_training_center,
-      PostType.expertExecutive => context.appLoc.subscribe_expert_executive,
+      // PostType.expertExecutive => context.appLoc.subscribe_expert_executive,
     };
   }
 
@@ -48,9 +48,9 @@ class _PostScreenState extends State<PostScreen> {
       case PostType.trainingCenter:
         context.goNamed(Routes.postTrainingCenter.name);
         break;
-      case PostType.expertExecutive:
-        context.goNamed(Routes.postExpertExecutive.name);
-        break;
+      // case PostType.expertExecutive:
+      //   context.goNamed(Routes.postExpertExecutive.name);
+      //   break;
     }
   }
 
@@ -128,19 +128,19 @@ class _PostScreenState extends State<PostScreen> {
                     });
                   },
                 ),
-                const SizedBox(height: Constants.spacingMedium),
-                _PostOptionTile(
-                  icon: Icons.work_outline,
-                  title: context.appLoc.expert_executive,
-                  isSelected: _selectedType == PostType.expertExecutive,
-                  isDark: isDark,
-                  theme: theme,
-                  onTap: () {
-                    setState(() {
-                      _selectedType = PostType.expertExecutive;
-                    });
-                  },
-                ),
+                // const SizedBox(height: Constants.spacingMedium),
+                // _PostOptionTile(
+                //   icon: Icons.work_outline,
+                //   title: context.appLoc.expert_executive,
+                //   isSelected: _selectedType == PostType.expertExecutive,
+                //   isDark: isDark,
+                //   theme: theme,
+                //   onTap: () {
+                //     setState(() {
+                //       _selectedType = PostType.expertExecutive;
+                //     });
+                //   },
+                // ),
               ],
             ),
             const SizedBox(height: Constants.spacingLarge),

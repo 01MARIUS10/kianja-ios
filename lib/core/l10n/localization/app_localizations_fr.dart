@@ -629,4 +629,21 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get server_under_maintenance =>
       'Le serveur est en maintenance ou a rencontré une erreur. Veuillez réessayer plus tard.';
+
+  @override
+  String get no_enough_kara => 'Vous n\'avez pas assez de Kara';
+
+  @override
+  String get phone_already_exists => 'Ce numéro de téléphone existe déjà.';
+
+  @override
+  String get domains => 'Domaines';
+
+  @override
+  String get deadline_must_be_today_or_future =>
+      'La date limite doit être aujourd\'hui ou une date future.';
+
+  @override
+  String get phone_number_cannot_be_changed =>
+      'Le numéro de téléphone ne peut pas être modifié.';
 }

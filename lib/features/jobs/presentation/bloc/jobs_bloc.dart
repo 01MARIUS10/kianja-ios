@@ -14,12 +14,13 @@ import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_zone.dar
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer_filter.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_category.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_domain.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
 import 'package:kianja/features/jobs/domain/entities/training/hot_event.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center_filter.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center_hot_event.dart';
-import 'package:kianja/features/jobs/domain/entities/training/training_center_view_all_category.dart';
+import 'package:kianja/features/jobs/domain/entities/training/training_center_view_all_domain.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_hot_event/create_hot_event_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_hot_event/create_hot_event_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_params.dart';
@@ -39,11 +40,11 @@ import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_
 import 'package:kianja/features/jobs/domain/usecases/get_job_features_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_offer_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_offers_group_by_usecase.dart';
-import 'package:kianja/features/jobs/domain/usecases/get_training_center_categories_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_detail_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_training_center_domains_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_filter_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_hot_event_usecase.dart';
-import 'package:kianja/features/jobs/domain/usecases/get_training_center_view_category_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_training_center_view_domain_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/subscribe_expert_executive_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/subscribe_expert_executive_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/upload_image_usecase.dart';
@@ -74,16 +75,15 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     required GetJobApplicantFiltersUseCase getJobApplicantFiltersUseCase,
     required GetJobApplicantPlanUsecase getJobApplicantPlanUsecase,
     required CreateJobApplicantUseCase createJobApplicantUseCase,
-    required GetTrainingCenterCategoriesUseCase
-    getTrainingCenterCategoriesUseCase,
+    required GetTrainingCenterDomainsUseCase getTrainingCenterDomainsUseCase,
     required GetTrainingCenterFilterUseCase getTrainingCenterFilterUseCase,
     required GetTrainingCenterHotEventUseCase getTrainingCenterHotEventUseCase,
     required ViewAllHotEventUseCase viewAllHotEventUseCase,
     required ViewAllTrainingCenterUseCase viewAllTrainingCenterUseCase,
     required GetHotEventDetailUseCase getHotEventDetailUseCase,
     required GetTrainingCenterDetailUseCase getTrainingCenterDetailUseCase,
-    required GetTrainingCenterViewCategoryUseCase
-    getTrainingCenterViewCategoryUseCase,
+    required GetTrainingCenterViewDomainUseCase
+    getTrainingCenterViewDomainUseCase,
     required CreateTrainingCenterUseCase createTrainingCenterUseCase,
     required SubscribeExpertExecutiveUseCase subscribeExpertExecutiveUseCase,
     required CreateHotEventUseCase createHotEventUseCase,
@@ -101,15 +101,14 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
        _getJobApplicantFiltersUseCase = getJobApplicantFiltersUseCase,
        _getJobApplicantPlanUsecase = getJobApplicantPlanUsecase,
        _createJobApplicantUseCase = createJobApplicantUseCase,
-       _getTrainingCenterCategoriesUseCase = getTrainingCenterCategoriesUseCase,
+       _getTrainingCenterDomainsUseCase = getTrainingCenterDomainsUseCase,
        _getTrainingCenterFilterUseCase = getTrainingCenterFilterUseCase,
        _getTrainingCenterHotEventUseCase = getTrainingCenterHotEventUseCase,
        _viewAllHotEventUseCase = viewAllHotEventUseCase,
        _viewAllTrainingCenterUseCase = viewAllTrainingCenterUseCase,
        _getHotEventDetailUseCase = getHotEventDetailUseCase,
        _getTrainingCenterDetailUseCase = getTrainingCenterDetailUseCase,
-       _getTrainingCenterViewCategoryUseCase =
-           getTrainingCenterViewCategoryUseCase,
+       _getTrainingCenterViewDomainUseCase = getTrainingCenterViewDomainUseCase,
        _createTrainingCenterUseCase = createTrainingCenterUseCase,
        _subscribeExpertExecutiveUseCase = subscribeExpertExecutiveUseCase,
        _createHotEventUseCase = createHotEventUseCase,
@@ -135,9 +134,7 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     on<JobApplicantFiltersFetchRequested>(_onJobApplicantFiltersFetchRequested);
     on<JobsGetJobApplicantPlanRequested>(_onJobsGetJobApplicantPlanRequested);
     on<JobCreateJobApplicantRequested>(_onJobCreateJobApplicantRequested);
-    on<GetTrainingCenterCategoriesRequested>(
-      _onGetTrainingCenterCategoriesRequested,
-    );
+    on<GetTrainingCenterDomainsRequested>(_onGetTrainingCenterDomainsRequested);
     on<GetTrainingCenterFilterRequested>(_onGetTrainingCenterFilterRequested);
     on<GetTrainingCenterHotEventRequested>(
       _onGetTrainingCenterHotEventRequested,
@@ -146,8 +143,8 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     on<ViewAllTrainingCentersRequested>(_onViewAllTrainingCentersRequested);
     on<GetHotEventDetailRequested>(_onGetHotEventDetailRequested);
     on<GetTrainingCenterDetailRequested>(_onGetTrainingCenterDetailRequested);
-    on<GetTrainingCenterViewCategoryRequested>(
-      _onGetTrainingCenterViewCategoryRequested,
+    on<GetTrainingCenterViewDomainRequested>(
+      _onGetTrainingCenterViewDomainRequested,
     );
     on<CreateTrainingCenterRequested>(_onCreateTrainingCenterRequested);
     on<SubscribeExpertExecutiveRequested>(_onSubscribeExpertExecutiveRequested);
@@ -168,15 +165,14 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
   final GetJobApplicantFiltersUseCase _getJobApplicantFiltersUseCase;
   final GetJobApplicantPlanUsecase _getJobApplicantPlanUsecase;
   final CreateJobApplicantUseCase _createJobApplicantUseCase;
-  final GetTrainingCenterCategoriesUseCase _getTrainingCenterCategoriesUseCase;
+  final GetTrainingCenterDomainsUseCase _getTrainingCenterDomainsUseCase;
   final GetTrainingCenterFilterUseCase _getTrainingCenterFilterUseCase;
   final GetTrainingCenterHotEventUseCase _getTrainingCenterHotEventUseCase;
   final ViewAllHotEventUseCase _viewAllHotEventUseCase;
   final ViewAllTrainingCenterUseCase _viewAllTrainingCenterUseCase;
   final GetHotEventDetailUseCase _getHotEventDetailUseCase;
   final GetTrainingCenterDetailUseCase _getTrainingCenterDetailUseCase;
-  final GetTrainingCenterViewCategoryUseCase
-  _getTrainingCenterViewCategoryUseCase;
+  final GetTrainingCenterViewDomainUseCase _getTrainingCenterViewDomainUseCase;
   final CreateTrainingCenterUseCase _createTrainingCenterUseCase;
   final SubscribeExpertExecutiveUseCase _subscribeExpertExecutiveUseCase;
   final CreateHotEventUseCase _createHotEventUseCase;
@@ -247,19 +243,19 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     );
   }
 
-  Future<void> _onGetTrainingCenterViewCategoryRequested(
-    GetTrainingCenterViewCategoryRequested event,
+  Future<void> _onGetTrainingCenterViewDomainRequested(
+    GetTrainingCenterViewDomainRequested event,
     Emitter<JobsState> emit,
   ) async {
-    AppDebug.showPrint('Bloc Jobs - Training center view category request');
+    AppDebug.showPrint('Bloc Jobs - Training center view Domain request');
 
     emit(JobsRequestInProgress());
-    final result = await _getTrainingCenterViewCategoryUseCase(event.params);
+    final result = await _getTrainingCenterViewDomainUseCase(event.params);
     result.fold(
       (failure) => emit(JobsRequestFailure(message: failure.message)),
-      (trainingCenterViewCategory) => emit(
-        GetTrainingCenterViewCategorySuccess(
-          trainingCenterViewCategory: trainingCenterViewCategory,
+      (trainingCenterViewDomain) => emit(
+        GetTrainingCenterViewDomainSuccess(
+          trainingCenterViewDomain: trainingCenterViewDomain,
         ),
       ),
     );
@@ -358,19 +354,19 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     );
   }
 
-  Future<void> _onGetTrainingCenterCategoriesRequested(
-    GetTrainingCenterCategoriesRequested event,
+  Future<void> _onGetTrainingCenterDomainsRequested(
+    GetTrainingCenterDomainsRequested event,
     Emitter<JobsState> emit,
   ) async {
-    AppDebug.showPrint('Bloc Jobs - Training center categories request');
+    AppDebug.showPrint('Bloc Jobs - Training center domains request');
 
     emit(JobsRequestInProgress());
-    final result = await _getTrainingCenterCategoriesUseCase(NoParams());
+    final result = await _getTrainingCenterDomainsUseCase(NoParams());
     result.fold(
       (failure) => emit(JobsRequestFailure(message: failure.message)),
-      (trainingCenterCategories) => emit(
-        GetTrainingCenterCategoriesSuccess(
-          trainingCenterCategories: trainingCenterCategories,
+      (trainingCenterDomains) => emit(
+        GetTrainingCenterDomainsSuccess(
+          trainingCenterDomains: trainingCenterDomains,
         ),
       ),
     );

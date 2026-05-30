@@ -12,11 +12,11 @@ import 'package:kianja/routing/routes.dart';
 class TrainingCenterVerticalSection extends StatelessWidget {
   const TrainingCenterVerticalSection({
     super.key,
-    required this.category,
+    required this.domain,
     required this.query,
     required this.trainingCenters,
   });
-  final String category;
+  final String domain;
   final String query;
   final List<TrainingCenter> trainingCenters;
 
@@ -38,7 +38,7 @@ class TrainingCenterVerticalSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                category,
+                domain,
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -104,7 +104,7 @@ class TrainingCenterVerticalSection extends StatelessWidget {
             onPressed: () {
               context.goNamed(
                 Routes.trainingCenterViewAll.name,
-                extra: {'title': category, 'query': query},
+                extra: {'title': domain, 'query': query},
               );
             },
             child: Text(

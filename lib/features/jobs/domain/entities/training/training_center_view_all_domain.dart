@@ -1,13 +1,13 @@
 import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
 
-class TrainingCenterViewCategory {
-  const TrainingCenterViewCategory({
+class TrainingCenterViewDomain {
+  const TrainingCenterViewDomain({
     required this.vip,
     required this.premium,
     required this.normal,
   });
 
-  const TrainingCenterViewCategory.empty({
+  const TrainingCenterViewDomain.empty({
     this.vip = const [],
     this.premium = const [],
     this.normal = const [],

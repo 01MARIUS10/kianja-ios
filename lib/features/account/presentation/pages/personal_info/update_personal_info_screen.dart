@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
 import 'package:kianja/core/shared/widgets/avatar/default_avatar.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
@@ -152,7 +153,7 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
                                   )
                                 : user.photoUrl.isNotEmpty
                                 ? Image.network(
-                                    user.photoUrl,
+                                    '${EnvConfig.baseApiUrl}${user.photoUrl}',
                                     fit: BoxFit.cover,
                                     width: Constants.size100,
                                     height: Constants.size100,
@@ -213,7 +214,7 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
                     onTap: () {
                       AppMessenger.showInfo(
                         context,
-                        'Phone number cannot be changed',
+                        context.appLoc.phone_number_cannot_be_changed,
                       );
                     },
                     child: PhoneInputField(

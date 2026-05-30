@@ -199,5 +199,10 @@
   "remove_training_center_question":"Do you want to remove this training ?",
   "remove_offer_question":"Do you want to remove this offer ?",
   "remove_history_question":"Do you want to remove this history ?",
-  "server_under_maintenance":"The server is under maintenance or encountered an error. Please try again later."
+  "server_under_maintenance":"The server is under maintenance or encountered an error. Please try again later.",
+  "no_enough_kara":"You don't have enough Kara",
+  "phone_already_exists":"The phone number already exists.",
+  "domains":"Domains",
+  "deadline_must_be_today_or_future":"The deadline must be today or a future date.",
+  "phone_number_cannot_be_changed":"Phone number cannot be changed"
 }

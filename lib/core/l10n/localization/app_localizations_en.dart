@@ -624,4 +624,20 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get server_under_maintenance =>
       'The server is under maintenance or encountered an error. Please try again later.';
+
+  @override
+  String get no_enough_kara => 'You don\'t have enough Kara';
+
+  @override
+  String get phone_already_exists => 'The phone number already exists.';
+
+  @override
+  String get domains => 'Domains';
+
+  @override
+  String get deadline_must_be_today_or_future =>
+      'The deadline must be today or a future date.';
+
+  @override
+  String get phone_number_cannot_be_changed => 'Phone number cannot be changed';
 }

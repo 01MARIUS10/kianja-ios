@@ -19,8 +19,13 @@ import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/routing/routes.dart';
 
 class TrainingCenterDetail extends StatelessWidget {
-  const TrainingCenterDetail({super.key, required this.id});
+  const TrainingCenterDetail({
+    super.key,
+    required this.id,
+    required this.matchedLocationBefore,
+  });
   final int id;
+  final String matchedLocationBefore;
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +87,9 @@ class TrainingCenterDetail extends StatelessWidget {
                                     ),
                                   ),
                                   if (appState.user.id ==
-                                      state.trainingCenter.user.id)
+                                          state.trainingCenter.user.id &&
+                                      matchedLocationBefore ==
+                                          Routes.myPost.path)
                                     InkWell(
                                       onTap: () {
                                         context.pushNamed(
@@ -145,8 +152,6 @@ class TrainingCenterDetail extends StatelessWidget {
                             horizontal: Constants.paddingMedium,
                           ),
                           child: PhotoHandler(
-                            trainingCenterId: trainingCenter.id,
-                            height: 300,
                             width: double.infinity,
                             imageUrls: trainingCenter.images
                                 .map(
@@ -155,30 +160,8 @@ class TrainingCenterDetail extends StatelessWidget {
                                 )
                                 .toList(),
                           ),
-                          // child: ClipRRect(
-                          //   child: CachedNetworkImage(
-                          //     imageUrl:
-                          //         '${EnvConfig.baseApiUrl}${trainingCenter.imageUrl}',
-                          //     fit: BoxFit.cover,
-                          //     errorWidget: (context, url, error) {
-                          //       return Image.asset(
-                          //         Assets.hiring,
-                          //         fit: BoxFit.cover,
-                          //         errorBuilder: (context, url, error) => const Icon(
-                          //           Icons.image,
-                          //           size: 40,
-                          //           color: Colors.grey,
-                          //         ),
-                          //       );
-                          //     },
-                          //     progressIndicatorBuilder: (context, url, progress) {
-                          //       return const Center(
-                          //         child: CircularProgressIndicator(),
-                          //       );
-                          //     },
-                          //   ),
-                          // ),
                         ),
+
                         const SizedBox(height: Constants.spacingMedium),
                         Divider(
                           color: borderColor,
@@ -241,8 +224,11 @@ class TrainingCenterDetail extends StatelessWidget {
                               const SizedBox(height: Constants.spacingMedium),
                               _buildFeatureRow(
                                 context,
-                                label: context.appLoc.categories,
-                                value: trainingCenter.category?.name ?? '',
+                                label: context.appLoc.domain,
+                                value: trainingCenter.domains
+                                    .map((domain) => domain.name)
+                                    .toList()
+                                    .join(', '),
                               ),
                               const SizedBox(height: Constants.spacingSmall),
                               _buildFeatureRow(

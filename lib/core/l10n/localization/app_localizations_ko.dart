@@ -614,4 +614,19 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String get server_under_maintenance =>
       '서버가 점검 중이거나 오류가 발생했습니다. 나중에 다시 시도해 주세요.';
+
+  @override
+  String get no_enough_kara => '보유한 Kara가 부족합니다';
+
+  @override
+  String get phone_already_exists => '이미 등록된 전화번호입니다.';
+
+  @override
+  String get domains => '분야';
+
+  @override
+  String get deadline_must_be_today_or_future => '마감일은 오늘 또는 미래 날짜여야 합니다.';
+
+  @override
+  String get phone_number_cannot_be_changed => '전화번호는 변경할 수 없습니다.';
 }

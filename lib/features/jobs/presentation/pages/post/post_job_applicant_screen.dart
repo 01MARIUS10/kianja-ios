@@ -180,7 +180,14 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                   pathParameters: {'id': state.jobApplicant.id.toString()},
                 );
               } else if (state is JobsRequestFailure) {
-                AppMessenger.showError(context, state.message);
+                if (state.message == 'Unprocessable entity') {
+                  AppMessenger.showError(
+                    context,
+                    context.appLoc.no_enough_kara,
+                  );
+                } else {
+                  AppMessenger.showError(context, state.message);
+                }
               }
             },
             builder: (context, state) {

@@ -81,6 +81,9 @@ class _MyPostTrainingCenterScreenState extends State<MyPostTrainingCenterScreen>
     context.pushNamed(
       Routes.trainingCenterDetail.name,
       pathParameters: {'trainingCenterId': trainingCenter.id.toString()},
+      extra: {
+        'matchedLocationBefore': GoRouter.of(context).state.matchedLocation,
+      },
     );
   }
 

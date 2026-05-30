@@ -282,7 +282,7 @@ class _MyPostHotEventEditScreenState extends State<MyPostHotEventEditScreen> {
                                       ),
                                     )
                                   : Text(
-                                      context.appLoc.save.toUpperCase(),
+                                      context.appLoc.update.toUpperCase(),
                                       style: theme.textTheme.titleMedium
                                           ?.copyWith(
                                             fontWeight: FontWeight.bold,

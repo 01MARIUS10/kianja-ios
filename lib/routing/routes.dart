@@ -32,7 +32,7 @@ enum Routes {
   trainingCenterHotEventViewAll('training-center-hot-event-view-all'),
   trainingCenterHotEventDetail('training-center-hot-event-detail/:id'),
   trainingCenterViewAll('training-center-view-all'),
-  trainingCenterViewCategory('training-center-view-category/:id'),
+  trainingCenterViewDomain('training-center-view-domain/:id'),
   trainingCenterDetail('training-center-detail/:trainingCenterId'),
   // ------------- TRAINING CENTER ----------------
 
@@ -42,7 +42,7 @@ enum Routes {
   postJobOffer('job-offer'),
   postTrainingCenter('training-center'),
   postExpertExecutive('expert-executive'),
-  postHotEvent('postHotEvent'),
+  postHotEvent('postHotEvent/:trainingCenterId'),
   createHotEvent('createHotEvent'),
   createHotEventSuccessful('createHotEventSuccessfully/:id'),
   subscribeExpertExecutive('subscribe-expert-executive'),

@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kianja/core/config/assets.dart';
+import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/domain/entities/training/hot_event.dart';
@@ -35,9 +37,22 @@ class HotEventCard extends StatelessWidget {
             height: Constants.size100,
             width: double.infinity,
             color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
-            child: hotEvent.type == 'hot'
-                ? Image.asset(Assets.hot, fit: BoxFit.fill)
-                : Image.asset(Assets.events, fit: BoxFit.fill),
+            child: CachedNetworkImage(
+              imageUrl: '${EnvConfig.baseApiUrl}${hotEvent.image?.url}',
+              fit: BoxFit.fill,
+              errorWidget: (context, url, error) {
+                return Image.asset(
+                  Assets.hiring,
+                  fit: BoxFit.fill,
+                  errorBuilder: (context, url, error) => hotEvent.type == 'hot'
+                      ? Image.asset(Assets.hot, fit: BoxFit.fill)
+                      : Image.asset(Assets.events, fit: BoxFit.fill),
+                );
+              },
+              progressIndicatorBuilder: (context, url, progress) {
+                return const Center(child: CircularProgressIndicator());
+              },
+            ),
           ),
 
           Padding(

@@ -7,13 +7,11 @@ import 'package:kianja/routing/routes.dart';
 class PhotoHandler extends StatefulWidget {
   const PhotoHandler({
     super.key,
-    required this.trainingCenterId,
     required this.imageUrls,
-    this.height,
+    this.height = 450,
     this.width,
-    this.fit = BoxFit.cover,
+    this.fit = BoxFit.fill,
   });
-  final int trainingCenterId;
   final List<String> imageUrls;
   final double? height;
   final double? width;
@@ -36,7 +34,6 @@ class _PhotoHandlerState extends State<PhotoHandler> {
   void _openPhotoViewer(BuildContext context, int index) {
     context.pushNamed(
       Routes.photoViewer.name,
-      pathParameters: {'id': widget.trainingCenterId.toString()},
       extra: {'imageUrls': widget.imageUrls, 'initialIndex': index.toString()},
     );
   }

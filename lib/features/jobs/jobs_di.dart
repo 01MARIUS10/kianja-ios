@@ -16,11 +16,11 @@ import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_
 import 'package:kianja/features/jobs/domain/usecases/get_job_features_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_offer_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_offers_group_by_usecase.dart';
-import 'package:kianja/features/jobs/domain/usecases/get_training_center_categories_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_detail_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_training_center_domains_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_filter_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_hot_event_usecase.dart';
-import 'package:kianja/features/jobs/domain/usecases/get_training_center_view_category_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_training_center_view_domain_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/subscribe_expert_executive_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/upload_image_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/upload_pdf_usecase.dart';
@@ -84,8 +84,8 @@ Future<void> initJobsDependencies(GetIt getIt, Dio dio) async {
   getIt.registerLazySingleton<CreateJobApplicantUseCase>(
     () => CreateJobApplicantUseCase(jobsRepository: getIt()),
   );
-  getIt.registerLazySingleton<GetTrainingCenterCategoriesUseCase>(
-    () => GetTrainingCenterCategoriesUseCase(jobsRepository: getIt()),
+  getIt.registerLazySingleton<GetTrainingCenterDomainsUseCase>(
+    () => GetTrainingCenterDomainsUseCase(jobsRepository: getIt()),
   );
   getIt.registerLazySingleton<GetTrainingCenterFilterUseCase>(
     () => GetTrainingCenterFilterUseCase(jobsRepository: getIt()),
@@ -105,8 +105,8 @@ Future<void> initJobsDependencies(GetIt getIt, Dio dio) async {
   getIt.registerLazySingleton<GetTrainingCenterDetailUseCase>(
     () => GetTrainingCenterDetailUseCase(jobsRepository: getIt()),
   );
-  getIt.registerLazySingleton<GetTrainingCenterViewCategoryUseCase>(
-    () => GetTrainingCenterViewCategoryUseCase(jobsRepository: getIt()),
+  getIt.registerLazySingleton<GetTrainingCenterViewDomainUseCase>(
+    () => GetTrainingCenterViewDomainUseCase(jobsRepository: getIt()),
   );
   getIt.registerLazySingleton<CreateTrainingCenterUseCase>(
     () => CreateTrainingCenterUseCase(jobsRepository: getIt()),
@@ -135,14 +135,14 @@ Future<void> initJobsDependencies(GetIt getIt, Dio dio) async {
       getJobOfferDetailUseCase: getIt(),
       getJobApplicantPlanUsecase: getIt(),
       createJobApplicantUseCase: getIt(),
-      getTrainingCenterCategoriesUseCase: getIt(),
+      getTrainingCenterDomainsUseCase: getIt(),
       getTrainingCenterFilterUseCase: getIt(),
       getTrainingCenterHotEventUseCase: getIt(),
       viewAllHotEventUseCase: getIt(),
       viewAllTrainingCenterUseCase: getIt(),
       getHotEventDetailUseCase: getIt(),
       getTrainingCenterDetailUseCase: getIt(),
-      getTrainingCenterViewCategoryUseCase: getIt(),
+      getTrainingCenterViewDomainUseCase: getIt(),
       createTrainingCenterUseCase: getIt(),
       subscribeExpertExecutiveUseCase: getIt(),
       createHotEventUseCase: getIt(),

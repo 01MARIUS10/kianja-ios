@@ -196,8 +196,8 @@ class GetTrainingCenterFilterRequested extends JobsEvent {
   List<Object> get props => [];
 }
 
-class GetTrainingCenterCategoriesRequested extends JobsEvent {
-  const GetTrainingCenterCategoriesRequested();
+class GetTrainingCenterDomainsRequested extends JobsEvent {
+  const GetTrainingCenterDomainsRequested();
 
   @override
   List<Object> get props => [];
@@ -241,9 +241,9 @@ class GetTrainingCenterDetailRequested extends JobsEvent {
   List<Object> get props => [trainingCenterDetailParams];
 }
 
-class GetTrainingCenterViewCategoryRequested extends JobsEvent {
-  const GetTrainingCenterViewCategoryRequested({required this.params});
-  final GetTrainingCenterViewCategoryParams params;
+class GetTrainingCenterViewDomainRequested extends JobsEvent {
+  const GetTrainingCenterViewDomainRequested({required this.params});
+  final GetTrainingCenterViewDomainParams params;
 
   @override
   List<Object> get props => [params];

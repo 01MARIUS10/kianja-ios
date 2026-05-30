@@ -1,7 +1,7 @@
 import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_image.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_actor.dart';
-import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_category.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_domain.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_location.dart';
 import 'package:kianja/features/jobs/domain/entities/training/enum/training_center_badge.dart';
 
@@ -12,7 +12,7 @@ class TrainingCenter {
     this.imageUrl,
     required this.images,
     required this.description,
-    this.category,
+    required this.domains,
     this.actor,
     this.location,
     this.badge,
@@ -26,7 +26,7 @@ class TrainingCenter {
     this.imageUrl,
     this.images = const [],
     this.description = '',
-    this.category,
+    this.domains = const [],
     this.actor,
     this.location,
     this.badge,
@@ -39,7 +39,7 @@ class TrainingCenter {
   final String? imageUrl;
   final List<JobImage> images;
   final String description;
-  final JobCategory? category;
+  final List<JobDomain> domains;
   final JobActor? actor;
   final JobLocation? location;
   final TrainingCenterBadge? badge;

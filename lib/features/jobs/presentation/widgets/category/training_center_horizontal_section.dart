@@ -12,11 +12,11 @@ import 'package:kianja/routing/routes.dart';
 class TrainingCenterHorizontalSection extends StatelessWidget {
   const TrainingCenterHorizontalSection({
     super.key,
-    required this.category,
+    required this.domain,
     required this.query,
     required this.hotEvents,
   });
-  final String category;
+  final String domain;
   final String query;
   final List<HotEvent> hotEvents;
 
@@ -38,7 +38,7 @@ class TrainingCenterHorizontalSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                category,
+                domain,
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -48,7 +48,7 @@ class TrainingCenterHorizontalSection extends StatelessWidget {
                 onPressed: () {
                   context.goNamed(
                     Routes.trainingCenterHotEventViewAll.name,
-                    extra: {'title': category, 'query': query},
+                    extra: {'title': domain, 'query': query},
                   );
                 },
                 child: Text(
@@ -80,7 +80,7 @@ class TrainingCenterHorizontalSection extends StatelessWidget {
                     context.goNamed(
                       Routes.trainingCenterHotEventDetail.name,
                       pathParameters: {'id': hotEvents[index].id.toString()},
-                      extra: {'category': category, 'query': query},
+                      extra: {'domain': domain, 'query': query},
                     );
                   },
                   child: HotEventCard(

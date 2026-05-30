@@ -1,12 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kianja/core/config/assets.dart';
+import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/shared/widgets/loading/shimmer_job_detail_indicator.dart';
+import 'package:kianja/core/shared/widgets/photos/photo_handler.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
@@ -189,18 +192,51 @@ class HotEventDetailScreen extends StatelessWidget {
                       endIndent: Constants.paddingMedium,
                     ),
                     const SizedBox(height: Constants.spacingMedium),
-
                     // Image
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: Constants.paddingMedium,
                       ),
-                      child: ClipRRect(
-                        child: hotEvent.type == 'hot'
-                            ? Image.asset(Assets.hot, fit: BoxFit.cover)
-                            : Image.asset(Assets.events, fit: BoxFit.cover),
+                      child: PhotoHandler(
+                        width: double.infinity,
+                        imageUrls: [hotEvent.image]
+                            .map(
+                              (image) => '${EnvConfig.baseApiUrl}${image?.url}',
+                            )
+                            .toList(),
                       ),
                     ),
+                    // // Image
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(
+                    //     horizontal: Constants.paddingMedium,
+                    //   ),
+                    //   child: ClipRRect(
+                    //     child: CachedNetworkImage(
+                    //       imageUrl:
+                    //           '${EnvConfig.baseApiUrl}${hotEvent.image?.url}',
+                    //       fit: BoxFit.fill,
+                    //       errorWidget: (context, url, error) {
+                    //         return Image.asset(
+                    //           Assets.hiring,
+                    //           fit: BoxFit.fill,
+                    //           errorBuilder: (context, url, error) =>
+                    //               hotEvent.type == 'hot'
+                    //               ? Image.asset(Assets.hot, fit: BoxFit.fill)
+                    //               : Image.asset(
+                    //                   Assets.events,
+                    //                   fit: BoxFit.fill,
+                    //                 ),
+                    //         );
+                    //       },
+                    //       progressIndicatorBuilder: (context, url, progress) {
+                    //         return const Center(
+                    //           child: CircularProgressIndicator(),
+                    //         );
+                    //       },
+                    //     ),
+                    //   ),
+                    // ),
                     const SizedBox(height: Constants.spacingMedium),
                     Divider(
                       color: borderColor,

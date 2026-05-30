@@ -11,7 +11,7 @@ import 'package:kianja/features/jobs/data/models/input/create_job_offer/create_j
 import 'package:kianja/features/jobs/data/models/input/create_training_center/create_training_center_input_model.dart';
 import 'package:kianja/features/jobs/data/models/input/hot_event/hot_event_input_model.dart';
 import 'package:kianja/features/jobs/data/models/input/subscribe_expert_executive/subscribe_expert_executive_input_model.dart';
-import 'package:kianja/features/jobs/data/models/output/training/training_center_view_category/training_center_view_category_model.dart';
+import 'package:kianja/features/jobs/data/models/output/training/training_center_view_domain/training_center_view_domain_model.dart';
 import 'package:kianja/features/jobs/domain/entities/expert_executive/expert_executive.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_image.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_pdf.dart';
@@ -22,6 +22,7 @@ import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_zone.dar
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer_filter.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_category.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_domain.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
 import 'package:kianja/features/jobs/domain/entities/training/hot_event.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
@@ -42,10 +43,10 @@ class JobsRepositoryImpl implements JobsRepository {
   final JobsRemoteDataSource remoteDataSource;
 
   @override
-  Future<Either<Failure, TrainingCenterViewCategoryModel>>
-  getTrainingCenterViewCategory({required int id}) async {
+  Future<Either<Failure, TrainingCenterViewDomainModel>>
+  getTrainingCenterViewDomain({required int id}) async {
     try {
-      final response = await remoteDataSource.getTrainingCenterViewCategory(
+      final response = await remoteDataSource.getTrainingCenterViewDomain(
         id: id,
       );
       return right(response);
@@ -140,6 +141,7 @@ class JobsRepositoryImpl implements JobsRepository {
           description: createTrainingCenterParams.description,
           locationId: createTrainingCenterParams.locationId,
           imageIds: createTrainingCenterParams.imageIds,
+          domainIds: createTrainingCenterParams.domainIds,
           actorId: createTrainingCenterParams.actorId,
           typeId: createTrainingCenterParams.typeId,
           tagId: createTrainingCenterParams.tagId,
@@ -238,10 +240,9 @@ class JobsRepositoryImpl implements JobsRepository {
   }
 
   @override
-  Future<Either<Failure, List<JobCategory>>>
-  getTrainingCenterCategories() async {
+  Future<Either<Failure, List<JobDomain>>> getTrainingCenterDomains() async {
     try {
-      final response = await remoteDataSource.getTrainingCenterCategories();
+      final response = await remoteDataSource.getTrainingCenterDomains();
       return right(response);
     } on AppException catch (e) {
       return left(failureHandler(e));

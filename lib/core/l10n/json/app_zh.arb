@@ -199,5 +199,10 @@
   "remove_training_center_question": "您想删除此培训中心吗？",
   "remove_offer_question": "您想删除此优惠吗？",
   "server_under_maintenance": "服务器正在维护中或发生错误，请稍后再试。",
-  "remove_history_question": "您想删除此记录吗？"
+  "remove_history_question": "您想删除此记录吗？",
+  "no_enough_kara": "您的 Kara 余额不足",
+  "phone_already_exists": "该手机号码已存在。",
+  "domains": "领域",
+  "deadline_must_be_today_or_future": "截止日期必须是今天或未来的日期。",
+  "phone_number_cannot_be_changed": "电话号码无法修改。"
 }

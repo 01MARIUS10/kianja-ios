@@ -6,6 +6,7 @@ import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/presentation/pages/job_applicant/job_applicants_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/job_offer/job_offers_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/post/post_experts_executives_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/training_center/training_center_screen.dart';
 
 class JobsScreen extends StatefulWidget {
@@ -20,7 +21,7 @@ class _JobsScreenState extends State<JobsScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
   }
 
   @override
@@ -56,7 +57,7 @@ class _JobsScreenState extends State<JobsScreen> with TickerProviderStateMixin {
                 Tab(text: context.appLoc.job_offers),
                 Tab(text: context.appLoc.job_applicants),
                 Tab(text: context.appLoc.training_centers),
-                // Tab(text: 'Experts & executes'),
+                Tab(text: context.appLoc.expert_executive),
               ],
             ),
           ),
@@ -68,7 +69,7 @@ class _JobsScreenState extends State<JobsScreen> with TickerProviderStateMixin {
                 JobOffersScreen(),
                 JobApplicantsScreen(),
                 TrainingCenterScreen(),
-                // ExpertExecutiveScreen(),
+                PostExpertsExecutivesScreen(),
               ],
             ),
           ),

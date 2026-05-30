@@ -199,5 +199,10 @@
   "remove_training_center_question": "Voulez-vous supprimer ce centre de formation ?",
   "remove_offer_question": "Voulez-vous supprimer cette offre ?",
   "server_under_maintenance": "Le serveur est en maintenance ou a rencontré une erreur. Veuillez réessayer plus tard.",
-  "remove_history_question": "Voulez-vous supprimer cet historique ?"
+  "remove_history_question": "Voulez-vous supprimer cet historique ?",
+  "no_enough_kara": "Vous n'avez pas assez de Kara",
+  "phone_already_exists": "Ce numéro de téléphone existe déjà.",
+  "domains": "Domaines",
+  "deadline_must_be_today_or_future": "La date limite doit être aujourd'hui ou une date future.",
+  "phone_number_cannot_be_changed": "Le numéro de téléphone ne peut pas être modifié."
 }

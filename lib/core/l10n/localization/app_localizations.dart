@@ -1309,6 +1309,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The server is under maintenance or encountered an error. Please try again later.'**
   String get server_under_maintenance;
+
+  /// No description provided for @no_enough_kara.
+  ///
+  /// In en, this message translates to:
+  /// **'You don\'t have enough Kara'**
+  String get no_enough_kara;
+
+  /// No description provided for @phone_already_exists.
+  ///
+  /// In en, this message translates to:
+  /// **'The phone number already exists.'**
+  String get phone_already_exists;
+
+  /// No description provided for @domains.
+  ///
+  /// In en, this message translates to:
+  /// **'Domains'**
+  String get domains;
+
+  /// No description provided for @deadline_must_be_today_or_future.
+  ///
+  /// In en, this message translates to:
+  /// **'The deadline must be today or a future date.'**
+  String get deadline_must_be_today_or_future;
+
+  /// No description provided for @phone_number_cannot_be_changed.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number cannot be changed'**
+  String get phone_number_cannot_be_changed;
 }
 
 class _AppLocalizationsDelegate
