@@ -14,7 +14,7 @@ import 'package:kianja/features/jobs/data/models/output/files/job_image/job_imag
 import 'package:kianja/features/jobs/data/models/output/files/pdf_image/job_pdf_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_applicant/job_applicant_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_applicant_filter/job_applicant_filter_model.dart';
-import 'package:kianja/features/jobs/data/models/output/jobs/job_applicant_plan/job_applicant_plan_model.dart';
+import 'package:kianja/features/jobs/data/models/output/jobs/price_plan/price_plan_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_applicant_zone/job_applicant_zone_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_offer/job_offer_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_offer_filter/job_offer_filter_model.dart';
@@ -41,7 +41,7 @@ abstract interface class JobsRemoteDataSource {
   Future<List<JobApplicantModel>> viewAllJobApplicants({required String query});
   Future<JobImageModel> uploadJobImage({required XFile file});
   Future<JobPdfModel> uploadJobPdf({required PlatformFile file});
-  Future<List<JobApplicantPlanModel>> getJobApplicantPlans();
+  Future<List<PricePlanModel>> getPricePlans({required String plan});
   Future<JobApplicantModel> createJobApplicant({
     required CreateJobApplicantInputModel createJobApplicantInputModel,
   });
@@ -412,13 +412,13 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
   }
 
   @override
-  Future<List<JobApplicantPlanModel>> getJobApplicantPlans() async {
+  Future<List<PricePlanModel>> getPricePlans({required String plan}) async {
     return requestHandler(() async {
-      final response = await dio.get('/api/plans');
+      final response = await dio.get('/api/plans/$plan');
       final result = jsonSimpleDecode(response.data);
       final List<dynamic> plans = result['data'] ?? [];
       return plans
-          .map((e) => JobApplicantPlanModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => PricePlanModel.fromJson(e as Map<String, dynamic>))
           .toList();
     });
   }

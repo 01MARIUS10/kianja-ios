@@ -1,15 +1,15 @@
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_duration.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_type.dart';
 
-class JobApplicantPlan {
-  const JobApplicantPlan({
+class PricePlan {
+  const PricePlan({
     required this.id,
     required this.price,
     required this.type,
     required this.duration,
   });
 
-  const JobApplicantPlan.empty({
+  const PricePlan.empty({
     this.id = -1,
     this.price = 0,
     this.type = const JobType.empty(),

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/services/api/api_endpoint.dart';
 import 'package:kianja/core/services/service_helper.dart';
 import 'package:kianja/core/shared/app_feature/data/models/user/user_model.dart';
@@ -11,6 +12,31 @@ import 'package:kianja/features/account/data/models/output/kara_history/kara_his
 class AccountRemoteDataSourceImpl implements AccountRemoteDataSource {
   const AccountRemoteDataSourceImpl({required this.dio});
   final Dio dio;
+
+  @override
+  Future<void> deleteProfilPhoto() async {
+    return requestHandler(() async {
+      await dio.delete(ApiEndpoint.profilPhoto.path);
+    });
+  }
+
+  @override
+  Future<void> uploadProfilPhoto({required XFile file}) async {
+    return requestHandler(() async {
+      final formData = FormData.fromMap({
+        'image': await MultipartFile.fromFile(file.path, filename: file.name),
+      });
+      AppDebug.showPrint('photo name ${file.name}');
+      AppDebug.showPrint('photo path ${file.path}');
+      await dio.post(
+        ApiEndpoint.profilPhoto.path,
+        data: formData,
+        onSendProgress: (sent, total) {
+          AppDebug.showPrint('${(sent / total * 100).toStringAsFixed(0)}%');
+        },
+      );
+    });
+  }
 
   @override
   Future<void> logout() async {

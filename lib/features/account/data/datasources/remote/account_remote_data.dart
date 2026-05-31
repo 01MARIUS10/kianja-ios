@@ -1,3 +1,4 @@
+import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/shared/app_feature/data/models/user/user_model.dart';
 import 'package:kianja/features/account/data/models/input/change_password/change_password_input_model.dart';
 import 'package:kianja/features/account/data/models/input/update_user_info/update_user_info_input_model.dart';
@@ -14,4 +15,6 @@ abstract interface class AccountRemoteDataSource {
   Future<String> cgu();
   Future<List<KaraHistoryModel>> getAllKaraHistory({required int page});
   Future<int> getKaraCount();
+  Future<void> uploadProfilPhoto({required XFile file});
+  Future<void> deleteProfilPhoto();
 }

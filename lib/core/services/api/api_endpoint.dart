@@ -4,6 +4,7 @@ enum ApiEndpoint {
   logout(path: '/api/auth/logout/'),
   changePassword(path: '/api/auth/change-password/'),
   register(path: '/api/auth/register/'),
+  profilPhoto(path: '/api/profil/photo/'),
 
   // ============= Users =============
   profile(path: '/api/profil/'),

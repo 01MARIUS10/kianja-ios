@@ -9,7 +9,7 @@ import 'package:kianja/features/jobs/domain/entities/files/job_image.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_pdf.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_filter.dart';
-import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_plan.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/price_plan.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_zone.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer_filter.dart';
@@ -33,7 +33,8 @@ import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_ho
 import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_filters_usecase.dart';
-import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_plan_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_price_plan/get_price_plan_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_price_plan/get_price_plan_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_professions_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_zone_usecase.dart';
@@ -73,7 +74,7 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     required GetJobApplicantProfessionsUseCase
     getJobApplicantProfessionsUseCase,
     required GetJobApplicantFiltersUseCase getJobApplicantFiltersUseCase,
-    required GetJobApplicantPlanUsecase getJobApplicantPlanUsecase,
+    required GetPricePlanUsecase getPricePlanUsecase,
     required CreateJobApplicantUseCase createJobApplicantUseCase,
     required GetTrainingCenterDomainsUseCase getTrainingCenterDomainsUseCase,
     required GetTrainingCenterFilterUseCase getTrainingCenterFilterUseCase,
@@ -99,7 +100,7 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
        _viewAllJobApplicantsUseCase = viewAllJobApplicantsUseCase,
        _getJobApplicantProfessionsUseCase = getJobApplicantProfessionsUseCase,
        _getJobApplicantFiltersUseCase = getJobApplicantFiltersUseCase,
-       _getJobApplicantPlanUsecase = getJobApplicantPlanUsecase,
+       _getPricePlanUsecase = getPricePlanUsecase,
        _createJobApplicantUseCase = createJobApplicantUseCase,
        _getTrainingCenterDomainsUseCase = getTrainingCenterDomainsUseCase,
        _getTrainingCenterFilterUseCase = getTrainingCenterFilterUseCase,
@@ -132,7 +133,7 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
       _onJobApplicantProfessionsFetchRequested,
     );
     on<JobApplicantFiltersFetchRequested>(_onJobApplicantFiltersFetchRequested);
-    on<JobsGetJobApplicantPlanRequested>(_onJobsGetJobApplicantPlanRequested);
+    on<JobsGetPricePlanRequested>(_onJobsGetPricePlanRequested);
     on<JobCreateJobApplicantRequested>(_onJobCreateJobApplicantRequested);
     on<GetTrainingCenterDomainsRequested>(_onGetTrainingCenterDomainsRequested);
     on<GetTrainingCenterFilterRequested>(_onGetTrainingCenterFilterRequested);
@@ -163,7 +164,7 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
   final ViewAllJobApplicantsUseCase _viewAllJobApplicantsUseCase;
   final GetJobApplicantProfessionsUseCase _getJobApplicantProfessionsUseCase;
   final GetJobApplicantFiltersUseCase _getJobApplicantFiltersUseCase;
-  final GetJobApplicantPlanUsecase _getJobApplicantPlanUsecase;
+  final GetPricePlanUsecase _getPricePlanUsecase;
   final CreateJobApplicantUseCase _createJobApplicantUseCase;
   final GetTrainingCenterDomainsUseCase _getTrainingCenterDomainsUseCase;
   final GetTrainingCenterFilterUseCase _getTrainingCenterFilterUseCase;
@@ -526,17 +527,15 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     );
   }
 
-  Future<void> _onJobsGetJobApplicantPlanRequested(
-    JobsGetJobApplicantPlanRequested event,
+  Future<void> _onJobsGetPricePlanRequested(
+    JobsGetPricePlanRequested event,
     Emitter<JobsState> emit,
   ) async {
     emit(JobsRequestInProgress());
-    final result = await _getJobApplicantPlanUsecase(NoParams());
+    final result = await _getPricePlanUsecase(event.getPricePlanParams);
     result.fold(
       (failure) => emit(JobsRequestFailure(message: failure.message)),
-      (jobApplicantPlans) => emit(
-        JobsGetJobApplicantPlanSuccess(jobApplicantPlans: jobApplicantPlans),
-      ),
+      (pricePlans) => emit(JobsGetPricePlanSuccess(pricePlans: pricePlans)),
     );
   }
 

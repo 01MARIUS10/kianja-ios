@@ -10,9 +10,10 @@ import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/core/utils/extensions.dart';
-import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_plan.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/price_plan.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_price_plan/get_price_plan_params.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/post_features_section.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/single_pdf_upload_widget.dart';
@@ -36,10 +37,10 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
 
   // ── Features fetched from bloc ─────────────────────────────────────────
   JobFeatures? _jobFeatures;
-  List<JobApplicantPlan> _plans = [];
+  List<PricePlan> _plans = [];
 
   // ── Selected plan fed back from PostFeaturesSection ────────────────────
-  JobApplicantPlan? _selectedPlan;
+  PricePlan? _selectedPlan;
 
   // ── Upload results ─────────────────────────────────────────────────────
   String? _uploadImageUrl;
@@ -152,15 +153,19 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
     return BlocProvider(
       create: (context) => GetIt.instance<JobsBloc>()
         ..add(const JobFeaturesFetchRequested())
-        ..add(const JobsGetJobApplicantPlanRequested()),
+        ..add(
+          const JobsGetPricePlanRequested(
+            getPricePlanParams: GetPricePlanParams(plan: 'job-applicant'),
+          ),
+        ),
       child: Builder(
         builder: (context) {
           return BlocConsumer<JobsBloc, JobsState>(
             listener: (context, state) {
               if (state is JobFeaturesFetchSuccess) {
                 setState(() => _jobFeatures = state.jobFeatures);
-              } else if (state is JobsGetJobApplicantPlanSuccess) {
-                setState(() => _plans = state.jobApplicantPlans);
+              } else if (state is JobsGetPricePlanSuccess) {
+                setState(() => _plans = state.pricePlans);
               } else if (state is JobsUploadImageSuccess) {
                 setState(() => _uploadImageUrl = state.jobImage.url);
                 AppMessenger.showSuccess(

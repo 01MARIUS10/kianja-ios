@@ -640,4 +640,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get phone_number_cannot_be_changed => 'Phone number cannot be changed';
+
+  @override
+  String get register => 'S\'inscrire';
 }

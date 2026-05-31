@@ -646,4 +646,7 @@ class AppLocalizationsMg extends AppLocalizations {
   @override
   String get phone_number_cannot_be_changed =>
       'Tsy azo ovaina ny laharan-telefaona.';
+
+  @override
+  String get register => 'Misoratra anarana';
 }

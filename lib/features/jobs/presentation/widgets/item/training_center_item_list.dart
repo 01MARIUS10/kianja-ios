@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/config/env_config.dart';
+import 'package:kianja/core/shared/widgets/avatar/default_avatar.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
@@ -123,20 +124,32 @@ class TrainingCenterItemList extends StatelessWidget {
                     children: [
                       // User avatar
                       ClipOval(
-                        child: Image.asset(
-                          Assets.rabbitAvatar,
-                          width: Constants.size30,
-                          height: Constants.size30,
-                          fit: BoxFit.cover,
-                          cacheWidth: 60,
-                          cacheHeight: 60,
-                          errorBuilder: (ctx, e, st) => Icon(
-                            Icons.person,
-                            size: Constants.iconSizeExtraSmall,
-                            color: textSecondary,
-                          ),
-                        ),
+                        child: trainingCenter.user.photoUrl.isNotEmpty
+                            ? Image.network(
+                                '${EnvConfig.baseApiUrl}${trainingCenter.user.photoUrl}',
+                                fit: BoxFit.cover,
+                                width: Constants.size30,
+                                height: Constants.size30,
+                                errorBuilder: (_, _, _) =>
+                                    const DefaultAvatar(size: Constants.size30),
+                              )
+                            : const DefaultAvatar(size: Constants.size30),
                       ),
+                      // ClipOval(
+                      //   child: Image.asset(
+                      //     Assets.rabbitAvatar,
+                      //     width: Constants.size30,
+                      //     height: Constants.size30,
+                      //     fit: BoxFit.cover,
+                      //     cacheWidth: 60,
+                      //     cacheHeight: 60,
+                      //     errorBuilder: (ctx, e, st) => Icon(
+                      //       Icons.person,
+                      //       size: Constants.iconSizeExtraSmall,
+                      //       color: textSecondary,
+                      //     ),
+                      //   ),
+                      // ),
                       const SizedBox(width: Constants.spacingExtraSmall),
 
                       // Name + time

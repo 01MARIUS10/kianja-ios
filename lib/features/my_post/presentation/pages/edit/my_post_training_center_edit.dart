@@ -11,15 +11,17 @@ import 'package:kianja/core/shared/widgets/fields/label_field.dart';
 import 'package:kianja/core/shared/widgets/fields/text_input_field.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/shared/widgets/loading/shimmer_job_detail_indicator.dart';
-import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/price_plan.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_price_plan/get_price_plan_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_detail_usecase.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/multi_photo_upload_widget.dart';
+import 'package:kianja/features/jobs/presentation/widgets/post/post_features_training_center.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_training_center/update_training_center_params.dart';
 import 'package:kianja/features/my_post/presentation/bloc/my_post_bloc.dart';
 
@@ -43,10 +45,13 @@ class _MyPostTrainingCenterEditScreenState
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
+  final List<int> _selectedDomainIds = [];
   int? _selectedLocationId;
   int? _selectedActorId;
 
   JobFeatures? _jobFeatures;
+  List<PricePlan> _plans = [];
+  PricePlan? _selectedPlan;
   bool _isFormReady = false;
 
   // Existing images (from entity detail)
@@ -70,6 +75,9 @@ class _MyPostTrainingCenterEditScreenState
     _descriptionController.text = trainingCenter.description;
     _selectedLocationId = trainingCenter.location?.id;
     _selectedActorId = trainingCenter.actor?.id;
+    _selectedDomainIds
+      ..clear()
+      ..addAll(trainingCenter.domains.map((domain) => domain.id));
 
     _existingImageIds
       ..clear()
@@ -94,12 +102,26 @@ class _MyPostTrainingCenterEditScreenState
         _nameController.text.trim().isNotEmpty &&
         _descriptionController.text.trim().isNotEmpty;
     final hasSelections =
-        _selectedLocationId != null && _selectedActorId != null;
+        _selectedLocationId != null &&
+        _selectedActorId != null &&
+        _selectedDomainIds.isNotEmpty &&
+        _plans.isNotEmpty;
     final hasAnyImage = _existingImageIds.isNotEmpty || _newPhotos.isNotEmpty;
 
     setState(() {
       _isFormReady = hasBasics && hasSelections && hasAnyImage;
     });
+  }
+
+  void _toggleDomain(int domainId) {
+    setState(() {
+      if (_selectedDomainIds.contains(domainId)) {
+        _selectedDomainIds.remove(domainId);
+      } else if (_selectedDomainIds.length < 5) {
+        _selectedDomainIds.add(domainId);
+      }
+    });
+    _checkFormReady();
   }
 
   void _toggleLocation(int locationId) {
@@ -139,12 +161,20 @@ class _MyPostTrainingCenterEditScreenState
       AppMessenger.showWarning(context, 'Please add a description');
       return;
     }
+    if (_selectedDomainIds.isEmpty) {
+      AppMessenger.showWarning(context, 'Please select at least one domain');
+      return;
+    }
     if (_selectedLocationId == null) {
       AppMessenger.showWarning(context, 'Please select a location');
       return;
     }
     if (_selectedActorId == null) {
       AppMessenger.showWarning(context, 'Please select an actor');
+      return;
+    }
+    if (_selectedPlan == null) {
+      AppMessenger.showWarning(context, 'Please select a plan');
       return;
     }
     if (_existingImageIds.isEmpty && _newPhotos.isEmpty) {
@@ -176,9 +206,9 @@ class _MyPostTrainingCenterEditScreenState
           imageIds: imageIds,
           actorId: _selectedActorId!,
           locationId: _selectedLocationId!,
-          typeId: 1,
-          tagId: 1,
-          durationId: 1,
+          typeId: _selectedPlan!.type.id,
+          tagId: _selectedPlan!.type.id,
+          durationId: _selectedPlan!.duration.id,
           status: 'published',
         ),
       ),
@@ -208,6 +238,11 @@ class _MyPostTrainingCenterEditScreenState
                   id: widget.trainingCenterId,
                 ),
               ),
+            )
+            ..add(
+              const JobsGetPricePlanRequested(
+                getPricePlanParams: GetPricePlanParams(plan: 'training-center'),
+              ),
             ),
         ),
         BlocProvider(create: (_) => GetIt.instance<MyPostBloc>()),
@@ -221,6 +256,9 @@ class _MyPostTrainingCenterEditScreenState
                 _checkFormReady();
               } else if (state is GetTrainingCenterDetailSuccess) {
                 _populateForm(state.trainingCenter);
+              } else if (state is JobsGetPricePlanSuccess) {
+                setState(() => _plans = state.pricePlans);
+                _checkFormReady();
               } else if (state is JobsUploadMultipleImagesSuccess) {
                 final uploadedIds = state.jobImages.map((e) => e.id).toList();
                 final merged = <int>[
@@ -249,7 +287,11 @@ class _MyPostTrainingCenterEditScreenState
                 );
                 context.pop(state.trainingCenter);
               } else if (state is MyPostRequestFailure) {
-                AppMessenger.showError(context, state.message);
+                if (state.message.contains('Unprocessable entity')) {
+                  AppMessenger.showWarning(context, state.message);
+                } else {
+                  AppMessenger.showError(context, state.message);
+                }
               }
             },
           ),
@@ -386,15 +428,73 @@ class _MyPostTrainingCenterEditScreenState
                           ),
                           const SizedBox(height: Constants.spacingMedium),
 
-                          LabelField(label: '${context.appLoc.description} *'),
-                          const SizedBox(height: Constants.spacingSmall),
-                          TextInputField(
-                            controller: _descriptionController,
-                            hintText: context.appLoc.add_description,
-                            maxLines: 8,
-                            keyboardType: TextInputType.multiline,
-                            onChanged: (_) => _checkFormReady(),
+                          const SizedBox(height: Constants.spacingMedium),
+
+                          Row(
+                            children: [
+                              Text(
+                                '${context.appLoc.domains} * ',
+                                style: theme.textTheme.titleSmall?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                '(${context.appLoc.max_5})',
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: isDark ? Colors.white54 : Colors.black54,
+                                ),
+                              ),
+                            ],
                           ),
+                          const SizedBox(height: Constants.spacingSmall),
+                          if (_jobFeatures != null)
+                            Wrap(
+                              spacing: Constants.spacingMedium,
+                              children: _jobFeatures!.domains.map((domain) {
+                                final isSelected = _selectedDomainIds.contains(
+                                  domain.id,
+                                );
+                                return InkWell(
+                                  onTap: isBusy
+                                      ? null
+                                      : () => _toggleDomain(domain.id),
+                                  borderRadius: BorderRadius.circular(4),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 6,
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SizedBox(
+                                          width: 24,
+                                          height: 24,
+                                          child: Checkbox(
+                                            value: isSelected,
+                                            onChanged: isBusy
+                                                ? null
+                                                : (_) => _toggleDomain(domain.id),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: Constants.spacingExtraSmall,
+                                        ),
+                                        Text(
+                                          domain.name,
+                                          style: theme.textTheme.bodyMedium,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            )
+                          else
+                            const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 8),
+                              child: CircularProgressIndicator(),
+                            ),
                           const SizedBox(height: Constants.spacingMedium),
 
                           LabelField(label: '${context.appLoc.location} *'),
@@ -449,7 +549,22 @@ class _MyPostTrainingCenterEditScreenState
                             ),
                           const SizedBox(height: Constants.spacingMedium),
 
-                          LabelField(label: '${context.appLoc.actor} *'),
+                          const SizedBox(height: Constants.spacingMedium),
+
+                          LabelField(label: '${context.appLoc.more_description} *'),
+                          const SizedBox(height: Constants.spacingSmall),
+                          TextInputField(
+                            controller: _descriptionController,
+                            hintText: context.appLoc.add_more_description,
+                            maxLines: 8,
+                            keyboardType: TextInputType.multiline,
+                            onChanged: (_) => _checkFormReady(),
+                          ),
+                          const SizedBox(height: Constants.spacingMedium),
+
+                          LabelField(
+                            label: '${context.appLoc.about_center_publisher} *',
+                          ),
                           const SizedBox(height: Constants.spacingSmall),
                           if (_jobFeatures != null)
                             Wrap(
@@ -498,32 +613,17 @@ class _MyPostTrainingCenterEditScreenState
                             ),
 
                           const SizedBox(height: Constants.spacingLarge),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: ElevatedButton(
-                              onPressed: (!_isFormReady || isBusy)
-                                  ? null
-                                  : () => _updateTrainingCenter(context),
-                              child: isBusy
-                                  ? const SizedBox(
-                                      width: 24,
-                                      height: 24,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                      ),
-                                    )
-                                  : Text(
-                                      context.appLoc.save.toUpperCase(),
-                                      style: theme.textTheme.titleMedium
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.bold,
-                                            letterSpacing: 1.2,
-                                            color: isDark
-                                                ? AppColors.darkTextPrimary
-                                                : AppColors.lightTextPrimary,
-                                          ),
-                                    ),
-                            ),
+                          const Divider(),
+                          const SizedBox(height: Constants.spacingMedium),
+
+                          PostFeaturesTrainingCenter(
+                            plans: _plans,
+                            isLoading: isBusy,
+                            postButtonLabel: context.appLoc.update,
+                            onPlanSelected: (plan) {
+                              _selectedPlan = plan;
+                            },
+                            onPost: () => _updateTrainingCenter(context),
                           ),
                           const SizedBox(height: Constants.spacingLarge),
                         ],

@@ -142,8 +142,9 @@ class JobsGetJobApplicantDetailRequested extends JobsEvent {
 }
 
 /// Get a job applicant plan.
-class JobsGetJobApplicantPlanRequested extends JobsEvent {
-  const JobsGetJobApplicantPlanRequested();
+class JobsGetPricePlanRequested extends JobsEvent {
+  const JobsGetPricePlanRequested({required this.getPricePlanParams});
+  final GetPricePlanParams getPricePlanParams;
 
   @override
   List<Object> get props => [];

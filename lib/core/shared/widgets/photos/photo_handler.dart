@@ -8,7 +8,7 @@ class PhotoHandler extends StatefulWidget {
   const PhotoHandler({
     super.key,
     required this.imageUrls,
-    this.height = 450,
+    this.height = 320,
     this.width,
     this.fit = BoxFit.fill,
   });

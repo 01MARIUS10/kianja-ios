@@ -10,12 +10,12 @@ import 'package:kianja/features/jobs/domain/usecases/create_training_center/crea
 import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_filters_usecase.dart';
-import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_plan_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_professions_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_zone_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_features_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_offer_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_offers_group_by_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_price_plan/get_price_plan_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_domains_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_filter_usecase.dart';
@@ -78,8 +78,8 @@ Future<void> initJobsDependencies(GetIt getIt, Dio dio) async {
   getIt.registerLazySingleton<GetJobApplicantDetailUseCase>(
     () => GetJobApplicantDetailUseCase(jobsRepository: getIt()),
   );
-  getIt.registerLazySingleton<GetJobApplicantPlanUsecase>(
-    () => GetJobApplicantPlanUsecase(jobsRepository: getIt()),
+  getIt.registerLazySingleton<GetPricePlanUsecase>(
+    () => GetPricePlanUsecase(jobsRepository: getIt()),
   );
   getIt.registerLazySingleton<CreateJobApplicantUseCase>(
     () => CreateJobApplicantUseCase(jobsRepository: getIt()),
@@ -133,7 +133,7 @@ Future<void> initJobsDependencies(GetIt getIt, Dio dio) async {
       uploadImageUseCase: getIt(),
       createJobOfferUseCase: getIt(),
       getJobOfferDetailUseCase: getIt(),
-      getJobApplicantPlanUsecase: getIt(),
+      getPricePlanUsecase: getIt(),
       createJobApplicantUseCase: getIt(),
       getTrainingCenterDomainsUseCase: getIt(),
       getTrainingCenterFilterUseCase: getIt(),

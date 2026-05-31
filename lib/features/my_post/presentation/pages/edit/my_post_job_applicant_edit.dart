@@ -11,8 +11,9 @@ import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
-import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_plan.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/price_plan.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_price_plan/get_price_plan_params.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/post_features_section.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/single_pdf_upload_widget.dart';
@@ -44,8 +45,8 @@ class _MyPostJobApplicantEditScreenState
   int? _selectedGender;
 
   JobFeatures? _jobFeatures;
-  List<JobApplicantPlan> _plans = [];
-  JobApplicantPlan? _selectedPlan;
+  List<PricePlan> _plans = [];
+  PricePlan? _selectedPlan;
 
   String? _existingPdfUrl;
   String? _uploadPdfUrl;
@@ -165,7 +166,11 @@ class _MyPostJobApplicantEditScreenState
           create: (_) => GetIt.instance<JobsBloc>()
             ..add(const JobFeaturesFetchRequested())
             ..add(JobsGetJobApplicantDetailRequested(id: widget.jobApplicantId))
-            ..add(const JobsGetJobApplicantPlanRequested()),
+            ..add(
+              const JobsGetPricePlanRequested(
+                getPricePlanParams: GetPricePlanParams(plan: 'job-applicant'),
+              ),
+            ),
         ),
         BlocProvider(create: (_) => GetIt.instance<MyPostBloc>()),
       ],
@@ -178,8 +183,8 @@ class _MyPostJobApplicantEditScreenState
                 _checkFormReady();
               } else if (state is JobsGetJobApplicantDetailSuccess) {
                 _populateFromJobApplicant(state.jobApplicant);
-              } else if (state is JobsGetJobApplicantPlanSuccess) {
-                setState(() => _plans = state.jobApplicantPlans);
+              } else if (state is JobsGetPricePlanSuccess) {
+                setState(() => _plans = state.pricePlans);
                 _checkFormReady();
               } else if (state is JobsUploadPdfSuccess) {
                 setState(() => _uploadPdfUrl = state.jobPdf.url);

@@ -629,4 +629,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get phone_number_cannot_be_changed => '전화번호는 변경할 수 없습니다.';
+
+  @override
+  String get register => '신청하다';
 }

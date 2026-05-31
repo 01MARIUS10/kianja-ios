@@ -31,6 +31,16 @@ class AccountUpdateUserInfoSuccess extends AccountState {
   List<Object> get props => [user];
 }
 
+class AccountProfilPhotoRequestInProgress extends AccountState {}
+
+class AccountProfilPhotoUploadSuccess extends AccountState {
+  const AccountProfilPhotoUploadSuccess();
+}
+
+class AccountProfilPhotoDeleteSuccess extends AccountState {
+  const AccountProfilPhotoDeleteSuccess();
+}
+
 class AccountWalletHistorySuccess extends AccountState {
   const AccountWalletHistorySuccess({
     required this.history,

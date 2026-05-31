@@ -1,4 +1,5 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/errors/failures.dart';
 import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
 import 'package:kianja/core/utils/usecase/query_page_params.dart';
@@ -8,6 +9,9 @@ import 'package:kianja/features/account/domain/usecases/upate_user_info/update_u
 
 abstract interface class AccountRepository {
   Future<Either<Failure, Unit>> logout();
+  Future<Either<Failure, Unit>> deleteProfilPhoto();
+  Future<Either<Failure, Unit>> uploadProfilPhoto({required XFile file});
+
   Future<Either<Failure, Unit>> changePassword({
     required ChangePasswordParams changePasswordParams,
   });

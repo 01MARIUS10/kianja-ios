@@ -57,7 +57,7 @@ class PostExpertsExecutivesScreen extends StatelessWidget {
                 onPressed: () =>
                     context.pushNamed(Routes.subscribeExpertExecutive.name),
                 child: Text(
-                  context.appLoc.subscribe,
+                  context.appLoc.register,
                   style: theme.textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,

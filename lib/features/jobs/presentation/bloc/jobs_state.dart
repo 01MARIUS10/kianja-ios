@@ -150,13 +150,13 @@ class GetTrainingCenterDomainsSuccess extends JobsState {
   List<Object> get props => [trainingCenterDomains];
 }
 
-/// [GetJobApplicantPlanUsecase] succeeded.
-class JobsGetJobApplicantPlanSuccess extends JobsState {
-  const JobsGetJobApplicantPlanSuccess({required this.jobApplicantPlans});
-  final List<JobApplicantPlan> jobApplicantPlans;
+/// [GetPricePlanUsecase] succeeded.
+class JobsGetPricePlanSuccess extends JobsState {
+  const JobsGetPricePlanSuccess({required this.pricePlans});
+  final List<PricePlan> pricePlans;
 
   @override
-  List<Object> get props => [jobApplicantPlans];
+  List<Object> get props => [pricePlans];
 }
 
 /// [CreateJobApplicantUseCase] succeeded.

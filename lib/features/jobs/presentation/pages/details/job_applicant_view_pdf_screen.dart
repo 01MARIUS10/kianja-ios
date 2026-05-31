@@ -10,7 +10,10 @@ class JobApplicantViewPdfScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(context.appLoc.view_pdf)),
+      appBar: AppBar(
+        title: Text(context.appLoc.view_pdf, textAlign: TextAlign.start),
+        centerTitle: false,
+      ),
       body: SfPdfViewer.network(
         pdfUrl,
         canShowPaginationDialog: false,

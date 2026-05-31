@@ -204,5 +204,6 @@
   "phone_already_exists":"The phone number already exists.",
   "domains":"Domains",
   "deadline_must_be_today_or_future":"The deadline must be today or a future date.",
-  "phone_number_cannot_be_changed":"Phone number cannot be changed"
+  "phone_number_cannot_be_changed":"Phone number cannot be changed",
+  "register":"S'inscrire"
 }

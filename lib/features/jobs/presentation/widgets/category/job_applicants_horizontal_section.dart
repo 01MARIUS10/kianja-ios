@@ -44,20 +44,23 @@ class JobApplicantsHorizontalSection extends StatelessWidget {
                   fontSize: 18,
                 ),
               ),
-              TextButton(
-                onPressed: () {
-                  context.goNamed(
-                    Routes.jobApplicantViewAll.name,
-                    extra: {'title': category, 'query': query},
-                  );
-                },
-                child: Text(
-                  context.appLoc.view_more,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: isDark
-                        ? AppColors.darkTextSecondary
-                        : AppColors.lightTextSecondary,
-                    fontWeight: FontWeight.w500,
+              Flexible(
+                child: TextButton(
+                  onPressed: () {
+                    context.goNamed(
+                      Routes.jobApplicantViewAll.name,
+                      extra: {'title': category, 'query': query},
+                    );
+                  },
+                  child: Text(
+                    context.appLoc.view_more,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: isDark
+                          ? AppColors.darkTextSecondary
+                          : AppColors.lightTextSecondary,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ),

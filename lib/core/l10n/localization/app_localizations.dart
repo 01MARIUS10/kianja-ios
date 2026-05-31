@@ -1339,6 +1339,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Phone number cannot be changed'**
   String get phone_number_cannot_be_changed;
+
+  /// No description provided for @register.
+  ///
+  /// In en, this message translates to:
+  /// **'S\'inscrire'**
+  String get register;
 }
 
 class _AppLocalizationsDelegate

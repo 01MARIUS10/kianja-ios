@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
 import 'package:kianja/core/utils/usecase/no_params.dart';
 import 'package:kianja/core/utils/usecase/query_page_params.dart';
@@ -7,11 +8,14 @@ import 'package:kianja/features/account/domain/entities/kara_history.dart';
 import 'package:kianja/features/account/domain/usecases/cgu_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/change_password/change_password_params.dart';
 import 'package:kianja/features/account/domain/usecases/change_password/change_password_usecase.dart';
+import 'package:kianja/features/account/domain/usecases/delete_profil_photo_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/get_all_kara_history_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/get_kara_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/logout_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/upate_user_info/update_user_info_params.dart';
 import 'package:kianja/features/account/domain/usecases/upate_user_info/update_user_info_usecase.dart';
+import 'package:kianja/features/account/domain/usecases/upload_profil_photo/upload_profil_photo_params.dart';
+import 'package:kianja/features/account/domain/usecases/upload_profil_photo/upload_profil_photo_usecase.dart';
 
 part 'account_event.dart';
 part 'account_state.dart';
@@ -24,12 +28,16 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     required CguUsecase cguUseCase,
     required GetAllKaraHistoryUsecase getAllKaraHistoryUsecase,
     required GetKaraUseCase getKaraUseCase,
+    required UploadProfilPhotoUseCase uploadProfilPhotoUseCase,
+    required DeleteProfilPhotoUseCase deleteProfilPhotoUseCase,
   }) : _logoutUseCase = logoutUseCase,
        _changePasswordUseCase = changePasswordUseCase,
        _updateUserInfoUseCase = updateUserInfoUseCase,
        _cguUseCase = cguUseCase,
        _getAllKaraHistoryUsecase = getAllKaraHistoryUsecase,
        _getKaraUseCase = getKaraUseCase,
+       _uploadProfilPhotoUseCase = uploadProfilPhotoUseCase,
+       _deleteProfilPhotoUseCase = deleteProfilPhotoUseCase,
        super(AccountInitial()) {
     on<AccountLogoutRequested>(_onLogoutRequested);
     on<AccountChangePasswordRequested>(_onChangePasswordRequested);
@@ -38,6 +46,8 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     on<AccountWalletHistoryRequested>(_onAccountWalletHistoryRequested);
     on<AccountWalletLoadMoreRequested>(_onAccountWalletLoadMoreRequested);
     on<AccountKaraRequested>(_onAccountKaraRequested);
+    on<AccountProfilPhotoUploadRequested>(_onProfilPhotoUploadRequested);
+    on<AccountProfilPhotoDeleteRequested>(_onProfilPhotoDeleteRequested);
   }
 
   final LogoutUseCase _logoutUseCase;
@@ -46,6 +56,8 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   final CguUsecase _cguUseCase;
   final GetAllKaraHistoryUsecase _getAllKaraHistoryUsecase;
   final GetKaraUseCase _getKaraUseCase;
+  final UploadProfilPhotoUseCase _uploadProfilPhotoUseCase;
+  final DeleteProfilPhotoUseCase _deleteProfilPhotoUseCase;
 
   static const int _pageSize = 15;
   int _currentPage = 1;
@@ -179,6 +191,32 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     result.fold(
       (failure) => emit(AccountKaraFailure(message: failure.message)),
       (kara) => emit(AccountKaraSuccess(kara: kara)),
+    );
+  }
+
+  Future<void> _onProfilPhotoUploadRequested(
+    AccountProfilPhotoUploadRequested event,
+    Emitter<AccountState> emit,
+  ) async {
+    emit(AccountProfilPhotoRequestInProgress());
+    final result = await _uploadProfilPhotoUseCase(
+      UploadProfilPhotoParams(file: event.file),
+    );
+    result.fold(
+      (failure) => emit(AccountRequestFailure(message: failure.message)),
+      (_) => emit(const AccountProfilPhotoUploadSuccess()),
+    );
+  }
+
+  Future<void> _onProfilPhotoDeleteRequested(
+    AccountProfilPhotoDeleteRequested event,
+    Emitter<AccountState> emit,
+  ) async {
+    emit(AccountProfilPhotoRequestInProgress());
+    final result = await _deleteProfilPhotoUseCase(NoParams());
+    result.fold(
+      (failure) => emit(AccountRequestFailure(message: failure.message)),
+      (_) => emit(const AccountProfilPhotoDeleteSuccess()),
     );
   }
 }

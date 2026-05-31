@@ -46,3 +46,16 @@ class AccountWalletHistoryRequested extends AccountEvent {
 class AccountWalletLoadMoreRequested extends AccountEvent {
   const AccountWalletLoadMoreRequested();
 }
+
+class AccountProfilPhotoUploadRequested extends AccountEvent {
+  const AccountProfilPhotoUploadRequested({required this.file});
+
+  final XFile file;
+
+  @override
+  List<Object> get props => [file];
+}
+
+class AccountProfilPhotoDeleteRequested extends AccountEvent {
+  const AccountProfilPhotoDeleteRequested();
+}

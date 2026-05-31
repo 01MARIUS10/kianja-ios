@@ -4,6 +4,7 @@ import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
 import 'package:kianja/core/shared/widgets/avatar/circle_user_avatar_detail.dart';
+import 'package:kianja/core/shared/widgets/avatar/default_avatar.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
@@ -135,7 +136,18 @@ class TrainingCenterCard extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const CircleUserAvatarDetail(user: User.empty()),
+                    ClipOval(
+                      child: trainingCenter.user.photoUrl.isNotEmpty
+                          ? Image.network(
+                              '${EnvConfig.baseApiUrl}${trainingCenter.user.photoUrl}',
+                              fit: BoxFit.cover,
+                              width: Constants.size30,
+                              height: Constants.size30,
+                              errorBuilder: (_, _, _) =>
+                                  const DefaultAvatar(size: Constants.size30),
+                            )
+                          : const DefaultAvatar(size: Constants.size30),
+                    ),
                     const SizedBox(width: Constants.spacingSmall),
                     Expanded(
                       child: Column(

@@ -204,5 +204,6 @@
   "phone_already_exists": "이미 등록된 전화번호입니다.",
   "domains": "분야",
   "deadline_must_be_today_or_future": "마감일은 오늘 또는 미래 날짜여야 합니다.",
-  "phone_number_cannot_be_changed": "전화번호는 변경할 수 없습니다."
+  "phone_number_cannot_be_changed": "전화번호는 변경할 수 없습니다.",
+  "register":"신청하다"
 }

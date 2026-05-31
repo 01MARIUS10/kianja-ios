@@ -204,5 +204,6 @@
   "phone_already_exists": "该手机号码已存在。",
   "domains": "领域",
   "deadline_must_be_today_or_future": "截止日期必须是今天或未来的日期。",
-  "phone_number_cannot_be_changed": "电话号码无法修改。"
+  "phone_number_cannot_be_changed": "电话号码无法修改。",
+  "register":"注册"
 }

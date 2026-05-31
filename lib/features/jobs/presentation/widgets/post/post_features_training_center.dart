@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/themes/app_colors.dart';
+import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/core/utils/extensions.dart';
-import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_plan.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_duration.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_type.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/price_plan.dart';
 
 class PostFeaturesTrainingCenter extends StatefulWidget {
   const PostFeaturesTrainingCenter({
@@ -14,11 +15,13 @@ class PostFeaturesTrainingCenter extends StatefulWidget {
     required this.onPlanSelected,
     this.onPost,
     this.isLoading = false,
+    this.postButtonLabel,
   });
-  final List<JobApplicantPlan> plans;
-  final ValueChanged<JobApplicantPlan?> onPlanSelected;
+  final List<PricePlan> plans;
+  final ValueChanged<PricePlan?> onPlanSelected;
   final VoidCallback? onPost;
   final bool isLoading;
+  final String? postButtonLabel;
 
   @override
   State<PostFeaturesTrainingCenter> createState() =>
@@ -29,7 +32,7 @@ class _PostFeaturesTrainingCenterState
     extends State<PostFeaturesTrainingCenter> {
   JobType? _selectedType;
   JobDuration? _selectedDuration;
-  JobApplicantPlan? _selectedPlan;
+  PricePlan? _selectedPlan;
 
   @override
   void initState() {
@@ -200,7 +203,9 @@ class _PostFeaturesTrainingCenterState
             ),
             const SizedBox(width: 4),
             Text(
-              _selectedPlan != null ? _selectedPlan!.price.toString() : '-',
+              _selectedPlan != null
+                  ? AppFunction.formatNumberWithSpaces(_selectedPlan!.price)
+                  : '-',
               style: textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -219,7 +224,7 @@ class _PostFeaturesTrainingCenterState
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
                 : Text(
-                    context.appLoc.post.toUpperCase(),
+                    widget.postButtonLabel ?? context.appLoc.post.toUpperCase(),
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       letterSpacing: 1.2,

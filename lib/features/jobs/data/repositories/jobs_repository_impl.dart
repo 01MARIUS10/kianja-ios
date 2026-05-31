@@ -17,7 +17,7 @@ import 'package:kianja/features/jobs/domain/entities/files/job_image.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_pdf.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_filter.dart';
-import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_plan.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/price_plan.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_zone.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer_filter.dart';
@@ -272,9 +272,11 @@ class JobsRepositoryImpl implements JobsRepository {
   }
 
   @override
-  Future<Either<Failure, List<JobApplicantPlan>>> getJobApplicantPlans() async {
+  Future<Either<Failure, List<PricePlan>>> getPricePlans({
+    required String plan,
+  }) async {
     try {
-      final response = await remoteDataSource.getJobApplicantPlans();
+      final response = await remoteDataSource.getPricePlans(plan: plan);
       return right(response);
     } on AppException catch (e) {
       return left(failureHandler(e));

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/fields/label_field.dart';
 import 'package:kianja/core/shared/widgets/fields/phone_input_field.dart';
@@ -14,8 +13,11 @@ import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_domain.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/price_plan.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_price_plan/get_price_plan_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/subscribe_expert_executive_params.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
+import 'package:kianja/features/jobs/presentation/widgets/post/post_features_expert_executive.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/single_pdf_upload_widget.dart';
 import 'package:kianja/routing/routes.dart';
 
@@ -42,6 +44,8 @@ class _SubscribeExpertsExecutivesScreenState
 
   // ── Professions from bloc ────────────────────────────────────────────────
   List<JobDomain> _domains = [];
+  List<PricePlan> _plans = [];
+  PricePlan? _selectedPlan;
 
   PlatformFile? _resumeFile;
 
@@ -116,11 +120,15 @@ class _SubscribeExpertsExecutivesScreenState
         'Please upload your resume in PDF format',
       );
       return;
-    } else {
-      BlocProvider.of<JobsBloc>(
-        context,
-      ).add(JobsUploadPdfRequested(file: _resumeFile!));
     }
+    if (_selectedPlan == null) {
+      AppMessenger.showWarning(context, 'Please select a subscription plan');
+      return;
+    }
+
+    BlocProvider.of<JobsBloc>(
+      context,
+    ).add(JobsUploadPdfRequested(file: _resumeFile!));
   }
 
   void _submitSubscription(BuildContext context, int pdfId) {
@@ -156,14 +164,21 @@ class _SubscribeExpertsExecutivesScreenState
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          GetIt.instance<JobsBloc>()..add(const JobFeaturesFetchRequested()),
+      create: (context) => GetIt.instance<JobsBloc>()
+        ..add(const JobFeaturesFetchRequested())
+        ..add(
+          const JobsGetPricePlanRequested(
+            getPricePlanParams: GetPricePlanParams(plan: 'expert-cadre'),
+          ),
+        ),
       child: Builder(
         builder: (context) {
           return BlocConsumer<JobsBloc, JobsState>(
             listener: (context, state) {
               if (state is JobFeaturesFetchSuccess) {
                 setState(() => _domains = state.jobFeatures.domains);
+              } else if (state is JobsGetPricePlanSuccess) {
+                setState(() => _plans = state.pricePlans);
               } else if (state is JobsUploadPdfSuccess) {
                 _submitSubscription(context, state.jobPdf.id);
               } else if (state is SubscribeExpertExecutiveSuccess) {
@@ -173,13 +188,19 @@ class _SubscribeExpertsExecutivesScreenState
                   pathParameters: {'id': state.expertExecutive.id.toString()},
                 );
               } else if (state is JobsRequestFailure) {
-                AppMessenger.showError(context, state.message);
+                if (state.message == 'Unprocessable entity') {
+                  AppMessenger.showError(
+                    context,
+                    context.appLoc.no_enough_kara,
+                  );
+                } else {
+                  AppMessenger.showError(context, state.message);
+                }
               }
             },
             builder: (context, state) {
               final isLoading = state is JobsRequestInProgress;
               final theme = Theme.of(context);
-              final isDark = theme.brightness == Brightness.dark;
 
               return BaseScreen(
                 appBar: TitleHeader(
@@ -355,60 +376,13 @@ class _SubscribeExpertsExecutivesScreenState
                         const Divider(),
                         const SizedBox(height: Constants.spacingMedium),
 
-                        // ── Subscription needs (static) ─────────────────
-                        Text(
-                          context.appLoc.subscription_needs,
-                          style: theme.textTheme.titleSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: Constants.spacingSmall),
-                        Row(
-                          children: [
-                            Text('KARA : ', style: theme.textTheme.bodyMedium),
-                            Image.asset(
-                              Assets.kara,
-                              height: 20,
-                              width: 20,
-                              fit: BoxFit.cover,
-                            ),
-                            const SizedBox(width: Constants.spacingExtraSmall),
-                            Text(
-                              '250 000',
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: isDark
-                                    ? AppColors.darkTextPrimary
-                                    : AppColors.lightTextPrimary,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: Constants.spacingMedium),
-
-                        // ── Subscribe button ────────────────────────────
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: ElevatedButton(
-                            onPressed: isLoading
-                                ? null
-                                : () => _subscribe(context),
-                            child: isLoading
-                                ? const SizedBox(
-                                    width: 24,
-                                    height: 24,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                    ),
-                                  )
-                                : Text(
-                                    context.appLoc.subscribe,
-                                    style: theme.textTheme.titleSmall?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                          ),
+                        PostFeaturesExpertExecutive(
+                          plans: _plans,
+                          isLoading: isLoading,
+                          onPlanSelected: (plan) {
+                            _selectedPlan = plan;
+                          },
+                          onSubscribe: () => _subscribe(context),
                         ),
                         const SizedBox(height: Constants.spacingLarge),
                       ],

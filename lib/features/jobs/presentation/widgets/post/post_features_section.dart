@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/themes/app_colors.dart';
+import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/core/utils/extensions.dart';
-import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_plan.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_duration.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_type.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/price_plan.dart';
 
 class PostFeaturesSection extends StatefulWidget {
   const PostFeaturesSection({
@@ -16,8 +17,8 @@ class PostFeaturesSection extends StatefulWidget {
     this.isLoading = false,
     this.postButtonLabel = 'POST',
   });
-  final List<JobApplicantPlan> plans;
-  final ValueChanged<JobApplicantPlan?> onPlanSelected;
+  final List<PricePlan> plans;
+  final ValueChanged<PricePlan?> onPlanSelected;
   final VoidCallback? onPost;
   final bool isLoading;
   final String postButtonLabel;
@@ -29,7 +30,7 @@ class PostFeaturesSection extends StatefulWidget {
 class _PostFeaturesSectionState extends State<PostFeaturesSection> {
   JobType? _selectedType;
   JobDuration? _selectedDuration;
-  JobApplicantPlan? _selectedPlan;
+  PricePlan? _selectedPlan;
 
   @override
   void initState() {
@@ -200,7 +201,9 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
             ),
             const SizedBox(width: 4),
             Text(
-              _selectedPlan != null ? _selectedPlan!.price.toString() : '-',
+              _selectedPlan != null
+                  ? AppFunction.formatNumberWithSpaces(_selectedPlan!.price)
+                  : '-',
               style: textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),

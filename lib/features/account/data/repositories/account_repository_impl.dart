@@ -1,4 +1,5 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/errors/exceptions.dart';
 import 'package:kianja/core/errors/failures.dart';
 import 'package:kianja/core/services/service_helper.dart';
@@ -27,6 +28,26 @@ class AccountRepositoryImpl implements AccountRepository {
     try {
       await remoteDataSource.logout();
       await appSharedPrefs.remove(Constants.token);
+      return right(unit);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> uploadProfilPhoto({required XFile file}) async {
+    try {
+      await remoteDataSource.uploadProfilPhoto(file: file);
+      return right(unit);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> deleteProfilPhoto() async {
+    try {
+      await remoteDataSource.deleteProfilPhoto();
       return right(unit);
     } on AppException catch (e) {
       return left(failureHandler(e));

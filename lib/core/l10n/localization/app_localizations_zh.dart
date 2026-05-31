@@ -626,4 +626,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get phone_number_cannot_be_changed => '电话号码无法修改。';
+
+  @override
+  String get register => '注册';
 }

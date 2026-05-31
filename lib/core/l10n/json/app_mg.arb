@@ -204,5 +204,6 @@
   "phone_already_exists": "Efa misy io laharan-telefaona io.",
   "domains": "Sehatra",
   "deadline_must_be_today_or_future": "Ny fe-potoana farany dia tsy maintsy anio na daty any aoriana.",
-  "phone_number_cannot_be_changed": "Tsy azo ovaina ny laharan-telefaona."
+  "phone_number_cannot_be_changed": "Tsy azo ovaina ny laharan-telefaona.",
+  "register":"Misoratra anarana"
 }

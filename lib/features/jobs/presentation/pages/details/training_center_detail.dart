@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
+import 'package:kianja/core/shared/widgets/avatar/default_avatar.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
@@ -266,23 +267,22 @@ class TrainingCenterDetail extends StatelessWidget {
                               const SizedBox(height: Constants.spacingMedium),
                               Row(
                                 children: [
-                                  Container(
-                                    width: Constants.size35,
-                                    height: Constants.size35,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: surfaceColor,
-                                      border: Border.all(
-                                        color: borderColor,
-                                        width: 1,
-                                      ),
-                                    ),
-                                    child: ClipOval(
-                                      child: Image.asset(
-                                        Assets.rabbitAvatar,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
+                                  ClipOval(
+                                    child:
+                                        trainingCenter.user.photoUrl.isNotEmpty
+                                        ? Image.network(
+                                            '${EnvConfig.baseApiUrl}${trainingCenter.user.photoUrl}',
+                                            fit: BoxFit.cover,
+                                            width: Constants.size35,
+                                            height: Constants.size35,
+                                            errorBuilder: (_, _, _) =>
+                                                const DefaultAvatar(
+                                                  size: Constants.size35,
+                                                ),
+                                          )
+                                        : const DefaultAvatar(
+                                            size: Constants.size35,
+                                          ),
                                   ),
                                   const SizedBox(width: Constants.spacingSmall),
                                   Text(
