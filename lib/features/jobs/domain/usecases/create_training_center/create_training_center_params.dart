@@ -2,7 +2,7 @@ class CreateTrainingCenterParams {
   const CreateTrainingCenterParams({
     required this.name,
     required this.description,
-    required this.imageIds,
+    this.imageIds,
     required this.domainIds,
     required this.actorId,
     required this.locationId,
@@ -13,7 +13,7 @@ class CreateTrainingCenterParams {
   });
   final String name;
   final String description;
-  final List<int> imageIds;
+  final List<int>? imageIds;
   final List<int> domainIds;
   final int actorId;
   final int locationId;

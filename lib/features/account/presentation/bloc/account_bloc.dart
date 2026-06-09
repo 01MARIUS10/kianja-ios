@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
+import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/usecase/no_params.dart';
 import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/account/domain/entities/kara_history.dart';
@@ -79,6 +80,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     result.fold(
       (failure) => emit(AccountRequestFailure(message: failure.message)),
       (history) {
+        AppDebug.showPrint('Kara history: $history');
         _cachedHistory = history;
         _hasMore = history.length >= _pageSize;
         emit(

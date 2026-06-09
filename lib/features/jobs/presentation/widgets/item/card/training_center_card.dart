@@ -2,8 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/config/env_config.dart';
-import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
-import 'package:kianja/core/shared/widgets/avatar/circle_user_avatar_detail.dart';
 import 'package:kianja/core/shared/widgets/avatar/default_avatar.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
@@ -37,26 +35,29 @@ class TrainingCenterCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           // Cover Image
-          Container(
-            height: Constants.size150,
-            width: double.infinity,
-            color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
-            child: CachedNetworkImage(
-              imageUrl: '${EnvConfig.baseApiUrl}${trainingCenter.imageUrl}',
-              fit: BoxFit.fill,
-              errorWidget: (context, url, error) {
-                return Image.asset(
-                  Assets.hiring,
-                  fit: BoxFit.fill,
-                  errorBuilder: (context, url, error) =>
-                      const Icon(Icons.image, size: 40, color: Colors.grey),
-                );
-              },
-              progressIndicatorBuilder: (context, url, progress) {
-                return const Center(child: CircularProgressIndicator());
-              },
+          if (trainingCenter.images != null &&
+              trainingCenter.images!.isNotEmpty)
+            Container(
+              height: Constants.size150,
+              width: double.infinity,
+              color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
+              child: CachedNetworkImage(
+                imageUrl:
+                    '${EnvConfig.baseApiUrl}${trainingCenter.images!.first.url}',
+                fit: BoxFit.fill,
+                errorWidget: (context, url, error) {
+                  return Image.asset(
+                    Assets.hiring,
+                    fit: BoxFit.fill,
+                    errorBuilder: (context, url, error) =>
+                        const Icon(Icons.image, size: 40, color: Colors.grey),
+                  );
+                },
+                progressIndicatorBuilder: (context, url, progress) {
+                  return const Center(child: CircularProgressIndicator());
+                },
+              ),
             ),
-          ),
 
           Padding(
             padding: const EdgeInsets.all(Constants.paddingSmall),

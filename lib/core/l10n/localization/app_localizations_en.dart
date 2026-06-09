@@ -579,12 +579,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get retry => 'Retry';
 
   @override
-  String get service_unavailable => 'Service unavailable';
-
-  @override
-  String get not_found => 'Not found';
-
-  @override
   String get page_failed_load => 'Page failed to load';
 
   @override
@@ -642,5 +636,132 @@ class AppLocalizationsEn extends AppLocalizations {
   String get phone_number_cannot_be_changed => 'Phone number cannot be changed';
 
   @override
-  String get register => 'S\'inscrire';
+  String get register => 'Register';
+
+  @override
+  String get connection_timeout => 'Connection timeout';
+
+  @override
+  String get send_timeout => 'Send timeout';
+
+  @override
+  String get receive_timeout => 'Receive timeout';
+
+  @override
+  String get bad_certificate => 'Bad certificate';
+
+  @override
+  String get request_cancelled => 'Request cancelled';
+
+  @override
+  String get no_internet_connection => 'No internet connection';
+
+  @override
+  String get unknown_error => 'Unknown error';
+
+  @override
+  String get unauthorized => 'Unauthorized';
+
+  @override
+  String get payment_required => 'Payment required';
+
+  @override
+  String get forbidden => 'Forbidden';
+
+  @override
+  String get not_found => 'Not found';
+
+  @override
+  String get method_not_allowed => 'Method not allowed';
+
+  @override
+  String get not_acceptable => 'Not acceptable';
+
+  @override
+  String get proxy_auth_required => 'Proxy authentication required';
+
+  @override
+  String get request_timeout => 'Request timeout';
+
+  @override
+  String get conflict => 'Conflict';
+
+  @override
+  String get unprocessable_entity => 'Unprocessable entity';
+
+  @override
+  String get internal_server_error => 'Internal server error';
+
+  @override
+  String get not_implemented => 'Not implemented';
+
+  @override
+  String get bad_gateway => 'Bad gateway';
+
+  @override
+  String get service_unavailable => 'Service unavailable';
+
+  @override
+  String get http_version_not_supported => 'HTTP version not supported';
+
+  @override
+  String get loop_detected => 'Loop detected';
+
+  @override
+  String get malagasy => 'Malagasy';
+
+  @override
+  String get french => 'French';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get chinese => 'Chinese';
+
+  @override
+  String get korean => 'Korean';
+
+  @override
+  String get no_job_offers_yet => 'No job offers yet';
+
+  @override
+  String get no_job_applicants_yet => 'No job applicants yet';
+
+  @override
+  String get no_training_centers_yet => 'No training centers yet';
+
+  @override
+  String get no_kara_history_yet => 'No Kara history yet';
+
+  @override
+  String get please_select_birth_date => 'Please select a birth date';
+
+  @override
+  String get must_be_at_least_18 => 'You must be at least 18 years old';
+
+  @override
+  String get male => 'Male';
+
+  @override
+  String get female => 'Female';
+
+  @override
+  String get expired => 'Expired';
+
+  @override
+  String get no_available_training_center => 'No available training center';
+
+  @override
+  String get no_hot_offers_yet => 'No hot offers yet';
+
+  @override
+  String get no_event_offers_yet => 'No event offers yet';
+
+  @override
+  String get please_fill_all_required_fields =>
+      'Please fill all required fields';
+
+  @override
+  String get job_offer_updated_successfully => 'Job offer updated successfully';
 }

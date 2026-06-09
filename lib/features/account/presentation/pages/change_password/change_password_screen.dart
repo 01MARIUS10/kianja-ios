@@ -36,7 +36,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     if (_oldPasswordController.text.isEmpty ||
         _newPasswordController.text.isEmpty ||
         _retypePasswordController.text.isEmpty) {
-      AppMessenger.showError(context, 'Please fill all fields');
+      AppMessenger.showError(
+        context,
+        context.appLoc.please_fill_all_required_fields,
+      );
       return;
     }
 

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CreateJobOfferInputModel {
 
-@JsonKey(defaultValue: '') String get title;@JsonKey(defaultValue: '') String get description;@JsonKey(name: 'image_id', defaultValue: -1) int get imageId;@JsonKey(name: 'categoriesIds', defaultValue: []) List<int> get categories;@JsonKey(defaultValue: -1) int get locationId;@JsonKey(defaultValue: -1) int get genderId;@JsonKey(defaultValue: -1) int get actorId;@JsonKey(name: 'date_limit', defaultValue: '') String get limitDate;@JsonKey(defaultValue: 'published') String get status;
+@JsonKey(defaultValue: '') String get title;@JsonKey(defaultValue: '') String get description;@JsonKey(name: 'image_id') int? get imageId;@JsonKey(name: 'categoriesIds', defaultValue: []) List<int> get categories;@JsonKey(defaultValue: -1) int get locationId;@JsonKey(defaultValue: -1) int get genderId;@JsonKey(defaultValue: -1) int get actorId;@JsonKey(name: 'date_limit', defaultValue: '') String get limitDate;@JsonKey(defaultValue: 'published') String get status;
 /// Create a copy of CreateJobOfferInputModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $CreateJobOfferInputModelCopyWith<$Res>  {
   factory $CreateJobOfferInputModelCopyWith(CreateJobOfferInputModel value, $Res Function(CreateJobOfferInputModel) _then) = _$CreateJobOfferInputModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(defaultValue: '') String title,@JsonKey(defaultValue: '') String description,@JsonKey(name: 'image_id', defaultValue: -1) int imageId,@JsonKey(name: 'categoriesIds', defaultValue: []) List<int> categories,@JsonKey(defaultValue: -1) int locationId,@JsonKey(defaultValue: -1) int genderId,@JsonKey(defaultValue: -1) int actorId,@JsonKey(name: 'date_limit', defaultValue: '') String limitDate,@JsonKey(defaultValue: 'published') String status
+@JsonKey(defaultValue: '') String title,@JsonKey(defaultValue: '') String description,@JsonKey(name: 'image_id') int? imageId,@JsonKey(name: 'categoriesIds', defaultValue: []) List<int> categories,@JsonKey(defaultValue: -1) int locationId,@JsonKey(defaultValue: -1) int genderId,@JsonKey(defaultValue: -1) int actorId,@JsonKey(name: 'date_limit', defaultValue: '') String limitDate,@JsonKey(defaultValue: 'published') String status
 });
 
 
@@ -65,12 +65,12 @@ class _$CreateJobOfferInputModelCopyWithImpl<$Res>
 
 /// Create a copy of CreateJobOfferInputModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? description = null,Object? imageId = null,Object? categories = null,Object? locationId = null,Object? genderId = null,Object? actorId = null,Object? limitDate = null,Object? status = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? description = null,Object? imageId = freezed,Object? categories = null,Object? locationId = null,Object? genderId = null,Object? actorId = null,Object? limitDate = null,Object? status = null,}) {
   return _then(_self.copyWith(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,imageId: null == imageId ? _self.imageId : imageId // ignore: cast_nullable_to_non_nullable
-as int,categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
+as String,imageId: freezed == imageId ? _self.imageId : imageId // ignore: cast_nullable_to_non_nullable
+as int?,categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
 as List<int>,locationId: null == locationId ? _self.locationId : locationId // ignore: cast_nullable_to_non_nullable
 as int,genderId: null == genderId ? _self.genderId : genderId // ignore: cast_nullable_to_non_nullable
 as int,actorId: null == actorId ? _self.actorId : actorId // ignore: cast_nullable_to_non_nullable
@@ -161,7 +161,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String description, @JsonKey(name: 'image_id', defaultValue: -1)  int imageId, @JsonKey(name: 'categoriesIds', defaultValue: [])  List<int> categories, @JsonKey(defaultValue: -1)  int locationId, @JsonKey(defaultValue: -1)  int genderId, @JsonKey(defaultValue: -1)  int actorId, @JsonKey(name: 'date_limit', defaultValue: '')  String limitDate, @JsonKey(defaultValue: 'published')  String status)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String description, @JsonKey(name: 'image_id')  int? imageId, @JsonKey(name: 'categoriesIds', defaultValue: [])  List<int> categories, @JsonKey(defaultValue: -1)  int locationId, @JsonKey(defaultValue: -1)  int genderId, @JsonKey(defaultValue: -1)  int actorId, @JsonKey(name: 'date_limit', defaultValue: '')  String limitDate, @JsonKey(defaultValue: 'published')  String status)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CreateJobOfferInputModel() when $default != null:
 return $default(_that.title,_that.description,_that.imageId,_that.categories,_that.locationId,_that.genderId,_that.actorId,_that.limitDate,_that.status);case _:
@@ -182,7 +182,7 @@ return $default(_that.title,_that.description,_that.imageId,_that.categories,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String description, @JsonKey(name: 'image_id', defaultValue: -1)  int imageId, @JsonKey(name: 'categoriesIds', defaultValue: [])  List<int> categories, @JsonKey(defaultValue: -1)  int locationId, @JsonKey(defaultValue: -1)  int genderId, @JsonKey(defaultValue: -1)  int actorId, @JsonKey(name: 'date_limit', defaultValue: '')  String limitDate, @JsonKey(defaultValue: 'published')  String status)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String description, @JsonKey(name: 'image_id')  int? imageId, @JsonKey(name: 'categoriesIds', defaultValue: [])  List<int> categories, @JsonKey(defaultValue: -1)  int locationId, @JsonKey(defaultValue: -1)  int genderId, @JsonKey(defaultValue: -1)  int actorId, @JsonKey(name: 'date_limit', defaultValue: '')  String limitDate, @JsonKey(defaultValue: 'published')  String status)  $default,) {final _that = this;
 switch (_that) {
 case _CreateJobOfferInputModel():
 return $default(_that.title,_that.description,_that.imageId,_that.categories,_that.locationId,_that.genderId,_that.actorId,_that.limitDate,_that.status);case _:
@@ -202,7 +202,7 @@ return $default(_that.title,_that.description,_that.imageId,_that.categories,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String description, @JsonKey(name: 'image_id', defaultValue: -1)  int imageId, @JsonKey(name: 'categoriesIds', defaultValue: [])  List<int> categories, @JsonKey(defaultValue: -1)  int locationId, @JsonKey(defaultValue: -1)  int genderId, @JsonKey(defaultValue: -1)  int actorId, @JsonKey(name: 'date_limit', defaultValue: '')  String limitDate, @JsonKey(defaultValue: 'published')  String status)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String description, @JsonKey(name: 'image_id')  int? imageId, @JsonKey(name: 'categoriesIds', defaultValue: [])  List<int> categories, @JsonKey(defaultValue: -1)  int locationId, @JsonKey(defaultValue: -1)  int genderId, @JsonKey(defaultValue: -1)  int actorId, @JsonKey(name: 'date_limit', defaultValue: '')  String limitDate, @JsonKey(defaultValue: 'published')  String status)?  $default,) {final _that = this;
 switch (_that) {
 case _CreateJobOfferInputModel() when $default != null:
 return $default(_that.title,_that.description,_that.imageId,_that.categories,_that.locationId,_that.genderId,_that.actorId,_that.limitDate,_that.status);case _:
@@ -217,12 +217,12 @@ return $default(_that.title,_that.description,_that.imageId,_that.categories,_th
 @JsonSerializable()
 
 class _CreateJobOfferInputModel extends CreateJobOfferInputModel {
-  const _CreateJobOfferInputModel({@JsonKey(defaultValue: '') required this.title, @JsonKey(defaultValue: '') required this.description, @JsonKey(name: 'image_id', defaultValue: -1) required this.imageId, @JsonKey(name: 'categoriesIds', defaultValue: []) required final  List<int> categories, @JsonKey(defaultValue: -1) required this.locationId, @JsonKey(defaultValue: -1) required this.genderId, @JsonKey(defaultValue: -1) required this.actorId, @JsonKey(name: 'date_limit', defaultValue: '') required this.limitDate, @JsonKey(defaultValue: 'published') required this.status}): _categories = categories,super._();
+  const _CreateJobOfferInputModel({@JsonKey(defaultValue: '') required this.title, @JsonKey(defaultValue: '') required this.description, @JsonKey(name: 'image_id') this.imageId, @JsonKey(name: 'categoriesIds', defaultValue: []) required final  List<int> categories, @JsonKey(defaultValue: -1) required this.locationId, @JsonKey(defaultValue: -1) required this.genderId, @JsonKey(defaultValue: -1) required this.actorId, @JsonKey(name: 'date_limit', defaultValue: '') required this.limitDate, @JsonKey(defaultValue: 'published') required this.status}): _categories = categories,super._();
   factory _CreateJobOfferInputModel.fromJson(Map<String, dynamic> json) => _$CreateJobOfferInputModelFromJson(json);
 
 @override@JsonKey(defaultValue: '') final  String title;
 @override@JsonKey(defaultValue: '') final  String description;
-@override@JsonKey(name: 'image_id', defaultValue: -1) final  int imageId;
+@override@JsonKey(name: 'image_id') final  int? imageId;
  final  List<int> _categories;
 @override@JsonKey(name: 'categoriesIds', defaultValue: []) List<int> get categories {
   if (_categories is EqualUnmodifiableListView) return _categories;
@@ -269,7 +269,7 @@ abstract mixin class _$CreateJobOfferInputModelCopyWith<$Res> implements $Create
   factory _$CreateJobOfferInputModelCopyWith(_CreateJobOfferInputModel value, $Res Function(_CreateJobOfferInputModel) _then) = __$CreateJobOfferInputModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(defaultValue: '') String title,@JsonKey(defaultValue: '') String description,@JsonKey(name: 'image_id', defaultValue: -1) int imageId,@JsonKey(name: 'categoriesIds', defaultValue: []) List<int> categories,@JsonKey(defaultValue: -1) int locationId,@JsonKey(defaultValue: -1) int genderId,@JsonKey(defaultValue: -1) int actorId,@JsonKey(name: 'date_limit', defaultValue: '') String limitDate,@JsonKey(defaultValue: 'published') String status
+@JsonKey(defaultValue: '') String title,@JsonKey(defaultValue: '') String description,@JsonKey(name: 'image_id') int? imageId,@JsonKey(name: 'categoriesIds', defaultValue: []) List<int> categories,@JsonKey(defaultValue: -1) int locationId,@JsonKey(defaultValue: -1) int genderId,@JsonKey(defaultValue: -1) int actorId,@JsonKey(name: 'date_limit', defaultValue: '') String limitDate,@JsonKey(defaultValue: 'published') String status
 });
 
 
@@ -286,12 +286,12 @@ class __$CreateJobOfferInputModelCopyWithImpl<$Res>
 
 /// Create a copy of CreateJobOfferInputModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? description = null,Object? imageId = null,Object? categories = null,Object? locationId = null,Object? genderId = null,Object? actorId = null,Object? limitDate = null,Object? status = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? description = null,Object? imageId = freezed,Object? categories = null,Object? locationId = null,Object? genderId = null,Object? actorId = null,Object? limitDate = null,Object? status = null,}) {
   return _then(_CreateJobOfferInputModel(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,imageId: null == imageId ? _self.imageId : imageId // ignore: cast_nullable_to_non_nullable
-as int,categories: null == categories ? _self._categories : categories // ignore: cast_nullable_to_non_nullable
+as String,imageId: freezed == imageId ? _self.imageId : imageId // ignore: cast_nullable_to_non_nullable
+as int?,categories: null == categories ? _self._categories : categories // ignore: cast_nullable_to_non_nullable
 as List<int>,locationId: null == locationId ? _self.locationId : locationId // ignore: cast_nullable_to_non_nullable
 as int,genderId: null == genderId ? _self.genderId : genderId // ignore: cast_nullable_to_non_nullable
 as int,actorId: null == actorId ? _self.actorId : actorId // ignore: cast_nullable_to_non_nullable

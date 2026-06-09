@@ -7,6 +7,7 @@ import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.da
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/training/enum/training_center_badge.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_view_domain_usecase.dart';
@@ -248,7 +249,7 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: Constants.spacingSmall),
             Text(
-              'Aucun centre de formation disponible',
+              context.appLoc.no_available_training_center,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: isDark
                     ? AppColors.darkTextSecondary

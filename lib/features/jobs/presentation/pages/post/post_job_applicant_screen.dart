@@ -124,8 +124,7 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
         createJobApplicantParams: CreateJobApplicantParams(
           title: _titleController.text.trim(),
           motivation: _motivationController.text.trim(),
-          imageUrl: _uploadImageUrl ?? '',
-          pdfUrl: _uploadPdfUrl ?? '',
+          pdfUrl: _uploadPdfUrl,
           locationId: _selectedLocation!,
           genderId: _selectedGender!,
           typeId: _selectedPlan!.type.id,
@@ -168,16 +167,16 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                 setState(() => _plans = state.pricePlans);
               } else if (state is JobsUploadImageSuccess) {
                 setState(() => _uploadImageUrl = state.jobImage.url);
-                AppMessenger.showSuccess(
-                  context,
-                  'Photo uploaded successfully',
-                );
+                // AppMessenger.showSuccess(
+                //   context,
+                //   'Photo uploaded successfully',
+                // );
               } else if (state is JobsUploadPdfSuccess) {
                 setState(() => _uploadPdfUrl = state.jobPdf.url);
-                AppMessenger.showSuccess(
-                  context,
-                  'Resume uploaded successfully',
-                );
+                // AppMessenger.showSuccess(
+                //   context,
+                //   'Resume uploaded successfully',
+                // );
               } else if (state is JobsCreateJobApplicantSuccess) {
                 _clearValues();
                 context.pushReplacementNamed(

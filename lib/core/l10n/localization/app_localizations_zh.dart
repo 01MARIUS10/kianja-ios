@@ -571,12 +571,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get retry => '重试';
 
   @override
-  String get service_unavailable => '服务不可用';
-
-  @override
-  String get not_found => '未找到';
-
-  @override
   String get page_failed_load => '页面加载失败';
 
   @override
@@ -629,4 +623,130 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get register => '注册';
+
+  @override
+  String get connection_timeout => '连接超时';
+
+  @override
+  String get send_timeout => '发送超时';
+
+  @override
+  String get receive_timeout => '接收超时';
+
+  @override
+  String get bad_certificate => '证书无效';
+
+  @override
+  String get request_cancelled => '请求已取消';
+
+  @override
+  String get no_internet_connection => '无网络连接';
+
+  @override
+  String get unknown_error => '未知错误';
+
+  @override
+  String get unauthorized => '未授权';
+
+  @override
+  String get payment_required => '需要付款';
+
+  @override
+  String get forbidden => '禁止访问';
+
+  @override
+  String get not_found => '未找到';
+
+  @override
+  String get method_not_allowed => '不允许的方法';
+
+  @override
+  String get not_acceptable => '不可接受';
+
+  @override
+  String get proxy_auth_required => '需要代理身份验证';
+
+  @override
+  String get request_timeout => '请求超时';
+
+  @override
+  String get conflict => '冲突';
+
+  @override
+  String get unprocessable_entity => '无法处理的实体';
+
+  @override
+  String get internal_server_error => '服务器内部错误';
+
+  @override
+  String get not_implemented => '尚未实现';
+
+  @override
+  String get bad_gateway => '错误网关';
+
+  @override
+  String get service_unavailable => '服务不可用';
+
+  @override
+  String get http_version_not_supported => '不支持的 HTTP 版本';
+
+  @override
+  String get loop_detected => '检测到循环';
+
+  @override
+  String get malagasy => '马达加斯加语';
+
+  @override
+  String get french => '法语';
+
+  @override
+  String get english => '英语';
+
+  @override
+  String get chinese => '中文';
+
+  @override
+  String get korean => '韩语';
+
+  @override
+  String get no_job_offers_yet => '暂无招聘信息';
+
+  @override
+  String get no_job_applicants_yet => '暂无求职者';
+
+  @override
+  String get no_training_centers_yet => '暂无培训中心';
+
+  @override
+  String get no_kara_history_yet => '暂无 Kara 使用记录';
+
+  @override
+  String get please_select_birth_date => '请选择出生日期';
+
+  @override
+  String get must_be_at_least_18 => '您必须年满 18 周岁';
+
+  @override
+  String get male => '男';
+
+  @override
+  String get female => '女';
+
+  @override
+  String get expired => '已过期';
+
+  @override
+  String get no_available_training_center => '暂无可用的培训中心';
+
+  @override
+  String get no_hot_offers_yet => '暂无热门优惠';
+
+  @override
+  String get no_event_offers_yet => '暂无活动优惠';
+
+  @override
+  String get please_fill_all_required_fields => '请填写所有必填字段';
+
+  @override
+  String get job_offer_updated_successfully => '招聘信息更新成功';
 }

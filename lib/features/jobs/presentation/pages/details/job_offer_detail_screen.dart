@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/widgets/avatar/default_avatar.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
@@ -27,9 +26,6 @@ class JobOfferDetailScreen extends StatelessWidget {
         ? AppColors.darkTextSecondary
         : AppColors.lightTextSecondary;
     final borderColor = isDark ? AppColors.darkBorder : AppColors.lightBorder;
-    final surfaceColor = isDark
-        ? AppColors.darkSurface
-        : AppColors.lightSurface;
 
     return BlocProvider(
       create: (context) =>
@@ -41,6 +37,7 @@ class JobOfferDetailScreen extends StatelessWidget {
           builder: (context, state) {
             if (state is JobsGetJobOfferDetailSuccess) {
               final jobOffer = state.jobOffer;
+              final isExpired = AppFunction.isExpired(jobOffer.dateLimit);
               return SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(
                   vertical: Constants.paddingMedium,
@@ -69,18 +66,24 @@ class JobOfferDetailScreen extends StatelessWidget {
                                 '${context.appLoc.deadline}  ',
                                 style: theme.textTheme.bodySmall,
                               ),
-                              const Icon(
+                              Icon(
                                 Icons.access_time,
                                 size: Constants.iconSizeExtraSmall,
-                                color: AppColors.danger,
+                                color: isExpired
+                                    ? AppColors.danger
+                                    : AppColors.success,
                               ),
                               const SizedBox(
                                 width: Constants.spacingExtraSmall,
                               ),
                               Text(
-                                AppFunction.getDate(jobOffer.dateLimit),
+                                isExpired
+                                    ? '${AppFunction.getDate(jobOffer.dateLimit)} (${context.appLoc.expired})'
+                                    : AppFunction.getDate(jobOffer.dateLimit),
                                 style: theme.textTheme.bodySmall?.copyWith(
-                                  color: AppColors.danger,
+                                  color: isExpired
+                                      ? AppColors.danger.withValues(alpha: 0.7)
+                                      : AppColors.success,
                                 ),
                               ),
                             ],
@@ -106,29 +109,36 @@ class JobOfferDetailScreen extends StatelessWidget {
                     const SizedBox(height: Constants.spacingMedium),
 
                     // Image
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Constants.paddingMedium,
-                      ),
-                      child: PhotoHandler(
-                        width: double.infinity,
-                        imageUrls: [jobOffer.image]
-                            .map(
-                              (image) => '${EnvConfig.baseApiUrl}${image?.url}',
-                            )
-                            .toList(),
-                      ),
-                    ),
+                    if (jobOffer.image != null)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: Constants.paddingMedium,
+                            ),
+                            child: PhotoHandler(
+                              width: double.infinity,
+                              imageUrls: [jobOffer.image]
+                                  .map(
+                                    (image) =>
+                                        '${EnvConfig.baseApiUrl}${image?.url}',
+                                  )
+                                  .toList(),
+                            ),
+                          ),
 
-                    const SizedBox(height: Constants.spacingMedium),
-                    Divider(
-                      color: borderColor,
-                      thickness: 1,
-                      height: 1,
-                      indent: Constants.paddingMedium,
-                      endIndent: Constants.paddingMedium,
-                    ),
-                    const SizedBox(height: Constants.spacingMedium),
+                          const SizedBox(height: Constants.spacingMedium),
+                          Divider(
+                            color: borderColor,
+                            thickness: 1,
+                            height: 1,
+                            indent: Constants.paddingMedium,
+                            endIndent: Constants.paddingMedium,
+                          ),
+                          const SizedBox(height: Constants.spacingMedium),
+                        ],
+                      ),
 
                     // Description
                     Padding(

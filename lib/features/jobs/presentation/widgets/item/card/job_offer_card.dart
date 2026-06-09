@@ -2,12 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/config/env_config.dart';
-import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
-import 'package:kianja/core/shared/widgets/avatar/circle_user_avatar_detail.dart';
 import 'package:kianja/core/shared/widgets/avatar/default_avatar.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/jobs/presentation/widgets/enum/width_view_enum.dart';
 
@@ -24,6 +23,7 @@ class JobOfferCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = Brightness.dark == Theme.of(context).brightness;
+    final isExpired = AppFunction.isExpired(jobOffer.dateLimit);
 
     return Container(
       width: widthViewEnum.width,
@@ -101,14 +101,20 @@ class JobOfferCard extends StatelessWidget {
                     Icon(
                       Icons.access_time,
                       size: Constants.iconSizeExtraSmall,
-                      color: AppColors.danger.withValues(alpha: 0.7),
+                      color: isExpired
+                          ? AppColors.danger.withValues(alpha: 0.7)
+                          : AppColors.success,
                     ),
                     const SizedBox(width: Constants.spacingExtraSmall),
                     Expanded(
                       child: Text(
-                        AppFunction.getDate(jobOffer.dateLimit),
+                        isExpired
+                            ? '${AppFunction.getDate(jobOffer.dateLimit)} (${context.appLoc.expired})'
+                            : AppFunction.getDate(jobOffer.dateLimit),
                         style: theme.textTheme.bodySmall?.copyWith(
-                          color: AppColors.danger.withValues(alpha: 0.7),
+                          color: isExpired
+                              ? AppColors.danger.withValues(alpha: 0.7)
+                              : AppColors.success,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,

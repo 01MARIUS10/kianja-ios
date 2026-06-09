@@ -192,7 +192,7 @@ class _MyPostHotScreenState extends State<MyPostHotScreen>
 
         if (_hasLoadedOnce) {
           if (_hots.isEmpty) {
-            return const Center(child: Text('No job offers yet'));
+            return const Center(child: Text('No Hots yet'));
           }
 
           final hasMore = state is MyPostGetAllHotsSuccess && state.hasMore;

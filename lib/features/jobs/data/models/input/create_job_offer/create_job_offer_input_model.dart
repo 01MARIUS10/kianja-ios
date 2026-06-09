@@ -8,7 +8,7 @@ abstract class CreateJobOfferInputModel with _$CreateJobOfferInputModel {
   const factory CreateJobOfferInputModel({
     @JsonKey(defaultValue: '') required String title,
     @JsonKey(defaultValue: '') required String description,
-    @JsonKey(name: 'image_id', defaultValue: -1) required int imageId,
+    @JsonKey(name: 'image_id') int? imageId,
     @JsonKey(name: 'categoriesIds', defaultValue: [])
     required List<int> categories,
     @JsonKey(defaultValue: -1) required int locationId,

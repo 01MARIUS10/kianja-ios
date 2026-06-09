@@ -79,14 +79,18 @@ class _MyPostTrainingCenterEditScreenState
       ..clear()
       ..addAll(trainingCenter.domains.map((domain) => domain.id));
 
-    _existingImageIds
-      ..clear()
-      ..addAll(trainingCenter.images.map((e) => e.id).where((id) => id > 0));
-    _existingImageUrls
-      ..clear()
-      ..addAll(
-        trainingCenter.images.map((e) => e.url).where((url) => url.isNotEmpty),
-      );
+    if (trainingCenter.images != null && trainingCenter.images!.isNotEmpty) {
+      _existingImageIds
+        ..clear()
+        ..addAll(trainingCenter.images!.map((e) => e.id).where((id) => id > 0));
+      _existingImageUrls
+        ..clear()
+        ..addAll(
+          trainingCenter.images!
+              .map((e) => e.url)
+              .where((url) => url.isNotEmpty),
+        );
+    }
 
     // Some training centers may only have a single cover `imageUrl`.
     final cover = trainingCenter.imageUrl;
@@ -442,7 +446,9 @@ class _MyPostTrainingCenterEditScreenState
                                 '(${context.appLoc.max_5})',
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
-                                  color: isDark ? Colors.white54 : Colors.black54,
+                                  color: isDark
+                                      ? Colors.white54
+                                      : Colors.black54,
                                 ),
                               ),
                             ],
@@ -474,7 +480,8 @@ class _MyPostTrainingCenterEditScreenState
                                             value: isSelected,
                                             onChanged: isBusy
                                                 ? null
-                                                : (_) => _toggleDomain(domain.id),
+                                                : (_) =>
+                                                      _toggleDomain(domain.id),
                                           ),
                                         ),
                                         const SizedBox(
@@ -551,7 +558,9 @@ class _MyPostTrainingCenterEditScreenState
 
                           const SizedBox(height: Constants.spacingMedium),
 
-                          LabelField(label: '${context.appLoc.more_description} *'),
+                          LabelField(
+                            label: '${context.appLoc.more_description} *',
+                          ),
                           const SizedBox(height: Constants.spacingSmall),
                           TextInputField(
                             controller: _descriptionController,

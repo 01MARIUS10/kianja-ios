@@ -171,31 +171,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       const SizedBox(width: 8),
                       Expanded(
-                        child: RichText(
-                          text: TextSpan(
-                            style: theme.textTheme.bodyMedium,
-                            children: [
-                              const TextSpan(text: 'I Agree with '),
-                              TextSpan(
-                                text: 'Terms of Service',
-                                style: theme.textTheme.bodyMedium!.copyWith(
-                                  color: isDark
-                                      ? AppColors.darkPrimary
-                                      : AppColors.lightPrimary,
-                                  fontWeight: FontWeight.bold,
+                        child: InkWell(
+                          onTap: () =>
+                              context.pushNamed(Routes.termsOfUse.name),
+                          child: RichText(
+                            text: TextSpan(
+                              style: theme.textTheme.bodyMedium,
+                              children: [
+                                TextSpan(text: context.appLoc.agree_with),
+                                TextSpan(
+                                  text: ' ${context.appLoc.terms_use}',
+                                  style: theme.textTheme.bodyMedium!.copyWith(
+                                    color: isDark
+                                        ? AppColors.darkPrimary
+                                        : AppColors.lightPrimary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                              const TextSpan(text: ' and '),
-                              TextSpan(
-                                text: 'Privacy Policy',
-                                style: theme.textTheme.bodyMedium!.copyWith(
-                                  color: isDark
-                                      ? AppColors.darkPrimary
-                                      : AppColors.lightPrimary,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),

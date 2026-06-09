@@ -117,7 +117,8 @@ class JobApplicantDetailScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: Constants.spacingMedium),
 
-                    if (jobApplicant.pdfUrl.isNotEmpty)
+                    if (jobApplicant.pdfUrl != null &&
+                        jobApplicant.pdfUrl!.isNotEmpty)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

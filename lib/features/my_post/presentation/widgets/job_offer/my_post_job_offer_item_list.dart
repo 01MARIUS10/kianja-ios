@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/config/env_config.dart';
+import 'package:kianja/core/shared/widgets/avatar/default_avatar.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
@@ -130,19 +131,18 @@ class MyPostJobOfferItemList extends StatelessWidget {
                       children: [
                         // User avatar
                         ClipOval(
-                          child: Image.asset(
-                            Assets.rabbitAvatar,
-                            width: Constants.size40,
-                            height: Constants.size40,
-                            fit: BoxFit.cover,
-                            cacheWidth: 80,
-                            cacheHeight: 80,
-                            errorBuilder: (ctx, e, st) => Icon(
-                              Icons.person,
-                              size: Constants.iconSizeExtraSmall,
-                              color: textSecondary,
-                            ),
-                          ),
+                          child: jobOffer.user.photoUrl.isNotEmpty
+                              ? Image.network(
+                                  '${EnvConfig.baseApiUrl}${jobOffer.user.photoUrl}',
+                                  fit: BoxFit.cover,
+                                  width: Constants.size35,
+                                  height: Constants.size35,
+                                  errorBuilder: (_, _, _) =>
+                                      const DefaultAvatar(
+                                        size: Constants.size35,
+                                      ),
+                                )
+                              : const DefaultAvatar(size: Constants.size35),
                         ),
                         const SizedBox(width: Constants.spacingExtraSmall),
 

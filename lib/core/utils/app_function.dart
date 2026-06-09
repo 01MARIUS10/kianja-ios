@@ -226,4 +226,13 @@ abstract class AppFunction {
 
     return buffer.toString().split('').reversed.join();
   }
+
+  static bool isExpired(String dateInput) {
+    try {
+      final DateTime inputDate = DateTime.parse(dateInput).toLocal();
+      return DateTime.now().isAfter(inputDate);
+    } catch (e) {
+      return false;
+    }
+  }
 }

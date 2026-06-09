@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$KaraHistoryModel {
 
-@JsonKey(name: 'id', defaultValue: -1) int get id;@JsonKey(defaultValue: '') String get type;@JsonKey(defaultValue: '') String get message;@JsonKey(defaultValue: 0) int get montant;@JsonKey(name: 'is_icome', defaultValue: false) bool get isIncome;@JsonKey(name: 'created_at', defaultValue: '') String get date;
+@JsonKey(name: 'id', defaultValue: -1) int get id;@JsonKey(defaultValue: '') String get type;@JsonKey(defaultValue: '') String get message;@JsonKey(defaultValue: 0) int get montant;@JsonKey(name: 'is_income', defaultValue: false) bool get isIncome;@JsonKey(name: 'created_at', defaultValue: '') String get date;
 /// Create a copy of KaraHistoryModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $KaraHistoryModelCopyWith<$Res>  {
   factory $KaraHistoryModelCopyWith(KaraHistoryModel value, $Res Function(KaraHistoryModel) _then) = _$KaraHistoryModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'id', defaultValue: -1) int id,@JsonKey(defaultValue: '') String type,@JsonKey(defaultValue: '') String message,@JsonKey(defaultValue: 0) int montant,@JsonKey(name: 'is_icome', defaultValue: false) bool isIncome,@JsonKey(name: 'created_at', defaultValue: '') String date
+@JsonKey(name: 'id', defaultValue: -1) int id,@JsonKey(defaultValue: '') String type,@JsonKey(defaultValue: '') String message,@JsonKey(defaultValue: 0) int montant,@JsonKey(name: 'is_income', defaultValue: false) bool isIncome,@JsonKey(name: 'created_at', defaultValue: '') String date
 });
 
 
@@ -158,7 +158,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'id', defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String type, @JsonKey(defaultValue: '')  String message, @JsonKey(defaultValue: 0)  int montant, @JsonKey(name: 'is_icome', defaultValue: false)  bool isIncome, @JsonKey(name: 'created_at', defaultValue: '')  String date)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'id', defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String type, @JsonKey(defaultValue: '')  String message, @JsonKey(defaultValue: 0)  int montant, @JsonKey(name: 'is_income', defaultValue: false)  bool isIncome, @JsonKey(name: 'created_at', defaultValue: '')  String date)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _KaraHistoryModel() when $default != null:
 return $default(_that.id,_that.type,_that.message,_that.montant,_that.isIncome,_that.date);case _:
@@ -179,7 +179,7 @@ return $default(_that.id,_that.type,_that.message,_that.montant,_that.isIncome,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'id', defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String type, @JsonKey(defaultValue: '')  String message, @JsonKey(defaultValue: 0)  int montant, @JsonKey(name: 'is_icome', defaultValue: false)  bool isIncome, @JsonKey(name: 'created_at', defaultValue: '')  String date)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'id', defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String type, @JsonKey(defaultValue: '')  String message, @JsonKey(defaultValue: 0)  int montant, @JsonKey(name: 'is_income', defaultValue: false)  bool isIncome, @JsonKey(name: 'created_at', defaultValue: '')  String date)  $default,) {final _that = this;
 switch (_that) {
 case _KaraHistoryModel():
 return $default(_that.id,_that.type,_that.message,_that.montant,_that.isIncome,_that.date);case _:
@@ -199,7 +199,7 @@ return $default(_that.id,_that.type,_that.message,_that.montant,_that.isIncome,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'id', defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String type, @JsonKey(defaultValue: '')  String message, @JsonKey(defaultValue: 0)  int montant, @JsonKey(name: 'is_icome', defaultValue: false)  bool isIncome, @JsonKey(name: 'created_at', defaultValue: '')  String date)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'id', defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String type, @JsonKey(defaultValue: '')  String message, @JsonKey(defaultValue: 0)  int montant, @JsonKey(name: 'is_income', defaultValue: false)  bool isIncome, @JsonKey(name: 'created_at', defaultValue: '')  String date)?  $default,) {final _that = this;
 switch (_that) {
 case _KaraHistoryModel() when $default != null:
 return $default(_that.id,_that.type,_that.message,_that.montant,_that.isIncome,_that.date);case _:
@@ -214,14 +214,14 @@ return $default(_that.id,_that.type,_that.message,_that.montant,_that.isIncome,_
 @JsonSerializable()
 
 class _KaraHistoryModel extends KaraHistoryModel {
-  const _KaraHistoryModel({@JsonKey(name: 'id', defaultValue: -1) required this.id, @JsonKey(defaultValue: '') required this.type, @JsonKey(defaultValue: '') required this.message, @JsonKey(defaultValue: 0) required this.montant, @JsonKey(name: 'is_icome', defaultValue: false) required this.isIncome, @JsonKey(name: 'created_at', defaultValue: '') required this.date}): super._();
+  const _KaraHistoryModel({@JsonKey(name: 'id', defaultValue: -1) required this.id, @JsonKey(defaultValue: '') required this.type, @JsonKey(defaultValue: '') required this.message, @JsonKey(defaultValue: 0) required this.montant, @JsonKey(name: 'is_income', defaultValue: false) required this.isIncome, @JsonKey(name: 'created_at', defaultValue: '') required this.date}): super._();
   factory _KaraHistoryModel.fromJson(Map<String, dynamic> json) => _$KaraHistoryModelFromJson(json);
 
 @override@JsonKey(name: 'id', defaultValue: -1) final  int id;
 @override@JsonKey(defaultValue: '') final  String type;
 @override@JsonKey(defaultValue: '') final  String message;
 @override@JsonKey(defaultValue: 0) final  int montant;
-@override@JsonKey(name: 'is_icome', defaultValue: false) final  bool isIncome;
+@override@JsonKey(name: 'is_income', defaultValue: false) final  bool isIncome;
 @override@JsonKey(name: 'created_at', defaultValue: '') final  String date;
 
 /// Create a copy of KaraHistoryModel
@@ -257,7 +257,7 @@ abstract mixin class _$KaraHistoryModelCopyWith<$Res> implements $KaraHistoryMod
   factory _$KaraHistoryModelCopyWith(_KaraHistoryModel value, $Res Function(_KaraHistoryModel) _then) = __$KaraHistoryModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'id', defaultValue: -1) int id,@JsonKey(defaultValue: '') String type,@JsonKey(defaultValue: '') String message,@JsonKey(defaultValue: 0) int montant,@JsonKey(name: 'is_icome', defaultValue: false) bool isIncome,@JsonKey(name: 'created_at', defaultValue: '') String date
+@JsonKey(name: 'id', defaultValue: -1) int id,@JsonKey(defaultValue: '') String type,@JsonKey(defaultValue: '') String message,@JsonKey(defaultValue: 0) int montant,@JsonKey(name: 'is_income', defaultValue: false) bool isIncome,@JsonKey(name: 'created_at', defaultValue: '') String date
 });
 
 

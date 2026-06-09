@@ -8,7 +8,6 @@ import 'package:kianja/core/shared/widgets/fields/label_field.dart';
 import 'package:kianja/core/shared/widgets/fields/text_input_field.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
-import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/core/utils/extensions.dart';
@@ -58,27 +57,18 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
         _selectedCategories.isEmpty ||
         _selectedLocation == null ||
         _selectedGender == null ||
-        _selectedActor == null ||
-        _uploadImageId == null) {
+        _selectedActor == null) {
       AppMessenger.showWarning(
         context,
-        'Please fill all required fields and upload a photo',
+        context.appLoc.please_fill_all_required_fields,
       );
       return;
     }
-    AppDebug.showPrint('title ${_titleController.text.trim()}');
-    AppDebug.showPrint('description ${_descriptionController.text.trim()}');
-    AppDebug.showPrint('limitDate ${_dateController.text.trim()}');
-    AppDebug.showPrint('categories $_selectedCategories');
-    AppDebug.showPrint('location $_selectedLocation');
-    AppDebug.showPrint('gender $_selectedGender');
-    AppDebug.showPrint('actor $_selectedActor');
-    AppDebug.showPrint('imageUrl $_uploadImageId');
     BlocProvider.of<JobsBloc>(context).add(
       JobsCreateJobOfferRequested(
         createJobOfferParams: CreateJobOfferParams(
           title: _titleController.text.trim(),
-          imageId: _uploadImageId!,
+          imageId: _uploadImageId,
           description: _descriptionController.text.trim(),
           categories: _selectedCategories,
           location: _selectedLocation!,
@@ -161,10 +151,10 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
                 setState(() {
                   _uploadImageId = state.jobImage.id;
                 });
-                AppMessenger.showSuccess(
-                  context,
-                  'Photo uploaded successfully',
-                );
+                // AppMessenger.showSuccess(
+                //   context,
+                //   'Photo uploaded successfully',
+                // );
               } else if (state is JobsCreateJobOfferSuccess) {
                 _clearValues();
                 context.pushReplacementNamed(
@@ -232,7 +222,7 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
                               ),
                             ),
                             Text(
-                              '(3 max)',
+                              context.appLoc.max_3,
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: isDark ? Colors.white54 : Colors.black54,

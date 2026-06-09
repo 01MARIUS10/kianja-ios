@@ -1,64 +1,73 @@
 import 'package:dio/dio.dart';
 import 'package:kianja/core/errors/exceptions.dart';
+import 'package:kianja/core/l10n/app_l10n.dart';
 
 abstract interface class DioExceptionHandler {
   static AppException handle(DioException e) {
+    final currentContext = AppL10n.current;
     return switch (e.type) {
-      DioExceptionType.connectionTimeout => const ConnectionTimeoutException(
-        message: 'Connection timeout',
+      DioExceptionType.connectionTimeout => ConnectionTimeoutException(
+        message: currentContext!.connection_timeout,
       ),
-      DioExceptionType.sendTimeout => const SendTimeoutException(
-        message: 'Send timeout',
+      DioExceptionType.sendTimeout => SendTimeoutException(
+        message: currentContext!.send_timeout,
       ),
-      DioExceptionType.receiveTimeout => const ReceiveTimeoutException(
-        message: 'Receive timeout',
+      DioExceptionType.receiveTimeout => ReceiveTimeoutException(
+        message: currentContext!.receive_timeout,
       ),
-      DioExceptionType.badCertificate => const BadCertificateException(
-        message: 'Bad certificate',
+      DioExceptionType.badCertificate => BadCertificateException(
+        message: currentContext!.bad_certificate,
       ),
       DioExceptionType.badResponse => handleBadResponse(e),
-      DioExceptionType.cancel => const CancelledException(
-        message: 'Request cancelled',
+      DioExceptionType.cancel => CancelledException(
+        message: currentContext!.cancel,
       ),
-      DioExceptionType.connectionError => const ConnectionErrorException(
-        message: 'No internet connection',
+      DioExceptionType.connectionError => ConnectionErrorException(
+        message: currentContext!.no_internet_connection,
       ),
-      DioExceptionType.unknown => const UnknownException(
-        message: 'Unknown error',
+      DioExceptionType.unknown => UnknownException(
+        message: currentContext!.unknown_error,
       ),
     };
   }
 
   static AppException handleBadResponse(DioException e) {
+    final currentContext = AppL10n.current;
     return switch (e.response?.statusCode) {
       // Client side exceptions
-      401 => const UnauthorizedException(message: 'Unauthorized'),
-      402 => const PaymentRequiredException(message: 'Payment required'),
-      403 => const ForbiddenException(message: 'Forbidden'),
-      404 => const NotFoundException(message: 'Not found'),
-      405 => const MethodNotAllowedException(message: 'Method not allowed'),
-      406 => const NotAcceptableException(message: 'Not acceptable'),
-      407 => const ProxyAuthenticationRequiredException(
-        message: 'Proxy authentication required',
+      401 => UnauthorizedException(message: currentContext!.unauthorized),
+      402 => PaymentRequiredException(
+        message: currentContext!.payment_required,
       ),
-      408 => const RequestTimeoutException(message: 'Request timeout'),
-      409 => const ConflictException(message: 'Conflict'),
-      422 => const UnprocessableEntityException(
-        message: 'Unprocessable entity',
+      403 => ForbiddenException(message: currentContext!.forbidden),
+      404 => NotFoundException(message: currentContext!.not_found),
+      405 => MethodNotAllowedException(
+        message: currentContext!.method_not_allowed,
+      ),
+      406 => NotAcceptableException(message: currentContext!.not_acceptable),
+      407 => ProxyAuthenticationRequiredException(
+        message: currentContext!.proxy_auth_required,
+      ),
+      408 => RequestTimeoutException(message: currentContext!.request_timeout),
+      409 => ConflictException(message: currentContext!.conflict),
+      422 => UnprocessableEntityException(
+        message: currentContext!.unprocessable_entity,
       ),
       // Server side exceptions
-      500 => const InternalServerErrorException(
-        message: 'Internal server error',
+      500 => InternalServerErrorException(
+        message: currentContext!.internal_server_error,
       ),
-      501 => const NotImplementedException(message: 'Not implemented'),
-      502 => const BadGatewayException(message: 'Bad gateway'),
-      503 => const ServiceUnavailableException(message: 'Service unavailable'),
-      505 => const HTTPVersionNotSupportedException(
-        message: 'HTTP version not supported',
+      501 => NotImplementedException(message: currentContext!.not_implemented),
+      502 => BadGatewayException(message: currentContext!.bad_gateway),
+      503 => ServiceUnavailableException(
+        message: currentContext!.service_unavailable,
       ),
-      508 => const LoopDetectedException(message: 'Loop detected'),
+      505 => HTTPVersionNotSupportedException(
+        message: currentContext!.http_version_not_supported,
+      ),
+      508 => LoopDetectedException(message: currentContext!.loop_detected),
       // Unknown exception
-      _ => const UnknownException(message: 'Unknown error'),
+      _ => UnknownException(message: currentContext!.unknown_error),
     };
   }
 }

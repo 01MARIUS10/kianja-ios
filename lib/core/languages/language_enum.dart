@@ -1,50 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:kianja/core/l10n/app_l10n.dart';
 import 'package:kianja/core/languages/languages.dart';
 
 enum LanguageEnum {
-  malagasy(
-    name: 'Malagasy',
-    flag: '🇲🇬',
-    locale: Languages.localeMalagasy,
-    langCode: 'mg',
-  ),
+  malagasy(flag: '🇲🇬', locale: Languages.localeMalagasy, langCode: 'mg'),
 
-  french(
-    name: 'Français',
-    flag: '🇫🇷',
-    locale: Languages.localeFrench,
-    langCode: 'fr',
-  ),
+  french(flag: '🇫🇷', locale: Languages.localeFrench, langCode: 'fr'),
 
-  english(
-    name: 'English',
-    flag: '🇬🇧',
-    locale: Languages.localeEnglish,
-    langCode: 'en',
-  ),
+  english(flag: '🇬🇧', locale: Languages.localeEnglish, langCode: 'en'),
 
-  chinese(
-    name: '中文',
-    flag: '🇨🇳',
-    locale: Languages.localeChinese,
-    langCode: 'zh',
-  ),
+  chinese(flag: '🇨🇳', locale: Languages.localeChinese, langCode: 'zh'),
 
-  korean(
-    name: '한국어',
-    flag: '🇰🇷',
-    locale: Languages.localeKorean,
-    langCode: 'ko',
-  );
+  korean(flag: '🇰🇷', locale: Languages.localeKorean, langCode: 'ko');
 
   const LanguageEnum({
-    required this.name,
     required this.flag,
     required this.locale,
     required this.langCode,
   });
 
-  final String name;
+  String get name {
+    switch (this) {
+      case LanguageEnum.malagasy:
+        return AppL10n.current!.malagasy;
+      case LanguageEnum.french:
+        return AppL10n.current!.french;
+      case LanguageEnum.english:
+        return AppL10n.current!.english;
+      case LanguageEnum.chinese:
+        return AppL10n.current!.chinese;
+      case LanguageEnum.korean:
+        return AppL10n.current!.korean;
+    }
+  }
+
   final String flag;
   final Locale locale;
   final String langCode;

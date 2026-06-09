@@ -1226,18 +1226,6 @@ abstract class AppLocalizations {
   /// **'Retry'**
   String get retry;
 
-  /// No description provided for @service_unavailable.
-  ///
-  /// In en, this message translates to:
-  /// **'Service unavailable'**
-  String get service_unavailable;
-
-  /// No description provided for @not_found.
-  ///
-  /// In en, this message translates to:
-  /// **'Not found'**
-  String get not_found;
-
   /// No description provided for @page_failed_load.
   ///
   /// In en, this message translates to:
@@ -1343,8 +1331,260 @@ abstract class AppLocalizations {
   /// No description provided for @register.
   ///
   /// In en, this message translates to:
-  /// **'S\'inscrire'**
+  /// **'Register'**
   String get register;
+
+  /// No description provided for @connection_timeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection timeout'**
+  String get connection_timeout;
+
+  /// No description provided for @send_timeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Send timeout'**
+  String get send_timeout;
+
+  /// No description provided for @receive_timeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive timeout'**
+  String get receive_timeout;
+
+  /// No description provided for @bad_certificate.
+  ///
+  /// In en, this message translates to:
+  /// **'Bad certificate'**
+  String get bad_certificate;
+
+  /// No description provided for @request_cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Request cancelled'**
+  String get request_cancelled;
+
+  /// No description provided for @no_internet_connection.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection'**
+  String get no_internet_connection;
+
+  /// No description provided for @unknown_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown error'**
+  String get unknown_error;
+
+  /// No description provided for @unauthorized.
+  ///
+  /// In en, this message translates to:
+  /// **'Unauthorized'**
+  String get unauthorized;
+
+  /// No description provided for @payment_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment required'**
+  String get payment_required;
+
+  /// No description provided for @forbidden.
+  ///
+  /// In en, this message translates to:
+  /// **'Forbidden'**
+  String get forbidden;
+
+  /// No description provided for @not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'Not found'**
+  String get not_found;
+
+  /// No description provided for @method_not_allowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Method not allowed'**
+  String get method_not_allowed;
+
+  /// No description provided for @not_acceptable.
+  ///
+  /// In en, this message translates to:
+  /// **'Not acceptable'**
+  String get not_acceptable;
+
+  /// No description provided for @proxy_auth_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Proxy authentication required'**
+  String get proxy_auth_required;
+
+  /// No description provided for @request_timeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Request timeout'**
+  String get request_timeout;
+
+  /// No description provided for @conflict.
+  ///
+  /// In en, this message translates to:
+  /// **'Conflict'**
+  String get conflict;
+
+  /// No description provided for @unprocessable_entity.
+  ///
+  /// In en, this message translates to:
+  /// **'Unprocessable entity'**
+  String get unprocessable_entity;
+
+  /// No description provided for @internal_server_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Internal server error'**
+  String get internal_server_error;
+
+  /// No description provided for @not_implemented.
+  ///
+  /// In en, this message translates to:
+  /// **'Not implemented'**
+  String get not_implemented;
+
+  /// No description provided for @bad_gateway.
+  ///
+  /// In en, this message translates to:
+  /// **'Bad gateway'**
+  String get bad_gateway;
+
+  /// No description provided for @service_unavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Service unavailable'**
+  String get service_unavailable;
+
+  /// No description provided for @http_version_not_supported.
+  ///
+  /// In en, this message translates to:
+  /// **'HTTP version not supported'**
+  String get http_version_not_supported;
+
+  /// No description provided for @loop_detected.
+  ///
+  /// In en, this message translates to:
+  /// **'Loop detected'**
+  String get loop_detected;
+
+  /// No description provided for @malagasy.
+  ///
+  /// In en, this message translates to:
+  /// **'Malagasy'**
+  String get malagasy;
+
+  /// No description provided for @french.
+  ///
+  /// In en, this message translates to:
+  /// **'French'**
+  String get french;
+
+  /// No description provided for @english.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// No description provided for @chinese.
+  ///
+  /// In en, this message translates to:
+  /// **'Chinese'**
+  String get chinese;
+
+  /// No description provided for @korean.
+  ///
+  /// In en, this message translates to:
+  /// **'Korean'**
+  String get korean;
+
+  /// No description provided for @no_job_offers_yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No job offers yet'**
+  String get no_job_offers_yet;
+
+  /// No description provided for @no_job_applicants_yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No job applicants yet'**
+  String get no_job_applicants_yet;
+
+  /// No description provided for @no_training_centers_yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No training centers yet'**
+  String get no_training_centers_yet;
+
+  /// No description provided for @no_kara_history_yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No Kara history yet'**
+  String get no_kara_history_yet;
+
+  /// No description provided for @please_select_birth_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a birth date'**
+  String get please_select_birth_date;
+
+  /// No description provided for @must_be_at_least_18.
+  ///
+  /// In en, this message translates to:
+  /// **'You must be at least 18 years old'**
+  String get must_be_at_least_18;
+
+  /// No description provided for @male.
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get male;
+
+  /// No description provided for @female.
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get female;
+
+  /// No description provided for @expired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get expired;
+
+  /// No description provided for @no_available_training_center.
+  ///
+  /// In en, this message translates to:
+  /// **'No available training center'**
+  String get no_available_training_center;
+
+  /// No description provided for @no_hot_offers_yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No hot offers yet'**
+  String get no_hot_offers_yet;
+
+  /// No description provided for @no_event_offers_yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No event offers yet'**
+  String get no_event_offers_yet;
+
+  /// No description provided for @please_fill_all_required_fields.
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill all required fields'**
+  String get please_fill_all_required_fields;
+
+  /// No description provided for @job_offer_updated_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Job offer updated successfully'**
+  String get job_offer_updated_successfully;
 }
 
 class _AppLocalizationsDelegate

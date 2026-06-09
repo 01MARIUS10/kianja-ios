@@ -12,7 +12,7 @@ _UpdateJobOfferInputModel _$UpdateJobOfferInputModelFromJson(
   id: (json['id'] as num?)?.toInt() ?? -1,
   title: json['title'] as String? ?? '',
   description: json['description'] as String? ?? '',
-  imageId: (json['image_id'] as num?)?.toInt() ?? -1,
+  imageId: (json['image_id'] as num?)?.toInt(),
   categories:
       (json['categoriesIds'] as List<dynamic>?)
           ?.map((e) => (e as num).toInt())

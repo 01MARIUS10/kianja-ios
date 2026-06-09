@@ -3,8 +3,7 @@ class UpdateJobApplicantParams {
     required this.id,
     required this.title,
     required this.motivation,
-    required this.imageUrl,
-    required this.pdfUrl,
+    this.pdfUrl,
     required this.locationId,
     required this.genderId,
     required this.typeId,
@@ -16,8 +15,7 @@ class UpdateJobApplicantParams {
   final int id;
   final String title;
   final String motivation;
-  final String imageUrl;
-  final String pdfUrl;
+  final String? pdfUrl;
   final int locationId;
   final int genderId;
   final int typeId;

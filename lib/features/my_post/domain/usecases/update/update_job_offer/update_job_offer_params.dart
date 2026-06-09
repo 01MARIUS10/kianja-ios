@@ -2,7 +2,7 @@ class UpdateJobOfferParams {
   const UpdateJobOfferParams({
     required this.id,
     required this.title,
-    required this.imageId,
+    this.imageId,
     required this.description,
     required this.categories,
     required this.location,
@@ -14,7 +14,7 @@ class UpdateJobOfferParams {
 
   final int id;
   final String title;
-  final int imageId;
+  final int? imageId;
   final String description;
   final List<int> categories;
   final int location;

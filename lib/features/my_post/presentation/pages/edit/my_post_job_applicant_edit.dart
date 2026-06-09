@@ -138,7 +138,6 @@ class _MyPostJobApplicantEditScreenState
           id: widget.jobApplicantId,
           title: _titleController.text.trim(),
           motivation: _motivationController.text.trim(),
-          imageUrl: '', // Photo upload is currently disabled in create flow.
           pdfUrl: pdfUrlToSend,
           locationId: _selectedLocation!,
           genderId: _selectedGender!,

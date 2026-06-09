@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/themes/app_colors.dart';
+import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/account/domain/entities/kara_history.dart';
 
@@ -18,6 +19,9 @@ class KaraHistoryItem extends StatelessWidget {
 
     final amountColor = history.isIncome ? AppColors.success : AppColors.danger;
     final sign = history.isIncome ? '+' : '-';
+    AppDebug.showPrint(
+      'Sign: $sign, Amount: ${history.montant}, Type: ${history.type}',
+    );
 
     return Padding(
       padding: const EdgeInsets.symmetric(

@@ -10,7 +10,7 @@ abstract class CreateTrainingCenterInputModel
     @JsonKey(defaultValue: '') required String name,
     @JsonKey(defaultValue: '') required String description,
     @JsonKey(defaultValue: -1) required int locationId,
-    @JsonKey(name: 'image_ids', defaultValue: []) required List<int> imageIds,
+    @JsonKey(name: 'image_ids') List<int>? imageIds,
     @JsonKey(defaultValue: []) required List<int> domainIds,
     @JsonKey(defaultValue: -1) required int actorId,
     @JsonKey(defaultValue: -1) required int typeId,

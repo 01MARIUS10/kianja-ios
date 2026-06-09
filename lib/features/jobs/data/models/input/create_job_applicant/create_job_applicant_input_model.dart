@@ -9,8 +9,7 @@ abstract class CreateJobApplicantInputModel
   const factory CreateJobApplicantInputModel({
     @JsonKey(name: 'title', defaultValue: '') required String title,
     @JsonKey(name: 'motivation', defaultValue: '') required String motivation,
-    @JsonKey(name: 'image_path', defaultValue: '') required String imageUrl,
-    @JsonKey(name: 'resumepdf_path', defaultValue: '') required String pdfUrl,
+    @JsonKey(name: 'resumepdf_path') String? pdfUrl,
     @JsonKey(defaultValue: -1) required int locationId,
     @JsonKey(defaultValue: -1) required int genderId,
     @JsonKey(defaultValue: -1) required int typeId,

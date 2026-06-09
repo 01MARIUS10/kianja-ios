@@ -9,7 +9,6 @@ import 'package:kianja/core/shared/widgets/fields/text_input_field.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/shared/widgets/loading/shimmer_job_detail_indicator.dart';
 import 'package:kianja/core/themes/app_colors.dart';
-import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/core/utils/extensions.dart';
@@ -77,22 +76,13 @@ class _MyPostHotEventEditScreenState extends State<MyPostHotEventEditScreen> {
   }
 
   void _updateHotEvent(BuildContext context) {
-    AppDebug.showPrint(
-      'Updating job offer with title: ${_titleController.text}',
-    );
-    AppDebug.showPrint(
-      'Updating job offer with description: ${_descriptionController.text}',
-    );
-    AppDebug.showPrint('Updating job offer with image : $_resolvedImageId');
-
     if (_titleController.text.trim().isEmpty ||
         _descriptionController.text.trim().isEmpty ||
         _startDateController.text.trim().isEmpty ||
-        _endDateController.text.trim().isEmpty ||
-        _resolvedImageId == null) {
+        _endDateController.text.trim().isEmpty) {
       AppMessenger.showWarning(
         context,
-        'Please fill all required fields and keep or upload a photo',
+        context.appLoc.please_fill_all_required_fields,
       );
       return;
     }
@@ -153,10 +143,10 @@ class _MyPostHotEventEditScreenState extends State<MyPostHotEventEditScreen> {
                 });
               } else if (state is JobsUploadImageSuccess) {
                 setState(() => _uploadImageId = state.jobImage.id);
-                AppMessenger.showSuccess(
-                  context,
-                  'Photo uploaded successfully',
-                );
+                // AppMessenger.showSuccess(
+                //   context,
+                //   'Photo uploaded successfully',
+                // );
               } else if (state is JobsRequestFailure) {
                 AppMessenger.showError(context, state.message);
               }
@@ -174,7 +164,7 @@ class _MyPostHotEventEditScreenState extends State<MyPostHotEventEditScreen> {
                 if (state.message.contains('Unprocessable entity')) {
                   AppMessenger.showWarning(
                     context,
-                    "La date limite doit être aujourd'hui ou une date future.",
+                    context.appLoc.deadline_must_be_today_or_future,
                   );
                 } else {
                   AppMessenger.showError(context, state.message);

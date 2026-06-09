@@ -16,9 +16,9 @@ class TermsOfUseScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) =>
           GetIt.instance<AccountBloc>()..add(const AccountCguRequested()),
-      child: BaseScreen(
+      child: Scaffold(
         appBar: TitleHeader(title: context.appLoc.terms_use),
-        child: BlocBuilder<AccountBloc, AccountState>(
+        body: BlocBuilder<AccountBloc, AccountState>(
           builder: (context, state) {
             if (state is AccountRequestInProgress) {
               return const Center(child: CircularProgressIndicator());

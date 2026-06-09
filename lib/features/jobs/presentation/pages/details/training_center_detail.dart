@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
 import 'package:kianja/core/shared/widgets/avatar/default_avatar.dart';
@@ -36,9 +35,6 @@ class TrainingCenterDetail extends StatelessWidget {
         ? AppColors.darkTextSecondary
         : AppColors.lightTextSecondary;
     final borderColor = isDark ? AppColors.darkBorder : AppColors.lightBorder;
-    final surfaceColor = isDark
-        ? AppColors.darkSurface
-        : AppColors.lightSurface;
 
     return BlocBuilder<AppBloc, AppState>(
       builder: (context, appState) {
@@ -148,30 +144,37 @@ class TrainingCenterDetail extends StatelessWidget {
                         const SizedBox(height: Constants.spacingMedium),
 
                         // Image
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: Constants.paddingMedium,
-                          ),
-                          child: PhotoHandler(
-                            width: double.infinity,
-                            imageUrls: trainingCenter.images
-                                .map(
-                                  (image) =>
-                                      '${EnvConfig.baseApiUrl}${image.url}',
-                                )
-                                .toList(),
-                          ),
-                        ),
+                        if (trainingCenter.images != null &&
+                            trainingCenter.images!.isNotEmpty)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: Constants.paddingMedium,
+                                ),
+                                child: PhotoHandler(
+                                  width: double.infinity,
+                                  imageUrls: trainingCenter.images!
+                                      .map(
+                                        (image) =>
+                                            '${EnvConfig.baseApiUrl}${image.url}',
+                                      )
+                                      .toList(),
+                                ),
+                              ),
 
-                        const SizedBox(height: Constants.spacingMedium),
-                        Divider(
-                          color: borderColor,
-                          thickness: 1,
-                          height: 1,
-                          indent: Constants.paddingMedium,
-                          endIndent: Constants.paddingMedium,
-                        ),
-                        const SizedBox(height: Constants.spacingMedium),
+                              const SizedBox(height: Constants.spacingMedium),
+                              Divider(
+                                color: borderColor,
+                                thickness: 1,
+                                height: 1,
+                                indent: Constants.paddingMedium,
+                                endIndent: Constants.paddingMedium,
+                              ),
+                              const SizedBox(height: Constants.spacingMedium),
+                            ],
+                          ),
 
                         // Description
                         Padding(

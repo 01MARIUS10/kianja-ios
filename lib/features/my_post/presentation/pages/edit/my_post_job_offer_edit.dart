@@ -111,11 +111,10 @@ class _MyPostJobOfferEditScreenState extends State<MyPostJobOfferEditScreen> {
         _selectedCategories.isEmpty ||
         _selectedLocation == null ||
         _selectedGender == null ||
-        _selectedActor == null ||
-        _resolvedImageId == null) {
+        _selectedActor == null) {
       AppMessenger.showWarning(
         context,
-        'Please fill all required fields and keep or upload a photo',
+        context.appLoc.please_fill_all_required_fields,
       );
       return;
     }
@@ -125,7 +124,7 @@ class _MyPostJobOfferEditScreenState extends State<MyPostJobOfferEditScreen> {
         updateJobOfferParams: UpdateJobOfferParams(
           id: widget.jobOfferId,
           title: _titleController.text.trim(),
-          imageId: _resolvedImageId!,
+          imageId: _resolvedImageId,
           description: _descriptionController.text.trim(),
           categories: List<int>.from(_selectedCategories),
           location: _selectedLocation!,
@@ -201,10 +200,10 @@ class _MyPostJobOfferEditScreenState extends State<MyPostJobOfferEditScreen> {
                 });
               } else if (state is JobsUploadImageSuccess) {
                 setState(() => _uploadImageId = state.jobImage.id);
-                AppMessenger.showSuccess(
-                  context,
-                  'Photo uploaded successfully',
-                );
+                // AppMessenger.showSuccess(
+                //   context,
+                //   'Photo uploaded successfully',
+                // );
               } else if (state is JobsRequestFailure) {
                 AppMessenger.showError(context, state.message);
               }

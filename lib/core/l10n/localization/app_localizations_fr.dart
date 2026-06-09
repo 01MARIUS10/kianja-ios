@@ -583,12 +583,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get retry => 'Réessayer';
 
   @override
-  String get service_unavailable => 'Service indisponible';
-
-  @override
-  String get not_found => 'Introuvable';
-
-  @override
   String get page_failed_load => 'Échec du chargement de la page';
 
   @override
@@ -648,5 +642,136 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le numéro de téléphone ne peut pas être modifié.';
 
   @override
-  String get register => 'Register';
+  String get register => 'S\'inscrire';
+
+  @override
+  String get connection_timeout => 'Délai de connexion dépassé';
+
+  @override
+  String get send_timeout => 'Délai d\'envoi dépassé';
+
+  @override
+  String get receive_timeout => 'Délai de réception dépassé';
+
+  @override
+  String get bad_certificate => 'Certificat invalide';
+
+  @override
+  String get request_cancelled => 'Requête annulée';
+
+  @override
+  String get no_internet_connection => 'Pas de connexion internet';
+
+  @override
+  String get unknown_error => 'Erreur inconnue';
+
+  @override
+  String get unauthorized => 'Non autorisé';
+
+  @override
+  String get payment_required => 'Paiement requis';
+
+  @override
+  String get forbidden => 'Accès interdit';
+
+  @override
+  String get not_found => 'Introuvable';
+
+  @override
+  String get method_not_allowed => 'Méthode non autorisée';
+
+  @override
+  String get not_acceptable => 'Non acceptable';
+
+  @override
+  String get proxy_auth_required => 'Authentification proxy requise';
+
+  @override
+  String get request_timeout => 'Délai de requête dépassé';
+
+  @override
+  String get conflict => 'Conflit';
+
+  @override
+  String get unprocessable_entity => 'Entité non traitable';
+
+  @override
+  String get internal_server_error => 'Erreur interne du serveur';
+
+  @override
+  String get not_implemented => 'Non implémenté';
+
+  @override
+  String get bad_gateway => 'Mauvaise passerelle';
+
+  @override
+  String get service_unavailable => 'Service indisponible';
+
+  @override
+  String get http_version_not_supported => 'Version HTTP non supportée';
+
+  @override
+  String get loop_detected => 'Boucle détectée';
+
+  @override
+  String get malagasy => 'Malgache';
+
+  @override
+  String get french => 'Français';
+
+  @override
+  String get english => 'Anglais';
+
+  @override
+  String get chinese => 'Chinois';
+
+  @override
+  String get korean => 'Coréen';
+
+  @override
+  String get no_job_offers_yet => 'Aucune offre d\'emploi pour le moment';
+
+  @override
+  String get no_job_applicants_yet => 'Aucun candidat pour le moment';
+
+  @override
+  String get no_training_centers_yet =>
+      'Aucun centre de formation pour le moment';
+
+  @override
+  String get no_kara_history_yet => 'Aucun historique Kara pour le moment';
+
+  @override
+  String get please_select_birth_date =>
+      'Veuillez sélectionner une date de naissance';
+
+  @override
+  String get must_be_at_least_18 => 'Vous devez avoir au moins 18 ans';
+
+  @override
+  String get male => 'Homme';
+
+  @override
+  String get female => 'Femme';
+
+  @override
+  String get expired => 'Expiré';
+
+  @override
+  String get no_available_training_center =>
+      'Aucun centre de formation disponible';
+
+  @override
+  String get no_hot_offers_yet => 'Aucune offre populaire pour le moment';
+
+  @override
+  String get no_event_offers_yet => 'Aucune offre d\'événement pour le moment';
+
+  @override
+  String get please_fill_all_required_fields =>
+      'Veuillez remplir tous les champs obligatoires';
+
+  @override
+  String get job_offer_updated_successfully =>
+      'L\'offre d\'emploi a été mise à jour avec succès';
 }

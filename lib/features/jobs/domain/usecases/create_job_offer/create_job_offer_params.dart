@@ -1,7 +1,7 @@
 class CreateJobOfferParams {
   const CreateJobOfferParams({
     required this.title,
-    required this.imageId,
+    this.imageId,
     required this.description,
     required this.categories,
     required this.location,
@@ -12,7 +12,7 @@ class CreateJobOfferParams {
   });
 
   final String title;
-  final int imageId;
+  final int? imageId;
   final String description;
   final List<int> categories;
   final int location;

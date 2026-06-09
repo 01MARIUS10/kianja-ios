@@ -44,6 +44,20 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
       dialCode: '+44',
       hint: '7XXX XXX XXX',
     ),
+    _Country(
+      name: 'China',
+      code: 'cn',
+      flag: '🇨🇳',
+      dialCode: '+86',
+      hint: '1XX XXXX XXXX',
+    ),
+    _Country(
+      name: 'South Korea',
+      code: 'kr',
+      flag: '🇰🇷',
+      dialCode: '+82',
+      hint: '1X XXXX XXXX',
+    ),
   ];
   late _Country _selectedCountry;
 
@@ -56,6 +70,7 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+    final bool isDark = Brightness.dark == theme.brightness;
 
     return TextField(
       enabled: widget.enabled,
@@ -67,7 +82,9 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
       inputFormatters: [PhoneInputFormatter(mask: _selectedCountry.hint)],
       decoration: InputDecoration(
         hintText: _selectedCountry.hint,
-        hintStyle: theme.textTheme.bodyMedium,
+        hintStyle: theme.textTheme.bodyMedium!.copyWith(
+          color: isDark ? AppColors.darkTextMuted : AppColors.lightTextMuted,
+        ),
         prefixIcon: _buildPrefixIcon(theme),
       ),
     );
@@ -94,7 +111,7 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
             const SizedBox(width: Constants.spacingSmall),
             Text(
               '(${_selectedCountry.dialCode})',
-              style: const TextStyle(color: AppColors.icon, fontSize: 14),
+              style: theme.textTheme.bodyMedium,
             ),
           ],
         ),

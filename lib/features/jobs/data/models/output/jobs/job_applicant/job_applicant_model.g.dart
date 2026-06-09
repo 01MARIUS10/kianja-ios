@@ -17,7 +17,7 @@ _JobApplicantModel _$JobApplicantModelFromJson(Map<String, dynamic> json) =>
       gender: json['gender'] == null
           ? null
           : JobGenderModel.fromJson(json['gender'] as Map<String, dynamic>),
-      pdfUrl: json['resumepdf_path'] as String? ?? '',
+      pdfUrl: json['resumepdf_path'] as String?,
       createdAt: json['created_at'] as String? ?? '',
       user: UserModel.fromJson(json['user'] as Map<String, dynamic>),
       category: json['category'] == null

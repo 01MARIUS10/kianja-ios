@@ -134,9 +134,9 @@ class _WalletScreenBodyState extends State<_WalletScreenBody> {
           ),
           child: Text(
             context.appLoc.kara_usage_history,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
           ),
         ),
         const Divider(
@@ -220,9 +220,11 @@ class _WalletScreenBodyState extends State<_WalletScreenBody> {
                           onRefresh: _refresh,
                           child: ListView(
                             physics: const AlwaysScrollableScrollPhysics(),
-                            children: const [
-                              SizedBox(height: 120),
-                              Center(child: Text('No Kara history yet')),
+                            children: [
+                              const SizedBox(height: 120),
+                              Center(
+                                child: Text(context.appLoc.no_kara_history_yet),
+                              ),
                             ],
                           ),
                         )
@@ -234,8 +236,9 @@ class _WalletScreenBodyState extends State<_WalletScreenBody> {
                             padding: const EdgeInsets.only(
                               bottom: Constants.paddingMedium,
                             ),
-                            itemCount:
-                                _hasMore ? _history.length + 1 : _history.length,
+                            itemCount: _hasMore
+                                ? _history.length + 1
+                                : _history.length,
                             itemBuilder: (context, index) {
                               if (_hasMore && index >= _history.length) {
                                 return const Padding(

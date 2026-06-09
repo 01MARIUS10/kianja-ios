@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
 import 'package:kianja/core/shared/app_feature/presentation/modify_app_lang_screen.dart';
+import 'package:kianja/core/shared/screens/view_add_screen.dart';
 import 'package:kianja/core/shared/widgets/photos/photo_viewer_screen.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/features/about/presentation/pages/about_screen.dart';
@@ -120,6 +121,7 @@ abstract class AppRouter {
           path: Routes.loading.path,
           builder: (context, state) => const SizedBox.shrink(),
         ),
+
         // ================= CHOOSE LANG =================
         GoRoute(
           parentNavigatorKey: _rootNavigatorKey,
@@ -129,8 +131,6 @@ abstract class AppRouter {
             return const ChooseLangScreen();
           },
         ),
-
-        // ================= CHOOSE LANG =================
 
         // ================= PHOTO VIEWER =================
         GoRoute(
@@ -145,7 +145,27 @@ abstract class AppRouter {
             );
           },
         ),
-        // ================= PHOTO VIEWER =================
+
+        // ================= TERMS OF USE =================
+        GoRoute(
+          parentNavigatorKey: _rootNavigatorKey,
+          name: Routes.termsOfUse.name,
+          path: Routes.termsOfUse.path,
+          builder: (context, state) {
+            return const TermsOfUseScreen();
+          },
+        ),
+
+        // ================= VIEW ADD =================
+        GoRoute(
+          parentNavigatorKey: _rootNavigatorKey,
+          name: Routes.viewAdd.name,
+          path: Routes.viewAdd.path,
+          builder: (context, state) {
+            final extra = state.extra as Map<String, dynamic>? ?? {};
+            return ViewAddScreen(url: extra['url'] as String? ?? '');
+          },
+        ),
 
         // ================= NAVIGATION (SHELL) =================
         StatefulShellRoute.indexedStack(
@@ -558,13 +578,6 @@ abstract class AppRouter {
                       path: Routes.changePassword.path,
                       builder: (context, state) {
                         return const ChangePasswordScreen();
-                      },
-                    ),
-                    GoRoute(
-                      name: Routes.termsOfUse.name,
-                      path: Routes.termsOfUse.path,
-                      builder: (context, state) {
-                        return const TermsOfUseScreen();
                       },
                     ),
                   ],

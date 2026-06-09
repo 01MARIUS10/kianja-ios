@@ -16,6 +16,8 @@ enum Routes {
   photoViewer('/photo-viewer'),
   // ------------- ABOUT ----------------
 
+  viewAdd('/viewAdd'),
+
   // ------------- HOME (Job offers) ----------------
   jobs('/'),
   jobCategoryViewAll('job-category-view-all'),
@@ -66,7 +68,7 @@ enum Routes {
   personalInfo('personal-info'), // Personal Info
   updatePersonalInfo('edit'), // Update Personal Info
   changePassword('change-password'), // Change Password
-  termsOfUse('termsOfUse'), // Terms of Use
+  termsOfUse('/termsOfUse'), // Terms of Use
   // ------------- ACCOUNT ----------------
 
   // ------------- AUTH ----------------

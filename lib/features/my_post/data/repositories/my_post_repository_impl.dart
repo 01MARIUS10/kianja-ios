@@ -116,7 +116,6 @@ class MyPostRepositoryImpl implements MyPostRepository {
           id: updateJobApplicantParams.id,
           title: updateJobApplicantParams.title,
           motivation: updateJobApplicantParams.motivation,
-          imageUrl: updateJobApplicantParams.imageUrl,
           pdfUrl: updateJobApplicantParams.pdfUrl,
           locationId: updateJobApplicantParams.locationId,
           genderId: updateJobApplicantParams.genderId,

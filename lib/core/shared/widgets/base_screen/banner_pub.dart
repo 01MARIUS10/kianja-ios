@@ -1,10 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kianja/core/config/assets.dart';
+import 'package:kianja/core/config/env_config.dart';
+import 'package:kianja/core/shared/app_feature/domain/entities/spons_partner.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
 
 class BannerPub extends StatelessWidget {
-  const BannerPub({super.key});
+  const BannerPub({super.key, required this.sponsPartner});
+  final SponsPartner sponsPartner;
 
   @override
   Widget build(BuildContext context) {
@@ -28,24 +32,20 @@ class BannerPub extends StatelessWidget {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(Constants.borderRadiusSmall),
-              child: Image.asset(
-                Assets.kimsKorea,
+              child: CachedNetworkImage(
+                imageUrl:
+                    '${EnvConfig.baseApiUrl}${sponsPartner.imageUrl.first}',
                 fit: BoxFit.cover,
-                cacheWidth: Constants.size150.toInt(),
-                cacheHeight: Constants.size70.toInt(),
-                errorBuilder: (context, error, stackTrace) => Icon(
-                  Icons.restaurant,
-                  color: isDark
-                      ? AppColors.darkPrimary
-                      : AppColors.lightPrimary,
-                  size: Constants.iconSizeSmall,
-                ),
+                placeholder: (context, url) =>
+                    const Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) =>
+                    Image.asset(Assets.logoKianja, fit: BoxFit.cover),
               ),
             ),
           ),
           Flexible(
             child: Text(
-              'KIMS Restaurant coréen',
+              sponsPartner.title,
               style: theme.textTheme.titleMedium?.copyWith(
                 color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
               ),

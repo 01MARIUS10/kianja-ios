@@ -584,12 +584,6 @@ class AppLocalizationsMg extends AppLocalizations {
   String get retry => 'Andramo indray';
 
   @override
-  String get service_unavailable => 'Tsy misy ny serivisy';
-
-  @override
-  String get not_found => 'Tsy hita';
-
-  @override
   String get page_failed_load => 'Tsy afaka nampiditra ny pejy';
 
   @override
@@ -649,4 +643,134 @@ class AppLocalizationsMg extends AppLocalizations {
 
   @override
   String get register => 'Misoratra anarana';
+
+  @override
+  String get connection_timeout =>
+      'Tapitra ny fotoana fiandrasana fifandraisana';
+
+  @override
+  String get send_timeout => 'Tapitra ny fotoana fiandrasana fandefasana';
+
+  @override
+  String get receive_timeout => 'Tapitra ny fotoana fiandrasana fandraisana';
+
+  @override
+  String get bad_certificate => 'Taratasy fanamarinana tsy manan-kery';
+
+  @override
+  String get request_cancelled => 'Nofoanana ny fangatahana';
+
+  @override
+  String get no_internet_connection => 'Tsy misy fifandraisana Internet';
+
+  @override
+  String get unknown_error => 'Hadisoana tsy fantatra';
+
+  @override
+  String get unauthorized => 'Tsy nahazo alalana';
+
+  @override
+  String get payment_required => 'Ilaina ny fandoavana';
+
+  @override
+  String get forbidden => 'Voarara';
+
+  @override
+  String get not_found => 'Tsy hita';
+
+  @override
+  String get method_not_allowed => 'Tsy azo ampiasaina ity fomba ity';
+
+  @override
+  String get not_acceptable => 'Tsy azo ekena';
+
+  @override
+  String get proxy_auth_required => 'Ilaina ny fanamarinana Proxy';
+
+  @override
+  String get request_timeout => 'Tapitra ny fotoana fiandrasana fangatahana';
+
+  @override
+  String get conflict => 'Misy fifanoherana';
+
+  @override
+  String get unprocessable_entity => 'Tsy azo tanterahina ny angona';
+
+  @override
+  String get internal_server_error => 'Hadisoana anatiny amin\'ny mpizara';
+
+  @override
+  String get not_implemented => 'Tsy mbola nampiharina';
+
+  @override
+  String get bad_gateway => 'Hadisoan\'ny vavahady';
+
+  @override
+  String get service_unavailable => 'Tsy misy ny serivisy';
+
+  @override
+  String get http_version_not_supported => 'Tsy tohanana ity kinova HTTP ity';
+
+  @override
+  String get loop_detected => 'Nisy fihodinana tsy mety hita';
+
+  @override
+  String get malagasy => 'Malagasy';
+
+  @override
+  String get french => 'Frantsay';
+
+  @override
+  String get english => 'Anglisy';
+
+  @override
+  String get chinese => 'Sinoa';
+
+  @override
+  String get korean => 'Koreana';
+
+  @override
+  String get no_job_offers_yet => 'Tsy mbola misy tolotra asa';
+
+  @override
+  String get no_job_applicants_yet => 'Tsy mbola misy mpangataka asa';
+
+  @override
+  String get no_training_centers_yet => 'Tsy mbola misy foibe fampiofanana';
+
+  @override
+  String get no_kara_history_yet => 'Tsy mbola misy tantaran\'ny Kara';
+
+  @override
+  String get please_select_birth_date => 'Azafady safidio ny daty nahaterahana';
+
+  @override
+  String get must_be_at_least_18 => 'Tsy maintsy 18 taona farafahakeliny ianao';
+
+  @override
+  String get male => 'Lahy';
+
+  @override
+  String get female => 'Vavy';
+
+  @override
+  String get expired => 'Lany daty';
+
+  @override
+  String get no_available_training_center =>
+      'Tsy misy foibe fampiofanana azo isafidianana';
+
+  @override
+  String get no_hot_offers_yet => 'Tsy mbola misy tolotra mafana';
+
+  @override
+  String get no_event_offers_yet => 'Tsy mbola misy tolotra hetsika';
+
+  @override
+  String get please_fill_all_required_fields =>
+      'Azafady fenoy ny saha rehetra takiana';
+
+  @override
+  String get job_offer_updated_successfully =>
+      'Nohavaozina soa aman-tsara ny tolotra asa';
 }

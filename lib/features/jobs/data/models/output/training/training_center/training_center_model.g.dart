@@ -11,11 +11,9 @@ _TrainingCenterModel _$TrainingCenterModelFromJson(Map<String, dynamic> json) =>
       id: (json['id'] as num?)?.toInt() ?? -1,
       name: json['name'] as String? ?? '',
       imageUrl: json['image_path'] as String? ?? '',
-      images:
-          (json['images'] as List<dynamic>?)
-              ?.map((e) => JobImageModel.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
+      images: (json['images'] as List<dynamic>?)
+          ?.map((e) => JobImageModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       description: json['description'] as String? ?? '',
       domains: (json['domains'] as List<dynamic>)
           .map((e) => JobDomainModel.fromJson(e as Map<String, dynamic>))

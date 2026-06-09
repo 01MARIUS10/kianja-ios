@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TrainingCenterModel {
 
-@JsonKey(defaultValue: -1) int get id;@JsonKey(defaultValue: '') String get name;@JsonKey(name: 'image_path', defaultValue: '') String? get imageUrl;@JsonKey(name: 'images', defaultValue: []) List<JobImageModel> get images;@JsonKey(defaultValue: '') String get description; List<JobDomainModel> get domains; JobActorModel? get actor; JobLocationModel? get location; TrainingCenterBadge? get badge;@JsonKey(name: 'user') UserModel get user;@JsonKey(name: 'created_at', defaultValue: '') String get createdAt;
+@JsonKey(defaultValue: -1) int get id;@JsonKey(defaultValue: '') String get name;@JsonKey(name: 'image_path', defaultValue: '') String? get imageUrl;@JsonKey(name: 'images') List<JobImageModel>? get images;@JsonKey(defaultValue: '') String get description; List<JobDomainModel> get domains; JobActorModel? get actor; JobLocationModel? get location; TrainingCenterBadge? get badge;@JsonKey(name: 'user') UserModel get user;@JsonKey(name: 'created_at', defaultValue: '') String get createdAt;
 /// Create a copy of TrainingCenterModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $TrainingCenterModelCopyWith<$Res>  {
   factory $TrainingCenterModelCopyWith(TrainingCenterModel value, $Res Function(TrainingCenterModel) _then) = _$TrainingCenterModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(defaultValue: -1) int id,@JsonKey(defaultValue: '') String name,@JsonKey(name: 'image_path', defaultValue: '') String? imageUrl,@JsonKey(name: 'images', defaultValue: []) List<JobImageModel> images,@JsonKey(defaultValue: '') String description, List<JobDomainModel> domains, JobActorModel? actor, JobLocationModel? location, TrainingCenterBadge? badge,@JsonKey(name: 'user') UserModel user,@JsonKey(name: 'created_at', defaultValue: '') String createdAt
+@JsonKey(defaultValue: -1) int id,@JsonKey(defaultValue: '') String name,@JsonKey(name: 'image_path', defaultValue: '') String? imageUrl,@JsonKey(name: 'images') List<JobImageModel>? images,@JsonKey(defaultValue: '') String description, List<JobDomainModel> domains, JobActorModel? actor, JobLocationModel? location, TrainingCenterBadge? badge,@JsonKey(name: 'user') UserModel user,@JsonKey(name: 'created_at', defaultValue: '') String createdAt
 });
 
 
@@ -65,13 +65,13 @@ class _$TrainingCenterModelCopyWithImpl<$Res>
 
 /// Create a copy of TrainingCenterModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? imageUrl = freezed,Object? images = null,Object? description = null,Object? domains = null,Object? actor = freezed,Object? location = freezed,Object? badge = freezed,Object? user = null,Object? createdAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? imageUrl = freezed,Object? images = freezed,Object? description = null,Object? domains = null,Object? actor = freezed,Object? location = freezed,Object? badge = freezed,Object? user = null,Object? createdAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
-as String?,images: null == images ? _self.images : images // ignore: cast_nullable_to_non_nullable
-as List<JobImageModel>,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String?,images: freezed == images ? _self.images : images // ignore: cast_nullable_to_non_nullable
+as List<JobImageModel>?,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,domains: null == domains ? _self.domains : domains // ignore: cast_nullable_to_non_nullable
 as List<JobDomainModel>,actor: freezed == actor ? _self.actor : actor // ignore: cast_nullable_to_non_nullable
 as JobActorModel?,location: freezed == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
@@ -196,7 +196,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String name, @JsonKey(name: 'image_path', defaultValue: '')  String? imageUrl, @JsonKey(name: 'images', defaultValue: [])  List<JobImageModel> images, @JsonKey(defaultValue: '')  String description,  List<JobDomainModel> domains,  JobActorModel? actor,  JobLocationModel? location,  TrainingCenterBadge? badge, @JsonKey(name: 'user')  UserModel user, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String name, @JsonKey(name: 'image_path', defaultValue: '')  String? imageUrl, @JsonKey(name: 'images')  List<JobImageModel>? images, @JsonKey(defaultValue: '')  String description,  List<JobDomainModel> domains,  JobActorModel? actor,  JobLocationModel? location,  TrainingCenterBadge? badge, @JsonKey(name: 'user')  UserModel user, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TrainingCenterModel() when $default != null:
 return $default(_that.id,_that.name,_that.imageUrl,_that.images,_that.description,_that.domains,_that.actor,_that.location,_that.badge,_that.user,_that.createdAt);case _:
@@ -217,7 +217,7 @@ return $default(_that.id,_that.name,_that.imageUrl,_that.images,_that.descriptio
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String name, @JsonKey(name: 'image_path', defaultValue: '')  String? imageUrl, @JsonKey(name: 'images', defaultValue: [])  List<JobImageModel> images, @JsonKey(defaultValue: '')  String description,  List<JobDomainModel> domains,  JobActorModel? actor,  JobLocationModel? location,  TrainingCenterBadge? badge, @JsonKey(name: 'user')  UserModel user, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String name, @JsonKey(name: 'image_path', defaultValue: '')  String? imageUrl, @JsonKey(name: 'images')  List<JobImageModel>? images, @JsonKey(defaultValue: '')  String description,  List<JobDomainModel> domains,  JobActorModel? actor,  JobLocationModel? location,  TrainingCenterBadge? badge, @JsonKey(name: 'user')  UserModel user, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _TrainingCenterModel():
 return $default(_that.id,_that.name,_that.imageUrl,_that.images,_that.description,_that.domains,_that.actor,_that.location,_that.badge,_that.user,_that.createdAt);case _:
@@ -237,7 +237,7 @@ return $default(_that.id,_that.name,_that.imageUrl,_that.images,_that.descriptio
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String name, @JsonKey(name: 'image_path', defaultValue: '')  String? imageUrl, @JsonKey(name: 'images', defaultValue: [])  List<JobImageModel> images, @JsonKey(defaultValue: '')  String description,  List<JobDomainModel> domains,  JobActorModel? actor,  JobLocationModel? location,  TrainingCenterBadge? badge, @JsonKey(name: 'user')  UserModel user, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String name, @JsonKey(name: 'image_path', defaultValue: '')  String? imageUrl, @JsonKey(name: 'images')  List<JobImageModel>? images, @JsonKey(defaultValue: '')  String description,  List<JobDomainModel> domains,  JobActorModel? actor,  JobLocationModel? location,  TrainingCenterBadge? badge, @JsonKey(name: 'user')  UserModel user, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _TrainingCenterModel() when $default != null:
 return $default(_that.id,_that.name,_that.imageUrl,_that.images,_that.description,_that.domains,_that.actor,_that.location,_that.badge,_that.user,_that.createdAt);case _:
@@ -252,17 +252,19 @@ return $default(_that.id,_that.name,_that.imageUrl,_that.images,_that.descriptio
 @JsonSerializable()
 
 class _TrainingCenterModel extends TrainingCenterModel {
-  const _TrainingCenterModel({@JsonKey(defaultValue: -1) required this.id, @JsonKey(defaultValue: '') required this.name, @JsonKey(name: 'image_path', defaultValue: '') this.imageUrl, @JsonKey(name: 'images', defaultValue: []) required final  List<JobImageModel> images, @JsonKey(defaultValue: '') required this.description, required final  List<JobDomainModel> domains, this.actor, this.location, this.badge, @JsonKey(name: 'user') required this.user, @JsonKey(name: 'created_at', defaultValue: '') required this.createdAt}): _images = images,_domains = domains,super._();
+  const _TrainingCenterModel({@JsonKey(defaultValue: -1) required this.id, @JsonKey(defaultValue: '') required this.name, @JsonKey(name: 'image_path', defaultValue: '') this.imageUrl, @JsonKey(name: 'images') final  List<JobImageModel>? images, @JsonKey(defaultValue: '') required this.description, required final  List<JobDomainModel> domains, this.actor, this.location, this.badge, @JsonKey(name: 'user') required this.user, @JsonKey(name: 'created_at', defaultValue: '') required this.createdAt}): _images = images,_domains = domains,super._();
   factory _TrainingCenterModel.fromJson(Map<String, dynamic> json) => _$TrainingCenterModelFromJson(json);
 
 @override@JsonKey(defaultValue: -1) final  int id;
 @override@JsonKey(defaultValue: '') final  String name;
 @override@JsonKey(name: 'image_path', defaultValue: '') final  String? imageUrl;
- final  List<JobImageModel> _images;
-@override@JsonKey(name: 'images', defaultValue: []) List<JobImageModel> get images {
+ final  List<JobImageModel>? _images;
+@override@JsonKey(name: 'images') List<JobImageModel>? get images {
+  final value = _images;
+  if (value == null) return null;
   if (_images is EqualUnmodifiableListView) return _images;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_images);
+  return EqualUnmodifiableListView(value);
 }
 
 @override@JsonKey(defaultValue: '') final  String description;
@@ -312,7 +314,7 @@ abstract mixin class _$TrainingCenterModelCopyWith<$Res> implements $TrainingCen
   factory _$TrainingCenterModelCopyWith(_TrainingCenterModel value, $Res Function(_TrainingCenterModel) _then) = __$TrainingCenterModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(defaultValue: -1) int id,@JsonKey(defaultValue: '') String name,@JsonKey(name: 'image_path', defaultValue: '') String? imageUrl,@JsonKey(name: 'images', defaultValue: []) List<JobImageModel> images,@JsonKey(defaultValue: '') String description, List<JobDomainModel> domains, JobActorModel? actor, JobLocationModel? location, TrainingCenterBadge? badge,@JsonKey(name: 'user') UserModel user,@JsonKey(name: 'created_at', defaultValue: '') String createdAt
+@JsonKey(defaultValue: -1) int id,@JsonKey(defaultValue: '') String name,@JsonKey(name: 'image_path', defaultValue: '') String? imageUrl,@JsonKey(name: 'images') List<JobImageModel>? images,@JsonKey(defaultValue: '') String description, List<JobDomainModel> domains, JobActorModel? actor, JobLocationModel? location, TrainingCenterBadge? badge,@JsonKey(name: 'user') UserModel user,@JsonKey(name: 'created_at', defaultValue: '') String createdAt
 });
 
 
@@ -329,13 +331,13 @@ class __$TrainingCenterModelCopyWithImpl<$Res>
 
 /// Create a copy of TrainingCenterModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? imageUrl = freezed,Object? images = null,Object? description = null,Object? domains = null,Object? actor = freezed,Object? location = freezed,Object? badge = freezed,Object? user = null,Object? createdAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? imageUrl = freezed,Object? images = freezed,Object? description = null,Object? domains = null,Object? actor = freezed,Object? location = freezed,Object? badge = freezed,Object? user = null,Object? createdAt = null,}) {
   return _then(_TrainingCenterModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
-as String?,images: null == images ? _self._images : images // ignore: cast_nullable_to_non_nullable
-as List<JobImageModel>,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String?,images: freezed == images ? _self._images : images // ignore: cast_nullable_to_non_nullable
+as List<JobImageModel>?,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,domains: null == domains ? _self._domains : domains // ignore: cast_nullable_to_non_nullable
 as List<JobDomainModel>,actor: freezed == actor ? _self.actor : actor // ignore: cast_nullable_to_non_nullable
 as JobActorModel?,location: freezed == location ? _self.location : location // ignore: cast_nullable_to_non_nullable

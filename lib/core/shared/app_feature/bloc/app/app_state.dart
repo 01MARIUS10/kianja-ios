@@ -7,6 +7,8 @@ enum AppUserStatus { initial, loading, loaded, sessionExpired, deleted, error }
 
 enum AppLanguageStatus { initial, loading, confirmed, error }
 
+enum AppSponsPartnerStatus { initial, loading, loaded, error }
+
 class AppState extends Equatable {
   const AppState({
     required this.lang,
@@ -17,6 +19,8 @@ class AppState extends Equatable {
     this.appInitStatus = AppInitStatus.initial,
     this.userStatus = AppUserStatus.initial,
     this.languageStatus = AppLanguageStatus.initial,
+    this.sponsPartnerStatus = AppSponsPartnerStatus.initial,
+    this.sponsPartners = const [],
     this.errorMessage = '',
   });
   final Locale lang;
@@ -27,6 +31,8 @@ class AppState extends Equatable {
   final AppInitStatus appInitStatus;
   final AppUserStatus userStatus;
   final AppLanguageStatus languageStatus;
+  final AppSponsPartnerStatus sponsPartnerStatus;
+  final List<SponsPartner> sponsPartners;
   final String errorMessage;
 
   AppState copyWith({
@@ -38,6 +44,8 @@ class AppState extends Equatable {
     AppInitStatus? appInitStatus,
     AppUserStatus? userStatus,
     AppLanguageStatus? languageStatus,
+    AppSponsPartnerStatus? sponsPartnerStatus,
+    List<SponsPartner>? sponsPartners,
     String? errorMessage,
   }) {
     return AppState(
@@ -49,6 +57,8 @@ class AppState extends Equatable {
       appInitStatus: appInitStatus ?? this.appInitStatus,
       userStatus: userStatus ?? this.userStatus,
       languageStatus: languageStatus ?? this.languageStatus,
+      sponsPartnerStatus: sponsPartnerStatus ?? this.sponsPartnerStatus,
+      sponsPartners: sponsPartners ?? this.sponsPartners,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }
@@ -63,6 +73,8 @@ class AppState extends Equatable {
     appInitStatus,
     userStatus,
     languageStatus,
+    sponsPartnerStatus,
+    sponsPartners,
     errorMessage,
   ];
 }

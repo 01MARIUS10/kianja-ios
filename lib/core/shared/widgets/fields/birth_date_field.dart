@@ -35,18 +35,17 @@ class _BirthDateFieldState extends State<BirthDateField> {
           ),
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'Please select a birth date';
+              return context.appLoc.please_select_birth_date;
             }
             final birthDate = DateTime.parse(value);
             final today = DateTime.now();
             int age = today.year - birthDate.year;
-            // Subtract a year if the birthday hasn't occurred yet this year
             if (today.month < birthDate.month ||
                 (today.month == birthDate.month && today.day < birthDate.day)) {
               age--;
             }
             if (age < 18) {
-              return 'You must be at least 18 years old';
+              return context.appLoc.must_be_at_least_18;
             }
             return null;
           },

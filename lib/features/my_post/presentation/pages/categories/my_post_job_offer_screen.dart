@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_job_offer/delete_job_offer_params.dart';
@@ -178,7 +179,7 @@ class _MyPostJobOfferScreenState extends State<MyPostJobOfferScreen>
 
         if (_hasLoadedOnce) {
           if (_jobOffers.isEmpty) {
-            return const Center(child: Text('No job offers yet'));
+            return Center(child: Text(context.appLoc.no_job_offers_yet));
           }
 
           final hasMore =

@@ -10,7 +10,7 @@ class TrainingCenter {
     required this.id,
     required this.name,
     this.imageUrl,
-    required this.images,
+    this.images,
     required this.description,
     required this.domains,
     this.actor,
@@ -37,7 +37,7 @@ class TrainingCenter {
   final int id;
   final String name;
   final String? imageUrl;
-  final List<JobImage> images;
+  final List<JobImage>? images;
   final String description;
   final List<JobDomain> domains;
   final JobActor? actor;

@@ -54,7 +54,7 @@ class _CreateHotEventScreenState extends State<CreateHotEventScreen> {
         _endDateController.text.trim().isEmpty) {
       AppMessenger.showWarning(
         context,
-        'Please fill all required fields and upload a photo',
+        context.appLoc.please_fill_all_required_fields,
       );
       return;
     }
@@ -103,10 +103,10 @@ class _CreateHotEventScreenState extends State<CreateHotEventScreen> {
                 setState(() {
                   _uploadImageId = state.jobImage.id;
                 });
-                AppMessenger.showSuccess(
-                  context,
-                  'Photo uploaded successfully',
-                );
+                // AppMessenger.showSuccess(
+                //   context,
+                //   'Photo uploaded successfully',
+                // );
               } else if (state is CreateHotEventSuccess) {
                 _clearValues();
                 context.pushReplacementNamed(

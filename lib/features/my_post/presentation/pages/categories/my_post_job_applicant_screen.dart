@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_job_applicant/delete_job_applicant_params.dart';
@@ -202,7 +203,7 @@ class _MyPostJobApplicantScreenState extends State<MyPostJobApplicantScreen>
 
         if (hasLoaded) {
           if (applicants.isEmpty) {
-            return const Center(child: Text('No job applicants yet'));
+            return Center(child: Text(context.appLoc.no_job_applicants_yet));
           }
 
           final hasMore =

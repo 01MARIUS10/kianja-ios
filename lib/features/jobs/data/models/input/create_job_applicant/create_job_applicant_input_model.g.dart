@@ -11,8 +11,7 @@ _CreateJobApplicantInputModel _$CreateJobApplicantInputModelFromJson(
 ) => _CreateJobApplicantInputModel(
   title: json['title'] as String? ?? '',
   motivation: json['motivation'] as String? ?? '',
-  imageUrl: json['image_path'] as String? ?? '',
-  pdfUrl: json['resumepdf_path'] as String? ?? '',
+  pdfUrl: json['resumepdf_path'] as String?,
   locationId: (json['locationId'] as num?)?.toInt() ?? -1,
   genderId: (json['genderId'] as num?)?.toInt() ?? -1,
   typeId: (json['typeId'] as num?)?.toInt() ?? -1,
@@ -26,7 +25,6 @@ Map<String, dynamic> _$CreateJobApplicantInputModelToJson(
 ) => <String, dynamic>{
   'title': instance.title,
   'motivation': instance.motivation,
-  'image_path': instance.imageUrl,
   'resumepdf_path': instance.pdfUrl,
   'locationId': instance.locationId,
   'genderId': instance.genderId,

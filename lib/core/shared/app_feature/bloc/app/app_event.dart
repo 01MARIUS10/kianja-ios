@@ -58,3 +58,7 @@ class AppThemeChanged extends AppEvent {
   @override
   List<Object> get props => [appMode];
 }
+
+class AppSponsPartnerLoaded extends AppEvent {
+  const AppSponsPartnerLoaded();
+}

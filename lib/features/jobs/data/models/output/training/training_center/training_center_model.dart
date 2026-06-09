@@ -18,8 +18,7 @@ abstract class TrainingCenterModel
     @JsonKey(defaultValue: -1) required int id,
     @JsonKey(defaultValue: '') required String name,
     @JsonKey(name: 'image_path', defaultValue: '') String? imageUrl,
-    @JsonKey(name: 'images', defaultValue: [])
-    required List<JobImageModel> images,
+    @JsonKey(name: 'images') List<JobImageModel>? images,
     @JsonKey(defaultValue: '') required String description,
     required List<JobDomainModel> domains,
     JobActorModel? actor,

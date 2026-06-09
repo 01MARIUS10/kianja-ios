@@ -572,12 +572,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get retry => '다시 시도';
 
   @override
-  String get service_unavailable => '서비스를 사용할 수 없습니다';
-
-  @override
-  String get not_found => '찾을 수 없음';
-
-  @override
   String get page_failed_load => '페이지를 불러오지 못했습니다';
 
   @override
@@ -632,4 +626,130 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get register => '신청하다';
+
+  @override
+  String get connection_timeout => '연결 시간 초과';
+
+  @override
+  String get send_timeout => '전송 시간 초과';
+
+  @override
+  String get receive_timeout => '수신 시간 초과';
+
+  @override
+  String get bad_certificate => '잘못된 인증서';
+
+  @override
+  String get request_cancelled => '요청이 취소되었습니다';
+
+  @override
+  String get no_internet_connection => '인터넷 연결이 없습니다';
+
+  @override
+  String get unknown_error => '알 수 없는 오류';
+
+  @override
+  String get unauthorized => '권한이 없습니다';
+
+  @override
+  String get payment_required => '결제가 필요합니다';
+
+  @override
+  String get forbidden => '접근이 금지되었습니다';
+
+  @override
+  String get not_found => '찾을 수 없습니다';
+
+  @override
+  String get method_not_allowed => '허용되지 않은 메서드';
+
+  @override
+  String get not_acceptable => '허용할 수 없습니다';
+
+  @override
+  String get proxy_auth_required => '프록시 인증이 필요합니다';
+
+  @override
+  String get request_timeout => '요청 시간 초과';
+
+  @override
+  String get conflict => '충돌이 발생했습니다';
+
+  @override
+  String get unprocessable_entity => '처리할 수 없는 엔터티';
+
+  @override
+  String get internal_server_error => '서버 내부 오류';
+
+  @override
+  String get not_implemented => '구현되지 않음';
+
+  @override
+  String get bad_gateway => '잘못된 게이트웨이';
+
+  @override
+  String get service_unavailable => '서비스를 사용할 수 없습니다';
+
+  @override
+  String get http_version_not_supported => '지원되지 않는 HTTP 버전';
+
+  @override
+  String get loop_detected => '루프가 감지되었습니다';
+
+  @override
+  String get malagasy => '마다가스카르어';
+
+  @override
+  String get french => '프랑스어';
+
+  @override
+  String get english => '영어';
+
+  @override
+  String get chinese => '중국어';
+
+  @override
+  String get korean => '한국어';
+
+  @override
+  String get no_job_offers_yet => '등록된 채용 공고가 없습니다';
+
+  @override
+  String get no_job_applicants_yet => '등록된 구직자가 없습니다';
+
+  @override
+  String get no_training_centers_yet => '등록된 교육 센터가 없습니다';
+
+  @override
+  String get no_kara_history_yet => 'Kara 사용 내역이 없습니다';
+
+  @override
+  String get please_select_birth_date => '생년월일을 선택해 주세요';
+
+  @override
+  String get must_be_at_least_18 => '만 18세 이상이어야 합니다';
+
+  @override
+  String get male => '남성';
+
+  @override
+  String get female => '여성';
+
+  @override
+  String get expired => '만료됨';
+
+  @override
+  String get no_available_training_center => '이용 가능한 교육 센터가 없습니다';
+
+  @override
+  String get no_hot_offers_yet => '등록된 인기 제안이 없습니다';
+
+  @override
+  String get no_event_offers_yet => '등록된 이벤트 제안이 없습니다';
+
+  @override
+  String get please_fill_all_required_fields => '모든 필수 항목을 입력해 주세요';
+
+  @override
+  String get job_offer_updated_successfully => '채용 공고가 성공적으로 수정되었습니다';
 }
