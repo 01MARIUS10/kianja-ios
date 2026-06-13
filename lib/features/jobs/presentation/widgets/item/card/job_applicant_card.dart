@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kianja/core/config/env_config.dart';
-import 'package:kianja/core/shared/widgets/avatar/circle_user_avatar_detail.dart';
 import 'package:kianja/core/shared/widgets/avatar/default_avatar.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';

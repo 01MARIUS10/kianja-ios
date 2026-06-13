@@ -14,13 +14,13 @@ import 'package:kianja/features/jobs/data/models/output/files/job_image/job_imag
 import 'package:kianja/features/jobs/data/models/output/files/pdf_image/job_pdf_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_applicant/job_applicant_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_applicant_filter/job_applicant_filter_model.dart';
-import 'package:kianja/features/jobs/data/models/output/jobs/price_plan/price_plan_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_applicant_zone/job_applicant_zone_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_offer/job_offer_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_offer_filter/job_offer_filter_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_category/job_category_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_domain/job_domain_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_features/job_features_model.dart';
+import 'package:kianja/features/jobs/data/models/output/jobs/price_plan/price_plan_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/hot_event/hot_event_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/training_center/training_center_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/training_center_filter/training_center_filter_model.dart';

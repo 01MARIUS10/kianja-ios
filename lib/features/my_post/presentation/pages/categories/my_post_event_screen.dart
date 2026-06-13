@@ -195,7 +195,7 @@ class _MyPostEventScreenState extends State<MyPostEventScreen>
 
         if (_hasLoadedOnce) {
           if (_events.isEmpty) {
-            return Center(child: Text('No Events yet'));
+            return const Center(child: Text('No Events yet'));
           }
 
           final hasMore = state is MyPostGetAllEventsSuccess && state.hasMore;

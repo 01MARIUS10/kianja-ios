@@ -11,6 +11,7 @@ enum AppSponsPartnerStatus { initial, loading, loaded, error }
 
 class AppState extends Equatable {
   const AppState({
+    required this.token,
     required this.lang,
     required this.isAlreadyChosenLang,
     required this.isAuthenticated,
@@ -23,6 +24,7 @@ class AppState extends Equatable {
     this.sponsPartners = const [],
     this.errorMessage = '',
   });
+  final String token;
   final Locale lang;
   final bool isAlreadyChosenLang;
   final bool isAuthenticated;
@@ -47,8 +49,10 @@ class AppState extends Equatable {
     AppSponsPartnerStatus? sponsPartnerStatus,
     List<SponsPartner>? sponsPartners,
     String? errorMessage,
+    String? token,
   }) {
     return AppState(
+      token: token ?? this.token,
       lang: lang ?? this.lang,
       isAlreadyChosenLang: isAlreadyChosenLang ?? this.isAlreadyChosenLang,
       isAuthenticated: isAuthenticated ?? this.isAuthenticated,
@@ -65,6 +69,7 @@ class AppState extends Equatable {
 
   @override
   List<Object> get props => [
+    token,
     lang,
     isAlreadyChosenLang,
     isAuthenticated,

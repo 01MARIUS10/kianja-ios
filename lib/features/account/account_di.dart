@@ -57,6 +57,7 @@ Future<void> initAccountDependencies(GetIt getIt, Dio dio) async {
   // Blocs
   getIt.registerFactory(
     () => AccountBloc(
+      appSharedPrefs: getIt(),
       logoutUseCase: getIt(),
       changePasswordUseCase: getIt(),
       updateUserInfoUseCase: getIt(),

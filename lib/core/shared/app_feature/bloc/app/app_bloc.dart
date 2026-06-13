@@ -28,6 +28,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
        //  _deleteCachedUserUseCase = deleteCachedUserUseCase,
        super(
          const AppState(
+           token: '',
            lang: Languages.localeFrench,
            isAlreadyChosenLang: false,
            isAuthenticated: false,
@@ -80,6 +81,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     );
     emit(
       state.copyWith(
+        token: token,
         lang: Locale(lang ?? 'fr'),
         isAlreadyChosenLang: isAlreadyChosenLang ?? false,
         isAuthenticated: isAuthenticated,

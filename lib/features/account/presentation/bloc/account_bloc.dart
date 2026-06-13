@@ -1,8 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kianja/core/shared/app_feature/data/datasources/app_shared_prefs.dart';
 import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
 import 'package:kianja/core/utils/app_debug.dart';
+import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/core/utils/usecase/no_params.dart';
 import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/account/domain/entities/kara_history.dart';
@@ -23,6 +25,7 @@ part 'account_state.dart';
 
 class AccountBloc extends Bloc<AccountEvent, AccountState> {
   AccountBloc({
+    required AppSharedPrefs appSharedPrefs,
     required LogoutUseCase logoutUseCase,
     required ChangePasswordUseCase changePasswordUseCase,
     required UpdateUserInfoUseCase updateUserInfoUseCase,
@@ -31,7 +34,8 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     required GetKaraUseCase getKaraUseCase,
     required UploadProfilPhotoUseCase uploadProfilPhotoUseCase,
     required DeleteProfilPhotoUseCase deleteProfilPhotoUseCase,
-  }) : _logoutUseCase = logoutUseCase,
+  }) : _appSharedPrefs = appSharedPrefs,
+       _logoutUseCase = logoutUseCase,
        _changePasswordUseCase = changePasswordUseCase,
        _updateUserInfoUseCase = updateUserInfoUseCase,
        _cguUseCase = cguUseCase,
@@ -51,6 +55,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     on<AccountProfilPhotoDeleteRequested>(_onProfilPhotoDeleteRequested);
   }
 
+  final AppSharedPrefs _appSharedPrefs;
   final LogoutUseCase _logoutUseCase;
   final ChangePasswordUseCase _changePasswordUseCase;
   final UpdateUserInfoUseCase _updateUserInfoUseCase;
@@ -138,6 +143,8 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   ) async {
     emit(AccountRequestInProgress());
     final result = await _logoutUseCase(NoParams());
+    await _appSharedPrefs.remove(Constants.token);
+
     result.fold(
       (failure) => emit(AccountRequestFailure(message: failure.message)),
       (_) => emit(const AccountLogoutSuccess()),
