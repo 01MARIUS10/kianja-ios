@@ -7,6 +7,7 @@ import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/about/presentation/bloc/about_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -22,7 +23,7 @@ class AboutScreen extends StatelessWidget {
           GetIt.instance<AboutBloc>()
             ..add(const AboutGetUpdateVersionRequested()),
       child: BaseScreen(
-        appBar: const TitleHeader(title: 'About'),
+        appBar: TitleHeader(title: context.appLoc.about),
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(Constants.paddingMedium),
           child: Column(
@@ -79,27 +80,16 @@ class AboutScreen extends StatelessWidget {
 
               _buildParagraph(
                 theme,
-                "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                context.appLoc.kianja_professional_description,
               ),
               const SizedBox(height: Constants.spacingMedium),
-              _buildParagraph(
-                theme,
-                'It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
-              ),
+              _buildParagraph(theme, context.appLoc.kianja_talent_description),
               const SizedBox(height: Constants.spacingMedium),
-              _buildParagraph(
-                theme,
-                'It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-              ),
-              const SizedBox(height: Constants.spacingMedium),
-              _buildParagraph(
-                theme,
-                'It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-              ),
+              _buildParagraph(theme, context.appLoc.kianja_access_description),
 
               const SizedBox(height: Constants.spacingLarge),
               Text(
-                'Contact us',
+                context.appLoc.contact_us,
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -109,9 +99,9 @@ class AboutScreen extends StatelessWidget {
               _buildContactRow(
                 theme: theme,
                 icon: Icons.phone_outlined,
-                title: 'Via phone',
+                title: context.appLoc.via_phone,
                 value: '+261 38 28 309 29',
-                buttonText: 'Call',
+                buttonText: context.appLoc.call,
                 onTap: () async {
                   try {
                     final Uri url = Uri(
@@ -127,7 +117,7 @@ class AboutScreen extends StatelessWidget {
                       if (context.mounted) {
                         AppMessenger.showError(
                           context,
-                          'Could not launch phone app',
+                          context.appLoc.could_not_launch_phone_app,
                         );
                       }
                     }
@@ -135,7 +125,7 @@ class AboutScreen extends StatelessWidget {
                     if (context.mounted) {
                       AppMessenger.showError(
                         context,
-                        'Error launching app: $e',
+                        '${context.appLoc.error_launching_app} $e',
                       );
                     }
                   }
@@ -145,15 +135,16 @@ class AboutScreen extends StatelessWidget {
               _buildContactRow(
                 theme: theme,
                 icon: Icons.email_outlined,
-                title: 'Via email',
+                title: context.appLoc.via_email,
                 value: 'contact@mips.mg',
-                buttonText: 'Send',
+                buttonText: context.appLoc.send,
                 onTap: () async {
                   try {
                     final Uri url = Uri(
                       scheme: 'mailto',
                       path: 'contact@mips.mg',
-                      query: 'subject=Forgot Password Request',
+                      query:
+                          'subject=${context.appLoc.forgot_password_request}',
                     );
                     if (await canLaunchUrl(url)) {
                       await launchUrl(
@@ -164,7 +155,7 @@ class AboutScreen extends StatelessWidget {
                       if (context.mounted) {
                         AppMessenger.showError(
                           context,
-                          'Could not launch email app',
+                          context.appLoc.could_not_launch_email_app,
                         );
                       }
                     }
@@ -172,7 +163,7 @@ class AboutScreen extends StatelessWidget {
                     if (context.mounted) {
                       AppMessenger.showError(
                         context,
-                        'Error launching app: $e',
+                        '${context.appLoc.error_launching_app} $e',
                       );
                     }
                   }

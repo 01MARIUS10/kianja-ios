@@ -1585,6 +1585,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Job offer updated successfully'**
   String get job_offer_updated_successfully;
+
+  /// No description provided for @kianja_professional_description.
+  ///
+  /// In en, this message translates to:
+  /// **'KIANJA is a professional platform developed to connect job seekers, recruiters, and training institutions within a single ecosystem. Through the mobile application, users can explore available job offers, discover job applicant profiles, and find training centers that can help them develop new skills and advance their careers. The platform is designed to simplify access to employment opportunities and professional development resources.'**
+  String get kianja_professional_description;
+
+  /// No description provided for @kianja_talent_description.
+  ///
+  /// In en, this message translates to:
+  /// **'For organizations, KIANJA also provides an administrative portal dedicated to the management and consultation of expert and executive profiles. These high-level professional profiles are exclusively accessible through the administration interface, enabling companies to identify qualified talents for strategic and specialized positions.'**
+  String get kianja_talent_description;
+
+  /// No description provided for @kianja_access_description.
+  ///
+  /// In en, this message translates to:
+  /// **'To access KIANJA, users must have a valid MIPS account. MIPS is a platform used to publish and manage various types of announcements and services. Existing MIPS users can use their credentials to sign in to KIANJA and benefit from its professional recruitment and training features without creating a separate account.'**
+  String get kianja_access_description;
+
+  /// No description provided for @contact_us.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact us'**
+  String get contact_us;
+
+  /// No description provided for @forgot_password_request.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password Request'**
+  String get forgot_password_request;
+
+  /// No description provided for @no_hots_yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No hots yet'**
+  String get no_hots_yet;
+
+  /// No description provided for @no_events_yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No events yet'**
+  String get no_events_yet;
+
+  /// No description provided for @error_launching_app.
+  ///
+  /// In en, this message translates to:
+  /// **'Error launching app:'**
+  String get error_launching_app;
+
+  /// No description provided for @could_not_launch_email_app.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not launch email app'**
+  String get could_not_launch_email_app;
+
+  /// No description provided for @could_not_launch_phone_app.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not launch phone app'**
+  String get could_not_launch_phone_app;
+
+  /// No description provided for @about.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get about;
 }
 
 class _AppLocalizationsDelegate

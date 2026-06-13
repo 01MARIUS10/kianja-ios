@@ -764,4 +764,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get job_offer_updated_successfully => 'Job offer updated successfully';
+
+  @override
+  String get kianja_professional_description =>
+      'KIANJA is a professional platform developed to connect job seekers, recruiters, and training institutions within a single ecosystem. Through the mobile application, users can explore available job offers, discover job applicant profiles, and find training centers that can help them develop new skills and advance their careers. The platform is designed to simplify access to employment opportunities and professional development resources.';
+
+  @override
+  String get kianja_talent_description =>
+      'For organizations, KIANJA also provides an administrative portal dedicated to the management and consultation of expert and executive profiles. These high-level professional profiles are exclusively accessible through the administration interface, enabling companies to identify qualified talents for strategic and specialized positions.';
+
+  @override
+  String get kianja_access_description =>
+      'To access KIANJA, users must have a valid MIPS account. MIPS is a platform used to publish and manage various types of announcements and services. Existing MIPS users can use their credentials to sign in to KIANJA and benefit from its professional recruitment and training features without creating a separate account.';
+
+  @override
+  String get contact_us => 'Contact us';
+
+  @override
+  String get forgot_password_request => 'Forgot Password Request';
+
+  @override
+  String get no_hots_yet => 'No hots yet';
+
+  @override
+  String get no_events_yet => 'No events yet';
+
+  @override
+  String get error_launching_app => 'Error launching app:';
+
+  @override
+  String get could_not_launch_email_app => 'Could not launch email app';
+
+  @override
+  String get could_not_launch_phone_app => 'Could not launch phone app';
+
+  @override
+  String get about => 'About';
 }

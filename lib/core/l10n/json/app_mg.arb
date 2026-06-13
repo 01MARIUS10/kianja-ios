@@ -245,5 +245,16 @@
   "no_hot_offers_yet": "Tsy mbola misy tolotra mafana",
   "no_event_offers_yet": "Tsy mbola misy tolotra hetsika",
   "please_fill_all_required_fields": "Azafady fenoy ny saha rehetra takiana",
-  "job_offer_updated_successfully": "Nohavaozina soa aman-tsara ny tolotra asa"
+  "job_offer_updated_successfully": "Nohavaozina soa aman-tsara ny tolotra asa",
+  "kianja_professional_description": "KIANJA dia sehatra matihanina novolavolaina mba hampifandray ireo mitady asa, mpampiasa, ary ivon-toeram-pampiofanana ao anatin'ny tontolo iray. Amin'ny alalan'ny rindranasa finday, afaka mijery ireo tolotra asa misy ny mpampiasa, mahita ny mombamomba ireo mpangataka asa, ary mitady foibe fampiofanana afaka manampy azy ireo hampivelatra fahaiza-manao vaovao sy hampandroso ny lalan'asany. Ny sehatra dia natao hanamorana ny fidirana amin'ny fahafahana ara-piasana sy ireo loharano ho an'ny fampandrosoana matihanina.",
+  "kianja_talent_description": "Ho an'ireo fikambanana sy orinasa, KIANJA dia manolotra ihany koa sehatra fitantanana natokana ho an'ny fitantanana sy fijerena ny mombamomba ireo manam-pahaizana sy mpanatanteraka. Ireo mombamomba matihanina avo lenta ireo dia azo idirana amin'ny alalan'ny sehatra fitantanana ihany, ahafahan'ny orinasa mamantatra ireo talenta mahafeno fepetra ho an'ny toerana stratejika sy manokana.",
+  "kianja_access_description": "Mba hampiasana an'i KIANJA, dia tsy maintsy manana kaonty MIPS manankery ny mpampiasa. MIPS dia sehatra ampiasaina amin'ny famoahana sy fitantanana karazana filazana sy tolotra isan-karazany. Ireo efa manana kaonty MIPS dia afaka mampiasa ny mombamomba azy ireo hidirana ao amin'i KIANJA ary hahazo tombony amin'ireo tolotra momba ny fandraisana mpiasa sy ny fampiofanana, nefa tsy mila mamorona kaonty vaovao.",
+  "contact_us": "Mifandraisa aminay",
+  "forgot_password_request": "Fangatahana famerenana tenimiafina",
+  "no_hots_yet": "Tsy mbola misy hot",
+  "no_events_yet": "Tsy mbola misy hetsika",
+  "error_launching_app": "Nisy olana teo am-panokafana ny rindranasa:",
+  "could_not_launch_email_app": "Tsy afaka nanokatra ny rindranasa mailaka",
+  "could_not_launch_phone_app": "Tsy afaka nanokatra ny rindranasa antso",
+  "about": "Momba"
 }

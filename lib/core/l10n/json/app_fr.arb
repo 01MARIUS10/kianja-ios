@@ -245,5 +245,16 @@
   "no_hot_offers_yet": "Aucune offre populaire pour le moment",
   "no_event_offers_yet": "Aucune offre d'événement pour le moment",
   "please_fill_all_required_fields": "Veuillez remplir tous les champs obligatoires",
-  "job_offer_updated_successfully": "L'offre d'emploi a été mise à jour avec succès"
+  "job_offer_updated_successfully": "L'offre d'emploi a été mise à jour avec succès",
+  "kianja_professional_description": "KIANJA est une plateforme professionnelle développée pour mettre en relation les chercheurs d'emploi, les recruteurs et les centres de formation au sein d'un même écosystème. Grâce à l'application mobile, les utilisateurs peuvent consulter les offres d'emploi disponibles, découvrir les profils des candidats et trouver des centres de formation capables de les aider à acquérir de nouvelles compétences et à faire évoluer leur carrière. La plateforme a été conçue pour faciliter l'accès aux opportunités professionnelles et aux ressources de développement des compétences.",
+  "kianja_talent_description": "Pour les organisations, KIANJA propose également un portail d'administration dédié à la gestion et à la consultation des profils d'experts et de cadres. Ces profils professionnels de haut niveau sont exclusivement accessibles via l'interface d'administration, permettant aux entreprises d'identifier des talents qualifiés pour des postes stratégiques et spécialisés.",
+  "kianja_access_description": "Pour accéder à KIANJA, les utilisateurs doivent disposer d'un compte MIPS valide. MIPS est une plateforme utilisée pour publier et gérer différents types d'annonces et de services. Les utilisateurs disposant déjà d'un compte MIPS peuvent utiliser leurs identifiants pour se connecter à KIANJA et bénéficier de ses fonctionnalités de recrutement et de formation sans avoir à créer un compte distinct.",
+  "contact_us": "Contactez-nous",
+  "forgot_password_request": "Demande de réinitialisation du mot de passe",
+  "no_hots_yet": "Aucun hot pour le moment",
+  "no_events_yet": "Aucun événement pour le moment",
+  "error_launching_app": "Erreur lors du lancement de l'application :",
+  "could_not_launch_email_app": "Impossible d'ouvrir l'application de messagerie",
+  "could_not_launch_phone_app": "Impossible d'ouvrir l'application téléphonique",
+  "about": "À propos"
 }

@@ -774,4 +774,44 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get job_offer_updated_successfully =>
       'L\'offre d\'emploi a été mise à jour avec succès';
+
+  @override
+  String get kianja_professional_description =>
+      'KIANJA est une plateforme professionnelle développée pour mettre en relation les chercheurs d\'emploi, les recruteurs et les centres de formation au sein d\'un même écosystème. Grâce à l\'application mobile, les utilisateurs peuvent consulter les offres d\'emploi disponibles, découvrir les profils des candidats et trouver des centres de formation capables de les aider à acquérir de nouvelles compétences et à faire évoluer leur carrière. La plateforme a été conçue pour faciliter l\'accès aux opportunités professionnelles et aux ressources de développement des compétences.';
+
+  @override
+  String get kianja_talent_description =>
+      'Pour les organisations, KIANJA propose également un portail d\'administration dédié à la gestion et à la consultation des profils d\'experts et de cadres. Ces profils professionnels de haut niveau sont exclusivement accessibles via l\'interface d\'administration, permettant aux entreprises d\'identifier des talents qualifiés pour des postes stratégiques et spécialisés.';
+
+  @override
+  String get kianja_access_description =>
+      'Pour accéder à KIANJA, les utilisateurs doivent disposer d\'un compte MIPS valide. MIPS est une plateforme utilisée pour publier et gérer différents types d\'annonces et de services. Les utilisateurs disposant déjà d\'un compte MIPS peuvent utiliser leurs identifiants pour se connecter à KIANJA et bénéficier de ses fonctionnalités de recrutement et de formation sans avoir à créer un compte distinct.';
+
+  @override
+  String get contact_us => 'Contactez-nous';
+
+  @override
+  String get forgot_password_request =>
+      'Demande de réinitialisation du mot de passe';
+
+  @override
+  String get no_hots_yet => 'Aucun hot pour le moment';
+
+  @override
+  String get no_events_yet => 'Aucun événement pour le moment';
+
+  @override
+  String get error_launching_app =>
+      'Erreur lors du lancement de l\'application :';
+
+  @override
+  String get could_not_launch_email_app =>
+      'Impossible d\'ouvrir l\'application de messagerie';
+
+  @override
+  String get could_not_launch_phone_app =>
+      'Impossible d\'ouvrir l\'application téléphonique';
+
+  @override
+  String get about => 'À propos';
 }

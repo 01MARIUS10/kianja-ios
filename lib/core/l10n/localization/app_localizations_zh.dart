@@ -749,4 +749,40 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get job_offer_updated_successfully => '招聘信息更新成功';
+
+  @override
+  String get kianja_professional_description =>
+      'KIANJA 是一个专业平台，旨在将求职者、招聘人员和培训机构连接到同一个生态系统中。通过移动应用程序，用户可以浏览可用的招聘信息、查看求职者档案，并寻找能够帮助他们提升技能和促进职业发展的培训中心。该平台旨在简化获取就业机会和职业发展资源的途径。';
+
+  @override
+  String get kianja_talent_description =>
+      '对于企业和组织，KIANJA 还提供了一个专门的管理后台，用于管理和查看专家及高管档案。这些高层次专业人才档案仅能通过管理界面访问，使企业能够为战略性和专业性岗位寻找合适的人才。';
+
+  @override
+  String get kianja_access_description =>
+      '要使用 KIANJA，用户必须拥有有效的 MIPS 账户。MIPS 是一个用于发布和管理各种公告及服务的平台。已有 MIPS 账户的用户可以直接使用其登录凭证访问 KIANJA，无需创建新的账户，即可享受其招聘与培训相关功能。';
+
+  @override
+  String get contact_us => '联系我们';
+
+  @override
+  String get forgot_password_request => '忘记密码申请';
+
+  @override
+  String get no_hots_yet => '暂无热门内容';
+
+  @override
+  String get no_events_yet => '暂无活动';
+
+  @override
+  String get error_launching_app => '启动应用时发生错误：';
+
+  @override
+  String get could_not_launch_email_app => '无法启动电子邮件应用';
+
+  @override
+  String get could_not_launch_phone_app => '无法启动电话应用';
+
+  @override
+  String get about => '关于';
 }

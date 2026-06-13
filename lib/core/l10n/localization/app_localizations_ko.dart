@@ -752,4 +752,40 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get job_offer_updated_successfully => '채용 공고가 성공적으로 수정되었습니다';
+
+  @override
+  String get kianja_professional_description =>
+      'KIANJA는 구직자, 채용 담당자 및 교육 기관을 하나의 생태계로 연결하기 위해 개발된 전문 플랫폼입니다. 모바일 애플리케이션을 통해 사용자는 채용 공고를 확인하고, 구직자 프로필을 탐색하며, 새로운 기술을 습득하고 경력을 발전시키는 데 도움을 줄 수 있는 교육 센터를 찾을 수 있습니다. 이 플랫폼은 취업 기회와 전문성 개발 자원에 보다 쉽게 접근할 수 있도록 설계되었습니다.';
+
+  @override
+  String get kianja_talent_description =>
+      '기업과 기관을 위해 KIANJA는 전문가 및 임원 프로필의 관리와 조회를 위한 전용 관리자 포털도 제공합니다. 이러한 고급 전문 인력 프로필은 관리자 인터페이스를 통해서만 접근할 수 있으며, 이를 통해 기업은 전략적이고 전문적인 직무에 적합한 인재를 발굴할 수 있습니다.';
+
+  @override
+  String get kianja_access_description =>
+      'KIANJA를 이용하려면 유효한 MIPS 계정이 필요합니다. MIPS는 다양한 공지사항과 서비스를 게시하고 관리하는 데 사용되는 플랫폼입니다. 기존 MIPS 사용자는 별도의 계정을 생성하지 않고도 기존 로그인 정보를 사용하여 KIANJA에 접속하고 채용 및 교육 기능을 이용할 수 있습니다.';
+
+  @override
+  String get contact_us => '문의하기';
+
+  @override
+  String get forgot_password_request => '비밀번호 재설정 요청';
+
+  @override
+  String get no_hots_yet => '등록된 인기 항목이 없습니다';
+
+  @override
+  String get no_events_yet => '등록된 이벤트가 없습니다';
+
+  @override
+  String get error_launching_app => '앱 실행 중 오류가 발생했습니다:';
+
+  @override
+  String get could_not_launch_email_app => '이메일 앱을 실행할 수 없습니다';
+
+  @override
+  String get could_not_launch_phone_app => '전화 앱을 실행할 수 없습니다';
+
+  @override
+  String get about => '정보';
 }
