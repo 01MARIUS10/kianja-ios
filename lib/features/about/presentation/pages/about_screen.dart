@@ -32,14 +32,8 @@ class AboutScreen extends StatelessWidget {
               const SizedBox(height: Constants.spacingMedium),
               Center(
                 child: Container(
-                  width: 80,
-                  height: 80,
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.primary,
-                    borderRadius: BorderRadius.circular(
-                      Constants.borderRadiusMedium,
-                    ),
-                  ),
+                  width: 100,
+                  height: 100,
                   padding: const EdgeInsets.all(Constants.paddingSmall),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(
