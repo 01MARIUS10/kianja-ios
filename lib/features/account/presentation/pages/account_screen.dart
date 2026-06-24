@@ -170,7 +170,7 @@ class AccountScreen extends StatelessWidget {
                     label: context.appLoc.terms_use,
                     iconColor: AppColors.warning,
                     onTap: () {
-                      context.goNamed(Routes.termsOfUse.name);
+                      context.pushNamed(Routes.termsOfUse.name);
                     },
                   ),
                   AccountMenuItem(

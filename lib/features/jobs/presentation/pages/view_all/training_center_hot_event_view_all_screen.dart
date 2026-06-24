@@ -38,7 +38,7 @@ class TrainingCenterHotEventViewAllScreen extends StatelessWidget {
         child: BlocConsumer<JobsBloc, JobsState>(
           listener: (context, state) {
             if (state is ViewAllHotEventsSuccess) {
-              AppMessenger.showSuccess(context, 'View All Fetch Success');
+              // AppMessenger.showSuccess(context, 'View All Fetch Success');
             } else if (state is JobsRequestFailure) {
               // AppMessenger.showError(context, state.message);
             }

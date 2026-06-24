@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kianja/core/config/env_config.dart';
@@ -15,6 +16,7 @@ import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_params.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/routing/routes.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HotEventDetailScreen extends StatelessWidget {
   const HotEventDetailScreen({
@@ -260,10 +262,14 @@ class HotEventDetailScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: Constants.spacingMedium),
-                          Text(
-                            hotEvent.description,
+                          Linkify(
+                            onOpen: _onOpen,
+                            text: hotEvent.description,
                             style: theme.textTheme.bodyMedium?.copyWith(
                               height: 1.5,
+                            ),
+                            linkStyle: theme.textTheme.bodyMedium?.copyWith(
+                              color: AppColors.info,
                             ),
                           ),
                         ],
@@ -293,5 +299,11 @@ class HotEventDetailScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _onOpen(LinkableElement link) async {
+    if (!await launchUrl(Uri.parse(link.url))) {
+      throw Exception('Could not launch ${link.url}');
+    }
   }
 }

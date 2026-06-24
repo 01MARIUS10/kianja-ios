@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get_it/get_it.dart';
 import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/widgets/avatar/default_avatar.dart';
@@ -13,6 +14,7 @@ import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class JobOfferDetailScreen extends StatelessWidget {
   const JobOfferDetailScreen({super.key, required this.id});
@@ -155,10 +157,14 @@ class JobOfferDetailScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: Constants.spacingMedium),
-                          Text(
-                            jobOffer.description,
+                          Linkify(
+                            onOpen: _onOpen,
+                            text: jobOffer.description,
                             style: theme.textTheme.bodyMedium?.copyWith(
                               height: 1.5,
+                            ),
+                            linkStyle: theme.textTheme.bodyMedium?.copyWith(
+                              color: AppColors.info,
                             ),
                           ),
                         ],
@@ -369,5 +375,11 @@ class JobOfferDetailScreen extends StatelessWidget {
         Expanded(child: Text(value, style: theme.textTheme.bodySmall)),
       ],
     );
+  }
+
+  Future<void> _onOpen(LinkableElement link) async {
+    if (!await launchUrl(Uri.parse(link.url))) {
+      throw Exception('Could not launch ${link.url}');
+    }
   }
 }
