@@ -12,6 +12,7 @@ import 'package:kianja/core/shared/app_feature/data/datasources/app_user_hive.da
 import 'package:kianja/core/shared/app_feature/data/repositories/app_repository_impl.dart';
 import 'package:kianja/core/shared/app_feature/domain/repositories/app_repository.dart';
 import 'package:kianja/core/shared/app_feature/domain/usecases/delete_cached_user_usecase.dart';
+import 'package:kianja/core/shared/app_feature/domain/usecases/get_app_spons_partner_usecase.dart';
 import 'package:kianja/core/shared/app_feature/domain/usecases/get_cached_user_usecase.dart';
 import 'package:kianja/core/shared/app_feature/domain/usecases/get_user_usecase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -67,12 +68,16 @@ Future<void> initAppDependencies(
   getIt.registerLazySingleton<DeleteCachedUserUseCase>(
     () => DeleteCachedUserUseCase(appRepository: getIt()),
   );
+  getIt.registerLazySingleton<GetAppSponsPartnerUseCase>(
+    () => GetAppSponsPartnerUseCase(appRepository: getIt()),
+  );
 
   // App Bloc
   getIt.registerFactory<AppBloc>(
     () => AppBloc(
       appSharedPrefs: getIt(),
       getUserUseCase: getIt(),
+      getAppSponsPartnerUseCase: getIt(),
       // deleteCachedUserUseCase: getIt(),
     ),
   );

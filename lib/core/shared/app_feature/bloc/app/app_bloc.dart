@@ -4,7 +4,9 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kianja/core/languages/languages.dart';
 import 'package:kianja/core/shared/app_feature/data/datasources/app_shared_prefs.dart';
+import 'package:kianja/core/shared/app_feature/domain/entities/spons_partner.dart';
 import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
+import 'package:kianja/core/shared/app_feature/domain/usecases/get_app_spons_partner_usecase.dart';
 import 'package:kianja/core/shared/app_feature/domain/usecases/get_user_usecase.dart';
 import 'package:kianja/core/themes/mode/app_mode.dart';
 import 'package:kianja/core/utils/app_debug.dart';
@@ -18,12 +20,15 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc({
     required AppSharedPrefs appSharedPrefs,
     required GetUserUseCase getUserUseCase,
+    required GetAppSponsPartnerUseCase getAppSponsPartnerUseCase,
     // required DeleteCachedUserUseCase deleteCachedUserUseCase,
   }) : _appSharedPrefs = appSharedPrefs,
        _getUserUseCase = getUserUseCase,
+       _getAppSponsPartnerUseCase = getAppSponsPartnerUseCase,
        //  _deleteCachedUserUseCase = deleteCachedUserUseCase,
        super(
          const AppState(
+           token: '',
            lang: Languages.localeFrench,
            isAlreadyChosenLang: false,
            isAuthenticated: false,
@@ -37,9 +42,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<AppUserUpdated>(_onAppUserUpdated);
     on<AppUserDeleted>(_onAppUserDeleted);
     on<AppThemeChanged>(_onAppThemeChanged);
+    on<AppSponsPartnerLoaded>(_onAppSponsPartnerLoaded);
   }
   final AppSharedPrefs _appSharedPrefs;
   final GetUserUseCase _getUserUseCase;
+  final GetAppSponsPartnerUseCase _getAppSponsPartnerUseCase;
   // final DeleteCachedUserUseCase _deleteCachedUserUseCase;
 
   void _onAppInitialized(AppInitialized event, Emitter emit) async {
@@ -74,6 +81,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     );
     emit(
       state.copyWith(
+        token: token,
         lang: Locale(lang ?? 'fr'),
         isAlreadyChosenLang: isAlreadyChosenLang ?? false,
         isAuthenticated: isAuthenticated,
@@ -165,5 +173,27 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   void _onAppThemeChanged(AppThemeChanged event, Emitter emit) async {
     await _appSharedPrefs.save(Constants.theme, event.appMode.name);
     emit(state.copyWith(appMode: event.appMode));
+  }
+
+  void _onAppSponsPartnerLoaded(
+    AppSponsPartnerLoaded event,
+    Emitter emit,
+  ) async {
+    emit(state.copyWith(sponsPartnerStatus: AppSponsPartnerStatus.loading));
+    final result = await _getAppSponsPartnerUseCase(NoParams());
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          sponsPartnerStatus: AppSponsPartnerStatus.error,
+          errorMessage: failure.message,
+        ),
+      ),
+      (sponsPartners) => emit(
+        state.copyWith(
+          sponsPartnerStatus: AppSponsPartnerStatus.loaded,
+          sponsPartners: sponsPartners,
+        ),
+      ),
+    );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kianja/core/utils/extensions.dart';
 
 class JobOffersFilterScreen extends StatelessWidget {
   const JobOffersFilterScreen({
@@ -16,7 +17,14 @@ class JobOffersFilterScreen extends StatelessWidget {
       onRefresh: onRefresh ?? () async {},
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
-        child: Column(children: children),
+        child: children.isNotEmpty
+            ? Column(children: children)
+            : Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(context.appLoc.no_job_offers_yet),
+                ),
+              ),
       ),
     );
   }

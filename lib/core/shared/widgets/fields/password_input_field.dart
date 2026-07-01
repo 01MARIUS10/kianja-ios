@@ -16,6 +16,7 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+    final bool isDark = Brightness.dark == theme.brightness;
 
     return TextField(
       controller: widget.controller,
@@ -24,7 +25,9 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
       style: theme.textTheme.bodyMedium,
       decoration: InputDecoration(
         hintText: Constants.hintTextPassword,
-        hintStyle: theme.textTheme.bodyMedium,
+        hintStyle: theme.textTheme.bodyMedium!.copyWith(
+          color: isDark ? AppColors.darkTextMuted : AppColors.lightTextMuted,
+        ),
         suffixIcon: IconButton(
           icon: Icon(
             _obscurePassword

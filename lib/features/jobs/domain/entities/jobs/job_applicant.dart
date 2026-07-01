@@ -10,7 +10,7 @@ class JobApplicant {
     required this.motivation,
     required this.location,
     this.gender,
-    required this.pdfUrl,
+    this.pdfUrl,
     required this.createdAt,
     required this.user,
     this.category,
@@ -22,7 +22,7 @@ class JobApplicant {
     this.motivation = '',
     this.location = const JobLocation.empty(),
     this.gender,
-    this.pdfUrl = '',
+    this.pdfUrl,
     this.createdAt = '',
     this.user = const User.empty(),
     this.category,
@@ -33,7 +33,7 @@ class JobApplicant {
   final String motivation;
   final JobLocation location;
   final JobGender? gender;
-  final String pdfUrl;
+  final String? pdfUrl;
   final String createdAt;
   final User user;
   final JobCategory? category;

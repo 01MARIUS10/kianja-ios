@@ -4,6 +4,7 @@ import 'package:kianja/core/shared/widgets/fields/label_field.dart';
 import 'package:kianja/core/shared/widgets/fields/text_input_field.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 
 class ResidenceField extends StatefulWidget {
   const ResidenceField({super.key, required this.residenceController});
@@ -27,11 +28,11 @@ class _ResidenceFieldState extends State<ResidenceField> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const LabelField(label: 'RESIDENCE'),
+        LabelField(label: context.appLoc.residence.toUpperCase()),
         const SizedBox(height: Constants.spacingSmall),
         TextInputField(
           controller: widget.residenceController,
-          hintText: 'select a residence',
+          hintText: context.appLoc.select_residence,
           readOnly: true,
           onTap: _showResidencePicker,
           suffixIcon: const Icon(

@@ -8,6 +8,7 @@ import 'package:kianja/core/shared/widgets/fields/password_input_field.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/account/domain/usecases/change_password/change_password_params.dart';
 import 'package:kianja/features/account/presentation/bloc/account_bloc.dart';
 
@@ -35,7 +36,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     if (_oldPasswordController.text.isEmpty ||
         _newPasswordController.text.isEmpty ||
         _retypePasswordController.text.isEmpty) {
-      AppMessenger.showError(context, 'Please fill all fields');
+      AppMessenger.showError(
+        context,
+        context.appLoc.please_fill_all_required_fields,
+      );
       return;
     }
 
@@ -61,7 +65,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     return BlocProvider(
       create: (context) => GetIt.instance<AccountBloc>(),
       child: BaseScreen(
-        appBar: const TitleHeader(title: 'Change Password'),
+        appBar: TitleHeader(title: context.appLoc.change_password),
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(Constants.paddingMedium),
@@ -69,25 +73,25 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               children: [
                 const SizedBox(height: Constants.spacingMedium),
                 Text(
-                  'Create a new secure password',
+                  context.appLoc.create_new_secure_password,
                   style: theme.textTheme.headlineLarge,
                 ),
                 const SizedBox(height: Constants.spacingLarge),
 
                 // Old Password Field
-                const LabelField(label: 'OLD PASSWORD'),
+                LabelField(label: context.appLoc.old_password.toUpperCase()),
                 const SizedBox(height: Constants.spacingSmall),
                 PasswordInputField(controller: _oldPasswordController),
                 const SizedBox(height: Constants.paddingMediumLarge),
 
                 // New Password Field
-                const LabelField(label: 'NEW PASSWORD'),
+                LabelField(label: context.appLoc.new_password.toUpperCase()),
                 const SizedBox(height: Constants.spacingSmall),
                 PasswordInputField(controller: _newPasswordController),
                 const SizedBox(height: Constants.paddingMediumLarge),
 
                 // Re-type Password Field
-                const LabelField(label: 'RE-TYPE PASSWORD'),
+                LabelField(label: context.appLoc.retype_password.toUpperCase()),
                 const SizedBox(height: Constants.spacingSmall),
                 PasswordInputField(controller: _retypePasswordController),
                 const SizedBox(height: Constants.spacingLarge),
@@ -126,7 +130,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                 ),
                               )
                             : Text(
-                                'UPDATE PASSWORD',
+                                context.appLoc.update_password.toUpperCase(),
                                 style: theme.textTheme.titleMedium!.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/jobs/presentation/widgets/category/padding_separator.dart';
 import 'package:kianja/features/jobs/presentation/widgets/enum/width_view_enum.dart';
@@ -43,20 +44,23 @@ class JobCategoryHorizontalSection extends StatelessWidget {
                   fontSize: 18,
                 ),
               ),
-              TextButton(
-                onPressed: () {
-                  context.goNamed(
-                    Routes.jobCategoryViewAll.name,
-                    extra: {'title': category, 'query': query},
-                  );
-                },
-                child: Text(
-                  'Voir plus',
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: isDark
-                        ? AppColors.darkTextSecondary
-                        : AppColors.lightTextSecondary,
-                    fontWeight: FontWeight.w500,
+              Flexible(
+                child: TextButton(
+                  onPressed: () {
+                    context.goNamed(
+                      Routes.jobCategoryViewAll.name,
+                      extra: {'title': category, 'query': query},
+                    );
+                  },
+                  child: Text(
+                    context.appLoc.view_more,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: isDark
+                          ? AppColors.darkTextSecondary
+                          : AppColors.lightTextSecondary,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kianja/core/l10n/app_localizations.dart';
+import 'package:kianja/core/l10n/localization/app_localizations.dart';
 
 /// Helper pour accéder plus facilement aux ressources de traduction (AppLocalizations).
 /// Permet d’écrire `context.appLoc` au lieu de `AppLocalizations.of(context)`.

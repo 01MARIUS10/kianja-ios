@@ -55,6 +55,13 @@ class ConflictFailure extends Failure {
   const ConflictFailure({required super.message, super.statusCode = 409});
 }
 
+class UnprocessableEntityFailure extends Failure {
+  const UnprocessableEntityFailure({
+    required super.message,
+    super.statusCode = 422,
+  });
+}
+
 class CancelledFailure extends Failure {
   const CancelledFailure({required super.message});
 }

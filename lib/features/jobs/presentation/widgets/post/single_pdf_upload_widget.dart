@@ -20,7 +20,7 @@ class _SinglePdfUploadWidgetState extends State<SinglePdfUploadWidget> {
   PlatformFile? _pdfFile;
 
   Future<void> _pickPdf() async {
-    final FilePickerResult? result = await FilePicker.platform.pickFiles(
+    final FilePickerResult? result = await FilePicker.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['pdf'],
     );

@@ -9,9 +9,11 @@ import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
-import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_plan.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/price_plan.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_price_plan/get_price_plan_params.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/post_features_section.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/single_pdf_upload_widget.dart';
@@ -35,10 +37,10 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
 
   // ── Features fetched from bloc ─────────────────────────────────────────
   JobFeatures? _jobFeatures;
-  List<JobApplicantPlan> _plans = [];
+  List<PricePlan> _plans = [];
 
   // ── Selected plan fed back from PostFeaturesSection ────────────────────
-  JobApplicantPlan? _selectedPlan;
+  PricePlan? _selectedPlan;
 
   // ── Upload results ─────────────────────────────────────────────────────
   String? _uploadImageUrl;
@@ -122,8 +124,7 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
         createJobApplicantParams: CreateJobApplicantParams(
           title: _titleController.text.trim(),
           motivation: _motivationController.text.trim(),
-          imageUrl: _uploadImageUrl ?? '',
-          pdfUrl: _uploadPdfUrl ?? '',
+          pdfUrl: _uploadPdfUrl,
           locationId: _selectedLocation!,
           genderId: _selectedGender!,
           typeId: _selectedPlan!.type.id,
@@ -151,27 +152,31 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
     return BlocProvider(
       create: (context) => GetIt.instance<JobsBloc>()
         ..add(const JobFeaturesFetchRequested())
-        ..add(const JobsGetJobApplicantPlanRequested()),
+        ..add(
+          const JobsGetPricePlanRequested(
+            getPricePlanParams: GetPricePlanParams(plan: 'job-applicant'),
+          ),
+        ),
       child: Builder(
         builder: (context) {
           return BlocConsumer<JobsBloc, JobsState>(
             listener: (context, state) {
               if (state is JobFeaturesFetchSuccess) {
                 setState(() => _jobFeatures = state.jobFeatures);
-              } else if (state is JobsGetJobApplicantPlanSuccess) {
-                setState(() => _plans = state.jobApplicantPlans);
+              } else if (state is JobsGetPricePlanSuccess) {
+                setState(() => _plans = state.pricePlans);
               } else if (state is JobsUploadImageSuccess) {
                 setState(() => _uploadImageUrl = state.jobImage.url);
-                AppMessenger.showSuccess(
-                  context,
-                  'Photo uploaded successfully',
-                );
+                // AppMessenger.showSuccess(
+                //   context,
+                //   'Photo uploaded successfully',
+                // );
               } else if (state is JobsUploadPdfSuccess) {
                 setState(() => _uploadPdfUrl = state.jobPdf.url);
-                AppMessenger.showSuccess(
-                  context,
-                  'Resume uploaded successfully',
-                );
+                // AppMessenger.showSuccess(
+                //   context,
+                //   'Resume uploaded successfully',
+                // );
               } else if (state is JobsCreateJobApplicantSuccess) {
                 _clearValues();
                 context.pushReplacementNamed(
@@ -179,7 +184,14 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                   pathParameters: {'id': state.jobApplicant.id.toString()},
                 );
               } else if (state is JobsRequestFailure) {
-                AppMessenger.showError(context, state.message);
+                if (state.message == 'Unprocessable entity') {
+                  AppMessenger.showError(
+                    context,
+                    context.appLoc.no_enough_kara,
+                  );
+                } else {
+                  AppMessenger.showError(context, state.message);
+                }
               }
             },
             builder: (context, state) {
@@ -188,7 +200,7 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
               // final isDark = theme.brightness == Brightness.dark;
 
               return BaseScreen(
-                appBar: const TitleHeader(title: 'Post a job applicant'),
+                appBar: TitleHeader(title: context.appLoc.post_job_applicant),
                 child: GestureDetector(
                   onTap: () => FocusScope.of(context).unfocus(),
                   child: SingleChildScrollView(
@@ -200,47 +212,32 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // ── Title ────────────────────────────────────────
-                        const LabelField(label: 'Job title *'),
+                        LabelField(label: '${context.appLoc.job_title} *'),
                         const SizedBox(height: Constants.spacingSmall),
                         TextInputField(
                           controller: _titleController,
-                          hintText: 'Add job title',
+                          hintText: context.appLoc.add_job_title,
                           maxLines: 3,
                           maxLength: 130,
                         ),
                         const SizedBox(height: Constants.spacingMedium),
 
                         // ── Motivation ───────────────────────────────────
-                        const LabelField(label: 'Motivation *'),
+                        LabelField(label: '${context.appLoc.motivation} *'),
                         const SizedBox(height: Constants.spacingSmall),
                         TextInputField(
                           controller: _motivationController,
-                          hintText: 'Add motivation',
+                          hintText: context.appLoc.add_motivation,
                           maxLines: 10,
                           keyboardType: TextInputType.multiline,
                         ),
                         const SizedBox(height: Constants.spacingMedium),
 
-                        // // ── Photo ────────────────────────────────────────
-                        // const LabelField(label: 'Recent photo (optional)'),
-                        // const SizedBox(height: Constants.spacingSmall),
-                        // SinglePhotoUploadWidget(
-                        //   onPhotoChanged: (photo) {
-                        //     if (photo != null) {
-                        //       BlocProvider.of<JobsBloc>(
-                        //         context,
-                        //       ).add(JobsUploadImageRequested(file: photo));
-                        //     }
-                        //   },
-                        // ),
-                        // const SizedBox(height: Constants.spacingMedium),
-
                         // ── Resume ───────────────────────────────────────
-                        const LabelField(label: 'Resume (optional)'),
+                        LabelField(label: context.appLoc.resume_optional),
                         const SizedBox(height: Constants.spacingSmall),
                         SinglePdfUploadWidget(
-                          text:
-                              'Upload your Resume and\nlet members look at it.\nIn PDF format.',
+                          text: context.appLoc.upload_resume_pdf,
                           onPdfChanged: (pdf) {
                             if (pdf != null) {
                               BlocProvider.of<JobsBloc>(
@@ -253,7 +250,7 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
 
                         // ── Category (single select) ─────────────────────
                         Text(
-                          'Category *',
+                          '${context.appLoc.category} *',
                           style: theme.textTheme.titleSmall!.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -305,7 +302,7 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                         const SizedBox(height: Constants.spacingMedium),
 
                         // ── Location ─────────────────────────────────────
-                        const LabelField(label: 'Location *'),
+                        LabelField(label: '${context.appLoc.location} *'),
                         const SizedBox(height: Constants.spacingSmall),
                         if (_jobFeatures != null)
                           Wrap(
@@ -348,7 +345,7 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                         const SizedBox(height: Constants.spacingMedium),
 
                         // ── Gender ───────────────────────────────────────
-                        const LabelField(label: 'Gender *'),
+                        LabelField(label: '${context.appLoc.gender} *'),
                         const SizedBox(height: Constants.spacingSmall),
                         if (_jobFeatures != null)
                           Wrap(
@@ -400,6 +397,7 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                             _selectedPlan = plan;
                           },
                           onPost: () => _postJobApplicant(context),
+                          postButtonLabel: context.appLoc.post.toUpperCase(),
                         ),
                         const SizedBox(height: Constants.spacingLarge),
                       ],

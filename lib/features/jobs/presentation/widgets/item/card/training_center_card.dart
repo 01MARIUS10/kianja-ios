@@ -2,8 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/config/env_config.dart';
-import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
-import 'package:kianja/core/shared/widgets/avatar/circle_user_avatar_detail.dart';
+import 'package:kianja/core/shared/widgets/avatar/default_avatar.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
@@ -36,26 +35,29 @@ class TrainingCenterCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           // Cover Image
-          Container(
-            height: 70,
-            width: double.infinity,
-            color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
-            child: CachedNetworkImage(
-              imageUrl: '${EnvConfig.baseApiUrl}${trainingCenter.imageUrl}',
-              fit: BoxFit.cover,
-              errorWidget: (context, url, error) {
-                return Image.asset(
-                  Assets.hiring,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, url, error) =>
-                      const Icon(Icons.image, size: 40, color: Colors.grey),
-                );
-              },
-              progressIndicatorBuilder: (context, url, progress) {
-                return const Center(child: CircularProgressIndicator());
-              },
+          if (trainingCenter.images != null &&
+              trainingCenter.images!.isNotEmpty)
+            Container(
+              height: Constants.size150,
+              width: double.infinity,
+              color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
+              child: CachedNetworkImage(
+                imageUrl:
+                    '${EnvConfig.baseApiUrl}${trainingCenter.images!.first.url}',
+                fit: BoxFit.fill,
+                errorWidget: (context, url, error) {
+                  return Image.asset(
+                    Assets.hiring,
+                    fit: BoxFit.fill,
+                    errorBuilder: (context, url, error) =>
+                        const Icon(Icons.image, size: 40, color: Colors.grey),
+                  );
+                },
+                progressIndicatorBuilder: (context, url, progress) {
+                  return const Center(child: CircularProgressIndicator());
+                },
+              ),
             ),
-          ),
 
           Padding(
             padding: const EdgeInsets.all(Constants.paddingSmall),
@@ -63,10 +65,9 @@ class TrainingCenterCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Description Text
                 Text(
                   trainingCenter.name,
-                  style: theme.textTheme.bodySmall?.copyWith(height: 1.2),
+                  style: theme.textTheme.titleSmall,
                   maxLines: 6,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -93,36 +94,61 @@ class TrainingCenterCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: Constants.spacingExtraSmall),
-
-                // Date
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.local_taxi,
-                      size: Constants.iconSizeExtraSmall,
-                      color: AppColors.danger,
-                    ),
-                    const SizedBox(width: Constants.spacingExtraSmall),
-                    Expanded(
-                      child: Text(
-                        trainingCenter.category?.name ?? '',
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: AppColors.success,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
                 const SizedBox(height: Constants.spacingSmall),
+
+                // Domain
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: List.generate(trainingCenter.domains.length, (
+                    index,
+                  ) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            CachedNetworkImage(
+                              imageUrl: trainingCenter.domains[index].icon,
+                              width: Constants.iconSizeExtraSmall,
+                              height: Constants.iconSizeExtraSmall,
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.work_outline),
+                            ),
+                            const SizedBox(width: Constants.spacingExtraSmall),
+                            Expanded(
+                              child: Text(
+                                trainingCenter.domains[index].name,
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: AppColors.success,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: Constants.spacingSmall),
+                      ],
+                    );
+                  }),
+                ),
 
                 // User Details
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const CircleUserAvatarDetail(user: User.empty()),
+                    ClipOval(
+                      child: trainingCenter.user.photoUrl.isNotEmpty
+                          ? Image.network(
+                              '${EnvConfig.baseApiUrl}${trainingCenter.user.photoUrl}',
+                              fit: BoxFit.cover,
+                              width: Constants.size30,
+                              height: Constants.size30,
+                              errorBuilder: (_, _, _) =>
+                                  const DefaultAvatar(size: Constants.size30),
+                            )
+                          : const DefaultAvatar(size: Constants.size30),
+                    ),
                     const SizedBox(width: Constants.spacingSmall),
                     Expanded(
                       child: Column(
@@ -138,7 +164,7 @@ class TrainingCenterCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            '• ${AppFunction.dateTimeCounter(trainingCenter.createdAt)}',
+                            '• ${AppFunction.dateTimeCounter(trainingCenter.createdAt, context)}',
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: isDark
                                   ? AppColors.darkTextSecondary

@@ -4,6 +4,7 @@ import 'package:kianja/core/shared/widgets/fields/text_input_field.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 
 class BirthDateField extends StatefulWidget {
   const BirthDateField({super.key, required this.birthDateController});
@@ -19,11 +20,12 @@ class _BirthDateFieldState extends State<BirthDateField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const LabelField(label: 'BIRTH DATE'),
+        LabelField(label: context.appLoc.birth_date.toUpperCase()),
         const SizedBox(height: Constants.spacingSmall),
         TextInputField(
           controller: widget.birthDateController,
-          hintText: 'Select date',
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          hintText: context.appLoc.select_date,
           readOnly: true,
           onTap: _selectDate,
           prefixIcon: const Icon(
@@ -31,6 +33,22 @@ class _BirthDateFieldState extends State<BirthDateField> {
             color: AppColors.icon,
             size: 20,
           ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return context.appLoc.please_select_birth_date;
+            }
+            final birthDate = DateTime.parse(value);
+            final today = DateTime.now();
+            int age = today.year - birthDate.year;
+            if (today.month < birthDate.month ||
+                (today.month == birthDate.month && today.day < birthDate.day)) {
+              age--;
+            }
+            if (age < 18) {
+              return context.appLoc.must_be_at_least_18;
+            }
+            return null;
+          },
         ),
       ],
     );

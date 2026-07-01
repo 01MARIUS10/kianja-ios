@@ -5,10 +5,17 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 
 class CameraImagePicker extends StatefulWidget {
-  const CameraImagePicker({super.key, required this.onImagePicked});
+  const CameraImagePicker({
+    super.key,
+    required this.onImagePicked,
+    this.hasServerPhoto = false,
+  });
+
   final void Function(File?) onImagePicked;
+  final bool hasServerPhoto;
 
   @override
   State<CameraImagePicker> createState() => _CameraImagePickerState();
@@ -83,7 +90,7 @@ class _CameraImagePickerState extends State<CameraImagePicker> {
               ListTile(
                 leading: const Icon(Icons.photo_library_outlined),
                 title: Text(
-                  'Choose from gallery',
+                  context.appLoc.choose_gallery,
                   style: theme.textTheme.bodyLarge,
                 ),
                 onTap: () {
@@ -93,20 +100,23 @@ class _CameraImagePickerState extends State<CameraImagePicker> {
               ),
               ListTile(
                 leading: const Icon(Icons.camera_alt_outlined),
-                title: Text('Take a photo', style: theme.textTheme.bodyLarge),
+                title: Text(
+                  context.appLoc.take_photo,
+                  style: theme.textTheme.bodyLarge,
+                ),
                 onTap: () {
                   context.pop();
                   _pickImage(ImageSource.camera);
                 },
               ),
-              if (_pickedImage != null)
+              if (_pickedImage != null || widget.hasServerPhoto)
                 ListTile(
                   leading: const Icon(
                     Icons.delete_outline,
                     color: AppColors.danger,
                   ),
                   title: Text(
-                    'Remove photo',
+                    context.appLoc.remove_photo,
                     style: theme.textTheme.bodyLarge?.copyWith(
                       color: AppColors.danger,
                     ),

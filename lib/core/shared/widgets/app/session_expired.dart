@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 
 class SessionExpired extends StatelessWidget {
   const SessionExpired({
@@ -79,7 +80,7 @@ class SessionExpired extends StatelessWidget {
                               ),
                             )
                           : Text(
-                              'Sign in',
+                              context.appLoc.sign_in,
                               style: theme.textTheme.bodyLarge?.copyWith(
                                 fontWeight: FontWeight.w600,
                               ),

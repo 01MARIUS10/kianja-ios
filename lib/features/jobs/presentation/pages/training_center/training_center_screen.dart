@@ -8,7 +8,8 @@ import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.da
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/constants.dart';
-import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_category.dart';
+import 'package:kianja/core/utils/extensions.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_domain.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center_filter.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center_hot_event.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
@@ -37,9 +38,9 @@ class _TrainingCenterScreenState extends State<TrainingCenterScreen>
   String? _recentError;
   bool _recentLoading = false;
 
-  List<JobCategory>? _categoryData;
-  String? _categoryError;
-  bool _categoryLoading = false;
+  List<JobDomain>? _domainData;
+  String? _domainError;
+  bool _domainLoading = false;
 
   @override
   bool get wantKeepAlive => true;
@@ -73,9 +74,9 @@ class _TrainingCenterScreenState extends State<TrainingCenterScreen>
           );
         }
       case 1:
-        if (_categoryData == null && _categoryError == null) {
+        if (_domainData == null && _domainError == null) {
           blocContext.read<JobsBloc>().add(
-            const GetTrainingCenterCategoriesRequested(),
+            const GetTrainingCenterDomainsRequested(),
           );
         }
     }
@@ -107,9 +108,9 @@ class _TrainingCenterScreenState extends State<TrainingCenterScreen>
                   _recentLoading = true;
                   _recentError = null;
                 }
-              } else if (_selectedIndex == 1 && _categoryData == null) {
-                _categoryLoading = true;
-                _categoryError = null;
+              } else if (_selectedIndex == 1 && _domainData == null) {
+                _domainLoading = true;
+                _domainError = null;
               }
             });
             return;
@@ -126,11 +127,11 @@ class _TrainingCenterScreenState extends State<TrainingCenterScreen>
               _recentLoading = false;
               _recentError = null;
             });
-          } else if (state is GetTrainingCenterCategoriesSuccess) {
+          } else if (state is GetTrainingCenterDomainsSuccess) {
             setState(() {
-              _categoryData = state.trainingCenterCategories;
-              _categoryLoading = false;
-              _categoryError = null;
+              _domainData = state.trainingCenterDomains;
+              _domainLoading = false;
+              _domainError = null;
             });
           } else if (state is JobsRequestFailure) {
             setState(() {
@@ -142,9 +143,9 @@ class _TrainingCenterScreenState extends State<TrainingCenterScreen>
                   _recentLoading = false;
                   _recentError = state.message;
                 }
-              } else if (_selectedIndex == 1 && _categoryData == null) {
-                _categoryLoading = false;
-                _categoryError = state.message;
+              } else if (_selectedIndex == 1 && _domainData == null) {
+                _domainLoading = false;
+                _domainError = state.message;
               }
             });
             // AppMessenger.showError(context, state.message);
@@ -191,7 +192,7 @@ class _TrainingCenterScreenState extends State<TrainingCenterScreen>
                               onTap: (index) => _onTabTap(blocContext, index),
                               tabs: [
                                 _buildFilterTab(
-                                  label: 'Actualites',
+                                  label: context.appLoc.actualities,
                                   index: 0,
                                   selected: _selectedIndex,
                                   theme: theme,
@@ -199,7 +200,7 @@ class _TrainingCenterScreenState extends State<TrainingCenterScreen>
                                   isDark: isDark,
                                 ),
                                 _buildFilterTab(
-                                  label: 'Categories',
+                                  label: context.appLoc.domains,
                                   index: 1,
                                   selected: _selectedIndex,
                                   theme: theme,
@@ -255,13 +256,13 @@ class _TrainingCenterScreenState extends State<TrainingCenterScreen>
                               children: [
                                 ...hotEvents.map(
                                   (e) => TrainingCenterHorizontalSection(
-                                    category: e.name,
+                                    domain: e.name,
                                     query: e.query,
                                     hotEvents: e.hotEvents,
                                   ),
                                 ),
                                 TrainingCenterVerticalSection(
-                                  category: trainingCenterFilter.name,
+                                  domain: trainingCenterFilter.name,
                                   query: trainingCenterFilter.query,
                                   trainingCenters:
                                       trainingCenterFilter.trainingCenters,
@@ -270,14 +271,14 @@ class _TrainingCenterScreenState extends State<TrainingCenterScreen>
                             ),
                       ),
                       // Tab 1 — Profession
-                      _buildCategoryContent(
+                      _builddomainContent(
                         blocContext: blocContext,
-                        isLoading: _categoryLoading,
-                        data: _categoryData,
-                        error: _categoryError,
+                        isLoading: _domainLoading,
+                        data: _domainData,
+                        error: _domainError,
                         onRetry: () {
                           blocContext.read<JobsBloc>().add(
-                            const GetTrainingCenterCategoriesRequested(),
+                            const GetTrainingCenterDomainsRequested(),
                           );
                         },
                       ),
@@ -340,10 +341,10 @@ class _TrainingCenterScreenState extends State<TrainingCenterScreen>
   }
 
   /// Renders the profession tab content (Job Categories).
-  Widget _buildCategoryContent({
+  Widget _builddomainContent({
     required BuildContext blocContext,
     required bool isLoading,
-    required List<JobCategory>? data,
+    required List<JobDomain>? data,
     required String? error,
     required VoidCallback onRetry,
   }) {
@@ -369,21 +370,21 @@ class _TrainingCenterScreenState extends State<TrainingCenterScreen>
       return TrainingCenterFilterScreen(
         onRefresh: () async {
           setState(() {
-            _categoryLoading = true;
-            _categoryData = null;
-            _categoryError = null;
+            _domainLoading = true;
+            _domainData = null;
+            _domainError = null;
           });
           blocContext.read<JobsBloc>().add(
-            const GetTrainingCenterCategoriesRequested(),
+            const GetTrainingCenterDomainsRequested(),
           );
         },
-        children: data.map((category) {
+        children: data.map((domain) {
           Widget iconWidget;
-          if (category.iconUrl.isEmpty) {
+          if (domain.icon.isEmpty) {
             iconWidget = Icon(Icons.work_outline, color: colorText);
           } else {
             iconWidget = CachedNetworkImage(
-              imageUrl: category.iconUrl,
+              imageUrl: domain.icon,
               width: 24,
               height: 24,
               errorWidget: (context, url, error) =>
@@ -398,7 +399,7 @@ class _TrainingCenterScreenState extends State<TrainingCenterScreen>
             child: ListTile(
               contentPadding: EdgeInsets.zero,
               leading: iconWidget,
-              title: Text(category.name, style: theme.textTheme.titleSmall),
+              title: Text(domain.name, style: theme.textTheme.titleSmall),
               trailing: Icon(
                 Icons.chevron_right,
                 color: isDark
@@ -406,12 +407,10 @@ class _TrainingCenterScreenState extends State<TrainingCenterScreen>
                     : AppColors.lightTextSecondary,
               ),
               onTap: () {
-                context.goNamed(
-                  Routes.jobApplicantViewAll.name,
-                  extra: {
-                    'title': category.name,
-                    'query': 'category_id=${category.id}',
-                  },
+                context.pushNamed(
+                  Routes.trainingCenterViewDomain.name,
+                  pathParameters: {'id': domain.id.toString()},
+                  extra: {'domain': domain.name},
                 );
               },
             ),

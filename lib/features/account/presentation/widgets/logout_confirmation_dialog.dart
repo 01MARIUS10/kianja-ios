@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 
 class LogoutConfirmationDialog extends StatelessWidget {
   const LogoutConfirmationDialog({
@@ -34,7 +35,7 @@ class LogoutConfirmationDialog extends StatelessWidget {
           children: [
             const SizedBox(height: Constants.spacingSmall),
             Text(
-              'Logout ?',
+              context.appLoc.logout_question,
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -42,7 +43,7 @@ class LogoutConfirmationDialog extends StatelessWidget {
             ),
             const SizedBox(height: Constants.spacingMedium),
             Text(
-              'Do you really want to logout ?',
+              context.appLoc.really_want_logout,
               style: theme.textTheme.bodyLarge?.copyWith(
                 fontWeight: FontWeight.w500,
               ),
@@ -80,7 +81,7 @@ class LogoutConfirmationDialog extends StatelessWidget {
                               ),
                             )
                           : Text(
-                              'Ok',
+                              context.appLoc.ok,
                               style: theme.textTheme.bodyLarge?.copyWith(
                                 fontWeight: FontWeight.w600,
                               ),
@@ -105,7 +106,7 @@ class LogoutConfirmationDialog extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        'Cancel',
+                        context.appLoc.cancel,
                         style: theme.textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.w600,
                         ),

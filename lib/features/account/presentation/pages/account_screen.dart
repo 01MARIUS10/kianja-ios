@@ -10,6 +10,7 @@ import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/account/presentation/bloc/account_bloc.dart';
 import 'package:kianja/features/account/presentation/widgets/account_menu/account_menu_accordion_item.dart';
 import 'package:kianja/features/account/presentation/widgets/account_menu/account_menu_card.dart';
@@ -29,7 +30,7 @@ class AccountScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => GetIt.instance<AccountBloc>(),
       child: BaseScreen(
-        appBar: const TitleHeader(title: 'Account'),
+        appBar: TitleHeader(title: context.appLoc.account),
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(Constants.paddingMedium),
           child: Column(
@@ -127,7 +128,7 @@ class AccountScreen extends StatelessWidget {
                 children: [
                   AccountMenuItem(
                     icon: Icons.person_outline,
-                    label: 'Personal Info',
+                    label: context.appLoc.personal_info,
                     iconColor: AppColors.warning,
                     onTap: () {
                       context.goNamed(Routes.personalInfo.name);
@@ -137,49 +138,54 @@ class AccountScreen extends StatelessWidget {
               ),
 
               // Card 2: General Settings
-              const AccountMenuCard(
+              AccountMenuCard(
                 children: [
                   AccountMenuImageItem(
                     asset: Assets.kara,
                     label: 'KARA',
                     iconColor: Colors.green,
+                    onTap: () {
+                      context.goNamed(Routes.kara.name);
+                    },
                   ),
-                  AccountMenuItem(
-                    icon: Icons.bookmark_outline,
-                    label: 'Saved',
-                    iconColor: Colors.blueGrey,
-                  ),
-                  AccountMenuItem(
-                    icon: Icons.notifications_none_outlined,
-                    label: 'Notifications',
-                    iconColor: AppColors.warning,
-                  ),
-                  AccountMenuAccordionItem(iconColor: Colors.green),
+                  // AccountMenuItem(
+                  //   icon: Icons.bookmark_outline,
+                  //   label: 'Saved',
+                  //   iconColor: Colors.blueGrey,
+                  // ),
+                  // AccountMenuItem(
+                  //   icon: Icons.notifications_none_outlined,
+                  //   label: 'Notifications',
+                  //   iconColor: AppColors.warning,
+                  // ),
+                  const AccountMenuAccordionItem(iconColor: Colors.green),
                 ],
               ),
 
               // Card 3: Account Settings
               AccountMenuCard(
                 children: [
-                  const AccountMenuItem(
+                  AccountMenuItem(
                     icon: Icons.help_outline,
-                    label: 'Privacy',
+                    label: context.appLoc.terms_use,
                     iconColor: AppColors.warning,
+                    onTap: () {
+                      context.pushNamed(Routes.termsOfUse.name);
+                    },
                   ),
                   AccountMenuItem(
                     icon: Icons.view_comfy_alt_outlined,
-                    label: 'Change password',
+                    label: context.appLoc.change_password,
                     iconColor: Colors.cyan,
                     onTap: () {
-                      // context.go('${Routes.account}/${Routes.changePassword}');
                       context.goNamed(Routes.changePassword.name);
                     },
                   ),
-                  const AccountMenuItem(
-                    icon: Icons.settings_outlined,
-                    label: 'Delete account',
-                    iconColor: Colors.indigo,
-                  ),
+                  // const AccountMenuItem(
+                  //   icon: Icons.settings_outlined,
+                  //   label: 'Delete account',
+                  //   iconColor: Colors.indigo,
+                  // ),
                 ],
               ),
 
@@ -207,7 +213,7 @@ class AccountScreen extends StatelessWidget {
                     children: [
                       AccountMenuItem(
                         icon: Icons.logout,
-                        label: 'Log Out',
+                        label: context.appLoc.logout,
                         iconColor: AppColors.danger,
                         onTap: () {
                           showDialog(

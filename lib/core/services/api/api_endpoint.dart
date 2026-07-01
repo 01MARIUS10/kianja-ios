@@ -4,16 +4,22 @@ enum ApiEndpoint {
   logout(path: '/api/auth/logout/'),
   changePassword(path: '/api/auth/change-password/'),
   register(path: '/api/auth/register/'),
+  profilPhoto(path: '/api/profil/photo/'),
 
   // ============= Users =============
   profile(path: '/api/profil/'),
-  profileFakaHistorique(path: '/api/profil/faka/historique/'),
+  karaHistory(path: '/api/kara/historique'),
 
   // ============= Job offers =============
   jobOffer(path: '/api/job-offers/'),
 
   // ============= Job applicants =============
   jobApplicant(path: '/api/job-applicants/'),
+
+  // ============= App =============
+  getUpdate(path: '/api/app/getUpdate/'),
+  appVersions(path: '/api/app/versions/'),
+  cgu(path: '/cgu'),
 
   // ============= Training center =============
   trainingCenter(path: '/api/training-centers/');

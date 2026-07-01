@@ -4,40 +4,50 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/usecase/no_params.dart';
+import 'package:kianja/features/jobs/domain/entities/expert_executive/expert_executive.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_image.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_pdf.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_filter.dart';
-import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_plan.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_zone.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer_filter.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_category.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_domain.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/price_plan.dart';
 import 'package:kianja/features/jobs/domain/entities/training/hot_event.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center_filter.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center_hot_event.dart';
-import 'package:kianja/features/jobs/domain/entities/training/training_center_view_all_category.dart';
+import 'package:kianja/features/jobs/domain/entities/training/training_center_view_all_domain.dart';
+import 'package:kianja/features/jobs/domain/usecases/create_hot_event/create_hot_event_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/create_hot_event/create_hot_event_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_usecase.dart';
-import 'package:kianja/features/jobs/domain/usecases/create_job_offer_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/create_job_offer/create_job_offer_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/create_job_offer/create_job_offer_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/create_training_center/create_training_center_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/create_training_center/create_training_center_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_filters_usecase.dart';
-import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_plan_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_professions_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_zone_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_features_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_offer_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_offers_group_by_usecase.dart';
-import 'package:kianja/features/jobs/domain/usecases/get_training_center_categories_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_price_plan/get_price_plan_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_price_plan/get_price_plan_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_detail_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_training_center_domains_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_filter_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_hot_event_usecase.dart';
-import 'package:kianja/features/jobs/domain/usecases/get_training_center_view_category_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_training_center_view_domain_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/subscribe_expert_executive_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/subscribe_expert_executive_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/upload_image_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/upload_pdf_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_hot_event_usecase.dart';
@@ -64,18 +74,20 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     required GetJobApplicantProfessionsUseCase
     getJobApplicantProfessionsUseCase,
     required GetJobApplicantFiltersUseCase getJobApplicantFiltersUseCase,
-    required GetJobApplicantPlanUsecase getJobApplicantPlanUsecase,
+    required GetPricePlanUsecase getPricePlanUsecase,
     required CreateJobApplicantUseCase createJobApplicantUseCase,
-    required GetTrainingCenterCategoriesUseCase
-    getTrainingCenterCategoriesUseCase,
+    required GetTrainingCenterDomainsUseCase getTrainingCenterDomainsUseCase,
     required GetTrainingCenterFilterUseCase getTrainingCenterFilterUseCase,
     required GetTrainingCenterHotEventUseCase getTrainingCenterHotEventUseCase,
     required ViewAllHotEventUseCase viewAllHotEventUseCase,
     required ViewAllTrainingCenterUseCase viewAllTrainingCenterUseCase,
     required GetHotEventDetailUseCase getHotEventDetailUseCase,
     required GetTrainingCenterDetailUseCase getTrainingCenterDetailUseCase,
-    required GetTrainingCenterViewCategoryUseCase
-    getTrainingCenterViewCategoryUseCase,
+    required GetTrainingCenterViewDomainUseCase
+    getTrainingCenterViewDomainUseCase,
+    required CreateTrainingCenterUseCase createTrainingCenterUseCase,
+    required SubscribeExpertExecutiveUseCase subscribeExpertExecutiveUseCase,
+    required CreateHotEventUseCase createHotEventUseCase,
   }) : _getJobOffersGroupByUseCase = getJobOffersGroupByUseCase,
        _viewAllJobOffersUseCase = viewAllJobOffersUseCase,
        _uploadPdfUseCase = uploadPdfUseCase,
@@ -88,17 +100,19 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
        _viewAllJobApplicantsUseCase = viewAllJobApplicantsUseCase,
        _getJobApplicantProfessionsUseCase = getJobApplicantProfessionsUseCase,
        _getJobApplicantFiltersUseCase = getJobApplicantFiltersUseCase,
-       _getJobApplicantPlanUsecase = getJobApplicantPlanUsecase,
+       _getPricePlanUsecase = getPricePlanUsecase,
        _createJobApplicantUseCase = createJobApplicantUseCase,
-       _getTrainingCenterCategoriesUseCase = getTrainingCenterCategoriesUseCase,
+       _getTrainingCenterDomainsUseCase = getTrainingCenterDomainsUseCase,
        _getTrainingCenterFilterUseCase = getTrainingCenterFilterUseCase,
        _getTrainingCenterHotEventUseCase = getTrainingCenterHotEventUseCase,
        _viewAllHotEventUseCase = viewAllHotEventUseCase,
        _viewAllTrainingCenterUseCase = viewAllTrainingCenterUseCase,
        _getHotEventDetailUseCase = getHotEventDetailUseCase,
        _getTrainingCenterDetailUseCase = getTrainingCenterDetailUseCase,
-       _getTrainingCenterViewCategoryUseCase =
-           getTrainingCenterViewCategoryUseCase,
+       _getTrainingCenterViewDomainUseCase = getTrainingCenterViewDomainUseCase,
+       _createTrainingCenterUseCase = createTrainingCenterUseCase,
+       _subscribeExpertExecutiveUseCase = subscribeExpertExecutiveUseCase,
+       _createHotEventUseCase = createHotEventUseCase,
        super(JobsInitial()) {
     on<JobsGroupByTypeFetchRequested>(_onGroupByTypeFetchRequested);
     on<JobsGroupByDateFetchRequested>(_onGroupByDateFetchRequested);
@@ -106,6 +120,7 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     on<JobsViewAllFetchRequested>(_onViewAllFetchRequested);
     on<JobsUploadPdfRequested>(_onUploadPdfRequested);
     on<JobsUploadImageRequested>(_onUploadImageRequested);
+    on<JobsUploadMultipleImagesRequested>(_onUploadMultipleImagesRequested);
     on<JobsCreateJobOfferRequested>(_onCreateJobOfferRequested);
     on<JobsGetJobOfferDetailRequested>(_onGetJobOfferDetailRequested);
     on<JobsGetJobApplicantDetailRequested>(_onGetJobApplicantDetailRequested);
@@ -118,11 +133,9 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
       _onJobApplicantProfessionsFetchRequested,
     );
     on<JobApplicantFiltersFetchRequested>(_onJobApplicantFiltersFetchRequested);
-    on<JobsGetJobApplicantPlanRequested>(_onJobsGetJobApplicantPlanRequested);
+    on<JobsGetPricePlanRequested>(_onJobsGetPricePlanRequested);
     on<JobCreateJobApplicantRequested>(_onJobCreateJobApplicantRequested);
-    on<GetTrainingCenterCategoriesRequested>(
-      _onGetTrainingCenterCategoriesRequested,
-    );
+    on<GetTrainingCenterDomainsRequested>(_onGetTrainingCenterDomainsRequested);
     on<GetTrainingCenterFilterRequested>(_onGetTrainingCenterFilterRequested);
     on<GetTrainingCenterHotEventRequested>(
       _onGetTrainingCenterHotEventRequested,
@@ -131,9 +144,12 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     on<ViewAllTrainingCentersRequested>(_onViewAllTrainingCentersRequested);
     on<GetHotEventDetailRequested>(_onGetHotEventDetailRequested);
     on<GetTrainingCenterDetailRequested>(_onGetTrainingCenterDetailRequested);
-    on<GetTrainingCenterViewCategoryRequested>(
-      _onGetTrainingCenterViewCategoryRequested,
+    on<GetTrainingCenterViewDomainRequested>(
+      _onGetTrainingCenterViewDomainRequested,
     );
+    on<CreateTrainingCenterRequested>(_onCreateTrainingCenterRequested);
+    on<SubscribeExpertExecutiveRequested>(_onSubscribeExpertExecutiveRequested);
+    on<CreateHotEventRequested>(_onCreateHotEventRequested);
   }
 
   final GetJobOffersGroupByUseCase _getJobOffersGroupByUseCase;
@@ -148,17 +164,68 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
   final ViewAllJobApplicantsUseCase _viewAllJobApplicantsUseCase;
   final GetJobApplicantProfessionsUseCase _getJobApplicantProfessionsUseCase;
   final GetJobApplicantFiltersUseCase _getJobApplicantFiltersUseCase;
-  final GetJobApplicantPlanUsecase _getJobApplicantPlanUsecase;
+  final GetPricePlanUsecase _getPricePlanUsecase;
   final CreateJobApplicantUseCase _createJobApplicantUseCase;
-  final GetTrainingCenterCategoriesUseCase _getTrainingCenterCategoriesUseCase;
+  final GetTrainingCenterDomainsUseCase _getTrainingCenterDomainsUseCase;
   final GetTrainingCenterFilterUseCase _getTrainingCenterFilterUseCase;
   final GetTrainingCenterHotEventUseCase _getTrainingCenterHotEventUseCase;
   final ViewAllHotEventUseCase _viewAllHotEventUseCase;
   final ViewAllTrainingCenterUseCase _viewAllTrainingCenterUseCase;
   final GetHotEventDetailUseCase _getHotEventDetailUseCase;
   final GetTrainingCenterDetailUseCase _getTrainingCenterDetailUseCase;
-  final GetTrainingCenterViewCategoryUseCase
-  _getTrainingCenterViewCategoryUseCase;
+  final GetTrainingCenterViewDomainUseCase _getTrainingCenterViewDomainUseCase;
+  final CreateTrainingCenterUseCase _createTrainingCenterUseCase;
+  final SubscribeExpertExecutiveUseCase _subscribeExpertExecutiveUseCase;
+  final CreateHotEventUseCase _createHotEventUseCase;
+
+  Future<void> _onCreateHotEventRequested(
+    CreateHotEventRequested event,
+    Emitter<JobsState> emit,
+  ) async {
+    emit(JobsRequestInProgress());
+    final result = await _createHotEventUseCase(event.createHotEventParams);
+    result.fold(
+      (failure) => emit(JobsRequestFailure(message: failure.message)),
+      (hotEvent) => emit(CreateHotEventSuccess(hotEvent: hotEvent)),
+    );
+  }
+
+  Future<void> _onSubscribeExpertExecutiveRequested(
+    SubscribeExpertExecutiveRequested event,
+    Emitter<JobsState> emit,
+  ) async {
+    AppDebug.showPrint('Bloc Jobs - Subscribe expert executive request');
+
+    emit(JobsRequestInProgress());
+    final result = await _subscribeExpertExecutiveUseCase(
+      event.subscribeExpertExecutiveParams,
+    );
+    result.fold(
+      (failure) => emit(JobsRequestFailure(message: failure.message)),
+      (subscribeExpertExecutive) => emit(
+        SubscribeExpertExecutiveSuccess(
+          expertExecutive: subscribeExpertExecutive,
+        ),
+      ),
+    );
+  }
+
+  Future<void> _onCreateTrainingCenterRequested(
+    CreateTrainingCenterRequested event,
+    Emitter<JobsState> emit,
+  ) async {
+    AppDebug.showPrint('Bloc Jobs - Create training center request');
+
+    emit(JobsRequestInProgress());
+    final result = await _createTrainingCenterUseCase(
+      event.createtrainingCenterParams,
+    );
+    result.fold(
+      (failure) => emit(JobsRequestFailure(message: failure.message)),
+      (trainingCenter) =>
+          emit(JobsCreateTrainingCenterSuccess(trainingCenter: trainingCenter)),
+    );
+  }
 
   Future<void> _onGetHotEventDetailRequested(
     GetHotEventDetailRequested event,
@@ -177,19 +244,19 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     );
   }
 
-  Future<void> _onGetTrainingCenterViewCategoryRequested(
-    GetTrainingCenterViewCategoryRequested event,
+  Future<void> _onGetTrainingCenterViewDomainRequested(
+    GetTrainingCenterViewDomainRequested event,
     Emitter<JobsState> emit,
   ) async {
-    AppDebug.showPrint('Bloc Jobs - Training center view category request');
+    AppDebug.showPrint('Bloc Jobs - Training center view Domain request');
 
     emit(JobsRequestInProgress());
-    final result = await _getTrainingCenterViewCategoryUseCase(event.params);
+    final result = await _getTrainingCenterViewDomainUseCase(event.params);
     result.fold(
       (failure) => emit(JobsRequestFailure(message: failure.message)),
-      (trainingCenterViewCategory) => emit(
-        GetTrainingCenterViewCategorySuccess(
-          trainingCenterViewCategory: trainingCenterViewCategory,
+      (trainingCenterViewDomain) => emit(
+        GetTrainingCenterViewDomainSuccess(
+          trainingCenterViewDomain: trainingCenterViewDomain,
         ),
       ),
     );
@@ -288,19 +355,19 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     );
   }
 
-  Future<void> _onGetTrainingCenterCategoriesRequested(
-    GetTrainingCenterCategoriesRequested event,
+  Future<void> _onGetTrainingCenterDomainsRequested(
+    GetTrainingCenterDomainsRequested event,
     Emitter<JobsState> emit,
   ) async {
-    AppDebug.showPrint('Bloc Jobs - Training center categories request');
+    AppDebug.showPrint('Bloc Jobs - Training center domains request');
 
     emit(JobsRequestInProgress());
-    final result = await _getTrainingCenterCategoriesUseCase(NoParams());
+    final result = await _getTrainingCenterDomainsUseCase(NoParams());
     result.fold(
       (failure) => emit(JobsRequestFailure(message: failure.message)),
-      (trainingCenterCategories) => emit(
-        GetTrainingCenterCategoriesSuccess(
-          trainingCenterCategories: trainingCenterCategories,
+      (trainingCenterDomains) => emit(
+        GetTrainingCenterDomainsSuccess(
+          trainingCenterDomains: trainingCenterDomains,
         ),
       ),
     );
@@ -460,17 +527,15 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     );
   }
 
-  Future<void> _onJobsGetJobApplicantPlanRequested(
-    JobsGetJobApplicantPlanRequested event,
+  Future<void> _onJobsGetPricePlanRequested(
+    JobsGetPricePlanRequested event,
     Emitter<JobsState> emit,
   ) async {
     emit(JobsRequestInProgress());
-    final result = await _getJobApplicantPlanUsecase(NoParams());
+    final result = await _getPricePlanUsecase(event.getPricePlanParams);
     result.fold(
       (failure) => emit(JobsRequestFailure(message: failure.message)),
-      (jobApplicantPlans) => emit(
-        JobsGetJobApplicantPlanSuccess(jobApplicantPlans: jobApplicantPlans),
-      ),
+      (pricePlans) => emit(JobsGetPricePlanSuccess(pricePlans: pricePlans)),
     );
   }
 
@@ -530,24 +595,36 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     );
   }
 
+  Future<void> _onUploadMultipleImagesRequested(
+    JobsUploadMultipleImagesRequested event,
+    Emitter<JobsState> emit,
+  ) async {
+    emit(JobsRequestInProgress());
+    final List<JobImage> uploadedImages = [];
+
+    for (final file in event.files) {
+      final result = await _uploadImageUseCase(UploadImageParams(file: file));
+
+      // If one fails, we can either stop or continue. Stopping is safer to avoid incomplete submissions.
+      if (result.isLeft()) {
+        final failure = result.fold((l) => l, (r) => throw Exception());
+        emit(JobsRequestFailure(message: failure.message));
+        return;
+      }
+
+      final jobImage = result.fold((l) => throw Exception(), (r) => r);
+      uploadedImages.add(jobImage);
+    }
+
+    emit(JobsUploadMultipleImagesSuccess(jobImages: uploadedImages));
+  }
+
   Future<void> _onCreateJobOfferRequested(
     JobsCreateJobOfferRequested event,
     Emitter<JobsState> emit,
   ) async {
     emit(JobsRequestInProgress());
-    final result = await _createJobOfferUseCase(
-      CreateJobOfferParams(
-        title: event.title,
-        imageId: event.imageId,
-        description: event.description,
-        categories: event.categories,
-        location: event.location,
-        gender: event.gender,
-        actor: event.actor,
-        limitDate: event.limitDate,
-        status: event.status,
-      ),
-    );
+    final result = await _createJobOfferUseCase(event.createJobOfferParams);
     result.fold(
       (failure) => emit(JobsRequestFailure(message: failure.message)),
       (jobOffer) => emit(JobsCreateJobOfferSuccess(jobOffer: jobOffer)),

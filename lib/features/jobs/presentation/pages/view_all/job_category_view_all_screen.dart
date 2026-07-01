@@ -7,7 +7,6 @@ import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/error_screen/no_connection_screen.dart';
 import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
-import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/features/jobs/presentation/widgets/enum/width_view_enum.dart';
@@ -34,7 +33,7 @@ class JobCategoryViewAllScreen extends StatelessWidget {
         child: BlocConsumer<JobsBloc, JobsState>(
           listener: (context, state) {
             if (state is JobsViewAllFetchSuccess) {
-              AppMessenger.showSuccess(context, 'View All Fetch Success');
+              // AppMessenger.showSuccess(context, 'View All Fetch Success');
             } else if (state is JobsRequestFailure) {
               // AppMessenger.showError(context, state.message);
             }

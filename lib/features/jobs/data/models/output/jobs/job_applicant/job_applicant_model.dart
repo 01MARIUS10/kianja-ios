@@ -18,7 +18,7 @@ abstract class JobApplicantModel
     @JsonKey(defaultValue: '') required String motivation,
     required JobLocationModel location,
     JobGenderModel? gender,
-    @JsonKey(name: 'resumepdf_path', defaultValue: '') required String pdfUrl,
+    @JsonKey(name: 'resumepdf_path') String? pdfUrl,
     @JsonKey(name: 'created_at', defaultValue: '') required String createdAt,
     required UserModel user,
     JobCategoryModel? category,

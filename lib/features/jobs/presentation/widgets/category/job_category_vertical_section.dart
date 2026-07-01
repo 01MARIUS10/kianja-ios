@@ -3,6 +3,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/jobs/presentation/widgets/enum/width_view_enum.dart';
 import 'package:kianja/features/jobs/presentation/widgets/item/card/job_offer_card.dart';
@@ -105,7 +106,7 @@ class JobCategoryVerticalSection extends StatelessWidget {
               );
             },
             child: Text(
-              'Voir plus',
+              context.appLoc.view_more,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),

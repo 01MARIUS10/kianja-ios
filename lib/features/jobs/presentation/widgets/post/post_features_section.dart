@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/themes/app_colors.dart';
+import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
-import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_plan.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_duration.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_type.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/price_plan.dart';
 
 class PostFeaturesSection extends StatefulWidget {
   const PostFeaturesSection({
@@ -13,11 +15,13 @@ class PostFeaturesSection extends StatefulWidget {
     required this.onPlanSelected,
     this.onPost,
     this.isLoading = false,
+    this.postButtonLabel = 'POST',
   });
-  final List<JobApplicantPlan> plans;
-  final ValueChanged<JobApplicantPlan?> onPlanSelected;
+  final List<PricePlan> plans;
+  final ValueChanged<PricePlan?> onPlanSelected;
   final VoidCallback? onPost;
   final bool isLoading;
+  final String postButtonLabel;
 
   @override
   State<PostFeaturesSection> createState() => _PostFeaturesSectionState();
@@ -26,7 +30,7 @@ class PostFeaturesSection extends StatefulWidget {
 class _PostFeaturesSectionState extends State<PostFeaturesSection> {
   JobType? _selectedType;
   JobDuration? _selectedDuration;
-  JobApplicantPlan? _selectedPlan;
+  PricePlan? _selectedPlan;
 
   @override
   void initState() {
@@ -119,13 +123,13 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Post features',
+          context.appLoc.post_features,
           style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 16),
         _buildFeatureRow(
           context,
-          label: 'Type :',
+          label: '${context.appLoc.type} :',
           children: _distinctTypes.map((type) {
             final isSelected = _selectedType?.id == type.id;
             return InkWell(
@@ -155,7 +159,7 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
         const SizedBox(height: 12),
         _buildFeatureRow(
           context,
-          label: 'Duration :',
+          label: '${context.appLoc.duration} :',
           children: _availableDurations.map((duration) {
             final isSelected = _selectedDuration?.id == duration.id;
             return InkWell(
@@ -185,7 +189,7 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
         const SizedBox(height: 12),
         Row(
           children: [
-            Text('Price : ', style: textTheme.bodyMedium),
+            Text('${context.appLoc.price} : ', style: textTheme.bodyMedium),
             const SizedBox(width: 8),
             Image.asset(
               Assets.kara,
@@ -197,7 +201,9 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
             ),
             const SizedBox(width: 4),
             Text(
-              _selectedPlan != null ? _selectedPlan!.price.toString() : '-',
+              _selectedPlan != null
+                  ? AppFunction.formatNumberWithSpaces(_selectedPlan!.price)
+                  : '-',
               style: textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -216,7 +222,7 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
                 : Text(
-                    'POST',
+                    widget.postButtonLabel,
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       letterSpacing: 1.2,

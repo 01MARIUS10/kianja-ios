@@ -32,6 +32,7 @@ abstract class AppColors {
   static const Color darkBorderStrong = Color(0xFF404050);
 
   // ================= SEMANTIC =================
+  static const Color endEvent = Color(0xFF00901C);
   static const Color success = Color(0xFF25D366);
   static const Color warning = Color(0xFFF97316);
   static const Color danger = Color(0xFFEF4444);

@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
+import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
 import 'package:kianja/core/shared/widgets/avatar/default_avatar.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/fields/label_field.dart';
@@ -17,6 +20,7 @@ import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/account/domain/usecases/upate_user_info/update_user_info_params.dart';
 import 'package:kianja/features/account/presentation/bloc/account_bloc.dart';
 import 'package:kianja/features/account/presentation/widgets/camera_image_picker.dart';
@@ -70,6 +74,54 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
     super.dispose();
   }
 
+  void _onImagePicked(BuildContext context, File? file, User user) {
+    if (file != null) {
+      setState(() => _pickedImage = file);
+      BlocProvider.of<AccountBloc>(
+        context,
+      ).add(AccountProfilPhotoUploadRequested(file: XFile(file.path)));
+      return;
+    }
+
+    if (_pickedImage != null) {
+      setState(() => _pickedImage = null);
+      return;
+    }
+
+    if (user.photoUrl.isNotEmpty) {
+      BlocProvider.of<AccountBloc>(
+        context,
+      ).add(const AccountProfilPhotoDeleteRequested());
+    }
+  }
+
+  void _onProfilPhotoStateChanged(BuildContext context, AccountState state) {
+    if (state is AccountProfilPhotoUploadSuccess) {
+      BlocProvider.of<AppBloc>(context).add(const AppUserLoaded());
+      AppMessenger.showSuccess(context, 'Photo updated successfully');
+    } else if (state is AccountProfilPhotoDeleteSuccess) {
+      final user = BlocProvider.of<AppBloc>(context).state.user;
+      BlocProvider.of<AppBloc>(context).add(
+        AppUserUpdated(
+          user: User(
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            photoUrl: '',
+            phone: user.phone,
+            email: user.email,
+            residence: user.residence,
+            createdAt: user.createdAt,
+          ),
+        ),
+      );
+      AppMessenger.showSuccess(context, 'Photo removed successfully');
+    } else if (state is AccountRequestFailure) {
+      setState(() => _pickedImage = null);
+      AppMessenger.showError(context, state.message);
+    }
+  }
+
   // ── Save ──────────────────────────────────────────────────────────
   void _onSave(BuildContext context) {
     final firstName = _firstNameController.text.trim();
@@ -84,6 +136,9 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
     }
     AppDebug.showPrint('residence: $residence');
 
+    final photo = BlocProvider.of<AppBloc>(context).state.user.photoUrl;
+    AppDebug.showPrint('photo: $photo');
+
     BlocProvider.of<AccountBloc>(context).add(
       AccountUpdateUserInfoRequested(
         updateUserInfoParams: UpdateUserInfoParams(
@@ -92,7 +147,7 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
           email: email,
           residence: residence,
           pseudo: pseudo,
-          photo: '',
+          photo: photo,
         ),
       ),
     );
@@ -110,7 +165,7 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
         builder: (context, state) {
           final user = state.user;
           return BaseScreen(
-            appBar: const TitleHeader(title: 'Edit profile'),
+            appBar: TitleHeader(title: context.appLoc.edit_profile),
             child: SingleChildScrollView(
               padding: const EdgeInsets.fromLTRB(
                 Constants.paddingMedium,
@@ -124,59 +179,97 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
                   const SizedBox(height: Constants.spacingMedium),
 
                   // ── Avatar with camera badge ───────────────────────
-                  Center(
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        // Avatar circle
-                        Container(
-                          width: Constants.size100,
-                          height: Constants.size100,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: isDark
-                                  ? AppColors.darkBorder
-                                  : AppColors.lightBorder,
-                              width: 2,
-                            ),
-                          ),
-                          child: ClipOval(
-                            child: _pickedImage != null
-                                ? Image.file(
-                                    _pickedImage!,
-                                    fit: BoxFit.cover,
-                                    width: Constants.size100,
-                                    height: Constants.size100,
-                                  )
-                                : user.photoUrl.isNotEmpty
-                                ? Image.network(
-                                    user.photoUrl,
-                                    fit: BoxFit.cover,
-                                    width: Constants.size100,
-                                    height: Constants.size100,
-                                    errorBuilder: (_, _, _) =>
-                                        const DefaultAvatar(),
-                                  )
-                                : const DefaultAvatar(),
-                          ),
-                        ),
+                  BlocConsumer<AccountBloc, AccountState>(
+                    listenWhen: (previous, current) =>
+                        current is AccountProfilPhotoUploadSuccess ||
+                        current is AccountProfilPhotoDeleteSuccess ||
+                        (current is AccountRequestFailure &&
+                            previous is AccountProfilPhotoRequestInProgress),
+                    listener: _onProfilPhotoStateChanged,
+                    buildWhen: (_, current) =>
+                        current is AccountProfilPhotoRequestInProgress ||
+                        current is AccountProfilPhotoUploadSuccess ||
+                        current is AccountProfilPhotoDeleteSuccess ||
+                        current is AccountInitial,
+                    builder: (context, photoState) {
+                      final isPhotoLoading =
+                          photoState is AccountProfilPhotoRequestInProgress;
 
-                        // Camera badge
-                        CameraImagePicker(
-                          onImagePicked: (file) {
-                            setState(() {
-                              _pickedImage = file;
-                            });
-                          },
+                      return Center(
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Container(
+                              width: Constants.size100,
+                              height: Constants.size100,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: isDark
+                                      ? AppColors.darkBorder
+                                      : AppColors.lightBorder,
+                                  width: 2,
+                                ),
+                              ),
+                              child: ClipOval(
+                                child: _pickedImage != null
+                                    ? Image.file(
+                                        _pickedImage!,
+                                        fit: BoxFit.cover,
+                                        width: Constants.size100,
+                                        height: Constants.size100,
+                                      )
+                                    : user.photoUrl.isNotEmpty
+                                    ? Image.network(
+                                        '${EnvConfig.baseApiUrl}${user.photoUrl}',
+                                        fit: BoxFit.cover,
+                                        width: Constants.size100,
+                                        height: Constants.size100,
+                                        errorBuilder: (_, _, _) =>
+                                            const DefaultAvatar(),
+                                      )
+                                    : const DefaultAvatar(),
+                              ),
+                            ),
+                            if (isPhotoLoading)
+                              Positioned(
+                                left: 0,
+                                top: 0,
+                                child: Container(
+                                  width: Constants.size100,
+                                  height: Constants.size100,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.black26,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: const Center(
+                                    child: SizedBox(
+                                      height: 24,
+                                      width: 24,
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                        strokeWidth: 2,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            CameraImagePicker(
+                              hasServerPhoto:
+                                  user.photoUrl.isNotEmpty &&
+                                  _pickedImage == null,
+                              onImagePicked: (file) =>
+                                  _onImagePicked(context, file, user),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
                   const SizedBox(height: Constants.spacingLarge),
 
                   // ── FIRST NAME ─────────────────────────────────────
-                  const LabelField(label: 'FIRST NAME'),
+                  LabelField(label: context.appLoc.first_name.toUpperCase()),
                   const SizedBox(height: Constants.spacingSmall),
                   TextInputField(
                     controller: _firstNameController,
@@ -186,7 +279,7 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
                   const SizedBox(height: Constants.spacingMedium),
 
                   // ── LAST NAME ──────────────────────────────────────
-                  const LabelField(label: 'LAST NAME'),
+                  LabelField(label: context.appLoc.last_name.toUpperCase()),
                   const SizedBox(height: Constants.spacingSmall),
                   TextInputField(
                     controller: _lastNameController,
@@ -196,7 +289,7 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
                   const SizedBox(height: Constants.spacingMedium),
 
                   // ── EMAIL ──────────────────────────────────────────
-                  const LabelField(label: 'EMAIL'),
+                  LabelField(label: context.appLoc.email.toUpperCase()),
                   const SizedBox(height: Constants.spacingSmall),
                   TextInputField(
                     controller: _emailController,
@@ -206,13 +299,13 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
                   const SizedBox(height: Constants.spacingMedium),
 
                   // ── PHONE ──────────────────────────────────────────
-                  const LabelField(label: 'PHONE'),
+                  LabelField(label: context.appLoc.phone),
                   const SizedBox(height: Constants.spacingSmall),
                   GestureDetector(
                     onTap: () {
                       AppMessenger.showInfo(
                         context,
-                        'Phone number cannot be changed',
+                        context.appLoc.phone_number_cannot_be_changed,
                       );
                     },
                     child: PhoneInputField(
@@ -229,6 +322,10 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
 
                   // ── SAVE button ────────────────────────────────────
                   BlocConsumer<AccountBloc, AccountState>(
+                    listenWhen: (previous, current) =>
+                        current is AccountUpdateUserInfoSuccess ||
+                        (current is AccountRequestFailure &&
+                            previous is AccountRequestInProgress),
                     listener: (context, state) {
                       if (state is AccountUpdateUserInfoSuccess) {
                         BlocProvider.of<AppBloc>(
@@ -261,7 +358,7 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
                                   ),
                                 )
                               : Text(
-                                  'SAVE',
+                                  context.appLoc.save.toUpperCase(),
                                   style: theme.textTheme.titleMedium?.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),

@@ -19,10 +19,43 @@ class AccountChangePasswordRequested extends AccountEvent {
   List<Object> get props => [changePasswordParams];
 }
 
+class AccountCguRequested extends AccountEvent {
+  const AccountCguRequested();
+}
+
+class AccountKaraRequested extends AccountEvent {
+  const AccountKaraRequested();
+}
+
 class AccountUpdateUserInfoRequested extends AccountEvent {
   const AccountUpdateUserInfoRequested({required this.updateUserInfoParams});
   final UpdateUserInfoParams updateUserInfoParams;
 
   @override
   List<Object> get props => [updateUserInfoParams];
+}
+
+class AccountWalletHistoryRequested extends AccountEvent {
+  const AccountWalletHistoryRequested({required this.queryPageParams});
+  final QueryPageParams queryPageParams;
+
+  @override
+  List<Object> get props => [queryPageParams];
+}
+
+class AccountWalletLoadMoreRequested extends AccountEvent {
+  const AccountWalletLoadMoreRequested();
+}
+
+class AccountProfilPhotoUploadRequested extends AccountEvent {
+  const AccountProfilPhotoUploadRequested({required this.file});
+
+  final XFile file;
+
+  @override
+  List<Object> get props => [file];
+}
+
+class AccountProfilPhotoDeleteRequested extends AccountEvent {
+  const AccountProfilPhotoDeleteRequested();
 }

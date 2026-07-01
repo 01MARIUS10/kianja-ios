@@ -9,6 +9,7 @@ abstract class JobDomainModel with _$JobDomainModel implements JobDomain {
   const factory JobDomainModel({
     @JsonKey(name: 'id', defaultValue: -1) required int id,
     @JsonKey(name: 'nom', defaultValue: '') required String name,
+    required String icon,
   }) = _JobDomainModel;
 
   const JobDomainModel._();

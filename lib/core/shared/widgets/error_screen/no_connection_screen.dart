@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 
 class NoConnectionScreen extends StatelessWidget {
   const NoConnectionScreen({super.key, required this.onRetry});
@@ -21,7 +22,7 @@ class NoConnectionScreen extends StatelessWidget {
           SvgPicture.asset(Assets.noConnectionIllustration, height: 250),
           // const SizedBox(height: Constants.spacingMedium),
           Text(
-            'Page failed to load',
+            context.appLoc.page_failed_load,
             style: theme.textTheme.headlineSmall?.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -29,7 +30,7 @@ class NoConnectionScreen extends StatelessWidget {
           ),
           const SizedBox(height: Constants.spacingSmall),
           Text(
-            'Please check your connection before trying again.',
+            context.appLoc.please_check_connection_before_trying,
             style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
             textAlign: TextAlign.center,
           ),
@@ -40,7 +41,7 @@ class NoConnectionScreen extends StatelessWidget {
             child: ElevatedButton(
               onPressed: onRetry,
               child: Text(
-                'RETRY',
+                context.appLoc.retry.toUpperCase(),
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),

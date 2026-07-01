@@ -3,6 +3,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
 import 'package:kianja/features/jobs/presentation/widgets/enum/width_view_enum.dart';
 import 'package:kianja/features/jobs/presentation/widgets/item/card/training_center_card.dart';
@@ -11,11 +12,11 @@ import 'package:kianja/routing/routes.dart';
 class TrainingCenterVerticalSection extends StatelessWidget {
   const TrainingCenterVerticalSection({
     super.key,
-    required this.category,
+    required this.domain,
     required this.query,
     required this.trainingCenters,
   });
-  final String category;
+  final String domain;
   final String query;
   final List<TrainingCenter> trainingCenters;
 
@@ -37,7 +38,7 @@ class TrainingCenterVerticalSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                category,
+                domain,
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -64,7 +65,7 @@ class TrainingCenterVerticalSection extends StatelessWidget {
                   context.goNamed(
                     Routes.trainingCenterDetail.name,
                     pathParameters: {
-                      'id': trainingCenters[index].id.toString(),
+                      'trainingCenterId': trainingCenters[index].id.toString(),
                     },
                   );
                 },
@@ -103,11 +104,11 @@ class TrainingCenterVerticalSection extends StatelessWidget {
             onPressed: () {
               context.goNamed(
                 Routes.trainingCenterViewAll.name,
-                extra: {'title': category, 'query': query},
+                extra: {'title': domain, 'query': query},
               );
             },
             child: Text(
-              'Voir plus',
+              context.appLoc.view_more,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),

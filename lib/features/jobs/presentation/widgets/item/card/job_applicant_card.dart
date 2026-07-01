@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kianja/core/shared/widgets/avatar/circle_user_avatar_detail.dart';
+import 'package:kianja/core/config/env_config.dart';
+import 'package:kianja/core/shared/widgets/avatar/default_avatar.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
@@ -36,14 +37,16 @@ class JobApplicantCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const SizedBox(height: Constants.spacingSmall),
                 Text(
                   jobApplicant.title,
-                  style: theme.textTheme.bodySmall?.copyWith(height: 1.2),
+                  style: theme.textTheme.titleSmall,
                   maxLines: 6,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: Constants.spacingSmall),
-
+                const Divider(),
+                const SizedBox(height: Constants.spacingSmall),
                 // Location
                 Row(
                   children: [
@@ -94,7 +97,18 @@ class JobApplicantCard extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CircleUserAvatarDetail(user: jobApplicant.user),
+                    ClipOval(
+                      child: jobApplicant.user.photoUrl.isNotEmpty
+                          ? Image.network(
+                              '${EnvConfig.baseApiUrl}${jobApplicant.user.photoUrl}',
+                              fit: BoxFit.cover,
+                              width: Constants.size30,
+                              height: Constants.size30,
+                              errorBuilder: (_, _, _) =>
+                                  const DefaultAvatar(size: Constants.size30),
+                            )
+                          : const DefaultAvatar(size: Constants.size30),
+                    ),
                     const SizedBox(width: Constants.spacingSmall),
                     Expanded(
                       child: Column(
@@ -109,7 +123,7 @@ class JobApplicantCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            '• ${AppFunction.dateTimeCounter(jobApplicant.createdAt)}',
+                            '• ${AppFunction.dateTimeCounter(jobApplicant.createdAt, context)}',
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: isDark
                                   ? AppColors.darkTextSecondary

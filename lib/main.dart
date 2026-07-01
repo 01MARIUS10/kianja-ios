@@ -26,8 +26,9 @@ void main() async {
                 ..add(const ConnectivitySubscribed()),
         ),
         BlocProvider(
-          create: (context) =>
-              GetIt.instance<AppBloc>()..add(const AppInitialized()),
+          create: (context) => GetIt.instance<AppBloc>()
+            ..add(const AppInitialized())
+            ..add(const AppSponsPartnerLoaded()),
         ),
       ],
       child: const Kianja(),

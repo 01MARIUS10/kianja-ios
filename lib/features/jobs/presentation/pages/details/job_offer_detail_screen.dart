@@ -1,17 +1,20 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get_it/get_it.dart';
-import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/config/env_config.dart';
+import 'package:kianja/core/shared/widgets/avatar/default_avatar.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/shared/widgets/loading/shimmer_job_detail_indicator.dart';
+import 'package:kianja/core/shared/widgets/photos/photo_handler.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class JobOfferDetailScreen extends StatelessWidget {
   const JobOfferDetailScreen({super.key, required this.id});
@@ -25,20 +28,18 @@ class JobOfferDetailScreen extends StatelessWidget {
         ? AppColors.darkTextSecondary
         : AppColors.lightTextSecondary;
     final borderColor = isDark ? AppColors.darkBorder : AppColors.lightBorder;
-    final surfaceColor = isDark
-        ? AppColors.darkSurface
-        : AppColors.lightSurface;
 
     return BlocProvider(
       create: (context) =>
           GetIt.instance<JobsBloc>()
             ..add(JobsGetJobOfferDetailRequested(id: id)),
       child: BaseScreen(
-        appBar: const TitleHeader(title: 'Job details'),
+        appBar: TitleHeader(title: context.appLoc.job_offer_detail),
         child: BlocBuilder<JobsBloc, JobsState>(
           builder: (context, state) {
             if (state is JobsGetJobOfferDetailSuccess) {
               final jobOffer = state.jobOffer;
+              final isExpired = AppFunction.isExpired(jobOffer.dateLimit);
               return SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(
                   vertical: Constants.paddingMedium,
@@ -64,28 +65,34 @@ class JobOfferDetailScreen extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                'Limite date  ',
+                                '${context.appLoc.deadline}  ',
                                 style: theme.textTheme.bodySmall,
                               ),
-                              const Icon(
+                              Icon(
                                 Icons.access_time,
                                 size: Constants.iconSizeExtraSmall,
-                                color: AppColors.danger,
+                                color: isExpired
+                                    ? AppColors.danger
+                                    : AppColors.success,
                               ),
                               const SizedBox(
                                 width: Constants.spacingExtraSmall,
                               ),
                               Text(
-                                AppFunction.getDate(jobOffer.dateLimit),
+                                isExpired
+                                    ? '${AppFunction.getDate(jobOffer.dateLimit)} (${context.appLoc.expired})'
+                                    : AppFunction.getDate(jobOffer.dateLimit),
                                 style: theme.textTheme.bodySmall?.copyWith(
-                                  color: AppColors.danger,
+                                  color: isExpired
+                                      ? AppColors.danger.withValues(alpha: 0.7)
+                                      : AppColors.success,
                                 ),
                               ),
                             ],
                           ),
                           const SizedBox(height: Constants.spacingExtraSmall),
                           Text(
-                            'Posted  •  ${AppFunction.dateTimeCounter(jobOffer.createdAt)}',
+                            '${context.appLoc.posted}  •  ${AppFunction.dateTimeCounter(jobOffer.createdAt, context)}',
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: textSecondary,
                             ),
@@ -104,43 +111,36 @@ class JobOfferDetailScreen extends StatelessWidget {
                     const SizedBox(height: Constants.spacingMedium),
 
                     // Image
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Constants.paddingMedium,
+                    if (jobOffer.image != null)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: Constants.paddingMedium,
+                            ),
+                            child: PhotoHandler(
+                              width: double.infinity,
+                              imageUrls: [jobOffer.image]
+                                  .map(
+                                    (image) =>
+                                        '${EnvConfig.baseApiUrl}${image?.url}',
+                                  )
+                                  .toList(),
+                            ),
+                          ),
+
+                          const SizedBox(height: Constants.spacingMedium),
+                          Divider(
+                            color: borderColor,
+                            thickness: 1,
+                            height: 1,
+                            indent: Constants.paddingMedium,
+                            endIndent: Constants.paddingMedium,
+                          ),
+                          const SizedBox(height: Constants.spacingMedium),
+                        ],
                       ),
-                      child: ClipRRect(
-                        child: CachedNetworkImage(
-                          imageUrl:
-                              '${EnvConfig.baseApiUrl}${jobOffer.imageUrl}',
-                          fit: BoxFit.cover,
-                          errorWidget: (context, url, error) {
-                            return Image.asset(
-                              Assets.hiring,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, url, error) => const Icon(
-                                Icons.image,
-                                size: 40,
-                                color: Colors.grey,
-                              ),
-                            );
-                          },
-                          progressIndicatorBuilder: (context, url, progress) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: Constants.spacingMedium),
-                    Divider(
-                      color: borderColor,
-                      thickness: 1,
-                      height: 1,
-                      indent: Constants.paddingMedium,
-                      endIndent: Constants.paddingMedium,
-                    ),
-                    const SizedBox(height: Constants.spacingMedium),
 
                     // Description
                     Padding(
@@ -151,16 +151,20 @@ class JobOfferDetailScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Description',
+                            context.appLoc.description,
                             style: theme.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           const SizedBox(height: Constants.spacingMedium),
-                          Text(
-                            jobOffer.description,
+                          Linkify(
+                            onOpen: _onOpen,
+                            text: jobOffer.description,
                             style: theme.textTheme.bodyMedium?.copyWith(
                               height: 1.5,
+                            ),
+                            linkStyle: theme.textTheme.bodyMedium?.copyWith(
+                              color: AppColors.info,
                             ),
                           ),
                         ],
@@ -185,7 +189,7 @@ class JobOfferDetailScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Job features',
+                            context.appLoc.job_features,
                             style: theme.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -193,7 +197,7 @@ class JobOfferDetailScreen extends StatelessWidget {
                           const SizedBox(height: Constants.spacingMedium),
                           _buildFeatureRow(
                             context,
-                            label: 'Category',
+                            label: context.appLoc.categories,
                             value: jobOffer.categories
                                 .map((category) => category.name)
                                 .join(', '),
@@ -201,13 +205,13 @@ class JobOfferDetailScreen extends StatelessWidget {
                           const SizedBox(height: Constants.spacingSmall),
                           _buildFeatureRow(
                             context,
-                            label: 'Location',
+                            label: context.appLoc.location,
                             value: jobOffer.location?.name ?? '',
                           ),
                           const SizedBox(height: Constants.spacingSmall),
                           _buildFeatureRow(
                             context,
-                            label: 'Gender',
+                            label: context.appLoc.gender,
                             value: jobOffer.gender?.name ?? '',
                           ),
                         ],
@@ -232,7 +236,7 @@ class JobOfferDetailScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Actor',
+                            context.appLoc.actor,
                             style: theme.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -264,7 +268,7 @@ class JobOfferDetailScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'About the client',
+                            context.appLoc.about_client,
                             style: theme.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -272,23 +276,21 @@ class JobOfferDetailScreen extends StatelessWidget {
                           const SizedBox(height: Constants.spacingMedium),
                           Row(
                             children: [
-                              Container(
-                                width: Constants.size35,
-                                height: Constants.size35,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: surfaceColor,
-                                  border: Border.all(
-                                    color: borderColor,
-                                    width: 1,
-                                  ),
-                                ),
-                                child: ClipOval(
-                                  child: Image.asset(
-                                    Assets.rabbitAvatar,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
+                              ClipOval(
+                                child: jobOffer.user.photoUrl.isNotEmpty
+                                    ? Image.network(
+                                        '${EnvConfig.baseApiUrl}${jobOffer.user.photoUrl}',
+                                        fit: BoxFit.cover,
+                                        width: Constants.size35,
+                                        height: Constants.size35,
+                                        errorBuilder: (_, _, _) =>
+                                            const DefaultAvatar(
+                                              size: Constants.size35,
+                                            ),
+                                      )
+                                    : const DefaultAvatar(
+                                        size: Constants.size35,
+                                      ),
                               ),
                               const SizedBox(width: Constants.spacingSmall),
                               Text(
@@ -309,24 +311,24 @@ class JobOfferDetailScreen extends StatelessWidget {
                                 width: Constants.spacingExtraSmall,
                               ),
                               Text(
-                                'Verified phone number',
+                                context.appLoc.verified_phone_number,
                                 style: theme.textTheme.bodySmall,
                               ),
                             ],
                           ),
                           const SizedBox(height: Constants.spacingSmall),
-                          Text(
-                            '10 jobs posted',
-                            style: theme.textTheme.bodySmall,
-                          ),
-                          const SizedBox(height: Constants.spacingSmall),
+                          // Text(
+                          //   '10 jobs posted',
+                          //   style: theme.textTheme.bodySmall,
+                          // ),
+                          // const SizedBox(height: Constants.spacingSmall),
                           Text(
                             jobOffer.user.residence,
                             style: theme.textTheme.bodySmall,
                           ),
                           const SizedBox(height: Constants.spacingSmall),
                           Text(
-                            'Member since ${AppFunction.getDate(jobOffer.user.createdAt)}',
+                            '${context.appLoc.member_since} ${AppFunction.getDate(jobOffer.user.createdAt)}',
                             style: theme.textTheme.bodySmall,
                           ),
                           const SizedBox(height: Constants.spacingLarge),
@@ -373,5 +375,11 @@ class JobOfferDetailScreen extends StatelessWidget {
         Expanded(child: Text(value, style: theme.textTheme.bodySmall)),
       ],
     );
+  }
+
+  Future<void> _onOpen(LinkableElement link) async {
+    if (!await launchUrl(Uri.parse(link.url))) {
+      throw Exception('Could not launch ${link.url}');
+    }
   }
 }

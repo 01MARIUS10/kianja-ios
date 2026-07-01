@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kianja/core/l10n/app_l10n.dart';
 import 'package:kianja/core/shared/widgets/fields/label_field.dart';
 import 'package:kianja/core/shared/widgets/fields/text_input_field.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 
 class GenderField extends StatefulWidget {
   const GenderField({super.key, required this.genderController});
@@ -14,17 +16,19 @@ class GenderField extends StatefulWidget {
 }
 
 class _GenderFieldState extends State<GenderField> {
-  final List<String> _genders = ['Male', 'Female'];
+  final currentAppLoc = AppL10n.current!;
+  late final List<String> _genders = [currentAppLoc.male, currentAppLoc.female];
+  final List<String> _genderValues = ['Male', 'Female'];
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const LabelField(label: 'GENDER'),
+        LabelField(label: context.appLoc.gender.toUpperCase()),
         const SizedBox(height: Constants.spacingSmall),
         TextInputField(
           controller: widget.genderController,
-          hintText: 'select a gender',
+          hintText: context.appLoc.select_gender,
           readOnly: true,
           onTap: _showGenderPicker,
           suffixIcon: const Icon(
@@ -50,7 +54,10 @@ class _GenderFieldState extends State<GenderField> {
               return ListTile(
                 title: Text(gender),
                 onTap: () {
-                  setState(() => widget.genderController.text = gender);
+                  setState(
+                    () => widget.genderController.text =
+                        _genderValues[_genders.indexOf(gender)],
+                  );
                   context.pop();
                 },
               );

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kianja/core/config/assets.dart';
-import 'package:kianja/core/l10n/app_localizations.dart';
+import 'package:kianja/core/l10n/localization/app_localizations.dart';
 import 'package:kianja/core/languages/language_enum.dart';
 import 'package:kianja/core/languages/languages.dart';
 import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';

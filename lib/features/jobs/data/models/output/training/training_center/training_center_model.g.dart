@@ -11,16 +11,20 @@ _TrainingCenterModel _$TrainingCenterModelFromJson(Map<String, dynamic> json) =>
       id: (json['id'] as num?)?.toInt() ?? -1,
       name: json['name'] as String? ?? '',
       imageUrl: json['image_path'] as String? ?? '',
+      images: (json['images'] as List<dynamic>?)
+          ?.map((e) => JobImageModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       description: json['description'] as String? ?? '',
-      category: json['category'] == null
-          ? null
-          : JobCategoryModel.fromJson(json['category'] as Map<String, dynamic>),
+      domains: (json['domains'] as List<dynamic>)
+          .map((e) => JobDomainModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       actor: json['actor'] == null
           ? null
           : JobActorModel.fromJson(json['actor'] as Map<String, dynamic>),
       location: json['location'] == null
           ? null
           : JobLocationModel.fromJson(json['location'] as Map<String, dynamic>),
+      badge: $enumDecodeNullable(_$TrainingCenterBadgeEnumMap, json['badge']),
       user: UserModel.fromJson(json['user'] as Map<String, dynamic>),
       createdAt: json['created_at'] as String? ?? '',
     );
@@ -31,10 +35,18 @@ Map<String, dynamic> _$TrainingCenterModelToJson(
   'id': instance.id,
   'name': instance.name,
   'image_path': instance.imageUrl,
+  'images': instance.images,
   'description': instance.description,
-  'category': instance.category,
+  'domains': instance.domains,
   'actor': instance.actor,
   'location': instance.location,
+  'badge': _$TrainingCenterBadgeEnumMap[instance.badge],
   'user': instance.user,
   'created_at': instance.createdAt,
+};
+
+const _$TrainingCenterBadgeEnumMap = {
+  TrainingCenterBadge.vip: 'vip',
+  TrainingCenterBadge.premium: 'premium',
+  TrainingCenterBadge.normal: 'normal',
 };

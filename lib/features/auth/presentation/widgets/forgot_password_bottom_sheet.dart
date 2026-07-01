@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/auth/presentation/widgets/contact_tile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -64,12 +65,15 @@ class _ForgotPasswordBottomSheetState extends State<ForgotPasswordBottomSheet> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Title
-          Text('Forgot Password ?', style: theme.textTheme.titleMedium),
+          Text(
+            '${context.appLoc.forgot_password} ?',
+            style: theme.textTheme.titleMedium,
+          ),
           const SizedBox(height: Constants.spacingSmall),
 
           // Subtitle
           Text(
-            'Please contact us via phone or email to help you to reset your password',
+            context.appLoc.please_contact_to_reset_password,
             style: theme.textTheme.bodyMedium,
           ),
           const SizedBox(height: Constants.spacingLarge),
@@ -77,7 +81,7 @@ class _ForgotPasswordBottomSheetState extends State<ForgotPasswordBottomSheet> {
           // Phone Tile
           ContactTile(
             icon: Icons.phone_outlined,
-            title: 'Via phone',
+            title: context.appLoc.via_phone,
             subtitle: _phoneNumber,
             isSelected: _selectedMethod == ContactMethod.phone,
             isDark: isDark,
@@ -93,7 +97,7 @@ class _ForgotPasswordBottomSheetState extends State<ForgotPasswordBottomSheet> {
           // Email Tile
           ContactTile(
             icon: Icons.email_outlined,
-            title: 'Via email',
+            title: context.appLoc.via_email,
             subtitle: _emailAddress,
             isSelected: _selectedMethod == ContactMethod.email,
             isDark: isDark,
@@ -113,7 +117,9 @@ class _ForgotPasswordBottomSheetState extends State<ForgotPasswordBottomSheet> {
             child: ElevatedButton(
               onPressed: () => _handleAction(context),
               child: Text(
-                _selectedMethod == ContactMethod.phone ? 'CALL' : 'SEND',
+                _selectedMethod == ContactMethod.phone
+                    ? context.appLoc.call.toUpperCase()
+                    : context.appLoc.send.toUpperCase(),
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.2,

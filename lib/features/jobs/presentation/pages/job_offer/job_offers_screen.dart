@@ -6,6 +6,7 @@ import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.da
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer_filter.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/features/jobs/presentation/pages/job_offer/job_offers_filter_screen.dart';
@@ -187,7 +188,7 @@ class _JobOffersScreenState extends State<JobOffersScreen>
                               onTap: (index) => _onTabTap(blocContext, index),
                               tabs: [
                                 _buildFilterTab(
-                                  label: 'Type',
+                                  label: context.appLoc.type,
                                   index: 0,
                                   selected: _selectedIndex,
                                   theme: theme,
@@ -195,7 +196,7 @@ class _JobOffersScreenState extends State<JobOffersScreen>
                                   isDark: isDark,
                                 ),
                                 _buildFilterTab(
-                                  label: 'Date',
+                                  label: context.appLoc.date,
                                   index: 1,
                                   selected: _selectedIndex,
                                   theme: theme,
@@ -203,7 +204,7 @@ class _JobOffersScreenState extends State<JobOffersScreen>
                                   isDark: isDark,
                                 ),
                                 _buildFilterTab(
-                                  label: 'Zone',
+                                  label: context.appLoc.zone,
                                   index: 2,
                                   selected: _selectedIndex,
                                   theme: theme,

@@ -6,6 +6,7 @@ import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
 import 'package:kianja/core/shared/app_feature/bloc/connectivity/connectivity_bloc.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/routing/routes.dart';
 
 class Navigation extends StatelessWidget {
@@ -100,25 +101,34 @@ class Navigation extends StatelessWidget {
                       ).add(const AppUserLoaded());
                     }
                   },
-                  items: const [
+                  items: [
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.work, size: Constants.iconSizeSmall),
-                      label: 'Jobs',
+                      icon: const Icon(
+                        Icons.work,
+                        size: Constants.iconSizeSmall,
+                      ),
+                      label: context.appLoc.jobs,
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.add_box, size: Constants.iconSizeSmall),
-                      label: 'Post',
+                      icon: const Icon(
+                        Icons.add_box,
+                        size: Constants.iconSizeSmall,
+                      ),
+                      label: context.appLoc.post,
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.assignment_rounded,
                         size: Constants.iconSizeSmall,
                       ),
-                      label: 'My post',
+                      label: context.appLoc.my_post,
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.person, size: Constants.iconSizeSmall),
-                      label: 'Account',
+                      icon: const Icon(
+                        Icons.person,
+                        size: Constants.iconSizeSmall,
+                      ),
+                      label: context.appLoc.account,
                     ),
                   ],
                 );

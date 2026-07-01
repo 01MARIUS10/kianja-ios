@@ -105,41 +105,22 @@ class JobsUploadImageRequested extends JobsEvent {
   List<Object> get props => [file];
 }
 
-/// Create a Job Offer.
-class JobsCreateJobOfferRequested extends JobsEvent {
-  const JobsCreateJobOfferRequested({
-    required this.title,
-    required this.imageId,
-    required this.description,
-    required this.categories,
-    required this.location,
-    required this.gender,
-    required this.actor,
-    required this.limitDate,
-    required this.status,
-  });
-  final String title;
-  final int imageId;
-  final String description;
-  final List<int> categories;
-  final int location;
-  final int gender;
-  final int actor;
-  final String limitDate;
-  final String status;
+/// Upload multiple image files.
+class JobsUploadMultipleImagesRequested extends JobsEvent {
+  const JobsUploadMultipleImagesRequested({required this.files});
+  final List<XFile> files;
 
   @override
-  List<Object> get props => [
-    title,
-    imageId,
-    description,
-    categories,
-    location,
-    gender,
-    actor,
-    limitDate,
-    status,
-  ];
+  List<Object> get props => [files];
+}
+
+/// Create a Job Offer.
+class JobsCreateJobOfferRequested extends JobsEvent {
+  const JobsCreateJobOfferRequested({required this.createJobOfferParams});
+  final CreateJobOfferParams createJobOfferParams;
+
+  @override
+  List<Object> get props => [createJobOfferParams];
 }
 
 /// Get a job offer detail.
@@ -161,8 +142,9 @@ class JobsGetJobApplicantDetailRequested extends JobsEvent {
 }
 
 /// Get a job applicant plan.
-class JobsGetJobApplicantPlanRequested extends JobsEvent {
-  const JobsGetJobApplicantPlanRequested();
+class JobsGetPricePlanRequested extends JobsEvent {
+  const JobsGetPricePlanRequested({required this.getPricePlanParams});
+  final GetPricePlanParams getPricePlanParams;
 
   @override
   List<Object> get props => [];
@@ -215,8 +197,8 @@ class GetTrainingCenterFilterRequested extends JobsEvent {
   List<Object> get props => [];
 }
 
-class GetTrainingCenterCategoriesRequested extends JobsEvent {
-  const GetTrainingCenterCategoriesRequested();
+class GetTrainingCenterDomainsRequested extends JobsEvent {
+  const GetTrainingCenterDomainsRequested();
 
   @override
   List<Object> get props => [];
@@ -230,6 +212,26 @@ class GetHotEventDetailRequested extends JobsEvent {
   List<Object> get props => [getHotEventDetailParams];
 }
 
+class CreateTrainingCenterRequested extends JobsEvent {
+  const CreateTrainingCenterRequested({
+    required this.createtrainingCenterParams,
+  });
+  final CreateTrainingCenterParams createtrainingCenterParams;
+
+  @override
+  List<Object> get props => [createtrainingCenterParams];
+}
+
+class SubscribeExpertExecutiveRequested extends JobsEvent {
+  const SubscribeExpertExecutiveRequested({
+    required this.subscribeExpertExecutiveParams,
+  });
+  final SubscribeExpertExecutiveParams subscribeExpertExecutiveParams;
+
+  @override
+  List<Object> get props => [subscribeExpertExecutiveParams];
+}
+
 class GetTrainingCenterDetailRequested extends JobsEvent {
   const GetTrainingCenterDetailRequested({
     required this.trainingCenterDetailParams,
@@ -240,10 +242,18 @@ class GetTrainingCenterDetailRequested extends JobsEvent {
   List<Object> get props => [trainingCenterDetailParams];
 }
 
-class GetTrainingCenterViewCategoryRequested extends JobsEvent {
-  const GetTrainingCenterViewCategoryRequested({required this.params});
-  final GetTrainingCenterViewCategoryParams params;
+class GetTrainingCenterViewDomainRequested extends JobsEvent {
+  const GetTrainingCenterViewDomainRequested({required this.params});
+  final GetTrainingCenterViewDomainParams params;
 
   @override
   List<Object> get props => [params];
+}
+
+class CreateHotEventRequested extends JobsEvent {
+  const CreateHotEventRequested({required this.createHotEventParams});
+  final CreateHotEventParams createHotEventParams;
+
+  @override
+  List<Object> get props => [createHotEventParams];
 }
