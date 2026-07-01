@@ -256,5 +256,6 @@
   "error_launching_app": "Error launching app:",
   "could_not_launch_email_app": "Could not launch email app",
   "could_not_launch_phone_app": "Could not launch phone app",
-  "about": "About"
+  "about": "About",
+  "announcer": "Announcer"
 }

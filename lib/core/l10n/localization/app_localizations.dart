@@ -1651,6 +1651,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'About'**
   String get about;
+
+  /// No description provided for @announcer.
+  ///
+  /// In en, this message translates to:
+  /// **'Announcer'**
+  String get announcer;
 }
 
 class _AppLocalizationsDelegate

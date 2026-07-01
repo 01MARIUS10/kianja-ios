@@ -15,6 +15,7 @@ abstract interface class DioExceptionHandler {
       DioExceptionType.receiveTimeout => ReceiveTimeoutException(
         message: currentContext!.receive_timeout,
       ),
+      DioExceptionType.transformTimeout => throw UnimplementedError(),
       DioExceptionType.badCertificate => BadCertificateException(
         message: currentContext!.bad_certificate,
       ),

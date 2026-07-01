@@ -256,5 +256,6 @@
   "error_launching_app": "启动应用时发生错误：",
   "could_not_launch_email_app": "无法启动电子邮件应用",
   "could_not_launch_phone_app": "无法启动电话应用",
-  "about": "关于"
+  "about": "关于",
+  "announcer": "发布者"
 }

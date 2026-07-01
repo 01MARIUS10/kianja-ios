@@ -812,4 +812,7 @@ class AppLocalizationsMg extends AppLocalizations {
 
   @override
   String get about => 'Momba';
+
+  @override
+  String get announcer => 'Mpampandefa filazana';
 }

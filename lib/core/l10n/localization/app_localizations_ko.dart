@@ -788,4 +788,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get about => '정보';
+
+  @override
+  String get announcer => '게시자';
 }

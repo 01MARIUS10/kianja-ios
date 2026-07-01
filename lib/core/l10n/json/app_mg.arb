@@ -256,5 +256,6 @@
   "error_launching_app": "Nisy olana teo am-panokafana ny rindranasa:",
   "could_not_launch_email_app": "Tsy afaka nanokatra ny rindranasa mailaka",
   "could_not_launch_phone_app": "Tsy afaka nanokatra ny rindranasa antso",
-  "about": "Momba"
+  "about": "Momba",
+  "announcer": "Mpampandefa filazana"
 }

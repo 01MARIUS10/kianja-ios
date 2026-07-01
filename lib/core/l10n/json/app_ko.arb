@@ -256,5 +256,6 @@
   "error_launching_app": "앱 실행 중 오류가 발생했습니다:",
   "could_not_launch_email_app": "이메일 앱을 실행할 수 없습니다",
   "could_not_launch_phone_app": "전화 앱을 실행할 수 없습니다",
-  "about": "정보"
+  "about": "정보",
+  "announcer": "게시자"
 }

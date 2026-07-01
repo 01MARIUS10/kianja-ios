@@ -256,5 +256,6 @@
   "error_launching_app": "Erreur lors du lancement de l'application :",
   "could_not_launch_email_app": "Impossible d'ouvrir l'application de messagerie",
   "could_not_launch_phone_app": "Impossible d'ouvrir l'application téléphonique",
-  "about": "À propos"
+  "about": "À propos",
+  "announcer": "Annonceur"
 }

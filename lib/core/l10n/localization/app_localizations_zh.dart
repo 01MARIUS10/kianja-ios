@@ -785,4 +785,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get about => '关于';
+
+  @override
+  String get announcer => '发布者';
 }
