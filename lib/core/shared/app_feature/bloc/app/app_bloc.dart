@@ -18,15 +18,11 @@ part 'app_state.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc({
-    required AppSharedPrefs appSharedPrefs,
-    required GetUserUseCase getUserUseCase,
-    required GetAppSponsPartnerUseCase getAppSponsPartnerUseCase,
+    required this._appSharedPrefs,
+    required this._getUserUseCase,
+    required this._getAppSponsPartnerUseCase,
     // required DeleteCachedUserUseCase deleteCachedUserUseCase,
-  }) : _appSharedPrefs = appSharedPrefs,
-       _getUserUseCase = getUserUseCase,
-       _getAppSponsPartnerUseCase = getAppSponsPartnerUseCase,
-       //  _deleteCachedUserUseCase = deleteCachedUserUseCase,
-       super(
+  }) : super(
          const AppState(
            token: '',
            lang: Languages.localeFrench,

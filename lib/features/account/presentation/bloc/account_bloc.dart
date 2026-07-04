@@ -25,25 +25,16 @@ part 'account_state.dart';
 
 class AccountBloc extends Bloc<AccountEvent, AccountState> {
   AccountBloc({
-    required AppSharedPrefs appSharedPrefs,
-    required LogoutUseCase logoutUseCase,
-    required ChangePasswordUseCase changePasswordUseCase,
-    required UpdateUserInfoUseCase updateUserInfoUseCase,
-    required CguUsecase cguUseCase,
-    required GetAllKaraHistoryUsecase getAllKaraHistoryUsecase,
-    required GetKaraUseCase getKaraUseCase,
-    required UploadProfilPhotoUseCase uploadProfilPhotoUseCase,
-    required DeleteProfilPhotoUseCase deleteProfilPhotoUseCase,
-  }) : _appSharedPrefs = appSharedPrefs,
-       _logoutUseCase = logoutUseCase,
-       _changePasswordUseCase = changePasswordUseCase,
-       _updateUserInfoUseCase = updateUserInfoUseCase,
-       _cguUseCase = cguUseCase,
-       _getAllKaraHistoryUsecase = getAllKaraHistoryUsecase,
-       _getKaraUseCase = getKaraUseCase,
-       _uploadProfilPhotoUseCase = uploadProfilPhotoUseCase,
-       _deleteProfilPhotoUseCase = deleteProfilPhotoUseCase,
-       super(AccountInitial()) {
+    required this._appSharedPrefs,
+    required this._logoutUseCase,
+    required this._changePasswordUseCase,
+    required this._updateUserInfoUseCase,
+    required this._cguUseCase,
+    required this._getAllKaraHistoryUsecase,
+    required this._getKaraUseCase,
+    required this._uploadProfilPhotoUseCase,
+    required this._deleteProfilPhotoUseCase,
+  }) : super(AccountInitial()) {
     on<AccountLogoutRequested>(_onLogoutRequested);
     on<AccountChangePasswordRequested>(_onChangePasswordRequested);
     on<AccountUpdateUserInfoRequested>(_onUpdateUserInfoRequested);

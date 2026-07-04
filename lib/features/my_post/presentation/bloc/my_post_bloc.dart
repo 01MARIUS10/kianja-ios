@@ -38,51 +38,29 @@ part 'my_post_state.dart';
 class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
   MyPostBloc({
     // UPDATE USECASE ---------------------------------------------------------
-    required UpdateJobOfferUseCase updateJobOfferUseCase,
-    required UpdateJobApplicantUseCase updateJobApplicantUseCase,
-    required UpdateTrainingCenterUseCase updateTrainingCenterUseCase,
-    required UpdateExpertExecutiveUseCase updateExpertExecutiveUseCase,
-    required UpdateHotEventUseCase updateHotEventUseCase,
+    required this._updateJobOfferUseCase,
+    required this._updateJobApplicantUseCase,
+    required this._updateTrainingCenterUseCase,
+    required this._updateExpertExecutiveUseCase,
+    required this._updateHotEventUseCase,
     // --------------------------------------------------------- UPDATE USECASE
 
     // DELETE USECASE ---------------------------------------------------------
-    required DeleteJobOfferUseCase deleteJobOfferUseCase,
-    required DeleteJobApplicantUseCase deleteJobApplicantUseCase,
-    required DeleteTrainingCenterUseCase deleteTrainingCenterUseCase,
-    required DeleteExpertExecutiveUseCase deleteExpertExecutiveUseCase,
-    required DeleteHotEventUseCase deleteHotEventUseCase,
+    required this._deleteJobOfferUseCase,
+    required this._deleteJobApplicantUseCase,
+    required this._deleteTrainingCenterUseCase,
+    required this._deleteExpertExecutiveUseCase,
+    required this._deleteHotEventUseCase,
     // --------------------------------------------------------- DELETE USECASE
 
     // GET ALL USECASE ---------------------------------------------------------
-    required GetAllJobOffersUseCase getAllJobOffersUseCase,
-    required GetAllJobApplicantsUseCase getAllJobApplicantsUseCase,
-    required GetAllTrainingCentersUseCase getAllTrainingCentersUseCase,
-    required GetAllHotsUseCase getAllHotsUseCase,
-    required GetAllEventsUseCase getAllEventsUseCase,
+    required this._getAllJobOffersUseCase,
+    required this._getAllJobApplicantsUseCase,
+    required this._getAllTrainingCentersUseCase,
+    required this._getAllHotsUseCase,
+    required this._getAllEventsUseCase,
     // --------------------------------------------------------- GET ALL USECASE
   }) : // UPDATE USECASE ------------------------------------------------------
-       _updateJobOfferUseCase = updateJobOfferUseCase,
-       _updateJobApplicantUseCase = updateJobApplicantUseCase,
-       _updateTrainingCenterUseCase = updateTrainingCenterUseCase,
-       _updateExpertExecutiveUseCase = updateExpertExecutiveUseCase,
-       _updateHotEventUseCase = updateHotEventUseCase,
-       // ------------------------------------------------------ UPDATE USECASE
-
-       // DELETE USECASE ------------------------------------------------------
-       _deleteJobOfferUseCase = deleteJobOfferUseCase,
-       _deleteJobApplicantUseCase = deleteJobApplicantUseCase,
-       _deleteTrainingCenterUseCase = deleteTrainingCenterUseCase,
-       _deleteExpertExecutiveUseCase = deleteExpertExecutiveUseCase,
-       _deleteHotEventUseCase = deleteHotEventUseCase,
-       // ------------------------------------------------------ DELETE USECASE
-
-       // GET ALL USECASE ------------------------------------------------------
-       _getAllJobOffersUseCase = getAllJobOffersUseCase,
-       _getAllJobApplicantsUseCase = getAllJobApplicantsUseCase,
-       _getAllTrainingCentersUseCase = getAllTrainingCentersUseCase,
-       _getAllHotsUseCase = getAllHotsUseCase,
-       _getAllEventsUseCase = getAllEventsUseCase,
-       // ------------------------------------------------------ GET ALL USECASE
        super(MyPostInitial()) {
     // UPDATE EVENT HANDLER -------------------------------------------------
     on<MyPostUpdateJobOfferRequested>(_onUpdateJobOfferRequested);

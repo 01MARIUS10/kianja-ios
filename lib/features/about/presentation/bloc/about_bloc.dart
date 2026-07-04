@@ -10,11 +10,9 @@ part 'about_state.dart';
 
 class AboutBloc extends Bloc<AboutEvent, AboutState> {
   AboutBloc({
-    required GetAllVersionsUseCase getAllVersionsUseCase,
-    required GetUpdateVersionUseCase getUpdateVersionUseCase,
-  }) : _getAllVersionsUseCase = getAllVersionsUseCase,
-       _getUpdateVersionUseCase = getUpdateVersionUseCase,
-       super(AboutInitial()) {
+    required this._getAllVersionsUseCase,
+    required this._getUpdateVersionUseCase,
+  }) : super(AboutInitial()) {
     on<AboutGetAllVersionsRequested>(_onGetAllVersionsRequested);
     on<AboutGetUpdateVersionRequested>(_onGetUpdateVersionRequested);
   }
