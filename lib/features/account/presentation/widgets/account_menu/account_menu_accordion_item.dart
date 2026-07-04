@@ -200,7 +200,7 @@ class _AccountMenuAccordionItemState extends State<AccountMenuAccordionItem>
         // ── Expanding radio list ───────────────────────────────────────────
         SizeTransition(
           sizeFactor: _expandAnimation,
-          axisAlignment: -1,
+          alignment: Alignment.topCenter,
           child: Column(
             children: [
               Divider(

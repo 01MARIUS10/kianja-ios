@@ -8,9 +8,8 @@ part 'connectivity_event.dart';
 part 'connectivity_state.dart';
 
 class ConnectivityBloc extends Bloc<ConnectivityEvent, ConnectivityState> {
-  ConnectivityBloc({required ConnectionChecker connectionChecker})
-    : _connectionChecker = connectionChecker,
-      super(ConnectivityInitial()) {
+  ConnectivityBloc({required this._connectionChecker})
+    : super(ConnectivityInitial()) {
     on<ConnectivitySubscribed>(_onConnectivitySubscribed);
     on<ConnectivityChanged>(_onConnectivityChanged);
   }
