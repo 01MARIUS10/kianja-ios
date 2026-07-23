@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/shared/app_feature/data/datasources/app_shared_prefs.dart';
@@ -17,6 +18,8 @@ import 'package:kianja/features/account/domain/usecases/get_kara_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/logout_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/upate_user_info/update_user_info_params.dart';
 import 'package:kianja/features/account/domain/usecases/upate_user_info/update_user_info_usecase.dart';
+import 'package:kianja/features/account/domain/usecases/upload_profil_cv/upload_profil_cv_params.dart';
+import 'package:kianja/features/account/domain/usecases/upload_profil_cv/upload_profil_cv_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/upload_profil_photo/upload_profil_photo_params.dart';
 import 'package:kianja/features/account/domain/usecases/upload_profil_photo/upload_profil_photo_usecase.dart';
 
@@ -34,6 +37,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     required this._getKaraUseCase,
     required this._uploadProfilPhotoUseCase,
     required this._deleteProfilPhotoUseCase,
+    required this._uploadProfilCVUseCase,
   }) : super(AccountInitial()) {
     on<AccountLogoutRequested>(_onLogoutRequested);
     on<AccountChangePasswordRequested>(_onChangePasswordRequested);
@@ -44,6 +48,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     on<AccountKaraRequested>(_onAccountKaraRequested);
     on<AccountProfilPhotoUploadRequested>(_onProfilPhotoUploadRequested);
     on<AccountProfilPhotoDeleteRequested>(_onProfilPhotoDeleteRequested);
+    on<AccountProfilCvUploadRequested>(_onProfilCvUploadRequested);
   }
 
   final AppSharedPrefs _appSharedPrefs;
@@ -55,6 +60,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   final GetKaraUseCase _getKaraUseCase;
   final UploadProfilPhotoUseCase _uploadProfilPhotoUseCase;
   final DeleteProfilPhotoUseCase _deleteProfilPhotoUseCase;
+  final UploadProfilCVUseCase _uploadProfilCVUseCase;
 
   static const int _pageSize = 15;
   int _currentPage = 1;
@@ -217,6 +223,20 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     result.fold(
       (failure) => emit(AccountRequestFailure(message: failure.message)),
       (_) => emit(const AccountProfilPhotoDeleteSuccess()),
+    );
+  }
+
+  Future<void> _onProfilCvUploadRequested(
+    AccountProfilCvUploadRequested event,
+    Emitter<AccountState> emit,
+  ) async {
+    emit(AccountProfilCVRequestInProgress());
+    final result = await _uploadProfilCVUseCase(
+      UploadProfilCVParams(file: event.file),
+    );
+    result.fold(
+      (failure) => emit(AccountRequestFailure(message: failure.message)),
+      (_) => emit(const AccountProfilCVUploadSuccess()),
     );
   }
 }

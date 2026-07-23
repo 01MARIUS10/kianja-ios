@@ -41,6 +41,12 @@ class AccountProfilPhotoDeleteSuccess extends AccountState {
   const AccountProfilPhotoDeleteSuccess();
 }
 
+class AccountProfilCVRequestInProgress extends AccountState {}
+
+class AccountProfilCVUploadSuccess extends AccountState {
+  const AccountProfilCVUploadSuccess();
+}
+
 class AccountWalletHistorySuccess extends AccountState {
   const AccountWalletHistorySuccess({
     required this.history,

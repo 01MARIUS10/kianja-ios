@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
 import 'package:kianja/core/shared/widgets/error_screen/no_connection_screen.dart';
 import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.dart';
 import 'package:kianja/core/themes/app_colors.dart';
@@ -13,6 +14,7 @@ import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_doma
 import 'package:kianja/features/jobs/domain/entities/training/training_center_filter.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center_hot_event.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
+import 'package:kianja/features/jobs/presentation/jobs_tab_reset_notifier.dart';
 import 'package:kianja/features/jobs/presentation/pages/training_center/training_center_filter_screen.dart';
 import 'package:kianja/features/jobs/presentation/widgets/category/training_center_horizontal_section.dart';
 import 'package:kianja/features/jobs/presentation/widgets/category/training_center_vertical_section.dart';
@@ -28,6 +30,8 @@ class TrainingCenterScreen extends StatefulWidget {
 class _TrainingCenterScreenState extends State<TrainingCenterScreen>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late final TabController _tabController;
+  late final JobsTabResetNotifier _resetNotifier;
+  JobsBloc? _jobsBloc;
   int _selectedIndex = 0;
 
   List<TrainingCenterHotEvent>? _hotEventData;
@@ -49,10 +53,38 @@ class _TrainingCenterScreenState extends State<TrainingCenterScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _resetNotifier = GetIt.instance<JobsTabResetNotifier>();
+    _resetNotifier.addListener(_resetToInitial);
+  }
+
+  void _resetToInitial() {
+    if (!mounted) return;
+
+    setState(() {
+      _selectedIndex = 0;
+      _hotEventData = null;
+      _hotEventError = null;
+      _hotEventLoading = true;
+      _recentData = null;
+      _recentError = null;
+      _recentLoading = true;
+      _domainData = null;
+      _domainError = null;
+      _domainLoading = false;
+    });
+
+    if (_tabController.index != 0) {
+      _tabController.index = 0;
+    }
+
+    _jobsBloc
+      ?..add(const GetTrainingCenterHotEventRequested())
+      ..add(const GetTrainingCenterFilterRequested());
   }
 
   @override
   void dispose() {
+    _resetNotifier.removeListener(_resetToInitial);
     _tabController.dispose();
     super.dispose();
   }
@@ -63,6 +95,9 @@ class _TrainingCenterScreenState extends State<TrainingCenterScreen>
 
     switch (index) {
       case 0:
+        blocContext.read<AppBloc>().add(
+          const AppSponsorAndPartnerLoaded(menuId: 8),
+        );
         if (_hotEventData == null && _hotEventError == null) {
           blocContext.read<JobsBloc>().add(
             const GetTrainingCenterHotEventRequested(),
@@ -74,6 +109,9 @@ class _TrainingCenterScreenState extends State<TrainingCenterScreen>
           );
         }
       case 1:
+        blocContext.read<AppBloc>().add(
+          const AppSponsorAndPartnerLoaded(menuId: 1),
+        );
         if (_domainData == null && _domainError == null) {
           blocContext.read<JobsBloc>().add(
             const GetTrainingCenterDomainsRequested(),
@@ -93,9 +131,15 @@ class _TrainingCenterScreenState extends State<TrainingCenterScreen>
         : AppColors.lightTextSecondary;
 
     return BlocProvider(
-      create: (context) => GetIt.instance<JobsBloc>()
-        ..add(const GetTrainingCenterHotEventRequested())
-        ..add(const GetTrainingCenterFilterRequested()),
+      create: (context) {
+        _jobsBloc = GetIt.instance<JobsBloc>()
+          ..add(const GetTrainingCenterHotEventRequested())
+          ..add(const GetTrainingCenterFilterRequested());
+        BlocProvider.of<AppBloc>(
+          context,
+        ).add(const AppSponsorAndPartnerLoaded(menuId: 8));
+        return _jobsBloc!;
+      },
       child: BlocListener<JobsBloc, JobsState>(
         listener: (context, state) {
           if (state is JobsRequestInProgress) {

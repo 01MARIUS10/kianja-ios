@@ -36,7 +36,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get date => 'Date';
 
   @override
-  String get zone => 'Zone';
+  String get zone => 'Area';
 
   @override
   String get view_more => 'View more';
@@ -281,7 +281,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get category_3_max => 'Category * (3 max)';
 
   @override
-  String get location => 'Location';
+  String get location => 'Localisation';
 
   @override
   String get actor => 'Actor';
@@ -803,4 +803,71 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get announcer => 'Announcer';
+
+  @override
+  String get apply => 'Apply';
+
+  @override
+  String get my_applications => 'My applications';
+
+  @override
+  String get enable_apply_button => 'Enable the Apply button';
+
+  @override
+  String get favorites => 'Favorites';
+
+  @override
+  String get expertise_domain => 'Expertise domain';
+
+  @override
+  String get posted_successfully => 'Posted successfully';
+
+  @override
+  String get application_already_sent => 'Application already sent';
+
+  @override
+  String get published_by => 'Published by';
+
+  @override
+  String get photo_optional => 'Photo (Optional)';
+
+  @override
+  String get you_applied_to_this_offer => 'You have applied to this offer.';
+
+  @override
+  String get applied_successfully => 'Applied successfully';
+
+  @override
+  String get you_applied_successfully_to_this_offer =>
+      'You applied successfully to this offer.';
+
+  @override
+  String get view_my_applications => 'View my applications';
+
+  @override
+  String get post_successful => 'Post successful.';
+
+  @override
+  String get view_post => 'View post';
+
+  @override
+  String get loading => 'Loading...';
+
+  @override
+  String get zone_by_province => 'Area (by province)';
+
+  @override
+  String get free => 'Free';
+
+  @override
+  String get extend => 'Extend';
+
+  @override
+  String get extension => 'Extension';
+
+  @override
+  String get extended_successfully => 'Extended successfully';
+
+  @override
+  String get extend_successful => 'Extension successful.';
 }

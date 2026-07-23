@@ -97,41 +97,45 @@ class TrainingCenterCard extends StatelessWidget {
                 const SizedBox(height: Constants.spacingSmall),
 
                 // Domain
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: List.generate(trainingCenter.domains.length, (
-                    index,
-                  ) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            CachedNetworkImage(
-                              imageUrl: trainingCenter.domains[index].icon,
-                              width: Constants.iconSizeExtraSmall,
-                              height: Constants.iconSizeExtraSmall,
-                              errorWidget: (context, url, error) =>
-                                  const Icon(Icons.work_outline),
-                            ),
-                            const SizedBox(width: Constants.spacingExtraSmall),
-                            Expanded(
-                              child: Text(
-                                trainingCenter.domains[index].name,
-                                style: theme.textTheme.bodySmall?.copyWith(
-                                  color: AppColors.success,
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+                // Column(
+                //   crossAxisAlignment: CrossAxisAlignment.start,
+                //   children: List.generate(trainingCenter.domains.length, (
+                //     index,
+                //   ) {
+                //     return
+                if (trainingCenter.domains != null &&
+                    trainingCenter.domains!.isNotEmpty)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          CachedNetworkImage(
+                            imageUrl: trainingCenter.domains!.first.icon,
+                            width: Constants.iconSizeExtraSmall,
+                            height: Constants.iconSizeExtraSmall,
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.work_outline),
+                          ),
+                          const SizedBox(width: Constants.spacingExtraSmall),
+                          Expanded(
+                            child: Text(
+                              trainingCenter.domains!.first.name,
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: AppColors.success,
                               ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                          ],
-                        ),
-                        const SizedBox(height: Constants.spacingSmall),
-                      ],
-                    );
-                  }),
-                ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: Constants.spacingSmall),
+                    ],
+                  ),
+                //     ;
+                //   }),
+                // ),
 
                 // User Details
                 Row(

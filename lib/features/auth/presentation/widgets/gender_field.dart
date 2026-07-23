@@ -18,7 +18,6 @@ class GenderField extends StatefulWidget {
 class _GenderFieldState extends State<GenderField> {
   final currentAppLoc = AppL10n.current!;
   late final List<String> _genders = [currentAppLoc.male, currentAppLoc.female];
-  final List<String> _genderValues = ['Male', 'Female'];
 
   @override
   Widget build(BuildContext context) {
@@ -54,10 +53,7 @@ class _GenderFieldState extends State<GenderField> {
               return ListTile(
                 title: Text(gender),
                 onTap: () {
-                  setState(
-                    () => widget.genderController.text =
-                        _genderValues[_genders.indexOf(gender)],
-                  );
+                  setState(() => widget.genderController.text = gender);
                   context.pop();
                 },
               );

@@ -7,6 +7,7 @@ class SubscribeExpertExecutiveParams {
     required this.phoneNumber,
     required this.address,
     required this.biography,
+    this.photoUrl,
     required this.domainId,
     required this.cvPdfId,
   });
@@ -18,6 +19,7 @@ class SubscribeExpertExecutiveParams {
   final String phoneNumber;
   final String address;
   final String biography;
+  final String? photoUrl;
   final int domainId;
   final int cvPdfId;
 }

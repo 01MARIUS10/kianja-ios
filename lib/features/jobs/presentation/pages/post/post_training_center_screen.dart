@@ -33,11 +33,12 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
   final TextEditingController _descriptionController = TextEditingController();
 
   // ── domain (multi-select, max 5) ──────────────────────────────────────
-  final List<int> _selectedDomains = [];
+  // final List<int> _selectedDomainIds = [];
+  int? _selectedDomainId;
 
   // ── Single-select IDs ────────────────────────────────────────────────────
   int? _selectedLocationId;
-  int? _selectedActorId;
+  // int? _selectedActorId;
 
   // ── Photos ───────────────────────────────────────────────────────────────
   List<XFile> _photos = [];
@@ -52,13 +53,13 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
   // ── Toggles ──────────────────────────────────────────────────────────────
   void _toggleDomain(int domainId) {
     setState(() {
-      if (_selectedDomains.contains(domainId)) {
-        _selectedDomains.remove(domainId);
-      } else {
-        if (_selectedDomains.length < 5) {
-          _selectedDomains.add(domainId);
+      setState(() {
+        if (_selectedDomainId == domainId) {
+          _selectedDomainId = null;
+        } else {
+          _selectedDomainId = domainId;
         }
-      }
+      });
     });
   }
 
@@ -72,24 +73,24 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
     });
   }
 
-  void _toggleActor(int actorId) {
-    setState(() {
-      if (_selectedActorId == actorId) {
-        _selectedActorId = null;
-      } else {
-        _selectedActorId = actorId;
-      }
-    });
-  }
+  // void _toggleActor(int actorId) {
+  //   setState(() {
+  //     if (_selectedActorId == actorId) {
+  //       _selectedActorId = null;
+  //     } else {
+  //       _selectedActorId = actorId;
+  //     }
+  //   });
+  // }
 
   // ── Clear ─────────────────────────────────────────────────────────────────
   void _clearValues() {
     _centerNameController.clear();
     _descriptionController.clear();
     setState(() {
-      _selectedDomains.clear();
+      _selectedDomainId == null;
       _selectedLocationId = null;
-      _selectedActorId = null;
+      // _selectedActorId = null;
       _photos = [];
     });
   }
@@ -104,7 +105,7 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
       AppMessenger.showWarning(context, 'Please add a description');
       return;
     }
-    if (_selectedDomains.isEmpty) {
+    if (_selectedDomainId == null) {
       AppMessenger.showWarning(context, 'Please select at least one domain');
       return;
     }
@@ -112,10 +113,10 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
       AppMessenger.showWarning(context, 'Please select a location');
       return;
     }
-    if (_selectedActorId == null) {
-      AppMessenger.showWarning(context, 'Please select an actor');
-      return;
-    }
+    // if (_selectedActorId == null) {
+    //   AppMessenger.showWarning(context, 'Please select an actor');
+    //   return;
+    // }
 
     if (_photos.isNotEmpty) {
       AppDebug.showPrint('Uploading ${_photos.length} photos...');
@@ -134,8 +135,7 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
           name: _centerNameController.text.trim(),
           description: _descriptionController.text.trim(),
           imageIds: imageIds,
-          domainIds: _selectedDomains,
-          actorId: _selectedActorId!,
+          domainId: _selectedDomainId!,
           locationId: _selectedLocationId!,
           typeId: _selectedPlan!.type.id,
           tagId: _selectedPlan!.type.id,
@@ -194,7 +194,7 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
             builder: (context, state) {
               final isLoading = state is JobsRequestInProgress;
               final theme = Theme.of(context);
-              final isDark = theme.brightness == Brightness.dark;
+              // final isDark = theme.brightness == Brightness.dark;
 
               return BaseScreen(
                 appBar: TitleHeader(title: context.appLoc.post_training_center),
@@ -247,18 +247,18 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
                         Row(
                           children: [
                             Text(
-                              '${context.appLoc.domains} * ',
+                              '${context.appLoc.domain} * ',
                               style: theme.textTheme.titleSmall?.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Text(
-                              '(${context.appLoc.max_5})',
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: isDark ? Colors.white54 : Colors.black54,
-                              ),
-                            ),
+                            // Text(
+                            //   '(${context.appLoc.max_5})',
+                            //   style: theme.textTheme.bodyMedium?.copyWith(
+                            //     fontWeight: FontWeight.bold,
+                            //     color: isDark ? Colors.white54 : Colors.black54,
+                            //   ),
+                            // ),
                           ],
                         ),
                         const SizedBox(height: Constants.spacingSmall),
@@ -266,9 +266,7 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
                           Wrap(
                             spacing: Constants.spacingMedium,
                             children: _jobFeatures!.domains.map((domain) {
-                              final isSelected = _selectedDomains.contains(
-                                domain.id,
-                              );
+                              final isSelected = _selectedDomainId == domain.id;
                               return InkWell(
                                 onTap: () => _toggleDomain(domain.id),
                                 borderRadius: BorderRadius.circular(4),
@@ -284,7 +282,7 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
                                         height: 24,
                                         child: Checkbox(
                                           value: isSelected,
-                                          onChanged: (_) =>
+                                          onChanged: (value) =>
                                               _toggleDomain(domain.id),
                                         ),
                                       ),
@@ -301,6 +299,44 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
                               );
                             }).toList(),
                           )
+                        // Wrap(
+                        //   spacing: Constants.spacingMedium,
+                        //   children: _jobFeatures!.domains.map((domain) {
+                        //     final isSelected = _selectedDomainId.contains(
+                        //       domain.id,
+                        //     );
+                        //     return InkWell(
+                        //       onTap: () => _toggleDomain(domain.id),
+                        //       borderRadius: BorderRadius.circular(4),
+                        //       child: Padding(
+                        //         padding: const EdgeInsets.symmetric(
+                        //           vertical: 6,
+                        //         ),
+                        //         child: Row(
+                        //           mainAxisSize: MainAxisSize.min,
+                        //           children: [
+                        //             SizedBox(
+                        //               width: 24,
+                        //               height: 24,
+                        //               child: Checkbox(
+                        //                 value: isSelected,
+                        //                 onChanged: (_) =>
+                        //                     _toggleDomain(domain.id),
+                        //               ),
+                        //             ),
+                        //             const SizedBox(
+                        //               width: Constants.spacingExtraSmall,
+                        //             ),
+                        //             Text(
+                        //               domain.name,
+                        //               style: theme.textTheme.bodyMedium,
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     );
+                        //   }).toList(),
+                        // )
                         else
                           const Padding(
                             padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -356,54 +392,54 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
                           ),
                         const SizedBox(height: Constants.spacingMedium),
 
-                        // ── Actor ────────────────────────────────────────
-                        LabelField(
-                          label: '${context.appLoc.about_center_publisher} *',
-                        ),
-                        const SizedBox(height: Constants.spacingSmall),
-                        if (_jobFeatures != null)
-                          Wrap(
-                            spacing: Constants.spacingMedium,
-                            children: _jobFeatures!.actors.map((actor) {
-                              final isSelected = _selectedActorId == actor.id;
-                              return InkWell(
-                                onTap: () => _toggleActor(actor.id),
-                                borderRadius: BorderRadius.circular(4),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 6,
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      SizedBox(
-                                        width: 24,
-                                        height: 24,
-                                        child: Checkbox(
-                                          value: isSelected,
-                                          onChanged: (value) =>
-                                              _toggleActor(actor.id),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: Constants.spacingExtraSmall,
-                                      ),
-                                      Text(
-                                        actor.name,
-                                        style: theme.textTheme.bodyMedium,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                          )
-                        else
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8.0),
-                            child: CircularProgressIndicator(),
-                          ),
-                        const SizedBox(height: Constants.spacingLarge),
+                        // // ── Actor ────────────────────────────────────────
+                        // LabelField(
+                        //   label: '${context.appLoc.about_center_publisher} *',
+                        // ),
+                        // const SizedBox(height: Constants.spacingSmall),
+                        // if (_jobFeatures != null)
+                        //   Wrap(
+                        //     spacing: Constants.spacingMedium,
+                        //     children: _jobFeatures!.actors.map((actor) {
+                        //       final isSelected = _selectedActorId == actor.id;
+                        //       return InkWell(
+                        //         onTap: () => _toggleActor(actor.id),
+                        //         borderRadius: BorderRadius.circular(4),
+                        //         child: Padding(
+                        //           padding: const EdgeInsets.symmetric(
+                        //             vertical: 6,
+                        //           ),
+                        //           child: Row(
+                        //             mainAxisSize: MainAxisSize.min,
+                        //             children: [
+                        //               SizedBox(
+                        //                 width: 24,
+                        //                 height: 24,
+                        //                 child: Checkbox(
+                        //                   value: isSelected,
+                        //                   onChanged: (value) =>
+                        //                       _toggleActor(actor.id),
+                        //                 ),
+                        //               ),
+                        //               const SizedBox(
+                        //                 width: Constants.spacingExtraSmall,
+                        //               ),
+                        //               Text(
+                        //                 actor.name,
+                        //                 style: theme.textTheme.bodyMedium,
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       );
+                        //     }).toList(),
+                        //   )
+                        // else
+                        //   const Padding(
+                        //     padding: EdgeInsets.symmetric(vertical: 8.0),
+                        //     child: CircularProgressIndicator(),
+                        //   ),
+                        // const SizedBox(height: Constants.spacingLarge),
 
                         // ── Post Features Section ────────────────────────
                         PostFeaturesTrainingCenter(

@@ -71,13 +71,19 @@ class WalletBalanceCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        balance,
-                        style: theme.textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.w800,
-                          color: textPrimary,
-                          height: 1.1,
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            balance,
+                            style: theme.textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.w800,
+                              color: textPrimary,
+                              height: 1.1,
+                            ),
+                          ),
+                          const SizedBox(width: Constants.spacingExtraSmall),
+                          Text('Kara', style: theme.textTheme.bodyMedium),
+                        ],
                       ),
                       const SizedBox(height: 2),
                       Text(
@@ -86,28 +92,28 @@ class WalletBalanceCard extends StatelessWidget {
                           color: textSecondary,
                         ),
                       ),
-                      const SizedBox(height: Constants.spacingSmall),
-                      SizedBox(
-                        height: Constants.size40,
-                        child: ElevatedButton(
-                          onPressed: onTransfer,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.success,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                Constants.borderRadiusMedium,
-                              ),
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: Constants.paddingLarge,
-                            ),
-                          ),
-                          child: Text(
-                            'Transfer',
-                            style: theme.textTheme.titleSmall,
-                          ),
-                        ),
-                      ),
+                      // const SizedBox(height: Constants.spacingSmall),
+                      // SizedBox(
+                      //   height: Constants.size40,
+                      //   child: ElevatedButton(
+                      //     onPressed: onTransfer,
+                      //     style: ElevatedButton.styleFrom(
+                      //       backgroundColor: AppColors.success,
+                      //       shape: RoundedRectangleBorder(
+                      //         borderRadius: BorderRadius.circular(
+                      //           Constants.borderRadiusMedium,
+                      //         ),
+                      //       ),
+                      //       padding: const EdgeInsets.symmetric(
+                      //         horizontal: Constants.paddingLarge,
+                      //       ),
+                      //     ),
+                      //     child: Text(
+                      //       'Transfer',
+                      //       style: theme.textTheme.titleSmall,
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

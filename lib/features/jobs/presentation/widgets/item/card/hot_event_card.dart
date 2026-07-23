@@ -42,7 +42,7 @@ class HotEventCard extends StatelessWidget {
               fit: BoxFit.fill,
               errorWidget: (context, url, error) {
                 return Image.asset(
-                  Assets.hiring,
+                  hotEvent.type == 'hot' ? Assets.hot : Assets.events,
                   fit: BoxFit.fill,
                   errorBuilder: (context, url, error) => hotEvent.type == 'hot'
                       ? Image.asset(Assets.hot, fit: BoxFit.fill)

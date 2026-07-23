@@ -11,18 +11,24 @@ _JobApplicantModel _$JobApplicantModelFromJson(Map<String, dynamic> json) =>
       id: (json['id'] as num?)?.toInt() ?? -1,
       title: json['title'] as String? ?? '',
       motivation: json['motivation'] as String? ?? '',
-      location: JobLocationModel.fromJson(
-        json['location'] as Map<String, dynamic>,
-      ),
+      categories:
+          (json['categories'] as List<dynamic>?)
+              ?.map((e) => JobCategoryModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      locations:
+          (json['locations'] as List<dynamic>?)
+              ?.map((e) => JobLocationModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       gender: json['gender'] == null
           ? null
           : JobGenderModel.fromJson(json['gender'] as Map<String, dynamic>),
+      photoUrl: json['photo_candidat'] as String?,
       pdfUrl: json['resumepdf_path'] as String?,
       createdAt: json['created_at'] as String? ?? '',
       user: UserModel.fromJson(json['user'] as Map<String, dynamic>),
-      category: json['category'] == null
-          ? null
-          : JobCategoryModel.fromJson(json['category'] as Map<String, dynamic>),
+      isFavorite: json['isFavorite'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$JobApplicantModelToJson(_JobApplicantModel instance) =>
@@ -30,10 +36,12 @@ Map<String, dynamic> _$JobApplicantModelToJson(_JobApplicantModel instance) =>
       'id': instance.id,
       'title': instance.title,
       'motivation': instance.motivation,
-      'location': instance.location,
+      'categories': instance.categories,
+      'locations': instance.locations,
       'gender': instance.gender,
+      'photo_candidat': instance.photoUrl,
       'resumepdf_path': instance.pdfUrl,
       'created_at': instance.createdAt,
       'user': instance.user,
-      'category': instance.category,
+      'isFavorite': instance.isFavorite,
     };

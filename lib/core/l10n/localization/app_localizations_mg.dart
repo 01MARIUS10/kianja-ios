@@ -815,4 +815,73 @@ class AppLocalizationsMg extends AppLocalizations {
 
   @override
   String get announcer => 'Mpampandefa filazana';
+
+  @override
+  String get apply => 'Handefa kandidà';
+
+  @override
+  String get my_applications => 'Kandidà nalefako';
+
+  @override
+  String get enable_apply_button => 'Alefaso ny bokotra Handefa kandidà';
+
+  @override
+  String get favorites => 'Ankafizina';
+
+  @override
+  String get expertise_domain => 'Sehatra ianarana';
+
+  @override
+  String get posted_successfully => 'Navoaka soa aman-tsara';
+
+  @override
+  String get application_already_sent => 'Efa nalefa ny kandidà';
+
+  @override
+  String get published_by => 'Navoakan\'i';
+
+  @override
+  String get photo_optional => 'Sary (Tsy voatery)';
+
+  @override
+  String get you_applied_to_this_offer =>
+      'Efa nandefa kandidà amin\'ity tolotr\'asa ity ianao.';
+
+  @override
+  String get applied_successfully =>
+      'Vita soa aman-tsara ny fandefasana kandidà';
+
+  @override
+  String get you_applied_successfully_to_this_offer =>
+      'Nahavita nandefa kandidà tamin\'ity tolotr\'asa ity ianao.';
+
+  @override
+  String get view_my_applications => 'Hijery ireo kandidà nalefako';
+
+  @override
+  String get post_successful => 'Vita soa aman-tsara ny famoahana.';
+
+  @override
+  String get view_post => 'Hijery ny famoahana';
+
+  @override
+  String get loading => 'Eo am-pametrahana...';
+
+  @override
+  String get zone_by_province => 'Faritra (isaky ny faritany)';
+
+  @override
+  String get free => 'Maimaim-poana';
+
+  @override
+  String get extend => 'Hanitatra';
+
+  @override
+  String get extension => 'Fanitarana';
+
+  @override
+  String get extended_successfully => 'Vita soa aman-tsara ny fanitarana';
+
+  @override
+  String get extend_successful => 'Nahomby ny fanitarana.';
 }

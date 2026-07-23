@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:kianja/core/utils/constants.dart';
 
 class TitleHeader extends StatelessWidget implements PreferredSizeWidget {
-  const TitleHeader({super.key, required this.title});
+  const TitleHeader({super.key, required this.title, this.actions});
   final String title;
+  final List<Widget>? actions;
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +14,7 @@ class TitleHeader extends StatelessWidget implements PreferredSizeWidget {
       title: Text(title, style: theme.textTheme.headlineMedium),
       centerTitle: false,
       titleSpacing: Constants.spacingMedium,
+      actions: actions,
     );
   }
 

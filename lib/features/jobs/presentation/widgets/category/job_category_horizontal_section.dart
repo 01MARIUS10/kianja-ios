@@ -82,7 +82,12 @@ class JobCategoryHorizontalSection extends StatelessWidget {
                   onTap: () {
                     context.goNamed(
                       Routes.jobOfferDetail.name,
-                      pathParameters: {'id': jobOfferList[index].id.toString()},
+                      pathParameters: {
+                        'id': jobOfferList[index].id.toString(),
+                        'matchedLocation': GoRouterState.of(
+                          context,
+                        ).matchedLocation,
+                      },
                     );
                   },
                   child: JobOfferCard(

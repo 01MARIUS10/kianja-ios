@@ -15,7 +15,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$JobOfferModel {
 
-@JsonKey(defaultValue: -1) int get id;@JsonKey(defaultValue: '') String get title;@JsonKey(defaultValue: '') String get description;@JsonKey(name: 'categories', defaultValue: <JobCategoryModel>[]) List<JobCategoryModel> get categories; JobImageModel? get image; JobLocationModel? get location; JobGenderModel? get gender; JobActorModel? get actor;@JsonKey(name: 'date_limit', defaultValue: '') String get dateLimit;@JsonKey(name: 'status', defaultValue: '') String get status;@JsonKey(name: 'user') UserModel get user;@JsonKey(name: 'created_at', defaultValue: '') String get createdAt;
+@JsonKey(defaultValue: -1) int get id;@JsonKey(defaultValue: '') String get title;@JsonKey(defaultValue: '') String get description;@JsonKey(name: 'categories', defaultValue: <JobCategoryModel>[]) List<JobCategoryModel> get categories;@JsonKey(name: 'locations', defaultValue: <JobLocationModel>[]) List<JobLocationModel> get locations; List<JobImageModel>? get images; JobImageModel? get image;// JobLocationModel? location,
+ JobGenderModel? get gender; JobActorModel? get actor; JobPreferenceModel? get preference;@JsonKey(name: 'date_limit', defaultValue: '') String get dateLimit;@JsonKey(name: 'candidats_count', defaultValue: 0) int get candidatsCount;@JsonKey(name: 'status', defaultValue: '') String get status;@JsonKey(name: 'user') UserModel get user;@JsonKey(name: 'created_at', defaultValue: '') String get createdAt;@JsonKey(defaultValue: false) bool get isFavorite;@JsonKey(defaultValue: false) bool get alreadyPostuler;
 /// Create a copy of JobOfferModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +29,16 @@ $JobOfferModelCopyWith<JobOfferModel> get copyWith => _$JobOfferModelCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is JobOfferModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other.categories, categories)&&(identical(other.image, image) || other.image == image)&&(identical(other.location, location) || other.location == location)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.actor, actor) || other.actor == actor)&&(identical(other.dateLimit, dateLimit) || other.dateLimit == dateLimit)&&(identical(other.status, status) || other.status == status)&&(identical(other.user, user) || other.user == user)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is JobOfferModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other.categories, categories)&&const DeepCollectionEquality().equals(other.locations, locations)&&const DeepCollectionEquality().equals(other.images, images)&&(identical(other.image, image) || other.image == image)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.actor, actor) || other.actor == actor)&&(identical(other.preference, preference) || other.preference == preference)&&(identical(other.dateLimit, dateLimit) || other.dateLimit == dateLimit)&&(identical(other.candidatsCount, candidatsCount) || other.candidatsCount == candidatsCount)&&(identical(other.status, status) || other.status == status)&&(identical(other.user, user) || other.user == user)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.isFavorite, isFavorite) || other.isFavorite == isFavorite)&&(identical(other.alreadyPostuler, alreadyPostuler) || other.alreadyPostuler == alreadyPostuler));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,description,const DeepCollectionEquality().hash(categories),image,location,gender,actor,dateLimit,status,user,createdAt);
+int get hashCode => Object.hash(runtimeType,id,title,description,const DeepCollectionEquality().hash(categories),const DeepCollectionEquality().hash(locations),const DeepCollectionEquality().hash(images),image,gender,actor,preference,dateLimit,candidatsCount,status,user,createdAt,isFavorite,alreadyPostuler);
 
 @override
 String toString() {
-  return 'JobOfferModel(id: $id, title: $title, description: $description, categories: $categories, image: $image, location: $location, gender: $gender, actor: $actor, dateLimit: $dateLimit, status: $status, user: $user, createdAt: $createdAt)';
+  return 'JobOfferModel(id: $id, title: $title, description: $description, categories: $categories, locations: $locations, images: $images, image: $image, gender: $gender, actor: $actor, preference: $preference, dateLimit: $dateLimit, candidatsCount: $candidatsCount, status: $status, user: $user, createdAt: $createdAt, isFavorite: $isFavorite, alreadyPostuler: $alreadyPostuler)';
 }
 
 
@@ -48,11 +49,11 @@ abstract mixin class $JobOfferModelCopyWith<$Res>  {
   factory $JobOfferModelCopyWith(JobOfferModel value, $Res Function(JobOfferModel) _then) = _$JobOfferModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(defaultValue: -1) int id,@JsonKey(defaultValue: '') String title,@JsonKey(defaultValue: '') String description,@JsonKey(name: 'categories', defaultValue: <JobCategoryModel>[]) List<JobCategoryModel> categories, JobImageModel? image, JobLocationModel? location, JobGenderModel? gender, JobActorModel? actor,@JsonKey(name: 'date_limit', defaultValue: '') String dateLimit,@JsonKey(name: 'status', defaultValue: '') String status,@JsonKey(name: 'user') UserModel user,@JsonKey(name: 'created_at', defaultValue: '') String createdAt
+@JsonKey(defaultValue: -1) int id,@JsonKey(defaultValue: '') String title,@JsonKey(defaultValue: '') String description,@JsonKey(name: 'categories', defaultValue: <JobCategoryModel>[]) List<JobCategoryModel> categories,@JsonKey(name: 'locations', defaultValue: <JobLocationModel>[]) List<JobLocationModel> locations, List<JobImageModel>? images, JobImageModel? image, JobGenderModel? gender, JobActorModel? actor, JobPreferenceModel? preference,@JsonKey(name: 'date_limit', defaultValue: '') String dateLimit,@JsonKey(name: 'candidats_count', defaultValue: 0) int candidatsCount,@JsonKey(name: 'status', defaultValue: '') String status,@JsonKey(name: 'user') UserModel user,@JsonKey(name: 'created_at', defaultValue: '') String createdAt,@JsonKey(defaultValue: false) bool isFavorite,@JsonKey(defaultValue: false) bool alreadyPostuler
 });
 
 
-$JobImageModelCopyWith<$Res>? get image;$JobLocationModelCopyWith<$Res>? get location;$JobGenderModelCopyWith<$Res>? get gender;$JobActorModelCopyWith<$Res>? get actor;$UserModelCopyWith<$Res> get user;
+$JobImageModelCopyWith<$Res>? get image;$JobGenderModelCopyWith<$Res>? get gender;$JobActorModelCopyWith<$Res>? get actor;$JobPreferenceModelCopyWith<$Res>? get preference;$UserModelCopyWith<$Res> get user;
 
 }
 /// @nodoc
@@ -65,21 +66,26 @@ class _$JobOfferModelCopyWithImpl<$Res>
 
 /// Create a copy of JobOfferModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,Object? categories = null,Object? image = freezed,Object? location = freezed,Object? gender = freezed,Object? actor = freezed,Object? dateLimit = null,Object? status = null,Object? user = null,Object? createdAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,Object? categories = null,Object? locations = null,Object? images = freezed,Object? image = freezed,Object? gender = freezed,Object? actor = freezed,Object? preference = freezed,Object? dateLimit = null,Object? candidatsCount = null,Object? status = null,Object? user = null,Object? createdAt = null,Object? isFavorite = null,Object? alreadyPostuler = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
-as List<JobCategoryModel>,image: freezed == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
-as JobImageModel?,location: freezed == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
-as JobLocationModel?,gender: freezed == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
+as List<JobCategoryModel>,locations: null == locations ? _self.locations : locations // ignore: cast_nullable_to_non_nullable
+as List<JobLocationModel>,images: freezed == images ? _self.images : images // ignore: cast_nullable_to_non_nullable
+as List<JobImageModel>?,image: freezed == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
+as JobImageModel?,gender: freezed == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
 as JobGenderModel?,actor: freezed == actor ? _self.actor : actor // ignore: cast_nullable_to_non_nullable
-as JobActorModel?,dateLimit: null == dateLimit ? _self.dateLimit : dateLimit // ignore: cast_nullable_to_non_nullable
-as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as JobActorModel?,preference: freezed == preference ? _self.preference : preference // ignore: cast_nullable_to_non_nullable
+as JobPreferenceModel?,dateLimit: null == dateLimit ? _self.dateLimit : dateLimit // ignore: cast_nullable_to_non_nullable
+as String,candidatsCount: null == candidatsCount ? _self.candidatsCount : candidatsCount // ignore: cast_nullable_to_non_nullable
+as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as String,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as UserModel,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as String,
+as String,isFavorite: null == isFavorite ? _self.isFavorite : isFavorite // ignore: cast_nullable_to_non_nullable
+as bool,alreadyPostuler: null == alreadyPostuler ? _self.alreadyPostuler : alreadyPostuler // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 /// Create a copy of JobOfferModel
@@ -93,18 +99,6 @@ $JobImageModelCopyWith<$Res>? get image {
 
   return $JobImageModelCopyWith<$Res>(_self.image!, (value) {
     return _then(_self.copyWith(image: value));
-  });
-}/// Create a copy of JobOfferModel
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$JobLocationModelCopyWith<$Res>? get location {
-    if (_self.location == null) {
-    return null;
-  }
-
-  return $JobLocationModelCopyWith<$Res>(_self.location!, (value) {
-    return _then(_self.copyWith(location: value));
   });
 }/// Create a copy of JobOfferModel
 /// with the given fields replaced by the non-null parameter values.
@@ -129,6 +123,18 @@ $JobActorModelCopyWith<$Res>? get actor {
 
   return $JobActorModelCopyWith<$Res>(_self.actor!, (value) {
     return _then(_self.copyWith(actor: value));
+  });
+}/// Create a copy of JobOfferModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$JobPreferenceModelCopyWith<$Res>? get preference {
+    if (_self.preference == null) {
+    return null;
+  }
+
+  return $JobPreferenceModelCopyWith<$Res>(_self.preference!, (value) {
+    return _then(_self.copyWith(preference: value));
   });
 }/// Create a copy of JobOfferModel
 /// with the given fields replaced by the non-null parameter values.
@@ -221,10 +227,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String description, @JsonKey(name: 'categories', defaultValue: <JobCategoryModel>[])  List<JobCategoryModel> categories,  JobImageModel? image,  JobLocationModel? location,  JobGenderModel? gender,  JobActorModel? actor, @JsonKey(name: 'date_limit', defaultValue: '')  String dateLimit, @JsonKey(name: 'status', defaultValue: '')  String status, @JsonKey(name: 'user')  UserModel user, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String description, @JsonKey(name: 'categories', defaultValue: <JobCategoryModel>[])  List<JobCategoryModel> categories, @JsonKey(name: 'locations', defaultValue: <JobLocationModel>[])  List<JobLocationModel> locations,  List<JobImageModel>? images,  JobImageModel? image,  JobGenderModel? gender,  JobActorModel? actor,  JobPreferenceModel? preference, @JsonKey(name: 'date_limit', defaultValue: '')  String dateLimit, @JsonKey(name: 'candidats_count', defaultValue: 0)  int candidatsCount, @JsonKey(name: 'status', defaultValue: '')  String status, @JsonKey(name: 'user')  UserModel user, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt, @JsonKey(defaultValue: false)  bool isFavorite, @JsonKey(defaultValue: false)  bool alreadyPostuler)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _JobOfferModel() when $default != null:
-return $default(_that.id,_that.title,_that.description,_that.categories,_that.image,_that.location,_that.gender,_that.actor,_that.dateLimit,_that.status,_that.user,_that.createdAt);case _:
+return $default(_that.id,_that.title,_that.description,_that.categories,_that.locations,_that.images,_that.image,_that.gender,_that.actor,_that.preference,_that.dateLimit,_that.candidatsCount,_that.status,_that.user,_that.createdAt,_that.isFavorite,_that.alreadyPostuler);case _:
   return orElse();
 
 }
@@ -242,10 +248,10 @@ return $default(_that.id,_that.title,_that.description,_that.categories,_that.im
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String description, @JsonKey(name: 'categories', defaultValue: <JobCategoryModel>[])  List<JobCategoryModel> categories,  JobImageModel? image,  JobLocationModel? location,  JobGenderModel? gender,  JobActorModel? actor, @JsonKey(name: 'date_limit', defaultValue: '')  String dateLimit, @JsonKey(name: 'status', defaultValue: '')  String status, @JsonKey(name: 'user')  UserModel user, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String description, @JsonKey(name: 'categories', defaultValue: <JobCategoryModel>[])  List<JobCategoryModel> categories, @JsonKey(name: 'locations', defaultValue: <JobLocationModel>[])  List<JobLocationModel> locations,  List<JobImageModel>? images,  JobImageModel? image,  JobGenderModel? gender,  JobActorModel? actor,  JobPreferenceModel? preference, @JsonKey(name: 'date_limit', defaultValue: '')  String dateLimit, @JsonKey(name: 'candidats_count', defaultValue: 0)  int candidatsCount, @JsonKey(name: 'status', defaultValue: '')  String status, @JsonKey(name: 'user')  UserModel user, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt, @JsonKey(defaultValue: false)  bool isFavorite, @JsonKey(defaultValue: false)  bool alreadyPostuler)  $default,) {final _that = this;
 switch (_that) {
 case _JobOfferModel():
-return $default(_that.id,_that.title,_that.description,_that.categories,_that.image,_that.location,_that.gender,_that.actor,_that.dateLimit,_that.status,_that.user,_that.createdAt);case _:
+return $default(_that.id,_that.title,_that.description,_that.categories,_that.locations,_that.images,_that.image,_that.gender,_that.actor,_that.preference,_that.dateLimit,_that.candidatsCount,_that.status,_that.user,_that.createdAt,_that.isFavorite,_that.alreadyPostuler);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -262,10 +268,10 @@ return $default(_that.id,_that.title,_that.description,_that.categories,_that.im
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String description, @JsonKey(name: 'categories', defaultValue: <JobCategoryModel>[])  List<JobCategoryModel> categories,  JobImageModel? image,  JobLocationModel? location,  JobGenderModel? gender,  JobActorModel? actor, @JsonKey(name: 'date_limit', defaultValue: '')  String dateLimit, @JsonKey(name: 'status', defaultValue: '')  String status, @JsonKey(name: 'user')  UserModel user, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(defaultValue: -1)  int id, @JsonKey(defaultValue: '')  String title, @JsonKey(defaultValue: '')  String description, @JsonKey(name: 'categories', defaultValue: <JobCategoryModel>[])  List<JobCategoryModel> categories, @JsonKey(name: 'locations', defaultValue: <JobLocationModel>[])  List<JobLocationModel> locations,  List<JobImageModel>? images,  JobImageModel? image,  JobGenderModel? gender,  JobActorModel? actor,  JobPreferenceModel? preference, @JsonKey(name: 'date_limit', defaultValue: '')  String dateLimit, @JsonKey(name: 'candidats_count', defaultValue: 0)  int candidatsCount, @JsonKey(name: 'status', defaultValue: '')  String status, @JsonKey(name: 'user')  UserModel user, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt, @JsonKey(defaultValue: false)  bool isFavorite, @JsonKey(defaultValue: false)  bool alreadyPostuler)?  $default,) {final _that = this;
 switch (_that) {
 case _JobOfferModel() when $default != null:
-return $default(_that.id,_that.title,_that.description,_that.categories,_that.image,_that.location,_that.gender,_that.actor,_that.dateLimit,_that.status,_that.user,_that.createdAt);case _:
+return $default(_that.id,_that.title,_that.description,_that.categories,_that.locations,_that.images,_that.image,_that.gender,_that.actor,_that.preference,_that.dateLimit,_that.candidatsCount,_that.status,_that.user,_that.createdAt,_that.isFavorite,_that.alreadyPostuler);case _:
   return null;
 
 }
@@ -277,7 +283,7 @@ return $default(_that.id,_that.title,_that.description,_that.categories,_that.im
 @JsonSerializable()
 
 class _JobOfferModel extends JobOfferModel {
-  const _JobOfferModel({@JsonKey(defaultValue: -1) required this.id, @JsonKey(defaultValue: '') required this.title, @JsonKey(defaultValue: '') required this.description, @JsonKey(name: 'categories', defaultValue: <JobCategoryModel>[]) required final  List<JobCategoryModel> categories, this.image, this.location, this.gender, this.actor, @JsonKey(name: 'date_limit', defaultValue: '') required this.dateLimit, @JsonKey(name: 'status', defaultValue: '') required this.status, @JsonKey(name: 'user') required this.user, @JsonKey(name: 'created_at', defaultValue: '') required this.createdAt}): _categories = categories,super._();
+  const _JobOfferModel({@JsonKey(defaultValue: -1) required this.id, @JsonKey(defaultValue: '') required this.title, @JsonKey(defaultValue: '') required this.description, @JsonKey(name: 'categories', defaultValue: <JobCategoryModel>[]) required final  List<JobCategoryModel> categories, @JsonKey(name: 'locations', defaultValue: <JobLocationModel>[]) required final  List<JobLocationModel> locations, final  List<JobImageModel>? images, this.image, this.gender, this.actor, this.preference, @JsonKey(name: 'date_limit', defaultValue: '') required this.dateLimit, @JsonKey(name: 'candidats_count', defaultValue: 0) required this.candidatsCount, @JsonKey(name: 'status', defaultValue: '') required this.status, @JsonKey(name: 'user') required this.user, @JsonKey(name: 'created_at', defaultValue: '') required this.createdAt, @JsonKey(defaultValue: false) required this.isFavorite, @JsonKey(defaultValue: false) required this.alreadyPostuler}): _categories = categories,_locations = locations,_images = images,super._();
   factory _JobOfferModel.fromJson(Map<String, dynamic> json) => _$JobOfferModelFromJson(json);
 
 @override@JsonKey(defaultValue: -1) final  int id;
@@ -290,14 +296,34 @@ class _JobOfferModel extends JobOfferModel {
   return EqualUnmodifiableListView(_categories);
 }
 
+ final  List<JobLocationModel> _locations;
+@override@JsonKey(name: 'locations', defaultValue: <JobLocationModel>[]) List<JobLocationModel> get locations {
+  if (_locations is EqualUnmodifiableListView) return _locations;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_locations);
+}
+
+ final  List<JobImageModel>? _images;
+@override List<JobImageModel>? get images {
+  final value = _images;
+  if (value == null) return null;
+  if (_images is EqualUnmodifiableListView) return _images;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(value);
+}
+
 @override final  JobImageModel? image;
-@override final  JobLocationModel? location;
+// JobLocationModel? location,
 @override final  JobGenderModel? gender;
 @override final  JobActorModel? actor;
+@override final  JobPreferenceModel? preference;
 @override@JsonKey(name: 'date_limit', defaultValue: '') final  String dateLimit;
+@override@JsonKey(name: 'candidats_count', defaultValue: 0) final  int candidatsCount;
 @override@JsonKey(name: 'status', defaultValue: '') final  String status;
 @override@JsonKey(name: 'user') final  UserModel user;
 @override@JsonKey(name: 'created_at', defaultValue: '') final  String createdAt;
+@override@JsonKey(defaultValue: false) final  bool isFavorite;
+@override@JsonKey(defaultValue: false) final  bool alreadyPostuler;
 
 /// Create a copy of JobOfferModel
 /// with the given fields replaced by the non-null parameter values.
@@ -312,16 +338,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _JobOfferModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other._categories, _categories)&&(identical(other.image, image) || other.image == image)&&(identical(other.location, location) || other.location == location)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.actor, actor) || other.actor == actor)&&(identical(other.dateLimit, dateLimit) || other.dateLimit == dateLimit)&&(identical(other.status, status) || other.status == status)&&(identical(other.user, user) || other.user == user)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _JobOfferModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other._categories, _categories)&&const DeepCollectionEquality().equals(other._locations, _locations)&&const DeepCollectionEquality().equals(other._images, _images)&&(identical(other.image, image) || other.image == image)&&(identical(other.gender, gender) || other.gender == gender)&&(identical(other.actor, actor) || other.actor == actor)&&(identical(other.preference, preference) || other.preference == preference)&&(identical(other.dateLimit, dateLimit) || other.dateLimit == dateLimit)&&(identical(other.candidatsCount, candidatsCount) || other.candidatsCount == candidatsCount)&&(identical(other.status, status) || other.status == status)&&(identical(other.user, user) || other.user == user)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.isFavorite, isFavorite) || other.isFavorite == isFavorite)&&(identical(other.alreadyPostuler, alreadyPostuler) || other.alreadyPostuler == alreadyPostuler));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,description,const DeepCollectionEquality().hash(_categories),image,location,gender,actor,dateLimit,status,user,createdAt);
+int get hashCode => Object.hash(runtimeType,id,title,description,const DeepCollectionEquality().hash(_categories),const DeepCollectionEquality().hash(_locations),const DeepCollectionEquality().hash(_images),image,gender,actor,preference,dateLimit,candidatsCount,status,user,createdAt,isFavorite,alreadyPostuler);
 
 @override
 String toString() {
-  return 'JobOfferModel(id: $id, title: $title, description: $description, categories: $categories, image: $image, location: $location, gender: $gender, actor: $actor, dateLimit: $dateLimit, status: $status, user: $user, createdAt: $createdAt)';
+  return 'JobOfferModel(id: $id, title: $title, description: $description, categories: $categories, locations: $locations, images: $images, image: $image, gender: $gender, actor: $actor, preference: $preference, dateLimit: $dateLimit, candidatsCount: $candidatsCount, status: $status, user: $user, createdAt: $createdAt, isFavorite: $isFavorite, alreadyPostuler: $alreadyPostuler)';
 }
 
 
@@ -332,11 +358,11 @@ abstract mixin class _$JobOfferModelCopyWith<$Res> implements $JobOfferModelCopy
   factory _$JobOfferModelCopyWith(_JobOfferModel value, $Res Function(_JobOfferModel) _then) = __$JobOfferModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(defaultValue: -1) int id,@JsonKey(defaultValue: '') String title,@JsonKey(defaultValue: '') String description,@JsonKey(name: 'categories', defaultValue: <JobCategoryModel>[]) List<JobCategoryModel> categories, JobImageModel? image, JobLocationModel? location, JobGenderModel? gender, JobActorModel? actor,@JsonKey(name: 'date_limit', defaultValue: '') String dateLimit,@JsonKey(name: 'status', defaultValue: '') String status,@JsonKey(name: 'user') UserModel user,@JsonKey(name: 'created_at', defaultValue: '') String createdAt
+@JsonKey(defaultValue: -1) int id,@JsonKey(defaultValue: '') String title,@JsonKey(defaultValue: '') String description,@JsonKey(name: 'categories', defaultValue: <JobCategoryModel>[]) List<JobCategoryModel> categories,@JsonKey(name: 'locations', defaultValue: <JobLocationModel>[]) List<JobLocationModel> locations, List<JobImageModel>? images, JobImageModel? image, JobGenderModel? gender, JobActorModel? actor, JobPreferenceModel? preference,@JsonKey(name: 'date_limit', defaultValue: '') String dateLimit,@JsonKey(name: 'candidats_count', defaultValue: 0) int candidatsCount,@JsonKey(name: 'status', defaultValue: '') String status,@JsonKey(name: 'user') UserModel user,@JsonKey(name: 'created_at', defaultValue: '') String createdAt,@JsonKey(defaultValue: false) bool isFavorite,@JsonKey(defaultValue: false) bool alreadyPostuler
 });
 
 
-@override $JobImageModelCopyWith<$Res>? get image;@override $JobLocationModelCopyWith<$Res>? get location;@override $JobGenderModelCopyWith<$Res>? get gender;@override $JobActorModelCopyWith<$Res>? get actor;@override $UserModelCopyWith<$Res> get user;
+@override $JobImageModelCopyWith<$Res>? get image;@override $JobGenderModelCopyWith<$Res>? get gender;@override $JobActorModelCopyWith<$Res>? get actor;@override $JobPreferenceModelCopyWith<$Res>? get preference;@override $UserModelCopyWith<$Res> get user;
 
 }
 /// @nodoc
@@ -349,21 +375,26 @@ class __$JobOfferModelCopyWithImpl<$Res>
 
 /// Create a copy of JobOfferModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,Object? categories = null,Object? image = freezed,Object? location = freezed,Object? gender = freezed,Object? actor = freezed,Object? dateLimit = null,Object? status = null,Object? user = null,Object? createdAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,Object? categories = null,Object? locations = null,Object? images = freezed,Object? image = freezed,Object? gender = freezed,Object? actor = freezed,Object? preference = freezed,Object? dateLimit = null,Object? candidatsCount = null,Object? status = null,Object? user = null,Object? createdAt = null,Object? isFavorite = null,Object? alreadyPostuler = null,}) {
   return _then(_JobOfferModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,categories: null == categories ? _self._categories : categories // ignore: cast_nullable_to_non_nullable
-as List<JobCategoryModel>,image: freezed == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
-as JobImageModel?,location: freezed == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
-as JobLocationModel?,gender: freezed == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
+as List<JobCategoryModel>,locations: null == locations ? _self._locations : locations // ignore: cast_nullable_to_non_nullable
+as List<JobLocationModel>,images: freezed == images ? _self._images : images // ignore: cast_nullable_to_non_nullable
+as List<JobImageModel>?,image: freezed == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
+as JobImageModel?,gender: freezed == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
 as JobGenderModel?,actor: freezed == actor ? _self.actor : actor // ignore: cast_nullable_to_non_nullable
-as JobActorModel?,dateLimit: null == dateLimit ? _self.dateLimit : dateLimit // ignore: cast_nullable_to_non_nullable
-as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as JobActorModel?,preference: freezed == preference ? _self.preference : preference // ignore: cast_nullable_to_non_nullable
+as JobPreferenceModel?,dateLimit: null == dateLimit ? _self.dateLimit : dateLimit // ignore: cast_nullable_to_non_nullable
+as String,candidatsCount: null == candidatsCount ? _self.candidatsCount : candidatsCount // ignore: cast_nullable_to_non_nullable
+as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as String,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as UserModel,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as String,
+as String,isFavorite: null == isFavorite ? _self.isFavorite : isFavorite // ignore: cast_nullable_to_non_nullable
+as bool,alreadyPostuler: null == alreadyPostuler ? _self.alreadyPostuler : alreadyPostuler // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -378,18 +409,6 @@ $JobImageModelCopyWith<$Res>? get image {
 
   return $JobImageModelCopyWith<$Res>(_self.image!, (value) {
     return _then(_self.copyWith(image: value));
-  });
-}/// Create a copy of JobOfferModel
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$JobLocationModelCopyWith<$Res>? get location {
-    if (_self.location == null) {
-    return null;
-  }
-
-  return $JobLocationModelCopyWith<$Res>(_self.location!, (value) {
-    return _then(_self.copyWith(location: value));
   });
 }/// Create a copy of JobOfferModel
 /// with the given fields replaced by the non-null parameter values.
@@ -414,6 +433,18 @@ $JobActorModelCopyWith<$Res>? get actor {
 
   return $JobActorModelCopyWith<$Res>(_self.actor!, (value) {
     return _then(_self.copyWith(actor: value));
+  });
+}/// Create a copy of JobOfferModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$JobPreferenceModelCopyWith<$Res>? get preference {
+    if (_self.preference == null) {
+    return null;
+  }
+
+  return $JobPreferenceModelCopyWith<$Res>(_self.preference!, (value) {
+    return _then(_self.copyWith(preference: value));
   });
 }/// Create a copy of JobOfferModel
 /// with the given fields replaced by the non-null parameter values.

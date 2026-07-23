@@ -12,6 +12,7 @@ class HotEvent {
     required this.imageUrl,
     this.image,
     required this.center,
+    required this.isFavorite,
   });
 
   const HotEvent.empty({
@@ -24,6 +25,7 @@ class HotEvent {
     this.imageUrl = '',
     this.image,
     this.center = const TrainingCenter.empty(),
+    this.isFavorite = false,
   });
 
   final int id;
@@ -35,4 +37,5 @@ class HotEvent {
   final String imageUrl;
   final JobImage? image;
   final TrainingCenter center;
+  final bool isFavorite;
 }

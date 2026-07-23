@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/errors/exceptions.dart';
@@ -38,6 +39,18 @@ class AccountRepositoryImpl implements AccountRepository {
   Future<Either<Failure, Unit>> uploadProfilPhoto({required XFile file}) async {
     try {
       await remoteDataSource.uploadProfilPhoto(file: file);
+      return right(unit);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> uploadProfilCV({
+    required PlatformFile file,
+  }) async {
+    try {
+      await remoteDataSource.uploadProfilCV(file: file);
       return right(unit);
     } on AppException catch (e) {
       return left(failureHandler(e));

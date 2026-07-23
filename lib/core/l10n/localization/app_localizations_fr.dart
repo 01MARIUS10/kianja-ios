@@ -282,7 +282,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get category_3_max => 'Catégorie * (3 max)';
 
   @override
-  String get location => 'Lieu';
+  String get location => 'Localisation';
 
   @override
   String get actor => 'Acteur';
@@ -817,4 +817,71 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get announcer => 'Annonceur';
+
+  @override
+  String get apply => 'Postuler';
+
+  @override
+  String get my_applications => 'Mes candidatures';
+
+  @override
+  String get enable_apply_button => 'Activer le bouton Postuler';
+
+  @override
+  String get favorites => 'Favoris';
+
+  @override
+  String get expertise_domain => 'Domaine d\'expertise';
+
+  @override
+  String get posted_successfully => 'Publié avec succès';
+
+  @override
+  String get application_already_sent => 'Candidature déjà envoyée';
+
+  @override
+  String get published_by => 'Publié par';
+
+  @override
+  String get photo_optional => 'Photo (Optionnelle)';
+
+  @override
+  String get you_applied_to_this_offer => 'Vous avez postulé à cette offre.';
+
+  @override
+  String get applied_successfully => 'Candidature envoyée avec succès';
+
+  @override
+  String get you_applied_successfully_to_this_offer =>
+      'Vous avez postulé avec succès à cette offre.';
+
+  @override
+  String get view_my_applications => 'Voir mes candidatures';
+
+  @override
+  String get post_successful => 'Publication réussie.';
+
+  @override
+  String get view_post => 'Voir la publication';
+
+  @override
+  String get loading => 'Chargement...';
+
+  @override
+  String get zone_by_province => 'Zone (par province)';
+
+  @override
+  String get free => 'Gratuit';
+
+  @override
+  String get extend => 'Prolonger';
+
+  @override
+  String get extension => 'Prolongement';
+
+  @override
+  String get extended_successfully => 'Prolongé avec succès';
+
+  @override
+  String get extend_successful => 'Prolongement réussi.';
 }

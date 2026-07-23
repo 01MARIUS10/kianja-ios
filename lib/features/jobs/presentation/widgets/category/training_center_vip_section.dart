@@ -18,6 +18,8 @@ class TrainingCenterVipSection extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final centers = vipCenters.toList();
+    final imageWidth =
+        MediaQuery.of(context).size.width / 3 - Constants.paddingLarge * 2 / 3;
     // centers.add(centers.first);
     // centers.add(centers.first);
 
@@ -31,107 +33,111 @@ class TrainingCenterVipSection extends StatelessWidget {
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: List.generate(centers.length, (index) {
               final center = centers[index];
               return Flexible(
                 fit: FlexFit.loose,
-                child: Stack(
-                  children: [
-                    InkWell(
-                      borderRadius: BorderRadius.circular(
-                        Constants.borderRadiusSmall,
-                      ),
-                      onTap: () {
-                        context.pushNamed(
-                          Routes.trainingCenterDetail.name,
-                          pathParameters: {
-                            'trainingCenterId': center.id.toString(),
+                child: SizedBox(
+                  width: imageWidth,
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: Stack(
+                      children: [
+                        InkWell(
+                          borderRadius: BorderRadius.circular(
+                            Constants.borderRadiusSmall,
+                          ),
+                          onTap: () {
+                            context.pushNamed(
+                              Routes.trainingCenterDetail.name,
+                              pathParameters: {
+                                'trainingCenterId': center.id.toString(),
+                              },
+                            );
                           },
-                        );
-                      },
-                      child: Column(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(
-                              Constants.borderRadiusSmall,
-                            ),
-                            child: SizedBox(
-                              width: 120,
-                              height: 75,
-                              child: CachedNetworkImage(
-                                imageUrl:
-                                    '${EnvConfig.baseApiUrl}${center.imageUrl}',
-                                fit: BoxFit.cover,
-                                errorWidget: (context, url, error) =>
-                                    Image.asset(
-                                      Assets.hiring,
-                                      fit: BoxFit.cover,
-                                      errorBuilder: (ctx, e, st) => Container(
+                          child: Column(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(
+                                  Constants.borderRadiusSmall,
+                                ),
+                                child: CachedNetworkImage(
+                                  width: imageWidth,
+                                  height: 100,
+                                  imageUrl:
+                                      '${EnvConfig.baseApiUrl}${center.images?.first.url}',
+                                  fit: BoxFit.cover,
+                                  errorWidget: (context, url, error) =>
+                                      Image.asset(
+                                        Assets.hiring,
+                                        fit: BoxFit.cover,
+                                        errorBuilder: (ctx, e, st) => Container(
+                                          color: isDark
+                                              ? AppColors.darkBorder
+                                              : AppColors.lightBorder,
+                                          child: const Icon(
+                                            Icons.image,
+                                            size: 32,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ),
+                                  progressIndicatorBuilder:
+                                      (context, url, progress) => Container(
                                         color: isDark
                                             ? AppColors.darkBorder
                                             : AppColors.lightBorder,
-                                        child: const Icon(
-                                          Icons.image,
-                                          size: 32,
-                                          color: Colors.grey,
+                                        child: const Center(
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                progressIndicatorBuilder:
-                                    (context, url, progress) => Container(
-                                      color: isDark
-                                          ? AppColors.darkBorder
-                                          : AppColors.lightBorder,
-                                      child: const Center(
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                        ),
-                                      ),
-                                    ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: Constants.paddingExtraSmall,
+                              ),
+                              Text(
+                                center.name,
+                                maxLines: 2,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                style: theme.textTheme.titleMedium,
+                              ),
+                            ],
+                          ),
+                        ),
+                        // VIP badge
+                        Positioned(
+                          top: Constants.spacingExtraSmall,
+                          left: Constants.spacingExtraSmall,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: Constants.paddingSmall,
+                              vertical: 3,
+                            ),
+                            decoration: BoxDecoration(
+                              color: AppColors.kara,
+                              borderRadius: BorderRadius.circular(
+                                Constants.borderRadiusLarge,
+                              ),
+                            ),
+                            child: const Text(
+                              'VIP',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 0.5,
                               ),
                             ),
                           ),
-                          const SizedBox(height: Constants.paddingExtraSmall),
-                          SizedBox(
-                            width: 120,
-                            child: Text(
-                              center.name,
-                              maxLines: 2,
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                              style: theme.textTheme.titleMedium,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    // VIP badge
-                    Positioned(
-                      top: Constants.spacingExtraSmall,
-                      left: Constants.spacingExtraSmall,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: Constants.paddingSmall,
-                          vertical: 3,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppColors.kara,
-                          borderRadius: BorderRadius.circular(
-                            Constants.borderRadiusLarge,
-                          ),
-                        ),
-                        child: const Text(
-                          'VIP',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 0.5,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               );
             }),

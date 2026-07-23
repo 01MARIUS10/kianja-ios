@@ -14,6 +14,9 @@ import 'package:kianja/features/my_post/domain/usecases/get_all/get_all_hots_use
 import 'package:kianja/features/my_post/domain/usecases/get_all/get_all_job_applicants_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/get_all/get_all_job_offers_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/get_all/get_all_training_centers_usecase.dart';
+import 'package:kianja/features/my_post/domain/usecases/get_candidate_usecase.dart';
+import 'package:kianja/features/my_post/domain/usecases/get_candidates/get_candidates_usecase.dart';
+import 'package:kianja/features/my_post/domain/usecases/prolonger/prolonger_job_applicant_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_expert_executive/update_expert_executive_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_hot_event/update_hot_event_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_job_applicant/update_job_applicant_usecase.dart';
@@ -78,6 +81,15 @@ Future<void> initMyPostDependencies(GetIt getIt, Dio dio) async {
   getIt.registerLazySingleton<GetAllEventsUseCase>(
     () => GetAllEventsUseCase(myPostRepository: getIt()),
   );
+  getIt.registerLazySingleton<GetCandidatesUseCase>(
+    () => GetCandidatesUseCase(myPostRepository: getIt()),
+  );
+  getIt.registerLazySingleton<GetCandidateUseCase>(
+    () => GetCandidateUseCase(myPostRepository: getIt()),
+  );
+  getIt.registerLazySingleton<ProlongerJobApplicantUseCase>(
+    () => ProlongerJobApplicantUseCase(myPostRepository: getIt()),
+  );
 
   // Blocs
   getIt.registerFactory(
@@ -97,6 +109,9 @@ Future<void> initMyPostDependencies(GetIt getIt, Dio dio) async {
       getAllTrainingCentersUseCase: getIt(),
       getAllHotsUseCase: getIt(),
       getAllEventsUseCase: getIt(),
+      getCandidatesUseCase: getIt(),
+      getCandidateUseCase: getIt(),
+      prolongerJobApplicantUseCase: getIt(),
     ),
   );
 }

@@ -788,4 +788,70 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get announcer => '发布者';
+
+  @override
+  String get apply => '申请';
+
+  @override
+  String get my_applications => '申请记录';
+
+  @override
+  String get enable_apply_button => '启用申请按钮';
+
+  @override
+  String get favorites => '收藏';
+
+  @override
+  String get expertise_domain => '专业领域';
+
+  @override
+  String get posted_successfully => '发布成功';
+
+  @override
+  String get application_already_sent => '申请已提交';
+
+  @override
+  String get published_by => '发布者';
+
+  @override
+  String get photo_optional => '照片（可选）';
+
+  @override
+  String get you_applied_to_this_offer => '您已申请此职位。';
+
+  @override
+  String get applied_successfully => '申请成功';
+
+  @override
+  String get you_applied_successfully_to_this_offer => '您已成功申请此职位。';
+
+  @override
+  String get view_my_applications => '查看我的申请';
+
+  @override
+  String get post_successful => '发布成功。';
+
+  @override
+  String get view_post => '查看发布';
+
+  @override
+  String get loading => '加载中...';
+
+  @override
+  String get zone_by_province => '地区（按省份）';
+
+  @override
+  String get free => '免费';
+
+  @override
+  String get extend => '延长';
+
+  @override
+  String get extension => '延期';
+
+  @override
+  String get extended_successfully => '延长成功';
+
+  @override
+  String get extend_successful => '延期成功。';
 }

@@ -59,3 +59,12 @@ class AccountProfilPhotoUploadRequested extends AccountEvent {
 class AccountProfilPhotoDeleteRequested extends AccountEvent {
   const AccountProfilPhotoDeleteRequested();
 }
+
+class AccountProfilCvUploadRequested extends AccountEvent {
+  const AccountProfilCvUploadRequested({required this.file});
+
+  final PlatformFile file;
+
+  @override
+  List<Object> get props => [file];
+}

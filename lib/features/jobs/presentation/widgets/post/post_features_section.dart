@@ -67,13 +67,13 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
     widget.onPlanSelected(_selectedPlan);
   }
 
-  void _toggleType(JobType type) {
-    if (_selectedType?.id == type.id) return;
-    setState(() {
-      _selectedType = type;
-      _updateDurationsForSelectedType();
-    });
-  }
+  // void _toggleType(JobType type) {
+  //   if (_selectedType?.id == type.id) return;
+  //   setState(() {
+  //     _selectedType = type;
+  //     _updateDurationsForSelectedType();
+  //   });
+  // }
 
   void _toggleDuration(JobDuration duration) {
     if (_selectedDuration?.id == duration.id) return;
@@ -90,13 +90,13 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
     });
   }
 
-  List<JobType> get _distinctTypes {
-    final types = <int, JobType>{};
-    for (final plan in widget.plans) {
-      types[plan.type.id] = plan.type;
-    }
-    return types.values.toList();
-  }
+  // List<JobType> get _distinctTypes {
+  //   final types = <int, JobType>{};
+  //   for (final plan in widget.plans) {
+  //     types[plan.type.id] = plan.type;
+  //   }
+  //   return types.values.toList();
+  // }
 
   List<JobDuration> get _availableDurations {
     if (_selectedType == null) return [];
@@ -127,36 +127,36 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
           style: textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 16),
-        _buildFeatureRow(
-          context,
-          label: '${context.appLoc.type} :',
-          children: _distinctTypes.map((type) {
-            final isSelected = _selectedType?.id == type.id;
-            return InkWell(
-              onTap: () => _toggleType(type),
-              borderRadius: BorderRadius.circular(4),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
-                child: Row(
-                  // mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: Checkbox(
-                        value: isSelected,
-                        onChanged: (value) => _toggleType(type),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Text(type.name, style: textTheme.bodyMedium),
-                  ],
-                ),
-              ),
-            );
-          }).toList(),
-        ),
-        const SizedBox(height: 12),
+        // _buildFeatureRow(
+        //   context,
+        //   label: '${context.appLoc.type} :',
+        //   children: _distinctTypes.map((type) {
+        //     final isSelected = _selectedType?.id == type.id;
+        //     return InkWell(
+        //       onTap: () => _toggleType(type),
+        //       borderRadius: BorderRadius.circular(4),
+        //       child: Padding(
+        //         padding: const EdgeInsets.symmetric(vertical: 4),
+        //         child: Row(
+        //           // mainAxisSize: MainAxisSize.min,
+        //           children: [
+        //             SizedBox(
+        //               width: 24,
+        //               height: 24,
+        //               child: Checkbox(
+        //                 value: isSelected,
+        //                 onChanged: (value) => _toggleType(type),
+        //               ),
+        //             ),
+        //             const SizedBox(width: 8),
+        //             Text(type.name, style: textTheme.bodyMedium),
+        //           ],
+        //         ),
+        //       ),
+        //     );
+        //   }).toList(),
+        // ),
+        // const SizedBox(height: 12),
         _buildFeatureRow(
           context,
           label: '${context.appLoc.duration} :',
@@ -199,15 +199,25 @@ class _PostFeaturesSectionState extends State<PostFeaturesSection> {
               width: 25,
               fit: BoxFit.cover,
             ),
-            const SizedBox(width: 4),
-            Text(
-              _selectedPlan != null
-                  ? AppFunction.formatNumberWithSpaces(_selectedPlan!.price)
-                  : '-',
-              style: textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+            const SizedBox(width: Constants.spacingSmall),
+            if (_selectedPlan != null && _selectedPlan!.price == 0)
+              Text(
+                context.appLoc.free,
+                style: textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
+            if (_selectedPlan != null && _selectedPlan!.price != 0)
+              Text(
+                _selectedPlan != null
+                    ? AppFunction.formatNumberWithSpaces(_selectedPlan!.price)
+                    : '-',
+                style: textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            const SizedBox(width: Constants.spacingExtraSmall),
+            Text('Kara', style: textTheme.bodyMedium),
           ],
         ),
         const SizedBox(height: 16),

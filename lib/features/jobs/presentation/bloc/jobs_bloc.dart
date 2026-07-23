@@ -12,6 +12,7 @@ import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_filter.d
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_zone.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer_filter.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/job_offer_filtering.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_category.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_domain.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
@@ -21,6 +22,7 @@ import 'package:kianja/features/jobs/domain/entities/training/training_center.da
 import 'package:kianja/features/jobs/domain/entities/training/training_center_filter.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center_hot_event.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center_view_all_domain.dart';
+import 'package:kianja/features/jobs/domain/usecases/apply_to_offer_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_hot_event/create_hot_event_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_hot_event/create_hot_event_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_params.dart';
@@ -38,6 +40,7 @@ import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_zone_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_features_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_offer_detail_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_job_offer_filtering_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_offers_group_by_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_price_plan/get_price_plan_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_price_plan/get_price_plan_usecase.dart';
@@ -73,6 +76,7 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     required this._viewAllJobApplicantsUseCase,
     required this._getJobApplicantProfessionsUseCase,
     required this._getJobApplicantFiltersUseCase,
+    required this._getJobOfferFilteringUseCase,
     required this._getPricePlanUsecase,
     required this._createJobApplicantUseCase,
     required this._getTrainingCenterDomainsUseCase,
@@ -106,6 +110,7 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
       _onJobApplicantProfessionsFetchRequested,
     );
     on<JobApplicantFiltersFetchRequested>(_onJobApplicantFiltersFetchRequested);
+    on<JobOfferFilteringFetchRequested>(_onJobOfferFilteringFetchRequested);
     on<JobsGetPricePlanRequested>(_onJobsGetPricePlanRequested);
     on<JobCreateJobApplicantRequested>(_onJobCreateJobApplicantRequested);
     on<GetTrainingCenterDomainsRequested>(_onGetTrainingCenterDomainsRequested);
@@ -137,6 +142,7 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
   final ViewAllJobApplicantsUseCase _viewAllJobApplicantsUseCase;
   final GetJobApplicantProfessionsUseCase _getJobApplicantProfessionsUseCase;
   final GetJobApplicantFiltersUseCase _getJobApplicantFiltersUseCase;
+  final GetJobOfferFilteringUseCase _getJobOfferFilteringUseCase;
   final GetPricePlanUsecase _getPricePlanUsecase;
   final CreateJobApplicantUseCase _createJobApplicantUseCase;
   final GetTrainingCenterDomainsUseCase _getTrainingCenterDomainsUseCase;
@@ -392,6 +398,22 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
         JobApplicantFiltersFetchSuccess(
           jobApplicantFilter: jobApplicantFilters,
         ),
+      ),
+    );
+  }
+
+  Future<void> _onJobOfferFilteringFetchRequested(
+    JobOfferFilteringFetchRequested event,
+    Emitter<JobsState> emit,
+  ) async {
+    AppDebug.showPrint('Bloc Jobs - Job offer filters request');
+
+    emit(JobsRequestInProgress());
+    final result = await _getJobOfferFilteringUseCase(NoParams());
+    result.fold(
+      (failure) => emit(JobsRequestFailure(message: failure.message)),
+      (jobOfferFiltering) => emit(
+        JobOfferFilteringFetchSuccess(jobOfferFiltering: jobOfferFiltering),
       ),
     );
   }

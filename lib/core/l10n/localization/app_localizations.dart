@@ -161,7 +161,7 @@ abstract class AppLocalizations {
   /// No description provided for @zone.
   ///
   /// In en, this message translates to:
-  /// **'Zone'**
+  /// **'Area'**
   String get zone;
 
   /// No description provided for @view_more.
@@ -641,7 +641,7 @@ abstract class AppLocalizations {
   /// No description provided for @location.
   ///
   /// In en, this message translates to:
-  /// **'Location'**
+  /// **'Localisation'**
   String get location;
 
   /// No description provided for @actor.
@@ -1657,6 +1657,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Announcer'**
   String get announcer;
+
+  /// No description provided for @apply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get apply;
+
+  /// No description provided for @my_applications.
+  ///
+  /// In en, this message translates to:
+  /// **'My applications'**
+  String get my_applications;
+
+  /// No description provided for @enable_apply_button.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable the Apply button'**
+  String get enable_apply_button;
+
+  /// No description provided for @favorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get favorites;
+
+  /// No description provided for @expertise_domain.
+  ///
+  /// In en, this message translates to:
+  /// **'Expertise domain'**
+  String get expertise_domain;
+
+  /// No description provided for @posted_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Posted successfully'**
+  String get posted_successfully;
+
+  /// No description provided for @application_already_sent.
+  ///
+  /// In en, this message translates to:
+  /// **'Application already sent'**
+  String get application_already_sent;
+
+  /// No description provided for @published_by.
+  ///
+  /// In en, this message translates to:
+  /// **'Published by'**
+  String get published_by;
+
+  /// No description provided for @photo_optional.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo (Optional)'**
+  String get photo_optional;
+
+  /// No description provided for @you_applied_to_this_offer.
+  ///
+  /// In en, this message translates to:
+  /// **'You have applied to this offer.'**
+  String get you_applied_to_this_offer;
+
+  /// No description provided for @applied_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Applied successfully'**
+  String get applied_successfully;
+
+  /// No description provided for @you_applied_successfully_to_this_offer.
+  ///
+  /// In en, this message translates to:
+  /// **'You applied successfully to this offer.'**
+  String get you_applied_successfully_to_this_offer;
+
+  /// No description provided for @view_my_applications.
+  ///
+  /// In en, this message translates to:
+  /// **'View my applications'**
+  String get view_my_applications;
+
+  /// No description provided for @post_successful.
+  ///
+  /// In en, this message translates to:
+  /// **'Post successful.'**
+  String get post_successful;
+
+  /// No description provided for @view_post.
+  ///
+  /// In en, this message translates to:
+  /// **'View post'**
+  String get view_post;
+
+  /// No description provided for @loading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading...'**
+  String get loading;
+
+  /// No description provided for @zone_by_province.
+  ///
+  /// In en, this message translates to:
+  /// **'Area (by province)'**
+  String get zone_by_province;
+
+  /// No description provided for @free.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get free;
+
+  /// No description provided for @extend.
+  ///
+  /// In en, this message translates to:
+  /// **'Extend'**
+  String get extend;
+
+  /// No description provided for @extension.
+  ///
+  /// In en, this message translates to:
+  /// **'Extension'**
+  String get extension;
+
+  /// No description provided for @extended_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Extended successfully'**
+  String get extended_successfully;
+
+  /// No description provided for @extend_successful.
+  ///
+  /// In en, this message translates to:
+  /// **'Extension successful.'**
+  String get extend_successful;
 }
 
 class _AppLocalizationsDelegate

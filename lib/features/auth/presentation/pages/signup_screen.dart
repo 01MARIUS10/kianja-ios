@@ -44,6 +44,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String _fullPhone = '';
   bool _agreeToTerms = false;
 
+  late final List<String> _genders = [
+    context.appLoc.male,
+    context.appLoc.female,
+  ];
+  final List<String> _genderValues = ['Male', 'Female'];
+
   @override
   void dispose() {
     _firstNameController.dispose();
@@ -260,7 +266,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       signUpParams: SignUpParams(
                                         firstName: _firstNameController.text,
                                         lastName: _lastNameController.text,
-                                        genre: _genderController.text,
+                                        genre:
+                                            _genderValues[_genders.indexOf(
+                                              _genderController.text,
+                                            )],
                                         phone: _fullPhone,
                                         birthDate:
                                             int.tryParse(

@@ -60,7 +60,9 @@ class JobApplicantCard extends StatelessWidget {
                     const SizedBox(width: Constants.spacingExtraSmall),
                     Expanded(
                       child: Text(
-                        jobApplicant.location.name,
+                        jobApplicant.locations
+                            .map((location) => location.name)
+                            .join(', '),
                         style: theme.textTheme.bodySmall,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -74,14 +76,16 @@ class JobApplicantCard extends StatelessWidget {
                 Row(
                   children: [
                     const Icon(
-                      Icons.computer,
+                      Icons.work,
                       size: Constants.iconSizeExtraSmall,
                       color: AppColors.success,
                     ),
                     const SizedBox(width: Constants.spacingExtraSmall),
                     Expanded(
                       child: Text(
-                        jobApplicant.category?.name ?? '',
+                        jobApplicant.categories
+                            .map((category) => category.name)
+                            .join(', '),
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: AppColors.success,
                         ),

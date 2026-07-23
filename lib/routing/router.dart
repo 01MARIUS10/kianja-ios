@@ -14,6 +14,7 @@ import 'package:kianja/features/account/presentation/pages/personal_info/persona
 import 'package:kianja/features/account/presentation/pages/personal_info/update_personal_info_screen.dart';
 import 'package:kianja/features/account/presentation/pages/terms_of_use/terms_of_use_screen.dart';
 import 'package:kianja/features/account/presentation/pages/wallet/wallet_screen.dart';
+import 'package:kianja/features/account/presentation/widgets/view_profil_cv.dart';
 import 'package:kianja/features/auth/presentation/pages/signin_screen.dart';
 import 'package:kianja/features/auth/presentation/pages/signup_screen.dart';
 import 'package:kianja/features/choose_lang/presentation/pages/choose_lang_screen.dart';
@@ -26,6 +27,7 @@ import 'package:kianja/features/jobs/presentation/pages/details/job_applicant_de
 import 'package:kianja/features/jobs/presentation/pages/details/job_applicant_view_pdf_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/details/job_offer_detail_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/details/training_center_detail.dart';
+import 'package:kianja/features/jobs/presentation/pages/job_applications/job_applications_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/jobs_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/hot_event/create_hot_event_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/hot_event/post_hot_event_screen.dart';
@@ -35,27 +37,35 @@ import 'package:kianja/features/jobs/presentation/pages/post/post_job_offer_scre
 import 'package:kianja/features/jobs/presentation/pages/post/post_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_training_center_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/subscribe_experts_executives_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/post/successful/applied_offer_successful_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/successful/post_executive_successful_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/successful/post_hot_event_successful_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/successful/post_job_applicant_successful_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/successful/post_job_offer_successful_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/successful/post_training_successful_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/saved/saved_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/training_center/training_center_domain_view_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/view_all/job_applicants_view_all_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/view_all/job_category_view_all_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/view_all/training_center_hot_event_view_all_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/view_all/training_center_view_all_screen.dart';
+import 'package:kianja/features/my_post/presentation/pages/candidates/candidate_detail_screen.dart';
+import 'package:kianja/features/my_post/presentation/pages/candidates/candidates_screen.dart';
 import 'package:kianja/features/my_post/presentation/pages/edit/my_post_hot_event_edit.dart';
 import 'package:kianja/features/my_post/presentation/pages/edit/my_post_job_applicant_edit.dart';
 import 'package:kianja/features/my_post/presentation/pages/edit/my_post_job_offer_edit.dart';
 import 'package:kianja/features/my_post/presentation/pages/edit/my_post_training_center_edit.dart';
 import 'package:kianja/features/my_post/presentation/pages/my_post_screen.dart';
+import 'package:kianja/features/my_post/presentation/pages/prolonger/prolonger_job_applicant_screen.dart';
+import 'package:kianja/features/my_post/presentation/pages/prolonger/prolonger_job_applicant_successful_screen.dart';
+import 'package:kianja/features/my_post/presentation/widgets/candidate/view_candidate_pdf.dart';
 import 'package:kianja/routing/navigation/navigation.dart';
 import 'package:kianja/routing/routes.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
-final _rootNavigatorPostKey = GlobalKey<NavigatorState>();
 final _shellNavigatorJobsKey = GlobalKey<NavigatorState>();
+final _rootNavigatorFavoritesKey = GlobalKey<NavigatorState>();
+final _rootNavigatorPostKey = GlobalKey<NavigatorState>();
 final _shellNavigatorMyPostKey = GlobalKey<NavigatorState>();
 final _shellNavigatorAccountKey = GlobalKey<NavigatorState>();
 
@@ -107,6 +117,10 @@ abstract class AppRouter {
           return Routes.signIn.path;
         }
         if (state.matchedLocation == Routes.account.path &&
+            isAuthenticated == false) {
+          return Routes.signIn.path;
+        }
+        if (state.matchedLocation == Routes.favorites.path &&
             isAuthenticated == false) {
           return Routes.signIn.path;
         }
@@ -203,8 +217,18 @@ abstract class AppRouter {
                         final params = state.pathParameters;
                         return JobOfferDetailScreen(
                           id: int.parse(params['id'] ?? '0'),
+                          matchedLocation: params['matchedLocation'],
                         );
                       },
+                      routes: [
+                        GoRoute(
+                          name: Routes.appliedJobOfferSuccessful.name,
+                          path: Routes.appliedJobOfferSuccessful.path,
+                          builder: (context, state) {
+                            return const AppliedOfferSuccessfulScreen();
+                          },
+                        ),
+                      ],
                     ),
                     GoRoute(
                       name: Routes.jobCategoryViewAll.name,
@@ -352,6 +376,19 @@ abstract class AppRouter {
                 ),
               ],
             ),
+            // Favorites branch
+            StatefulShellBranch(
+              navigatorKey: _rootNavigatorFavoritesKey,
+              routes: [
+                GoRoute(
+                  name: Routes.favorites.name,
+                  path: Routes.favorites.path,
+                  builder: (context, state) {
+                    return const SavedScreen();
+                  },
+                ),
+              ],
+            ),
             // Post branch
             StatefulShellBranch(
               navigatorKey: _rootNavigatorPostKey,
@@ -436,6 +473,37 @@ abstract class AppRouter {
                   },
                   routes: [
                     GoRoute(
+                      name: Routes.candidatesList.name,
+                      path: Routes.candidatesList.path,
+                      builder: (context, state) {
+                        final params = state.pathParameters;
+                        return CandidatesScreen(
+                          jobOfferId: int.parse(params['jobId'] ?? '0'),
+                        );
+                      },
+                      routes: [
+                        GoRoute(
+                          name: Routes.candidateDetail.name,
+                          path: Routes.candidateDetail.path,
+                          builder: (context, state) {
+                            final params = state.pathParameters;
+                            return CandidateDetailScreen(
+                              id: int.parse(params['id'] ?? '0'),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    GoRoute(
+                      parentNavigatorKey: _rootNavigatorKey,
+                      name: Routes.viewCandidatePdf.name,
+                      path: Routes.viewCandidatePdf.path,
+                      builder: (context, state) {
+                        final extra = state.extra as Map<String, String>? ?? {};
+                        return ViewCandidatePdf(pdfUrl: extra['pdfUrl'] ?? '');
+                      },
+                    ),
+                    GoRoute(
                       name: Routes.myPostJobOfferEdit.name,
                       path: Routes.myPostJobOfferEdit.path,
                       builder: (context, state) {
@@ -462,6 +530,32 @@ abstract class AppRouter {
                               : null,
                         );
                       },
+                    ),
+                    GoRoute(
+                      name: Routes.prolongerJobApplicant.name,
+                      path: Routes.prolongerJobApplicant.path,
+                      builder: (context, state) {
+                        final params = state.pathParameters;
+                        // final jobApplicant = state.extra;
+                        return ProlongerJobApplicantScreen(
+                          id: int.parse(params['id'] ?? '0'),
+                          // initialJobApplicant: jobApplicant is JobApplicant
+                          //     ? jobApplicant
+                          //     : null,
+                        );
+                      },
+                      routes: [
+                        GoRoute(
+                          name: Routes.prolongerJobApplicantSuccessful.name,
+                          path: Routes.prolongerJobApplicantSuccessful.path,
+                          builder: (context, state) {
+                            final params = state.pathParameters;
+                            return ProlongerJobApplicantSuccessfulScreen(
+                              id: int.parse(params['jobAppId'] ?? '0'),
+                            );
+                          },
+                        ),
+                      ],
                     ),
                     GoRoute(
                       name: Routes.myPostTrainingCenterEdit.name,
@@ -558,6 +652,16 @@ abstract class AppRouter {
                       },
                       routes: [
                         GoRoute(
+                          parentNavigatorKey: _rootNavigatorKey,
+                          name: Routes.viewProfileCV.name,
+                          path: Routes.viewProfileCV.path,
+                          builder: (context, state) {
+                            final extra =
+                                state.extra as Map<String, String>? ?? {};
+                            return ViewProfilCv(pdfUrl: extra['pdfUrl'] ?? '');
+                          },
+                        ),
+                        GoRoute(
                           name: Routes.updatePersonalInfo.name,
                           path: Routes.updatePersonalInfo.path,
                           builder: (context, state) {
@@ -571,6 +675,20 @@ abstract class AppRouter {
                       path: Routes.kara.path,
                       builder: (context, state) {
                         return const WalletScreen();
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.applications.name,
+                      path: Routes.applications.path,
+                      builder: (context, state) {
+                        return const JobApplicationsScreen();
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.saved.name,
+                      path: Routes.saved.path,
+                      builder: (context, state) {
+                        return const SavedScreen();
                       },
                     ),
                     GoRoute(

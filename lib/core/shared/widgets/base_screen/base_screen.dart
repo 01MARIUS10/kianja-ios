@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
-import 'package:kianja/core/shared/widgets/base_screen/banner_pub.dart';
+import 'package:kianja/core/shared/widgets/base_screen/banner_partner.dart';
+import 'package:kianja/core/shared/widgets/base_screen/banner_pub_loading.dart';
+import 'package:kianja/core/shared/widgets/base_screen/banner_sponsor.dart';
 import 'package:kianja/routing/routes.dart';
 
 class BaseScreen extends StatelessWidget {
@@ -24,31 +26,39 @@ class BaseScreen extends StatelessWidget {
         children: [
           BlocBuilder<AppBloc, AppState>(
             builder: (context, state) {
-              if (state.sponsPartners.isEmpty) {
-                return const SizedBox.shrink();
+              if (state.sponsorAndPartnerStatus ==
+                      AppSponsorAndPartnerStatus.loaded &&
+                  state.sponsorAndPartner.sponsor != null) {
+                return InkWell(
+                  onTap: () => context.pushNamed(
+                    Routes.viewAdd.name,
+                    extra: {'url': state.sponsorAndPartner.sponsor!.pageUrl},
+                  ),
+                  child: BannerSponsor(
+                    sponsor: state.sponsorAndPartner.sponsor!,
+                  ),
+                );
               }
-              return InkWell(
-                onTap: () => context.pushNamed(
-                  Routes.viewAdd.name,
-                  extra: {'url': state.sponsPartners.first.pageUrl},
-                ),
-                child: BannerPub(sponsPartner: state.sponsPartners.first),
-              );
+              return const BannerPubLoading();
             },
           ),
           Expanded(child: child),
           BlocBuilder<AppBloc, AppState>(
             builder: (context, state) {
-              if (state.sponsPartners.isEmpty) {
-                return const SizedBox.shrink();
+              if (state.sponsorAndPartnerStatus ==
+                      AppSponsorAndPartnerStatus.loaded &&
+                  state.sponsorAndPartner.partner != null) {
+                return InkWell(
+                  onTap: () => context.pushNamed(
+                    Routes.viewAdd.name,
+                    extra: {'url': state.sponsorAndPartner.partner!.pageUrl},
+                  ),
+                  child: BannerPartner(
+                    partner: state.sponsorAndPartner.partner!,
+                  ),
+                );
               }
-              return InkWell(
-                onTap: () => context.pushNamed(
-                  Routes.viewAdd.name,
-                  extra: {'url': state.sponsPartners.last.pageUrl},
-                ),
-                child: BannerPub(sponsPartner: state.sponsPartners.last),
-              );
+              return const BannerPubLoading();
             },
           ),
         ],

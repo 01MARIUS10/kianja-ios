@@ -46,7 +46,8 @@ class TrainingCenterItemList extends StatelessWidget {
                 width: 110,
                 height: 75,
                 child: CachedNetworkImage(
-                  imageUrl: '${EnvConfig.baseApiUrl}${trainingCenter.imageUrl}',
+                  imageUrl:
+                      '${EnvConfig.baseApiUrl}${trainingCenter.images?.first.url}',
                   fit: BoxFit.cover,
                   errorWidget: (context, url, error) => Image.asset(
                     Assets.hiring,

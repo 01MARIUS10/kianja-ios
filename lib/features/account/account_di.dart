@@ -11,6 +11,7 @@ import 'package:kianja/features/account/domain/usecases/get_all_kara_history_use
 import 'package:kianja/features/account/domain/usecases/get_kara_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/logout_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/upate_user_info/update_user_info_usecase.dart';
+import 'package:kianja/features/account/domain/usecases/upload_profil_cv/upload_profil_cv_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/upload_profil_photo/upload_profil_photo_usecase.dart';
 import 'package:kianja/features/account/presentation/bloc/account_bloc.dart';
 
@@ -53,6 +54,9 @@ Future<void> initAccountDependencies(GetIt getIt, Dio dio) async {
   getIt.registerLazySingleton<DeleteProfilPhotoUseCase>(
     () => DeleteProfilPhotoUseCase(accountRepository: getIt()),
   );
+  getIt.registerLazySingleton<UploadProfilCVUseCase>(
+    () => UploadProfilCVUseCase(accountRepository: getIt()),
+  );
 
   // Blocs
   getIt.registerFactory(
@@ -66,6 +70,7 @@ Future<void> initAccountDependencies(GetIt getIt, Dio dio) async {
       getKaraUseCase: getIt(),
       uploadProfilPhotoUseCase: getIt(),
       deleteProfilPhotoUseCase: getIt(),
+      uploadProfilCVUseCase: getIt(),
     ),
   );
 }

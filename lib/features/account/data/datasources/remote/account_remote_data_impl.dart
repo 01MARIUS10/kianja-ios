@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/services/api/api_endpoint.dart';
 import 'package:kianja/core/services/service_helper.dart';
@@ -30,6 +31,24 @@ class AccountRemoteDataSourceImpl implements AccountRemoteDataSource {
       AppDebug.showPrint('photo path ${file.path}');
       await dio.post(
         ApiEndpoint.profilPhoto.path,
+        data: formData,
+        onSendProgress: (sent, total) {
+          AppDebug.showPrint('${(sent / total * 100).toStringAsFixed(0)}%');
+        },
+      );
+    });
+  }
+
+  @override
+  Future<void> uploadProfilCV({required PlatformFile file}) async {
+    return requestHandler(() async {
+      final formData = FormData.fromMap({
+        'pdf': await MultipartFile.fromFile(file.path!, filename: file.name),
+      });
+      AppDebug.showPrint('cv name ${file.name}');
+      AppDebug.showPrint('cv path ${file.path}');
+      await dio.post(
+        '/api/profil/cv',
         data: formData,
         onSendProgress: (sent, total) {
           AppDebug.showPrint('${(sent / total * 100).toStringAsFixed(0)}%');

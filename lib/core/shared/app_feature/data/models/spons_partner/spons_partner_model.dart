@@ -10,7 +10,7 @@ abstract class SponsPartnerModel
     implements SponsPartner {
   const factory SponsPartnerModel({
     @JsonKey(name: 'titre', defaultValue: '') required String title,
-    @JsonKey(name: 'image', defaultValue: []) required List<String> imageUrl,
+    @JsonKey(defaultValue: '') required String image,
     @JsonKey(name: 'url', defaultValue: '') required String pageUrl,
   }) = _SponsPartnerModel;
 

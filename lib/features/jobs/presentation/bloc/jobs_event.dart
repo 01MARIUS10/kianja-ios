@@ -31,6 +31,14 @@ class JobApplicantFiltersFetchRequested extends JobsEvent {
   List<Object> get props => [];
 }
 
+/// Fetch job offer filters.
+class JobOfferFilteringFetchRequested extends JobsEvent {
+  const JobOfferFilteringFetchRequested();
+
+  @override
+  List<Object> get props => [];
+}
+
 /// Fetch job offers grouped by [query] (e.g. category, actor type…).
 class JobsGroupByTypeFetchRequested extends JobsEvent {
   const JobsGroupByTypeFetchRequested({required this.query});
@@ -126,6 +134,15 @@ class JobsCreateJobOfferRequested extends JobsEvent {
 /// Get a job offer detail.
 class JobsGetJobOfferDetailRequested extends JobsEvent {
   const JobsGetJobOfferDetailRequested({required this.id});
+  final int id;
+
+  @override
+  List<Object> get props => [id];
+}
+
+/// Apply to a job offer.
+class JobsApplyToOfferRequested extends JobsEvent {
+  const JobsApplyToOfferRequested({required this.id});
   final int id;
 
   @override

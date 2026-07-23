@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/errors/failures.dart';
+import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/jobs/data/models/output/training/training_center_view_domain/training_center_view_domain_model.dart';
 import 'package:kianja/features/jobs/domain/entities/expert_executive/expert_executive.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_image.dart';
@@ -11,6 +12,7 @@ import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_filter.d
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_zone.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer_filter.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/job_offer_filtering.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_category.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_domain.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
@@ -25,6 +27,7 @@ import 'package:kianja/features/jobs/domain/usecases/create_job_offer/create_job
 import 'package:kianja/features/jobs/domain/usecases/create_training_center/create_training_center_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/save_content/save_content_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/subscribe_expert_executive_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_job_applicants/view_all_job_applicants_params.dart';
 
@@ -32,6 +35,7 @@ abstract interface class JobsRepository {
   Future<Either<Failure, JobFeatures>> getJobFeatures();
   Future<Either<Failure, List<JobCategory>>> getJobApplicantProfessions();
   Future<Either<Failure, JobApplicantFilter>> getJobApplicantFilters();
+  Future<Either<Failure, JobOfferFiltering>> getJobOfferFiltering();
   Future<Either<Failure, List<JobOfferFilter>>> getJobOffersGroupBy({
     required String query,
   });
@@ -68,6 +72,28 @@ abstract interface class JobsRepository {
     required CreateJobOfferParams createJobOfferParams,
   });
   Future<Either<Failure, JobOffer>> getJobOfferDetail({required int id});
+  Future<Either<Failure, String>> applyToOffer({required int id});
+  Future<Either<Failure, String>> saveContent({
+    required SaveContentParams saveContentParams,
+  });
+  Future<Either<Failure, List<JobOffer>>> getAllSavedJobOffers({
+    required QueryPageParams queryPageParams,
+  });
+  Future<Either<Failure, List<JobApplicant>>> getAllSavedJobApplicants({
+    required QueryPageParams queryPageParams,
+  });
+  Future<Either<Failure, List<TrainingCenter>>> getAllSavedTrainingCenters({
+    required QueryPageParams queryPageParams,
+  });
+  Future<Either<Failure, List<HotEvent>>> getAllSavedHots({
+    required QueryPageParams queryPageParams,
+  });
+  Future<Either<Failure, List<HotEvent>>> getAllSavedEvents({
+    required QueryPageParams queryPageParams,
+  });
+  Future<Either<Failure, List<JobOffer>>> getJobApplications({
+    required QueryPageParams queryPageParams,
+  });
   Future<Either<Failure, JobApplicant>> getJobApplicantDetail({
     required int id,
   });

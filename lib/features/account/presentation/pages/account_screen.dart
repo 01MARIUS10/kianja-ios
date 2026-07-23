@@ -127,14 +127,6 @@ class AccountScreen extends StatelessWidget {
               AccountMenuCard(
                 children: [
                   AccountMenuItem(
-                    icon: Icons.card_travel,
-                    label: 'Profile',
-                    iconColor: AppColors.info,
-                    onTap: () {
-                      // context.goNamed(Routes.personalInfo.name);
-                    },
-                  ),
-                  AccountMenuItem(
                     icon: Icons.person_outline,
                     label: context.appLoc.personal_info,
                     iconColor: AppColors.warning,
@@ -156,16 +148,22 @@ class AccountScreen extends StatelessWidget {
                       context.goNamed(Routes.kara.name);
                     },
                   ),
-                  const AccountMenuItem(
+                  AccountMenuItem(
                     icon: Icons.wallet_outlined,
-                    label: 'Applications',
+                    label: context.appLoc.my_applications,
                     iconColor: AppColors.warning,
+                    onTap: () {
+                      context.goNamed(Routes.applications.name);
+                    },
                   ),
-                  const AccountMenuItem(
-                    icon: Icons.bookmark_outline,
-                    label: 'Saved',
-                    iconColor: Colors.blueGrey,
-                  ),
+                  // AccountMenuItem(
+                  //   icon: Icons.favorite_outline,
+                  //   label: 'Recordings',
+                  //   iconColor: Colors.blueGrey,
+                  //   onTap: () {
+                  //     context.goNamed(Routes.saved.name);
+                  //   },
+                  // ),
                   const AccountMenuAccordionItem(iconColor: Colors.green),
                 ],
               ),

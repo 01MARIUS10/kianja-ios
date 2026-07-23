@@ -65,7 +65,9 @@ class MyPostJobApplicantItemList extends StatelessWidget {
                     const SizedBox(width: 2),
                     Expanded(
                       child: Text(
-                        jobApplicant.location.name,
+                        jobApplicant.locations
+                            .map((location) => location.name)
+                            .join(', '),
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: textSecondary,
                         ),
@@ -75,6 +77,32 @@ class MyPostJobApplicantItemList extends StatelessWidget {
                     ),
                   ],
                 ),
+                const SizedBox(height: Constants.spacingSmall),
+
+                // Row(
+                //   children: [
+                //     Text(
+                //       '${context.appLoc.end} : ',
+                //       style: theme.textTheme.bodyMedium?.copyWith(
+                //         color: textSecondary,
+                //         fontWeight: FontWeight.w600,
+                //       ),
+                //     ),
+                //     // Expanded(
+                //     //   child: Text(
+                //     //     AppFunction.getDate(jobApplicant.endDate),
+                //     //     style: theme.textTheme.bodyMedium?.copyWith(
+                //     //       color: AppFunction.isExpired(jobApplicant.endDate)
+                //     //           ? AppColors.danger
+                //     //           : AppColors.endEvent,
+                //     //       fontWeight: FontWeight.w700,
+                //     //     ),
+                //     //     maxLines: 1,
+                //     //     overflow: TextOverflow.ellipsis,
+                //     //   ),
+                //     // ),
+                //   ],
+                // ),
               ],
             ),
             const SizedBox(height: Constants.spacingMedium),

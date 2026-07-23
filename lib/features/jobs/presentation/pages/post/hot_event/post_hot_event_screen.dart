@@ -42,7 +42,7 @@ class _PostHotEventScreenState extends State<PostHotEventScreen> {
           pathParameters: {
             'trainingCenterId': widget.trainingCenterId.toString(),
           },
-          extra: {'type': context.appLoc.hot},
+          extra: {'type': 'hot'},
         );
         break;
       case PostHotEventType.event:
@@ -51,7 +51,7 @@ class _PostHotEventScreenState extends State<PostHotEventScreen> {
           pathParameters: {
             'trainingCenterId': widget.trainingCenterId.toString(),
           },
-          extra: {'type': context.appLoc.event},
+          extra: {'type': 'event'},
         );
         break;
     }

@@ -48,10 +48,10 @@ class MyPostHotEventItemList extends StatelessWidget {
                 height: 120,
                 child: CachedNetworkImage(
                   imageUrl: '${EnvConfig.baseApiUrl}${hotEvent.image?.url}',
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                   errorWidget: (context, url, error) => Image.asset(
-                    Assets.hiring,
-                    fit: BoxFit.cover,
+                    hotEvent.type == 'hot' ? Assets.hot : Assets.events,
+                    fit: BoxFit.fill,
                     errorBuilder: (ctx, e, st) => Container(
                       color: isDark
                           ? AppColors.darkBorder

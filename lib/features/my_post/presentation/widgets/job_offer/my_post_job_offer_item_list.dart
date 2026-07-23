@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/widgets/avatar/default_avatar.dart';
@@ -7,6 +8,7 @@ import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
+import 'package:kianja/routing/routes.dart';
 
 class MyPostJobOfferItemList extends StatelessWidget {
   const MyPostJobOfferItemList({
@@ -41,15 +43,53 @@ class MyPostJobOfferItemList extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Cover image
-            ClipRRect(
-              borderRadius: BorderRadius.circular(Constants.borderRadiusSmall),
-              child: SizedBox(
-                width: 120,
-                height: 120,
-                child: CachedNetworkImage(
-                  imageUrl: '${EnvConfig.baseApiUrl}${jobOffer.image?.url}',
-                  fit: BoxFit.cover,
-                  errorWidget: (context, url, error) => Image.asset(
+            if (jobOffer.images != null && jobOffer.images!.isNotEmpty)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(
+                  Constants.borderRadiusSmall,
+                ),
+                child: SizedBox(
+                  width: 120,
+                  height: 120,
+                  child: CachedNetworkImage(
+                    imageUrl:
+                        '${EnvConfig.baseApiUrl}${jobOffer.images!.first.url}',
+                    fit: BoxFit.cover,
+                    errorWidget: (context, url, error) => Image.asset(
+                      Assets.hiring,
+                      fit: BoxFit.cover,
+                      errorBuilder: (ctx, e, st) => Container(
+                        color: isDark
+                            ? AppColors.darkBorder
+                            : AppColors.lightBorder,
+                        child: const Icon(
+                          Icons.image,
+                          size: 32,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                    progressIndicatorBuilder: (context, url, progress) =>
+                        Container(
+                          color: isDark
+                              ? AppColors.darkBorder
+                              : AppColors.lightBorder,
+                          child: const Center(
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          ),
+                        ),
+                  ),
+                ),
+              ),
+            if (jobOffer.images != null && jobOffer.images!.isEmpty)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(
+                  Constants.borderRadiusSmall,
+                ),
+                child: SizedBox(
+                  width: 120,
+                  height: 120,
+                  child: Image.asset(
                     Assets.hiring,
                     fit: BoxFit.cover,
                     errorBuilder: (ctx, e, st) => Container(
@@ -63,18 +103,9 @@ class MyPostJobOfferItemList extends StatelessWidget {
                       ),
                     ),
                   ),
-                  progressIndicatorBuilder: (context, url, progress) =>
-                      Container(
-                        color: isDark
-                            ? AppColors.darkBorder
-                            : AppColors.lightBorder,
-                        child: const Center(
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        ),
-                      ),
                 ),
               ),
-            ),
+
             const SizedBox(width: Constants.spacingSmall),
 
             // Content
@@ -96,12 +127,12 @@ class MyPostJobOfferItemList extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             height: 1.2,
                           ),
-                          maxLines: 2,
+                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: Constants.spacingSmall),
 
-                        if (jobOffer.location != null)
+                        if (jobOffer.locations.isNotEmpty)
                           Row(
                             children: [
                               Icon(
@@ -112,7 +143,9 @@ class MyPostJobOfferItemList extends StatelessWidget {
                               const SizedBox(width: 2),
                               Expanded(
                                 child: Text(
-                                  jobOffer.location!.name,
+                                  jobOffer.locations
+                                      .map((location) => location.name)
+                                      .join(', '),
                                   style: theme.textTheme.bodySmall?.copyWith(
                                     color: textSecondary,
                                   ),
@@ -121,6 +154,54 @@ class MyPostJobOfferItemList extends StatelessWidget {
                                 ),
                               ),
                             ],
+                          ),
+
+                        if (jobOffer.candidatsCount > 0)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: Constants.paddingExtraSmall,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Column(
+                                  children: [
+                                    const SizedBox(
+                                      height: Constants.spacingSmall,
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        context.pushNamed(
+                                          Routes.candidatesList.name,
+                                          pathParameters: {
+                                            'jobId': jobOffer.id.toString(),
+                                          },
+                                        );
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal:
+                                              Constants.paddingExtraSmall,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.info,
+                                          borderRadius: BorderRadius.circular(
+                                            Constants.borderRadiusSmall,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          'Candidats (${jobOffer.candidatsCount})',
+                                          style: theme.textTheme.bodyLarge
+                                              ?.copyWith(color: Colors.white),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                       ],
                     ),

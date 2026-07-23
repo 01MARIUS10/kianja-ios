@@ -5,6 +5,7 @@ import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_a
 import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_category/job_category_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_gender/job_gender_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_location/job_location_model.dart';
+import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_preference/job_preference_model.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 
 part 'job_offer_model.freezed.dart';
@@ -18,14 +19,22 @@ abstract class JobOfferModel with _$JobOfferModel implements JobOffer {
     @JsonKey(defaultValue: '') required String description,
     @JsonKey(name: 'categories', defaultValue: <JobCategoryModel>[])
     required List<JobCategoryModel> categories,
+    @JsonKey(name: 'locations', defaultValue: <JobLocationModel>[])
+    required List<JobLocationModel> locations,
+    List<JobImageModel>? images,
     JobImageModel? image,
-    JobLocationModel? location,
+    // JobLocationModel? location,
     JobGenderModel? gender,
     JobActorModel? actor,
+    JobPreferenceModel? preference,
     @JsonKey(name: 'date_limit', defaultValue: '') required String dateLimit,
+    @JsonKey(name: 'candidats_count', defaultValue: 0)
+    required int candidatsCount,
     @JsonKey(name: 'status', defaultValue: '') required String status,
     @JsonKey(name: 'user') required UserModel user,
     @JsonKey(name: 'created_at', defaultValue: '') required String createdAt,
+    @JsonKey(defaultValue: false) required bool isFavorite,
+    @JsonKey(defaultValue: false) required bool alreadyPostuler,
   }) = _JobOfferModel;
 
   const JobOfferModel._();

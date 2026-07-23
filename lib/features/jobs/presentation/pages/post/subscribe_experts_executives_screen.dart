@@ -19,6 +19,7 @@ import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/post_features_expert_executive.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/single_pdf_upload_widget.dart';
+import 'package:kianja/features/jobs/presentation/widgets/post/single_photo_upload_widget.dart';
 import 'package:kianja/routing/routes.dart';
 
 class SubscribeExpertsExecutivesScreen extends StatefulWidget {
@@ -48,6 +49,9 @@ class _SubscribeExpertsExecutivesScreenState
   PricePlan? _selectedPlan;
 
   PlatformFile? _resumeFile;
+
+  // ── Upload results ─────────────────────────────────────────────────────
+  String? _uploadImageUrl;
 
   // ── Domain toggles ───────────────────────────────────────────────────────
   void _toggleDomain(int id) {
@@ -141,6 +145,7 @@ class _SubscribeExpertsExecutivesScreenState
           email: _emailController.text.trim(),
           phoneNumber: _phoneController.text.trim(),
           address: _addressController.text.trim(),
+          photoUrl: _uploadImageUrl,
           biography: _presentationController.text.trim(),
           domainId: _selectedDomainIds.first,
           cvPdfId: pdfId,
@@ -179,6 +184,8 @@ class _SubscribeExpertsExecutivesScreenState
                 setState(() => _domains = state.jobFeatures.domains);
               } else if (state is JobsGetPricePlanSuccess) {
                 setState(() => _plans = state.pricePlans);
+              } else if (state is JobsUploadImageSuccess) {
+                setState(() => _uploadImageUrl = state.jobImage.url);
               } else if (state is JobsUploadPdfSuccess) {
                 _submitSubscription(context, state.jobPdf.id);
               } else if (state is SubscribeExpertExecutiveSuccess) {
@@ -293,10 +300,10 @@ class _SubscribeExpertsExecutivesScreenState
                         ),
                         const SizedBox(height: Constants.spacingMedium),
 
-                        // ── Professional domain (checkbox wrap, same as
+                        // ── Expertise domain (checkbox wrap, same as
                         //    category in PostJobApplicantScreen) ──────────
                         LabelField(
-                          label: '${context.appLoc.professional_domain} *',
+                          label: '${context.appLoc.expertise_domain} *',
                         ),
                         const SizedBox(height: Constants.spacingSmall),
                         if (_domains.isNotEmpty)
@@ -355,6 +362,20 @@ class _SubscribeExpertsExecutivesScreenState
                           hintText: context.appLoc.add_brief_presentation,
                           maxLines: 5,
                           keyboardType: TextInputType.multiline,
+                        ),
+                        const SizedBox(height: Constants.spacingMedium),
+
+                        // ── Photo ───────────────────────────────────
+                        LabelField(label: context.appLoc.photo),
+                        const SizedBox(height: Constants.spacingSmall),
+                        SinglePhotoUploadWidget(
+                          onPhotoChanged: (photo) {
+                            if (photo != null) {
+                              BlocProvider.of<JobsBloc>(
+                                context,
+                              ).add(JobsUploadImageRequested(file: photo));
+                            }
+                          },
                         ),
                         const SizedBox(height: Constants.spacingMedium),
 

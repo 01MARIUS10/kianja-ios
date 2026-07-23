@@ -4,6 +4,7 @@ class UpdateTrainingCenterParams {
     required this.name,
     required this.description,
     this.imageIds,
+    required this.domainId,
     required this.actorId,
     required this.locationId,
     required this.typeId,
@@ -16,6 +17,7 @@ class UpdateTrainingCenterParams {
   final String name;
   final String description;
   final List<int>? imageIds;
+  final int domainId;
   final int actorId;
   final int locationId;
   final int typeId;

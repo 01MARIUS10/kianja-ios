@@ -60,6 +60,9 @@ class JobCategoryViewAllScreen extends StatelessWidget {
                           Routes.jobOfferDetail.name,
                           pathParameters: {
                             'id': jobOfferList[index].id.toString(),
+                            'matchedLocation': GoRouterState.of(
+                              context,
+                            ).matchedLocation,
                           },
                         );
                       },

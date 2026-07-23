@@ -45,7 +45,8 @@ class _MyPostTrainingCenterEditScreenState
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
-  final List<int> _selectedDomainIds = [];
+  // final List<int> _selectedDomainIds = [];
+  int? _selectedDomainId;
   int? _selectedLocationId;
   int? _selectedActorId;
 
@@ -67,6 +68,7 @@ class _MyPostTrainingCenterEditScreenState
     super.initState();
     if (widget.initialTrainingCenter != null) {
       _populateForm(widget.initialTrainingCenter!);
+      _isFormReady = true;
     }
   }
 
@@ -74,10 +76,7 @@ class _MyPostTrainingCenterEditScreenState
     _nameController.text = trainingCenter.name;
     _descriptionController.text = trainingCenter.description;
     _selectedLocationId = trainingCenter.location?.id;
-    _selectedActorId = trainingCenter.actor?.id;
-    _selectedDomainIds
-      ..clear()
-      ..addAll(trainingCenter.domains.map((domain) => domain.id));
+    _selectedDomainId = trainingCenter.domains?.first.id;
 
     if (trainingCenter.images != null && trainingCenter.images!.isNotEmpty) {
       _existingImageIds
@@ -108,7 +107,7 @@ class _MyPostTrainingCenterEditScreenState
     final hasSelections =
         _selectedLocationId != null &&
         _selectedActorId != null &&
-        _selectedDomainIds.isNotEmpty &&
+        _selectedDomainId != null &&
         _plans.isNotEmpty;
     final hasAnyImage = _existingImageIds.isNotEmpty || _newPhotos.isNotEmpty;
 
@@ -119,11 +118,7 @@ class _MyPostTrainingCenterEditScreenState
 
   void _toggleDomain(int domainId) {
     setState(() {
-      if (_selectedDomainIds.contains(domainId)) {
-        _selectedDomainIds.remove(domainId);
-      } else if (_selectedDomainIds.length < 5) {
-        _selectedDomainIds.add(domainId);
-      }
+      _selectedDomainId = _selectedDomainId == domainId ? null : domainId;
     });
     _checkFormReady();
   }
@@ -165,7 +160,7 @@ class _MyPostTrainingCenterEditScreenState
       AppMessenger.showWarning(context, 'Please add a description');
       return;
     }
-    if (_selectedDomainIds.isEmpty) {
+    if (_selectedDomainId == null) {
       AppMessenger.showWarning(context, 'Please select at least one domain');
       return;
     }
@@ -208,6 +203,7 @@ class _MyPostTrainingCenterEditScreenState
           name: _nameController.text.trim(),
           description: _descriptionController.text.trim(),
           imageIds: imageIds,
+          domainId: _selectedDomainId!,
           actorId: _selectedActorId!,
           locationId: _selectedLocationId!,
           typeId: _selectedPlan!.type.id,
@@ -458,9 +454,8 @@ class _MyPostTrainingCenterEditScreenState
                             Wrap(
                               spacing: Constants.spacingMedium,
                               children: _jobFeatures!.domains.map((domain) {
-                                final isSelected = _selectedDomainIds.contains(
-                                  domain.id,
-                                );
+                                final isSelected =
+                                    _selectedDomainId == domain.id;
                                 return InkWell(
                                   onTap: isBusy
                                       ? null

@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/errors/failures.dart';
@@ -11,6 +12,7 @@ abstract interface class AccountRepository {
   Future<Either<Failure, Unit>> logout();
   Future<Either<Failure, Unit>> deleteProfilPhoto();
   Future<Either<Failure, Unit>> uploadProfilPhoto({required XFile file});
+  Future<Either<Failure, Unit>> uploadProfilCV({required PlatformFile file});
 
   Future<Either<Failure, Unit>> changePassword({
     required ChangePasswordParams changePasswordParams,

@@ -104,10 +104,10 @@ class MyPostTrainingCenterItemList extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             height: 1.2,
                           ),
-                          maxLines: 2,
+                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        const SizedBox(height: Constants.spacingExtraSmall),
+                        const SizedBox(height: Constants.spacingSmall),
 
                         // Location
                         if (trainingCenter.location != null)
@@ -131,7 +131,33 @@ class MyPostTrainingCenterItemList extends StatelessWidget {
                               ),
                             ],
                           ),
-                        const SizedBox(height: Constants.spacingExtraSmall),
+                        const SizedBox(height: Constants.spacingSmall),
+
+                        // Row(
+                        //   children: [
+                        //     Text(
+                        //       '${context.appLoc.end} : ',
+                        //       style: theme.textTheme.bodyMedium?.copyWith(
+                        //         color: textSecondary,
+                        //         fontWeight: FontWeight.w600,
+                        //       ),
+                        //     ),
+                        //     // Expanded(
+                        //     //   child: Text(
+                        //     //     AppFunction.getDate(jobApplicant.endDate),
+                        //     //     style: theme.textTheme.bodyMedium?.copyWith(
+                        //     //       color: AppFunction.isExpired(jobApplicant.endDate)
+                        //     //           ? AppColors.danger
+                        //     //           : AppColors.endEvent,
+                        //     //       fontWeight: FontWeight.w700,
+                        //     //     ),
+                        //     //     maxLines: 1,
+                        //     //     overflow: TextOverflow.ellipsis,
+                        //     //   ),
+                        //     // ),
+                        //   ],
+                        // ),
+                        // const SizedBox(height: Constants.spacingExtraSmall),
                       ],
                     ),
 

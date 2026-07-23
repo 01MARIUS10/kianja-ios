@@ -791,4 +791,70 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get announcer => '게시자';
+
+  @override
+  String get apply => '지원하기';
+
+  @override
+  String get my_applications => '지원 내역';
+
+  @override
+  String get enable_apply_button => '지원 버튼 활성화';
+
+  @override
+  String get favorites => '즐겨찾기';
+
+  @override
+  String get expertise_domain => '전문 분야';
+
+  @override
+  String get posted_successfully => '성공적으로 게시되었습니다';
+
+  @override
+  String get application_already_sent => '이미 지원했습니다';
+
+  @override
+  String get published_by => '게시자';
+
+  @override
+  String get photo_optional => '사진 (선택 사항)';
+
+  @override
+  String get you_applied_to_this_offer => '이 채용 공고에 지원하셨습니다.';
+
+  @override
+  String get applied_successfully => '지원이 완료되었습니다';
+
+  @override
+  String get you_applied_successfully_to_this_offer => '이 채용 공고에 성공적으로 지원했습니다.';
+
+  @override
+  String get view_my_applications => '내 지원 내역 보기';
+
+  @override
+  String get post_successful => '게시가 완료되었습니다.';
+
+  @override
+  String get view_post => '게시물 보기';
+
+  @override
+  String get loading => '불러오는 중...';
+
+  @override
+  String get zone_by_province => '지역 (도/주별)';
+
+  @override
+  String get free => '무료';
+
+  @override
+  String get extend => '연장';
+
+  @override
+  String get extension => '연장';
+
+  @override
+  String get extended_successfully => '성공적으로 연장되었습니다';
+
+  @override
+  String get extend_successful => '연장이 완료되었습니다.';
 }

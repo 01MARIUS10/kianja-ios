@@ -21,7 +21,7 @@ enum Routes {
   // ------------- HOME (Job offers) ----------------
   jobs('/'),
   jobCategoryViewAll('job-category-view-all'),
-  jobOfferDetail('job-offer-detail/:id'),
+  jobOfferDetail('job-offer-detail/:id/:matchedLocation'),
   // ------------- HOME (Job offers) ----------------
 
   // ------------- JOB APPLICANT ----------------
@@ -52,6 +52,7 @@ enum Routes {
   postJobOfferSuccessful('job-offer-successfully-posted/:id'),
   postJobApplicantSuccessful('job-applicant-successfully-posted/:id'),
   postTrainingCenterSuccessful('training-center-successfully-posted/:id'),
+  appliedJobOfferSuccessful('appliedJobOfferSuccessful'),
   // ------------- POST ----------------
 
   // ------------- MY POST ----------------
@@ -60,21 +61,38 @@ enum Routes {
   myPostJobApplicantEdit('edit-job-applicant/:id'),
   myPostTrainingCenterEdit('edit-training-center/:id'),
   myPostHotEventEdit('edit-hot-event/:id'),
+  candidatesList('candidates-list/:jobId'),
+  candidateDetail('candidate-detail/:id'),
+  viewCandidatePdf('view-candidate-pdf'),
+  prolongerJobApplicant('prolonger-job-applicant/:id'),
+  prolongerJobApplicantSuccessful(
+    'prolonger-job-applicant-successful/:jobAppId',
+  ),
   // ------------- MY POST ----------------
 
   // ------------- ACCOUNT ----------------
   account('/account'),
   kara('/kara'),
+  applications('/applications'),
   personalInfo('personal-info'), // Personal Info
+  viewProfileCV('profile-cv'),
   updatePersonalInfo('edit'), // Update Personal Info
   changePassword('change-password'), // Change Password
   termsOfUse('/termsOfUse'), // Terms of Use
   // ------------- ACCOUNT ----------------
 
+  // ------------- FAVORITES ----------------
+  favorites('/favorites'),
+  // ------------- FAVORITES ----------------
+
   // ------------- AUTH ----------------
   signIn('/sign-in'),
-  signUp('/sign-up');
+  signUp('/sign-up'),
   // ------------- AUTH ----------------
+
+  // ------------- SAVED ----------------
+  saved('/saved');
+  // ------------- SAVED ----------------
 
   const Routes(this.path);
   final String path;

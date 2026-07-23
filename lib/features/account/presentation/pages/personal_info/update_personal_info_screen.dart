@@ -24,6 +24,7 @@ import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/account/domain/usecases/upate_user_info/update_user_info_params.dart';
 import 'package:kianja/features/account/presentation/bloc/account_bloc.dart';
 import 'package:kianja/features/account/presentation/widgets/camera_image_picker.dart';
+import 'package:kianja/features/jobs/presentation/widgets/post/single_pdf_upload_widget.dart';
 import 'package:kianja/routing/routes.dart';
 
 /// Edit profile screen — mirrors the fields shown in the design mockup.
@@ -107,10 +108,12 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
             id: user.id,
             firstName: user.firstName,
             lastName: user.lastName,
-            photoUrl: '',
+            photoUrl: user.photoUrl,
+            cvUrl: user.cvUrl,
             phone: user.phone,
             email: user.email,
             residence: user.residence,
+            dateCandidature: user.dateCandidature,
             createdAt: user.createdAt,
           ),
         ),
@@ -289,7 +292,9 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
                   const SizedBox(height: Constants.spacingMedium),
 
                   // ── EMAIL ──────────────────────────────────────────
-                  LabelField(label: context.appLoc.email.toUpperCase()),
+                  LabelField(
+                    label: context.appLoc.email_optional.toUpperCase(),
+                  ),
                   const SizedBox(height: Constants.spacingSmall),
                   TextInputField(
                     controller: _emailController,
@@ -299,7 +304,7 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
                   const SizedBox(height: Constants.spacingMedium),
 
                   // ── PHONE ──────────────────────────────────────────
-                  LabelField(label: context.appLoc.phone),
+                  LabelField(label: context.appLoc.phone.toUpperCase()),
                   const SizedBox(height: Constants.spacingSmall),
                   GestureDetector(
                     onTap: () {
@@ -318,6 +323,23 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
 
                   // ── RESIDENCE ──────────────────────────────────────
                   ResidenceField(residenceController: _residenceController),
+                  const SizedBox(height: Constants.spacingMedium),
+
+                  // ── CV ──────────────────────────────────────────────
+                  LabelField(
+                    label: context.appLoc.resume_optional.toUpperCase(),
+                  ),
+                  const SizedBox(height: Constants.spacingSmall),
+                  SinglePdfUploadWidget(
+                    text: context.appLoc.upload_resume_pdf,
+                    onPdfChanged: (pdf) {
+                      if (pdf != null) {
+                        BlocProvider.of<AccountBloc>(
+                          context,
+                        ).add(AccountProfilCvUploadRequested(file: pdf));
+                      }
+                    },
+                  ),
                   const SizedBox(height: Constants.spacingLarge),
 
                   // ── SAVE button ────────────────────────────────────

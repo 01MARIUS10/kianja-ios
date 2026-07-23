@@ -15,18 +15,16 @@ _TrainingCenterModel _$TrainingCenterModelFromJson(Map<String, dynamic> json) =>
           ?.map((e) => JobImageModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       description: json['description'] as String? ?? '',
-      domains: (json['domains'] as List<dynamic>)
-          .map((e) => JobDomainModel.fromJson(e as Map<String, dynamic>))
+      domains: (json['domains'] as List<dynamic>?)
+          ?.map((e) => JobDomainModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      actor: json['actor'] == null
-          ? null
-          : JobActorModel.fromJson(json['actor'] as Map<String, dynamic>),
       location: json['location'] == null
           ? null
           : JobLocationModel.fromJson(json['location'] as Map<String, dynamic>),
       badge: $enumDecodeNullable(_$TrainingCenterBadgeEnumMap, json['badge']),
       user: UserModel.fromJson(json['user'] as Map<String, dynamic>),
       createdAt: json['created_at'] as String? ?? '',
+      isFavorite: json['isFavorite'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$TrainingCenterModelToJson(
@@ -38,11 +36,11 @@ Map<String, dynamic> _$TrainingCenterModelToJson(
   'images': instance.images,
   'description': instance.description,
   'domains': instance.domains,
-  'actor': instance.actor,
   'location': instance.location,
   'badge': _$TrainingCenterBadgeEnumMap[instance.badge],
   'user': instance.user,
   'created_at': instance.createdAt,
+  'isFavorite': instance.isFavorite,
 };
 
 const _$TrainingCenterBadgeEnumMap = {

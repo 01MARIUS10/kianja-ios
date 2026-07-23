@@ -5,6 +5,7 @@ import 'package:kianja/core/errors/exceptions.dart';
 import 'package:kianja/core/errors/failures.dart';
 import 'package:kianja/core/services/service_helper.dart';
 import 'package:kianja/core/utils/app_debug.dart';
+import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/jobs/data/datasources/jobs_remote_data.dart';
 import 'package:kianja/features/jobs/data/models/input/create_job_applicant/create_job_applicant_input_model.dart';
 import 'package:kianja/features/jobs/data/models/input/create_job_offer/create_job_offer_input_model.dart';
@@ -20,6 +21,7 @@ import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_filter.d
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_zone.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer_filter.dart';
+import 'package:kianja/features/jobs/domain/entities/jobs/job_offer_filtering.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_category.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_domain.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
@@ -35,6 +37,7 @@ import 'package:kianja/features/jobs/domain/usecases/create_job_offer/create_job
 import 'package:kianja/features/jobs/domain/usecases/create_training_center/create_training_center_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/save_content/save_content_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/subscribe_expert_executive_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_job_applicants/view_all_job_applicants_params.dart';
 
@@ -141,8 +144,7 @@ class JobsRepositoryImpl implements JobsRepository {
           description: createTrainingCenterParams.description,
           locationId: createTrainingCenterParams.locationId,
           imageIds: createTrainingCenterParams.imageIds,
-          domainIds: createTrainingCenterParams.domainIds,
-          actorId: createTrainingCenterParams.actorId,
+          domainId: createTrainingCenterParams.domainId,
           typeId: createTrainingCenterParams.typeId,
           tagId: createTrainingCenterParams.tagId,
           durationId: createTrainingCenterParams.durationId,
@@ -180,6 +182,16 @@ class JobsRepositoryImpl implements JobsRepository {
   Future<Either<Failure, JobApplicantFilter>> getJobApplicantFilters() async {
     try {
       final response = await remoteDataSource.getJobApplicantFilters();
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, JobOfferFiltering>> getJobOfferFiltering() async {
+    try {
+      final response = await remoteDataSource.getJobOfferFiltering();
       return right(response);
     } on AppException catch (e) {
       return left(failureHandler(e));
@@ -296,6 +308,7 @@ class JobsRepositoryImpl implements JobsRepository {
           email: subscribeExpertExecutiveParams.email,
           phoneNumber: subscribeExpertExecutiveParams.phoneNumber,
           address: subscribeExpertExecutiveParams.address,
+          photoUrl: subscribeExpertExecutiveParams.photoUrl,
           biography: subscribeExpertExecutiveParams.biography,
           domainId: subscribeExpertExecutiveParams.domainId,
           cvPdfId: subscribeExpertExecutiveParams.cvPdfId,
@@ -316,12 +329,15 @@ class JobsRepositoryImpl implements JobsRepository {
         createJobApplicantInputModel: CreateJobApplicantInputModel(
           title: createJobApplicantParams.title,
           motivation: createJobApplicantParams.motivation,
+          photoUrl: createJobApplicantParams.photoUrl,
           pdfUrl: createJobApplicantParams.pdfUrl,
-          locationId: createJobApplicantParams.locationId,
+          categories: createJobApplicantParams.categories,
+          locationIds: createJobApplicantParams.locations,
+          // locationId: createJobApplicantParams.locationId,
           genderId: createJobApplicantParams.genderId,
           typeId: createJobApplicantParams.typeId,
           durationId: createJobApplicantParams.durationId,
-          categoryId: createJobApplicantParams.categoryId,
+          // categoryId: createJobApplicantParams.categoryId,
           status: createJobApplicantParams.status,
         ),
       );
@@ -341,10 +357,13 @@ class JobsRepositoryImpl implements JobsRepository {
           title: createJobOfferParams.title,
           description: createJobOfferParams.description,
           imageId: createJobOfferParams.imageId,
+          imageIds: createJobOfferParams.imageIds,
           categories: createJobOfferParams.categories,
-          locationId: createJobOfferParams.location,
+          locationIds: createJobOfferParams.locations,
+          // locationId: createJobOfferParams.location,
           genderId: createJobOfferParams.gender,
           actorId: createJobOfferParams.actor,
+          showButton: createJobOfferParams.showPostButton,
           limitDate: createJobOfferParams.limitDate,
           status: createJobOfferParams.status,
         ),
@@ -359,6 +378,115 @@ class JobsRepositoryImpl implements JobsRepository {
   Future<Either<Failure, JobOffer>> getJobOfferDetail({required int id}) async {
     try {
       final response = await remoteDataSource.getJobOfferDetail(id: id);
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> applyToOffer({required int id}) async {
+    try {
+      final response = await remoteDataSource.applyToOffer(id: id);
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> saveContent({
+    required SaveContentParams saveContentParams,
+  }) async {
+    try {
+      final response = await remoteDataSource.saveContent(
+        saveContent: saveContentParams.saveContent,
+        id: saveContentParams.id,
+      );
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<JobOffer>>> getAllSavedJobOffers({
+    required QueryPageParams queryPageParams,
+  }) async {
+    try {
+      final response = await remoteDataSource.getAllSavedJobOffers(
+        page: queryPageParams.page,
+      );
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<JobApplicant>>> getAllSavedJobApplicants({
+    required QueryPageParams queryPageParams,
+  }) async {
+    try {
+      final response = await remoteDataSource.getAllSavedJobApplicants(
+        page: queryPageParams.page,
+      );
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<TrainingCenter>>> getAllSavedTrainingCenters({
+    required QueryPageParams queryPageParams,
+  }) async {
+    try {
+      final response = await remoteDataSource.getAllSavedTrainingCenters(
+        page: queryPageParams.page,
+      );
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<HotEvent>>> getAllSavedHots({
+    required QueryPageParams queryPageParams,
+  }) async {
+    try {
+      final response = await remoteDataSource.getAllSavedHots(
+        page: queryPageParams.page,
+      );
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<HotEvent>>> getAllSavedEvents({
+    required QueryPageParams queryPageParams,
+  }) async {
+    try {
+      final response = await remoteDataSource.getAllSavedEvents(
+        page: queryPageParams.page,
+      );
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<JobOffer>>> getJobApplications({
+    required QueryPageParams queryPageParams,
+  }) async {
+    try {
+      final response = await remoteDataSource.getJobApplications(
+        page: queryPageParams.page,
+      );
       return right(response);
     } on AppException catch (e) {
       return left(failureHandler(e));

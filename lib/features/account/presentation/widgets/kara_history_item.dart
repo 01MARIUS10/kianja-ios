@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kianja/core/config/assets.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/constants.dart';
@@ -73,6 +72,22 @@ class KaraHistoryItem extends StatelessWidget {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      // Container(
+                      //   width: 20,
+                      //   height: 20,
+                      //   decoration: BoxDecoration(
+                      //     shape: BoxShape.circle,
+                      //     color: AppColors.success.withValues(alpha: 0.1),
+                      //     border: Border.all(
+                      //       color: AppColors.success.withValues(alpha: 0.2),
+                      //     ),
+                      //   ),
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.all(3),
+                      //     child: Image.asset(Assets.kara, fit: BoxFit.contain),
+                      //   ),
+                      // ),
+                      // const SizedBox(width: Constants.spacingExtraSmall),
                       Text(
                         '$sign${history.montant}',
                         style: theme.textTheme.titleSmall?.copyWith(
@@ -81,21 +96,7 @@ class KaraHistoryItem extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: Constants.spacingExtraSmall),
-                      Container(
-                        width: 20,
-                        height: 20,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppColors.success.withValues(alpha: 0.1),
-                          border: Border.all(
-                            color: AppColors.success.withValues(alpha: 0.2),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(3),
-                          child: Image.asset(Assets.kara, fit: BoxFit.contain),
-                        ),
-                      ),
+                      Text('Kara', style: theme.textTheme.bodyMedium),
                     ],
                   ),
                 ],

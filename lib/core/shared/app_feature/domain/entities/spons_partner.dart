@@ -1,15 +1,15 @@
 class SponsPartner {
   const SponsPartner({
     required this.title,
-    required this.imageUrl,
+    required this.image,
     required this.pageUrl,
   });
   const SponsPartner.empty({
     this.title = '',
-    this.imageUrl = const [],
+    this.image = '',
     this.pageUrl = '',
   });
   final String title;
-  final List<String> imageUrl;
+  final String image;
   final String pageUrl;
 }

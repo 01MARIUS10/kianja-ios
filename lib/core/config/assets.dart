@@ -23,6 +23,8 @@ abstract final class Assets {
   // Training center
   static const hot = 'assets/images/training_center/hot.jpg';
   static const events = 'assets/images/training_center/events.jpeg';
+  static const trainingCenter =
+      'assets/images/training_center/training_center.jpeg';
 
   // HTML
   static const cguHtml = 'assets/html/cgu.html';

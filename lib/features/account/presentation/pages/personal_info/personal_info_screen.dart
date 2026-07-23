@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
 import 'package:kianja/core/shared/widgets/avatar/circle_user_avatar.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
@@ -122,13 +123,18 @@ class PersonalInfoScreen extends StatelessWidget {
                           : fullName,
                       iconColor: AppColors.warning,
                     ),
-                    const Divider(thickness: 0.5),
-                    PersonalInfoRow(
-                      icon: Icons.mail_outline,
-                      label: context.appLoc.email,
-                      value: user.email,
-                      iconColor: AppColors.info,
-                    ),
+                    if (user.email.isNotEmpty)
+                      Column(
+                        children: [
+                          const Divider(thickness: 0.5),
+                          PersonalInfoRow(
+                            icon: Icons.mail_outline,
+                            label: context.appLoc.email,
+                            value: user.email,
+                            iconColor: AppColors.info,
+                          ),
+                        ],
+                      ),
                     const Divider(thickness: 0.5),
 
                     PersonalInfoRow(
@@ -146,6 +152,29 @@ class PersonalInfoScreen extends StatelessWidget {
                       value: user.residence,
                       iconColor: AppColors.danger,
                     ),
+
+                    if (user.cvUrl.isNotEmpty)
+                      Column(
+                        children: [
+                          const Divider(thickness: 0.5),
+                          InkWell(
+                            onTap: () {
+                              context.pushNamed(
+                                Routes.viewProfileCV.name,
+                                extra: {
+                                  'pdfUrl': EnvConfig.baseApiUrl + user.cvUrl,
+                                },
+                              );
+                            },
+                            child: PersonalInfoRow(
+                              icon: Icons.picture_as_pdf_outlined,
+                              label: context.appLoc.resume,
+                              value: 'Voir mon CV',
+                              iconColor: AppColors.info,
+                            ),
+                          ),
+                        ],
+                      ),
                   ],
                 ),
                 const SizedBox(height: Constants.spacingSmall),

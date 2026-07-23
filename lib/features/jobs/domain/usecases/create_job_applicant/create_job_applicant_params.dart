@@ -2,22 +2,24 @@ class CreateJobApplicantParams {
   CreateJobApplicantParams({
     required this.title,
     required this.motivation,
+    this.photoUrl,
     this.pdfUrl,
-    required this.locationId,
+    required this.categories,
+    required this.locations,
     required this.genderId,
     required this.typeId,
     required this.durationId,
-    required this.categoryId,
     required this.status,
   });
 
   final String title;
   final String motivation;
+  final List<int> categories;
+  final List<int> locations;
+  final String? photoUrl;
   final String? pdfUrl;
-  final int locationId;
   final int genderId;
   final int typeId;
   final int durationId;
-  final int categoryId;
   final String status;
 }

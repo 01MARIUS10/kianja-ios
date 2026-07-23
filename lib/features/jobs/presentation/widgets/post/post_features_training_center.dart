@@ -201,7 +201,7 @@ class _PostFeaturesTrainingCenterState
               width: 25,
               fit: BoxFit.cover,
             ),
-            const SizedBox(width: 4),
+            const SizedBox(width: Constants.spacingSmall),
             Text(
               _selectedPlan != null
                   ? AppFunction.formatNumberWithSpaces(_selectedPlan!.price)
@@ -210,6 +210,8 @@ class _PostFeaturesTrainingCenterState
                 fontWeight: FontWeight.bold,
               ),
             ),
+            const SizedBox(width: Constants.spacingExtraSmall),
+            Text('Kara', style: textTheme.bodyMedium),
           ],
         ),
         const SizedBox(height: 16),

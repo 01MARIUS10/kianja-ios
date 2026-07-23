@@ -62,3 +62,11 @@ class AppThemeChanged extends AppEvent {
 class AppSponsPartnerLoaded extends AppEvent {
   const AppSponsPartnerLoaded();
 }
+
+class AppSponsorAndPartnerLoaded extends AppEvent {
+  const AppSponsorAndPartnerLoaded({required this.menuId});
+  final int menuId;
+
+  @override
+  List<Object> get props => [menuId];
+}

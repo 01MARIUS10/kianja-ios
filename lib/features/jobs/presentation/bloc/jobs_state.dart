@@ -58,6 +58,15 @@ class JobApplicantFiltersFetchSuccess extends JobsState {
   List<Object> get props => [jobApplicantFilter];
 }
 
+/// [GetJobOfferFilteringUseCase] succeeded.
+class JobOfferFilteringFetchSuccess extends JobsState {
+  const JobOfferFilteringFetchSuccess({required this.jobOfferFiltering});
+  final JobOfferFiltering jobOfferFiltering;
+
+  @override
+  List<Object> get props => [jobOfferFiltering];
+}
+
 /// [GetJobOffersGroupByUseCase] succeeded.
 class JobsGroupByTypeFetchSuccess extends JobsState {
   const JobsGroupByTypeFetchSuccess({required this.jobOffersType});
@@ -139,6 +148,30 @@ class JobsGetJobOfferDetailSuccess extends JobsState {
 
   @override
   List<Object> get props => [jobOffer];
+}
+
+/// [ApplyToOfferUseCase] succeeded.
+class JobsApplyInProgress extends JobsState {
+  const JobsApplyInProgress();
+
+  @override
+  List<Object> get props => [];
+}
+
+class JobsApplyToOfferSuccess extends JobsState {
+  const JobsApplyToOfferSuccess({required this.applyMessage});
+  final String applyMessage;
+
+  @override
+  List<Object> get props => [applyMessage];
+}
+
+class JobsApplyRequestFailure extends JobsState {
+  const JobsApplyRequestFailure({required this.message});
+  final String message;
+
+  @override
+  List<Object> get props => [message];
 }
 
 /// [GetTrainingCenterDomainsUseCase] succeeded.
