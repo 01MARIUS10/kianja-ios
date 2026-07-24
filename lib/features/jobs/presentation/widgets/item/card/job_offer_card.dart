@@ -142,12 +142,15 @@ class JobOfferCard extends StatelessWidget {
                   children: [
                     ClipOval(
                       child: jobOffer.user.photoUrl.isNotEmpty
-                          ? Image.network(
-                              '${EnvConfig.baseApiUrl}${jobOffer.user.photoUrl}',
+                          ? CachedNetworkImage(
+                              imageUrl:
+                                  '${EnvConfig.baseApiUrl}${jobOffer.user.photoUrl}',
                               fit: BoxFit.cover,
                               width: Constants.size30,
                               height: Constants.size30,
-                              errorBuilder: (_, _, _) =>
+                              placeholder: (context, url) =>
+                                  const CircularProgressIndicator(),
+                              errorWidget: (_, _, _) =>
                                   const DefaultAvatar(size: Constants.size30),
                             )
                           : const DefaultAvatar(size: Constants.size30),

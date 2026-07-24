@@ -24,7 +24,7 @@ abstract final class Assets {
   static const hot = 'assets/images/training_center/hot.jpg';
   static const events = 'assets/images/training_center/events.jpeg';
   static const trainingCenter =
-      'assets/images/training_center/training_center.jpeg';
+      'assets/images/training_center/training_center.jpg';
 
   // HTML
   static const cguHtml = 'assets/html/cgu.html';

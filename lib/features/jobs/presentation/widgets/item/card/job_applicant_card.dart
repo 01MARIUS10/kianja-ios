@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/widgets/avatar/default_avatar.dart';
@@ -103,12 +104,15 @@ class JobApplicantCard extends StatelessWidget {
                   children: [
                     ClipOval(
                       child: jobApplicant.user.photoUrl.isNotEmpty
-                          ? Image.network(
-                              '${EnvConfig.baseApiUrl}${jobApplicant.user.photoUrl}',
+                          ? CachedNetworkImage(
+                              imageUrl:
+                                  '${EnvConfig.baseApiUrl}${jobApplicant.user.photoUrl}',
                               fit: BoxFit.cover,
                               width: Constants.size30,
                               height: Constants.size30,
-                              errorBuilder: (_, _, _) =>
+                              placeholder: (context, url) =>
+                                  const CircularProgressIndicator(),
+                              errorWidget: (_, _, _) =>
                                   const DefaultAvatar(size: Constants.size30),
                             )
                           : const DefaultAvatar(size: Constants.size30),

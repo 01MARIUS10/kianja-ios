@@ -162,15 +162,17 @@ class SaveJobOfferItemList extends StatelessWidget {
                         // User avatar
                         ClipOval(
                           child: jobOffer.user.photoUrl.isNotEmpty
-                              ? Image.network(
-                                  '${EnvConfig.baseApiUrl}${jobOffer.user.photoUrl}',
+                              ? CachedNetworkImage(
+                                  imageUrl:
+                                      '${EnvConfig.baseApiUrl}${jobOffer.user.photoUrl}',
                                   fit: BoxFit.cover,
                                   width: Constants.size35,
                                   height: Constants.size35,
-                                  errorBuilder: (_, _, _) =>
-                                      const DefaultAvatar(
-                                        size: Constants.size35,
-                                      ),
+                                  placeholder: (context, url) =>
+                                      const CircularProgressIndicator(),
+                                  errorWidget: (_, _, _) => const DefaultAvatar(
+                                    size: Constants.size35,
+                                  ),
                                 )
                               : const DefaultAvatar(size: Constants.size35),
                         ),

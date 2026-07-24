@@ -121,15 +121,17 @@ class SaveTrainingCenterItemList extends StatelessWidget {
                       children: [
                         ClipOval(
                           child: trainingCenter.user.photoUrl.isNotEmpty
-                              ? Image.network(
-                                  '${EnvConfig.baseApiUrl}${trainingCenter.user.photoUrl}',
+                              ? CachedNetworkImage(
+                                  imageUrl:
+                                      '${EnvConfig.baseApiUrl}${trainingCenter.user.photoUrl}',
                                   fit: BoxFit.cover,
                                   width: Constants.size35,
                                   height: Constants.size35,
-                                  errorBuilder: (_, _, _) =>
-                                      const DefaultAvatar(
-                                        size: Constants.size35,
-                                      ),
+                                  placeholder: (context, url) =>
+                                      const CircularProgressIndicator(),
+                                  errorWidget: (_, _, _) => const DefaultAvatar(
+                                    size: Constants.size35,
+                                  ),
                                 )
                               : const DefaultAvatar(size: Constants.size35),
                         ),

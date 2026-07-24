@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,7 +37,7 @@ class Navigation extends StatelessWidget {
         }
       },
       child: Scaffold(
-        body: navigationShell,
+        body: SafeArea(child: navigationShell),
         bottomNavigationBar: BlocConsumer<ConnectivityBloc, ConnectivityState>(
           listener: (context, state) {
             // return switch (state) {
@@ -149,12 +150,15 @@ class Navigation extends StatelessWidget {
                               borderRadius: BorderRadius.circular(
                                 Constants.borderRadiusSmall,
                               ),
-                              child: Image.network(
-                                '${EnvConfig.baseApiUrl}${state.user.photoUrl}',
+                              child: CachedNetworkImage(
+                                imageUrl:
+                                    '${EnvConfig.baseApiUrl}${state.user.photoUrl}',
                                 fit: BoxFit.cover,
                                 width: Constants.iconSizeSmall,
                                 height: Constants.iconSizeSmall,
-                                errorBuilder: (_, _, _) => const DefaultAvatar(
+                                placeholder: (context, url) =>
+                                    const CircularProgressIndicator(),
+                                errorWidget: (_, _, _) => const DefaultAvatar(
                                   size: Constants.iconSizeSmall,
                                 ),
                               ),

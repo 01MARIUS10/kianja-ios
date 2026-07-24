@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
@@ -374,12 +375,15 @@ class _TrainingCenterDetailState extends State<TrainingCenterDetail> {
                                                 .user
                                                 .photoUrl
                                                 .isNotEmpty
-                                            ? Image.network(
-                                                '${EnvConfig.baseApiUrl}${trainingCenter.user.photoUrl}',
+                                            ? CachedNetworkImage(
+                                                imageUrl:
+                                                    '${EnvConfig.baseApiUrl}${trainingCenter.user.photoUrl}',
                                                 fit: BoxFit.cover,
                                                 width: Constants.size35,
                                                 height: Constants.size35,
-                                                errorBuilder: (_, _, _) =>
+                                                placeholder: (context, url) =>
+                                                    const CircularProgressIndicator(),
+                                                errorWidget: (_, _, _) =>
                                                     const DefaultAvatar(
                                                       size: Constants.size35,
                                                     ),

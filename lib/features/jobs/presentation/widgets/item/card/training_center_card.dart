@@ -58,6 +58,13 @@ class TrainingCenterCard extends StatelessWidget {
                 },
               ),
             ),
+          if (trainingCenter.images != null && trainingCenter.images!.isEmpty)
+            Image.asset(
+              Assets.trainingCenter,
+              fit: BoxFit.fill,
+              errorBuilder: (context, url, error) =>
+                  const Icon(Icons.image, size: 40, color: Colors.grey),
+            ),
 
           Padding(
             padding: const EdgeInsets.all(Constants.paddingSmall),
@@ -143,12 +150,15 @@ class TrainingCenterCard extends StatelessWidget {
                   children: [
                     ClipOval(
                       child: trainingCenter.user.photoUrl.isNotEmpty
-                          ? Image.network(
-                              '${EnvConfig.baseApiUrl}${trainingCenter.user.photoUrl}',
+                          ? CachedNetworkImage(
+                              imageUrl:
+                                  '${EnvConfig.baseApiUrl}${trainingCenter.user.photoUrl}',
                               fit: BoxFit.cover,
                               width: Constants.size30,
                               height: Constants.size30,
-                              errorBuilder: (_, _, _) =>
+                              placeholder: (context, url) =>
+                                  const CircularProgressIndicator(),
+                              errorWidget: (_, _, _) =>
                                   const DefaultAvatar(size: Constants.size30),
                             )
                           : const DefaultAvatar(size: Constants.size30),
