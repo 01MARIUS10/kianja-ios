@@ -28,11 +28,12 @@ class AppLanguageChanged extends AppEvent {
 }
 
 class AppAuthenticated extends AppEvent {
-  const AppAuthenticated({required this.isAuthenticated});
+  const AppAuthenticated({required this.isAuthenticated, required this.token});
   final bool isAuthenticated;
+  final String token;
 
   @override
-  List<Object> get props => [isAuthenticated];
+  List<Object> get props => [isAuthenticated, token];
 }
 
 class AppUserLoaded extends AppEvent {

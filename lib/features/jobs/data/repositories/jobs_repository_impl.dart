@@ -59,10 +59,13 @@ class JobsRepositoryImpl implements JobsRepository {
 
   @override
   Future<Either<Failure, List<HotEvent>>> viewAllHotEvents({
-    required String query,
+    required QueryPageParams queryPageParams,
   }) async {
     try {
-      final response = await remoteDataSource.viewAllHotEvents(query: query);
+      final response = await remoteDataSource.viewAllHotEvents(
+        query: queryPageParams.query,
+        page: queryPageParams.page,
+      );
       return right(response);
     } on AppException catch (e) {
       return left(failureHandler(e));
@@ -98,11 +101,12 @@ class JobsRepositoryImpl implements JobsRepository {
 
   @override
   Future<Either<Failure, List<TrainingCenter>>> viewAllTrainingCenters({
-    required String query,
+    required QueryPageParams queryPageParams,
   }) async {
     try {
       final response = await remoteDataSource.viewAllTrainingCenters(
-        query: query,
+        query: queryPageParams.query,
+        page: queryPageParams.page,
       );
       return right(response);
     } on AppException catch (e) {

@@ -5,6 +5,7 @@ import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.da
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/account/presentation/bloc/account_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class TermsOfUseScreen extends StatelessWidget {
@@ -32,6 +33,18 @@ class TermsOfUseScreen extends StatelessWidget {
               );
             } else if (state is AccountCguSuccess) {
               final WebViewController webViewController = WebViewController()
+                ..setNavigationDelegate(
+                  NavigationDelegate(
+                    onNavigationRequest: (request) async {
+                      final uri = Uri.parse(request.url);
+                      if (['tel', 'mailto', 'sms'].contains(uri.scheme)) {
+                        await launchUrl(uri); // package url_launcher
+                        return NavigationDecision.prevent;
+                      }
+                      return NavigationDecision.navigate;
+                    },
+                  ),
+                )
                 ..setJavaScriptMode(JavaScriptMode.unrestricted)
                 ..loadHtmlString(state.cgu);
               return WebViewWidget(controller: webViewController);

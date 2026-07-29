@@ -80,9 +80,13 @@ abstract interface class JobsRemoteDataSource {
   Future<List<JobDomainModel>> getTrainingCenterDomains();
   Future<List<TrainingCenterHotEventModel>> getTrainingCenterHotEvent();
   Future<TrainingCenterFilterModel> getTrainingCenterFilter();
-  Future<List<HotEventModel>> viewAllHotEvents({required String query});
+  Future<List<HotEventModel>> viewAllHotEvents({
+    required String query,
+    required int page,
+  });
   Future<List<TrainingCenterModel>> viewAllTrainingCenters({
     required String query,
+    required int page,
   });
   Future<TrainingCenterViewDomainModel> getTrainingCenterViewDomain({
     required int id,
@@ -171,9 +175,12 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
   }
 
   @override
-  Future<List<HotEventModel>> viewAllHotEvents({required String query}) async {
+  Future<List<HotEventModel>> viewAllHotEvents({
+    required String query,
+    required int page,
+  }) async {
     return requestHandler(() async {
-      final response = await dio.get('/api/training-centers$query');
+      final response = await dio.get('/api/training-centers$query?page=$page');
       final Map<String, dynamic> result = jsonHandler(response.data);
       final Map<String, dynamic> contenu = result['Contenu'];
       return (contenu['data'] as List<dynamic>)
@@ -185,9 +192,10 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
   @override
   Future<List<TrainingCenterModel>> viewAllTrainingCenters({
     required String query,
+    required int page,
   }) async {
     return requestHandler(() async {
-      final response = await dio.get('/api/training-centers?$query');
+      final response = await dio.get('/api/training-centers?$query&page=$page');
       final Map<String, dynamic> result = jsonHandler(response.data);
       final Map<String, dynamic> contenu = result['Contenu'];
       return (contenu['data'] as List<dynamic>)

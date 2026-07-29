@@ -208,9 +208,9 @@ class AccountScreen extends StatelessWidget {
                     if (context.canPop()) {
                       context.pop();
                     }
-                    BlocProvider.of<AppBloc>(
-                      context,
-                    ).add(const AppAuthenticated(isAuthenticated: false));
+                    BlocProvider.of<AppBloc>(context).add(
+                      const AppAuthenticated(isAuthenticated: false, token: ''),
+                    );
                     context.goNamed(Routes.signIn.name);
                   }
                 },

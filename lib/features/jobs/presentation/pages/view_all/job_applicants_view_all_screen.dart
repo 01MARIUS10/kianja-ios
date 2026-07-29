@@ -36,14 +36,15 @@ class JobApplicantsViewAllScreen extends StatelessWidget {
         ),
       child: BaseScreen(
         appBar: TitleHeader(title: title),
-        child: const _JobApplicantViewAllContent(),
+        child: _JobApplicantViewAllContent(query: query),
       ),
     );
   }
 }
 
 class _JobApplicantViewAllContent extends StatefulWidget {
-  const _JobApplicantViewAllContent();
+  const _JobApplicantViewAllContent({required this.query});
+  final String query;
 
   @override
   State<_JobApplicantViewAllContent> createState() =>
@@ -91,8 +92,8 @@ class _JobApplicantViewAllContentState
 
   void _fetchFirstPage() {
     BlocProvider.of<JobsBloc>(context).add(
-      const JobApplicantsViewAllFetchRequested(
-        queryPageParams: QueryPageParams(page: 1),
+      JobApplicantsViewAllFetchRequested(
+        queryPageParams: QueryPageParams(query: widget.query, page: 1),
       ),
     );
   }

@@ -42,10 +42,10 @@ abstract interface class JobsRepository {
     required QueryPageParams queryPageParams,
   });
   Future<Either<Failure, List<HotEvent>>> viewAllHotEvents({
-    required String query,
+    required QueryPageParams queryPageParams,
   });
   Future<Either<Failure, List<TrainingCenter>>> viewAllTrainingCenters({
-    required String query,
+    required QueryPageParams queryPageParams,
   });
   Future<Either<Failure, TrainingCenterViewDomainModel>>
   getTrainingCenterViewDomain({required int id});

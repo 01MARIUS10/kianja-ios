@@ -212,7 +212,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       listener: (context, state) {
                         if (state is AuthSignUpSuccess) {
                           BlocProvider.of<AppBloc>(context)
-                            ..add(const AppAuthenticated(isAuthenticated: true))
+                            ..add(
+                              const AppAuthenticated(
+                                isAuthenticated: true,
+                                token: '',
+                              ),
+                            )
                             ..add(const AppUserLoaded());
                           context.goNamed(Routes.account.name);
                         } else if (state is AuthRequestFailure) {

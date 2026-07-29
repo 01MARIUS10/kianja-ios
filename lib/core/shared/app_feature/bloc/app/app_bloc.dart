@@ -115,7 +115,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   void _onAppAuthenticated(AppAuthenticated event, Emitter emit) {
-    emit(state.copyWith(isAuthenticated: event.isAuthenticated));
+    emit(
+      state.copyWith(
+        isAuthenticated: event.isAuthenticated,
+        token: event.token,
+      ),
+    );
   }
 
   void _onAppUserLoaded(AppUserLoaded event, Emitter emit) async {

@@ -17,15 +17,17 @@ class JobsRequestInProgress extends JobsState {}
 class JobApplicantsViewAllFetchSuccess extends JobsState {
   const JobApplicantsViewAllFetchSuccess({
     required this.jobApplicants,
+    required this.query,
     required this.hasMore,
     this.isLoadMore = false,
   });
   final List<JobApplicant> jobApplicants;
+  final String query;
   final bool hasMore;
   final bool isLoadMore;
 
   @override
-  List<Object> get props => [jobApplicants, hasMore, isLoadMore];
+  List<Object> get props => [jobApplicants, query, hasMore, isLoadMore];
 }
 
 /// [GetJobApplicantsZoneUseCase] succeeded.
@@ -263,20 +265,36 @@ class GetTrainingCenterFilterSuccess extends JobsState {
 
 /// [ViewAllHotEventUseCase] succeeded.
 class ViewAllHotEventsSuccess extends JobsState {
-  const ViewAllHotEventsSuccess({required this.hotEvents});
+  const ViewAllHotEventsSuccess({
+    required this.hotEvents,
+    required this.query,
+    required this.hasMore,
+    this.isLoadMore = false,
+  });
   final List<HotEvent> hotEvents;
+  final String query;
+  final bool hasMore;
+  final bool isLoadMore;
 
   @override
-  List<Object> get props => [hotEvents];
+  List<Object> get props => [hotEvents, query, hasMore, isLoadMore];
 }
 
 /// [ViewAllTrainingCenterUseCase] succeeded.
 class ViewAllTrainingCentersSuccess extends JobsState {
-  const ViewAllTrainingCentersSuccess({required this.trainingCenters});
+  const ViewAllTrainingCentersSuccess({
+    required this.trainingCenters,
+    required this.query,
+    required this.hasMore,
+    this.isLoadMore = false,
+  });
   final List<TrainingCenter> trainingCenters;
+  final String query;
+  final bool hasMore;
+  final bool isLoadMore;
 
   @override
-  List<Object> get props => [trainingCenters];
+  List<Object> get props => [trainingCenters, query, hasMore, isLoadMore];
 }
 
 /// [GetHotEventDetailUseCase] succeeded.
