@@ -39,7 +39,6 @@ import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_ho
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/save_content/save_content_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/subscribe_expert_executive_params.dart';
-import 'package:kianja/features/jobs/domain/usecases/view_all_job_applicants/view_all_job_applicants_params.dart';
 
 class JobsRepositoryImpl implements JobsRepository {
   const JobsRepositoryImpl({required this.remoteDataSource});
