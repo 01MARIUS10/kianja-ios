@@ -213,10 +213,13 @@ class JobsRepositoryImpl implements JobsRepository {
 
   @override
   Future<Either<Failure, List<JobOffer>>> viewAllJobOffers({
-    required String query,
+    required QueryPageParams queryPageParams,
   }) async {
     try {
-      final response = await remoteDataSource.viewAllJobOffers(query: query);
+      final response = await remoteDataSource.viewAllJobOffers(
+        query: queryPageParams.query,
+        page: queryPageParams.page,
+      );
       return right(response);
     } on AppException catch (e) {
       return left(failureHandler(e));
@@ -239,11 +242,12 @@ class JobsRepositoryImpl implements JobsRepository {
 
   @override
   Future<Either<Failure, List<JobApplicant>>> viewAllJobApplicants({
-    required ViewAllJobApplicantsParams viewAllJobApplicantsParams,
+    required QueryPageParams queryPageParams,
   }) async {
     try {
       final response = await remoteDataSource.viewAllJobApplicants(
-        query: viewAllJobApplicantsParams.query,
+        query: queryPageParams.query,
+        page: queryPageParams.page,
       );
       return right(response);
     } on AppException catch (e) {

@@ -33,27 +33,41 @@ class HotEventCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           // Cover Image
-          Container(
-            height: Constants.size100,
-            width: double.infinity,
-            color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
-            child: CachedNetworkImage(
-              imageUrl: '${EnvConfig.baseApiUrl}${hotEvent.image?.url}',
-              fit: BoxFit.fill,
-              errorWidget: (context, url, error) {
-                return Image.asset(
-                  hotEvent.type == 'hot' ? Assets.hot : Assets.events,
-                  fit: BoxFit.fill,
-                  errorBuilder: (context, url, error) => hotEvent.type == 'hot'
-                      ? Image.asset(Assets.hot, fit: BoxFit.fill)
-                      : Image.asset(Assets.events, fit: BoxFit.fill),
-                );
-              },
-              progressIndicatorBuilder: (context, url, progress) {
-                return const Center(child: CircularProgressIndicator());
-              },
+          if (hotEvent.image != null && hotEvent.image!.url.isNotEmpty)
+            Container(
+              height: Constants.size100,
+              width: double.infinity,
+              color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
+              child: CachedNetworkImage(
+                imageUrl: '${EnvConfig.baseApiUrl}${hotEvent.image?.url}',
+                fit: BoxFit.fill,
+                errorWidget: (context, url, error) {
+                  return Image.asset(
+                    hotEvent.type == 'hot' ? Assets.hot : Assets.events,
+                    fit: BoxFit.fill,
+                    errorBuilder: (context, url, error) =>
+                        hotEvent.type == 'hot'
+                        ? Image.asset(Assets.hot, fit: BoxFit.fill)
+                        : Image.asset(Assets.events, fit: BoxFit.fill),
+                  );
+                },
+                progressIndicatorBuilder: (context, url, progress) {
+                  return const Center(child: CircularProgressIndicator());
+                },
+              ),
             ),
-          ),
+
+          if (hotEvent.image != null && hotEvent.image!.url.isEmpty)
+            SizedBox(
+              height: Constants.size100,
+              width: double.infinity,
+              child: Image.asset(
+                hotEvent.type == 'hot' ? Assets.hot : Assets.events,
+                fit: BoxFit.fill,
+                errorBuilder: (context, url, error) =>
+                    const Icon(Icons.image, size: 40, color: Colors.grey),
+              ),
+            ),
 
           Padding(
             padding: const EdgeInsets.all(Constants.paddingSmall),

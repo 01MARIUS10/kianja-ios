@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
 import 'package:kianja/core/shared/app_feature/presentation/modify_app_lang_screen.dart';
 import 'package:kianja/core/shared/screens/view_add_screen.dart';
+import 'package:kianja/core/shared/widgets/photos/photo_type_enum.dart';
 import 'package:kianja/core/shared/widgets/photos/photo_viewer_screen.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/features/about/presentation/pages/about_screen.dart';
@@ -156,6 +157,7 @@ abstract class AppRouter {
             return PhotoViewerScreen(
               imageUrls: extra['imageUrls'] as List<String>? ?? [],
               initialIndex: int.tryParse(extra['initialIndex'] ?? '0') ?? 0,
+              photoTypeEnum: extra['photoTypeEnum'] ?? PhotoTypeEnum.hiring,
             );
           },
         ),

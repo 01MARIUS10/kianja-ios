@@ -83,6 +83,30 @@ class MyPostTrainingCenterItemList extends StatelessWidget {
                   ),
                 ),
               ),
+            if (trainingCenter.images != null && trainingCenter.images!.isEmpty)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(
+                  Constants.borderRadiusSmall,
+                ),
+                child: SizedBox(
+                  width: 120,
+                  height: 120,
+                  child: Image.asset(
+                    Assets.trainingCenter,
+                    fit: BoxFit.cover,
+                    errorBuilder: (ctx, e, st) => Container(
+                      color: isDark
+                          ? AppColors.darkBorder
+                          : AppColors.lightBorder,
+                      child: const Icon(
+                        Icons.image,
+                        size: 32,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             const SizedBox(width: Constants.spacingSmall),
 
             // Content

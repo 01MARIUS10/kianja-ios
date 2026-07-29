@@ -59,11 +59,15 @@ class TrainingCenterCard extends StatelessWidget {
               ),
             ),
           if (trainingCenter.images != null && trainingCenter.images!.isEmpty)
-            Image.asset(
-              Assets.trainingCenter,
-              fit: BoxFit.fill,
-              errorBuilder: (context, url, error) =>
-                  const Icon(Icons.image, size: 40, color: Colors.grey),
+            SizedBox(
+              height: Constants.size150,
+              width: double.infinity,
+              child: Image.asset(
+                Assets.trainingCenter,
+                fit: BoxFit.fill,
+                errorBuilder: (context, url, error) =>
+                    const Icon(Icons.image, size: 40, color: Colors.grey),
+              ),
             ),
 
           Padding(

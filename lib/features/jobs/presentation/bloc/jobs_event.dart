@@ -68,11 +68,19 @@ class JobsGroupByZoneFetchRequested extends JobsEvent {
 
 /// Fetch the flat list of all job offers matching [query].
 class JobsViewAllFetchRequested extends JobsEvent {
-  const JobsViewAllFetchRequested({required this.query});
-  final String query;
+  const JobsViewAllFetchRequested({required this.queryPageParams});
+  final QueryPageParams queryPageParams;
 
   @override
-  List<Object> get props => [query];
+  List<Object> get props => [queryPageParams];
+}
+
+/// Load the next page of job offers for the current view-all query.
+class JobsLoadMoreViewAllRequested extends JobsEvent {
+  const JobsLoadMoreViewAllRequested();
+
+  @override
+  List<Object> get props => [];
 }
 
 /// Fetch job applicants by zone.
@@ -86,13 +94,19 @@ class JobApplicantsZoneFetchRequested extends JobsEvent {
 
 /// Fetch the flat list of all job applicants matching [query].
 class JobApplicantsViewAllFetchRequested extends JobsEvent {
-  const JobApplicantsViewAllFetchRequested({
-    required this.viewAllJobApplicantsParams,
-  });
-  final ViewAllJobApplicantsParams viewAllJobApplicantsParams;
+  const JobApplicantsViewAllFetchRequested({required this.queryPageParams});
+  final QueryPageParams queryPageParams;
 
   @override
-  List<Object> get props => [viewAllJobApplicantsParams];
+  List<Object> get props => [queryPageParams];
+}
+
+/// Load the next page of job offers for the current view-all query.
+class JobApplicantLoadMoreViewAllRequested extends JobsEvent {
+  const JobApplicantLoadMoreViewAllRequested();
+
+  @override
+  List<Object> get props => [];
 }
 
 /// Upload a PDF file.

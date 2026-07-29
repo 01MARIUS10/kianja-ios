@@ -163,35 +163,36 @@ class _JobApplicantDetailScreenState extends State<JobApplicantDetailScreen> {
 
                       // Image
                       if (jobApplicant.photoUrl != null)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: Constants.paddingMedium,
+                        if (jobApplicant.photoUrl!.isNotEmpty)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: Constants.paddingMedium,
+                                ),
+                                child: PhotoHandler(
+                                  width: double.infinity,
+                                  imageUrls: [jobApplicant.photoUrl]
+                                      .map(
+                                        (image) =>
+                                            '${EnvConfig.baseApiUrl}$image',
+                                      )
+                                      .toList(),
+                                ),
                               ),
-                              child: PhotoHandler(
-                                width: double.infinity,
-                                imageUrls: [jobApplicant.photoUrl]
-                                    .map(
-                                      (image) =>
-                                          '${EnvConfig.baseApiUrl}$image',
-                                    )
-                                    .toList(),
-                              ),
-                            ),
 
-                            const SizedBox(height: Constants.spacingMedium),
-                            Divider(
-                              color: borderColor,
-                              thickness: 1,
-                              height: 1,
-                              indent: Constants.paddingMedium,
-                              endIndent: Constants.paddingMedium,
-                            ),
-                            const SizedBox(height: Constants.spacingMedium),
-                          ],
-                        ),
+                              const SizedBox(height: Constants.spacingMedium),
+                              Divider(
+                                color: borderColor,
+                                thickness: 1,
+                                height: 1,
+                                indent: Constants.paddingMedium,
+                                endIndent: Constants.paddingMedium,
+                              ),
+                              const SizedBox(height: Constants.spacingMedium),
+                            ],
+                          ),
 
                       // Description
                       Padding(

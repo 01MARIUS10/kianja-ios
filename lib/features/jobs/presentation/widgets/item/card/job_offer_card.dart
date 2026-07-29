@@ -61,11 +61,15 @@ class JobOfferCard extends StatelessWidget {
             ),
 
           if (jobOffer.images != null && jobOffer.images!.isEmpty)
-            Image.asset(
-              Assets.hiring,
-              fit: BoxFit.fill,
-              errorBuilder: (context, url, error) =>
-                  const Icon(Icons.image, size: 40, color: Colors.grey),
+            SizedBox(
+              height: Constants.size150,
+              width: double.infinity,
+              child: Image.asset(
+                Assets.hiring,
+                fit: BoxFit.fill,
+                errorBuilder: (context, url, error) =>
+                    const Icon(Icons.image, size: 40, color: Colors.grey),
+              ),
             ),
 
           Padding(

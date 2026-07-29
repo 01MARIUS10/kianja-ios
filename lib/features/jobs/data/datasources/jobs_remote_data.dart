@@ -40,8 +40,14 @@ abstract interface class JobsRemoteDataSource {
   Future<List<JobApplicantZoneModel>> getJobApplicantsZone({
     required String query,
   });
-  Future<List<JobOfferModel>> viewAllJobOffers({required String query});
-  Future<List<JobApplicantModel>> viewAllJobApplicants({required String query});
+  Future<List<JobOfferModel>> viewAllJobOffers({
+    required String query,
+    required int page,
+  });
+  Future<List<JobApplicantModel>> viewAllJobApplicants({
+    required String query,
+    required int page,
+  });
   Future<JobImageModel> uploadJobImage({required XFile file});
   Future<JobPdfModel> uploadJobPdf({required PlatformFile file});
   Future<List<PricePlanModel>> getPricePlans({required String plan});
@@ -322,9 +328,12 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
   }
 
   @override
-  Future<List<JobOfferModel>> viewAllJobOffers({required String query}) async {
+  Future<List<JobOfferModel>> viewAllJobOffers({
+    required String query,
+    required int page,
+  }) async {
     return requestHandler(() async {
-      final response = await dio.get('/api/job-offers?$query');
+      final response = await dio.get('/api/job-offers?$query&page=$page');
       final result = jsonHandler(response.data);
       final Map<String, dynamic> contenu =
           result['Contenu'] as Map<String, dynamic>;
@@ -355,9 +364,10 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
   @override
   Future<List<JobApplicantModel>> viewAllJobApplicants({
     required String query,
+    required int page,
   }) async {
     return requestHandler(() async {
-      final response = await dio.get('/api/job-applicants?$query');
+      final response = await dio.get('/api/job-applicants?$query&page=$page');
       final result = jsonHandler(response.data);
       final Map<String, dynamic> contenu =
           result['Contenu'] as Map<String, dynamic>;

@@ -40,7 +40,7 @@ abstract interface class JobsRepository {
     required String query,
   });
   Future<Either<Failure, List<JobOffer>>> viewAllJobOffers({
-    required String query,
+    required QueryPageParams queryPageParams,
   });
   Future<Either<Failure, List<HotEvent>>> viewAllHotEvents({
     required String query,
@@ -54,7 +54,7 @@ abstract interface class JobsRepository {
     required GetJobApplicantParams getJobApplicantParams,
   });
   Future<Either<Failure, List<JobApplicant>>> viewAllJobApplicants({
-    required ViewAllJobApplicantsParams viewAllJobApplicantsParams,
+    required QueryPageParams queryPageParams,
   });
   Future<Either<Failure, JobImage>> uploadImage({required XFile file});
   Future<Either<Failure, JobPdf>> uploadPdf({required PlatformFile file});

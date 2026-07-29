@@ -37,7 +37,11 @@ class _PhotoHandlerState extends State<PhotoHandler> {
   void _openPhotoViewer(BuildContext context, int index) {
     context.pushNamed(
       Routes.photoViewer.name,
-      extra: {'imageUrls': widget.imageUrls, 'initialIndex': index.toString()},
+      extra: {
+        'imageUrls': widget.imageUrls,
+        'initialIndex': index.toString(),
+        'photoTypeEnum': widget.photoTypeEnum,
+      },
     );
   }
 
@@ -100,6 +104,12 @@ class _PhotoHandlerState extends State<PhotoHandler> {
               });
             },
             itemBuilder: (context, index) {
+              final String assetImage = switch (widget.photoTypeEnum) {
+                PhotoTypeEnum.hiring => Assets.hiring,
+                PhotoTypeEnum.trainingCenter => Assets.trainingCenter,
+                PhotoTypeEnum.hot => Assets.hot,
+                PhotoTypeEnum.event => Assets.events,
+              };
               return GestureDetector(
                 onTap: () => _openPhotoViewer(context, index),
                 child: CachedNetworkImage(
@@ -108,7 +118,7 @@ class _PhotoHandlerState extends State<PhotoHandler> {
                   placeholder: (context, url) =>
                       const Center(child: CircularProgressIndicator()),
                   errorWidget: (context, url, error) =>
-                      Image.asset(Assets.logoKianja, fit: widget.fit),
+                      Image.asset(assetImage, fit: widget.fit),
                 ),
               );
             },

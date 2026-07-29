@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/usecase/no_params.dart';
+import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/jobs/domain/entities/expert_executive/expert_executive.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_image.dart';
 import 'package:kianja/features/jobs/domain/entities/files/job_pdf.dart';
@@ -54,7 +55,6 @@ import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/
 import 'package:kianja/features/jobs/domain/usecases/upload_image_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/upload_pdf_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_hot_event_usecase.dart';
-import 'package:kianja/features/jobs/domain/usecases/view_all_job_applicants/view_all_job_applicants_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_job_applicants/view_all_job_applicants_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_job_offers_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_training_centers_usecase.dart';
@@ -95,6 +95,7 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     on<JobsGroupByDateFetchRequested>(_onGroupByDateFetchRequested);
     on<JobsGroupByZoneFetchRequested>(_onGroupByZoneFetchRequested);
     on<JobsViewAllFetchRequested>(_onViewAllFetchRequested);
+    on<JobsLoadMoreViewAllRequested>(_onLoadMoreViewAllRequested);
     on<JobsUploadPdfRequested>(_onUploadPdfRequested);
     on<JobsUploadImageRequested>(_onUploadImageRequested);
     on<JobsUploadMultipleImagesRequested>(_onUploadMultipleImagesRequested);
@@ -104,6 +105,9 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     on<JobFeaturesFetchRequested>(_onJobFeaturesFetchRequested);
     on<JobApplicantsViewAllFetchRequested>(
       _onJobApplicantsViewAllFetchRequested,
+    );
+    on<JobApplicantLoadMoreViewAllRequested>(
+      _onLoadMoreJopApplicantViewAllRequested,
     );
     on<JobApplicantsZoneFetchRequested>(_onJobApplicantsZoneFetchRequested);
     on<JobApplicantProfessionsFetchRequested>(
@@ -156,6 +160,18 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
   final CreateTrainingCenterUseCase _createTrainingCenterUseCase;
   final SubscribeExpertExecutiveUseCase _subscribeExpertExecutiveUseCase;
   final CreateHotEventUseCase _createHotEventUseCase;
+
+  static const int _viewAllPageSize = 15;
+  int _currentViewAllPage = 1;
+  String _currentViewAllQuery = '';
+  List<JobOffer> _cachedViewAllJobOffers = [];
+  bool _hasMoreViewAll = true;
+  bool _isLoadMoreViewAllInProgress = false;
+
+  int _currentViewAllJobApplicantPage = 1;
+  List<JobApplicant> _cachedViewAllJobApplicants = [];
+  bool _hasMoreViewAllJobApplicants = true;
+  bool _isLoadMoreViewAllJobApplicantsInProgress = false;
 
   Future<void> _onCreateHotEventRequested(
     CreateHotEventRequested event,
@@ -485,15 +501,70 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     JobsViewAllFetchRequested event,
     Emitter<JobsState> emit,
   ) async {
+    _currentViewAllPage = event.queryPageParams.page;
+    _currentViewAllQuery = event.queryPageParams.query;
+    _cachedViewAllJobOffers = [];
+    _hasMoreViewAll = true;
+    _isLoadMoreViewAllInProgress = false;
+
     emit(JobsRequestInProgress());
-    final result = await _viewAllJobOffersUseCase(
-      ViewAllJobOffersParams(query: event.query),
-    );
+    final result = await _viewAllJobOffersUseCase(event.queryPageParams);
     result.fold(
       (failure) => emit(JobsRequestFailure(message: failure.message)),
-      (jobOffers) => emit(
-        JobsViewAllFetchSuccess(jobOffers: jobOffers, query: event.query),
+      (jobOffers) {
+        _cachedViewAllJobOffers = jobOffers;
+        _hasMoreViewAll = jobOffers.length >= _viewAllPageSize;
+        emit(
+          JobsViewAllFetchSuccess(
+            jobOffers: _cachedViewAllJobOffers,
+            query: _currentViewAllQuery,
+            hasMore: _hasMoreViewAll,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _onLoadMoreViewAllRequested(
+    JobsLoadMoreViewAllRequested event,
+    Emitter<JobsState> emit,
+  ) async {
+    if (!_hasMoreViewAll || _isLoadMoreViewAllInProgress) {
+      return;
+    }
+
+    _isLoadMoreViewAllInProgress = true;
+    emit(
+      JobsViewAllFetchSuccess(
+        jobOffers: _cachedViewAllJobOffers,
+        query: _currentViewAllQuery,
+        hasMore: _hasMoreViewAll,
+        isLoadMore: true,
       ),
+    );
+
+    _currentViewAllPage++;
+    final result = await _viewAllJobOffersUseCase(
+      QueryPageParams(query: _currentViewAllQuery, page: _currentViewAllPage),
+    );
+    result.fold(
+      (failure) {
+        _currentViewAllPage--;
+        _isLoadMoreViewAllInProgress = false;
+        emit(JobsRequestFailure(message: failure.message));
+      },
+      (jobOffers) {
+        _cachedViewAllJobOffers = [..._cachedViewAllJobOffers, ...jobOffers];
+        _hasMoreViewAll = jobOffers.length >= _viewAllPageSize;
+        _isLoadMoreViewAllInProgress = false;
+        emit(
+          JobsViewAllFetchSuccess(
+            jobOffers: _cachedViewAllJobOffers,
+            query: _currentViewAllQuery,
+            hasMore: _hasMoreViewAll,
+          ),
+        );
+      },
     );
   }
 
@@ -553,14 +624,70 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     JobApplicantsViewAllFetchRequested event,
     Emitter<JobsState> emit,
   ) async {
+    _currentViewAllJobApplicantPage = event.queryPageParams.page;
+    _cachedViewAllJobApplicants = [];
+    _hasMoreViewAllJobApplicants = true;
+    _isLoadMoreViewAllJobApplicantsInProgress = false;
+
     emit(JobsRequestInProgress());
-    final result = await _viewAllJobApplicantsUseCase(
-      event.viewAllJobApplicantsParams,
-    );
+    final result = await _viewAllJobApplicantsUseCase(event.queryPageParams);
     result.fold(
       (failure) => emit(JobsRequestFailure(message: failure.message)),
-      (jobApplicants) =>
-          emit(JobApplicantsViewAllFetchSuccess(jobApplicants: jobApplicants)),
+      (jobApplicants) {
+        _cachedViewAllJobApplicants = jobApplicants;
+        _hasMoreViewAllJobApplicants = jobApplicants.length >= _viewAllPageSize;
+        emit(
+          JobApplicantsViewAllFetchSuccess(
+            jobApplicants: _cachedViewAllJobApplicants,
+            hasMore: _hasMoreViewAllJobApplicants,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _onLoadMoreJopApplicantViewAllRequested(
+    JobApplicantLoadMoreViewAllRequested event,
+    Emitter<JobsState> emit,
+  ) async {
+    if (!_hasMoreViewAllJobApplicants ||
+        _isLoadMoreViewAllJobApplicantsInProgress) {
+      return;
+    }
+
+    _isLoadMoreViewAllJobApplicantsInProgress = true;
+    emit(
+      JobApplicantsViewAllFetchSuccess(
+        jobApplicants: _cachedViewAllJobApplicants,
+        hasMore: _hasMoreViewAllJobApplicants,
+        isLoadMore: true,
+      ),
+    );
+
+    _currentViewAllJobApplicantPage++;
+    final result = await _viewAllJobApplicantsUseCase(
+      QueryPageParams(page: _currentViewAllJobApplicantPage),
+    );
+    result.fold(
+      (failure) {
+        _currentViewAllJobApplicantPage--;
+        _isLoadMoreViewAllJobApplicantsInProgress = false;
+        emit(JobsRequestFailure(message: failure.message));
+      },
+      (jobApplicants) {
+        _cachedViewAllJobApplicants = [
+          ..._cachedViewAllJobApplicants,
+          ...jobApplicants,
+        ];
+        _hasMoreViewAllJobApplicants = jobApplicants.length >= _viewAllPageSize;
+        _isLoadMoreViewAllJobApplicantsInProgress = false;
+        emit(
+          JobApplicantsViewAllFetchSuccess(
+            jobApplicants: _cachedViewAllJobApplicants,
+            hasMore: _hasMoreViewAllJobApplicants,
+          ),
+        );
+      },
     );
   }
 

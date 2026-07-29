@@ -1,15 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kianja/core/config/assets.dart';
+import 'package:kianja/core/shared/widgets/photos/photo_type_enum.dart';
 
 class PhotoViewerScreen extends StatefulWidget {
   const PhotoViewerScreen({
     super.key,
     required this.imageUrls,
     this.initialIndex = 0,
+    this.photoTypeEnum = PhotoTypeEnum.hiring,
   });
   final List<String> imageUrls;
   final int initialIndex;
+  final PhotoTypeEnum photoTypeEnum;
 
   @override
   State<PhotoViewerScreen> createState() => _PhotoViewerScreenState();
@@ -34,6 +37,13 @@ class _PhotoViewerScreenState extends State<PhotoViewerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final String assetImage = switch (widget.photoTypeEnum) {
+      PhotoTypeEnum.hiring => Assets.hiring,
+      PhotoTypeEnum.trainingCenter => Assets.trainingCenter,
+      PhotoTypeEnum.hot => Assets.hot,
+      PhotoTypeEnum.event => Assets.events,
+    };
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -50,7 +60,7 @@ class _PhotoViewerScreenState extends State<PhotoViewerScreen> {
       extendBodyBehindAppBar: true,
       body: SafeArea(
         child: widget.imageUrls.isEmpty
-            ? Center(child: Image.asset(Assets.logoKianja, fit: BoxFit.contain))
+            ? Center(child: Image.asset(assetImage, fit: BoxFit.contain))
             : PageView.builder(
                 controller: _pageController,
                 itemCount: widget.imageUrls.length,
@@ -70,7 +80,7 @@ class _PhotoViewerScreenState extends State<PhotoViewerScreen> {
                         child: CircularProgressIndicator(color: Colors.white),
                       ),
                       errorWidget: (context, url, error) =>
-                          Image.asset(Assets.logoKianja, fit: BoxFit.contain),
+                          Image.asset(assetImage, fit: BoxFit.contain),
                     ),
                   );
                 },

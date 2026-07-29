@@ -15,11 +15,17 @@ class JobsRequestInProgress extends JobsState {}
 
 /// [ViewAllJobApplicantsUseCase] succeeded.
 class JobApplicantsViewAllFetchSuccess extends JobsState {
-  const JobApplicantsViewAllFetchSuccess({required this.jobApplicants});
+  const JobApplicantsViewAllFetchSuccess({
+    required this.jobApplicants,
+    required this.hasMore,
+    this.isLoadMore = false,
+  });
   final List<JobApplicant> jobApplicants;
+  final bool hasMore;
+  final bool isLoadMore;
 
   @override
-  List<Object> get props => [jobApplicants];
+  List<Object> get props => [jobApplicants, hasMore, isLoadMore];
 }
 
 /// [GetJobApplicantsZoneUseCase] succeeded.
@@ -97,12 +103,20 @@ class JobsGroupByZoneFetchSuccess extends JobsState {
 /// [ViewAllJobOffersUseCase] succeeded.
 /// [query] is kept so the UI knows which category/filter was active.
 class JobsViewAllFetchSuccess extends JobsState {
-  const JobsViewAllFetchSuccess({required this.jobOffers, required this.query});
+  const JobsViewAllFetchSuccess({
+    required this.jobOffers,
+    required this.query,
+    required this.hasMore,
+    this.isLoadMore = false,
+  });
+
   final List<JobOffer> jobOffers;
   final String query;
+  final bool hasMore;
+  final bool isLoadMore;
 
   @override
-  List<Object> get props => [jobOffers, query];
+  List<Object> get props => [jobOffers, query, hasMore, isLoadMore];
 }
 
 /// [UploadPdfUseCase] succeeded.
