@@ -24,6 +24,7 @@ import 'package:kianja/features/jobs/domain/usecases/get_job_features_usecase.da
 import 'package:kianja/features/jobs/domain/usecases/get_job_offer_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_offer_filtering_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_offers_group_by_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_motifs_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_price_plan/get_price_plan_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_domains_usecase.dart';
@@ -31,6 +32,7 @@ import 'package:kianja/features/jobs/domain/usecases/get_training_center_filter_
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_hot_event_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_view_domain_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/save_content/save_content_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/signaler_contenu/signaler_contenu_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/subscribe_expert_executive_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/upload_image_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/upload_pdf_usecase.dart';
@@ -170,6 +172,12 @@ Future<void> initJobsDependencies(GetIt getIt, Dio dio) async {
   getIt.registerLazySingleton<BlockUserUseCase>(
     () => BlockUserUseCase(jobsRepository: getIt()),
   );
+  getIt.registerLazySingleton<GetMotifsUseCase>(
+    () => GetMotifsUseCase(jobsRepository: getIt()),
+  );
+  getIt.registerLazySingleton<SignalerContenuUseCase>(
+    () => SignalerContenuUseCase(jobsRepository: getIt()),
+  );
 
   getIt.registerLazySingleton(JobsTabResetNotifier.new);
 
@@ -204,6 +212,8 @@ Future<void> initJobsDependencies(GetIt getIt, Dio dio) async {
       createHotEventUseCase: getIt(),
       viewUserProfileUseCase: getIt(),
       blockUserUseCase: getIt(),
+      getMotifsUseCase: getIt(),
+      signalerContenuUseCase: getIt(),
     ),
   );
   getIt.registerFactory(() => ApplyToOfferBloc(applyToOfferUseCase: getIt()));

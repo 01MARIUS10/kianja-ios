@@ -67,22 +67,33 @@ class AccountBlockedUsersSuccess extends AccountState {
     required this.users,
     required this.hasMore,
     this.isLoadMore = false,
+    this.unblockingUserId,
   });
 
   final List<User> users;
   final bool hasMore;
   final bool isLoadMore;
+  final int? unblockingUserId;
 
   @override
-  List<Object> get props => [users, hasMore, isLoadMore];
+  List<Object> get props => [
+        users,
+        hasMore,
+        isLoadMore,
+        ?unblockingUserId,
+      ];
 }
 
 class AccountUnblockUserSuccess extends AccountState {
-  const AccountUnblockUserSuccess({required this.message});
+  const AccountUnblockUserSuccess({
+    required this.message,
+    required this.userId,
+  });
   final String message;
+  final int userId;
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [message, userId];
 }
 
 class AccountSendComplaintsSuggestionsSuccess extends AccountState {

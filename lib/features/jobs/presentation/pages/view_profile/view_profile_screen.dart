@@ -37,7 +37,7 @@ class ViewProfileScreen extends StatelessWidget {
           ),
         ),
       child: BaseScreen(
-        appBar: const TitleHeader(title: 'User profile'),
+        appBar: TitleHeader(title: context.appLoc.user_profile),
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(
             Constants.paddingMedium,
@@ -51,7 +51,7 @@ class ViewProfileScreen extends StatelessWidget {
                 context.pushReplacementNamed(Routes.jobs.name);
                 AppMessenger.showSuccess(
                   context,
-                  'Utilisateur bloqué avec succès',
+                  context.appLoc.blocked_user_successfully,
                 );
               } else if (state is JobsRequestFailure) {
                 AppMessenger.showError(context, state.message);
@@ -110,7 +110,7 @@ class ViewProfileScreen extends StatelessWidget {
                           icon: Icons.phone_outlined,
                           label: context.appLoc.phone_number,
                           value:
-                              '+261 ${AppFunction.formatPhoneNumber(user.phone)}',
+                              '${AppFunction.codePhoneNumber(user.phone)} ${AppFunction.formatPhoneNumber(user.phone)}',
                           iconColor: AppColors.success,
                         ),
                         const Divider(thickness: 0.5),
@@ -139,7 +139,7 @@ class ViewProfileScreen extends StatelessWidget {
                                 child: PersonalInfoRow(
                                   icon: Icons.picture_as_pdf_outlined,
                                   label: context.appLoc.resume,
-                                  value: 'Voir mon CV',
+                                  value: context.appLoc.view_my_cv,
                                   iconColor: AppColors.info,
                                 ),
                               ),
@@ -159,7 +159,7 @@ class ViewProfileScreen extends StatelessWidget {
                           );
                         },
                         child: Text(
-                          'Bloquer'.toUpperCase(),
+                          context.appLoc.block.toUpperCase(),
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             letterSpacing: 1.2,

@@ -888,4 +888,91 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get not_enough_kara_or_email_already_used =>
       'Vous n\'avez pas assez de Kara ou cette adresse e-mail est déjà utilisée.';
+
+  @override
+  String get candidate_profile => 'Profil du candidat';
+
+  @override
+  String get user_profile => 'Profil utilisateur';
+
+  @override
+  String get view_my_cv => 'Voir mon CV';
+
+  @override
+  String get please_select_a_reason => 'Veuillez sélectionner un motif';
+
+  @override
+  String get content_reported_successfully => 'Contenu signalé avec succès';
+
+  @override
+  String get report_this_content => 'Signaler ce contenu';
+
+  @override
+  String get reason => 'Motif';
+
+  @override
+  String get comment => 'Commentaire';
+
+  @override
+  String get privacy_policy => 'Politique de confidentialité';
+
+  @override
+  String get complaints_and_suggestions => 'Plaintes et suggestions';
+
+  @override
+  String get blocked_users => 'Utilisateurs bloqués';
+
+  @override
+  String get delete_account => 'Supprimer le compte';
+
+  @override
+  String get unblock => 'Débloquer';
+
+  @override
+  String get complaints_or_suggestions_sent_successfully =>
+      'Vos plaintes ou suggestions ont été envoyées avec succès';
+
+  @override
+  String get return_to_my_account => 'Revenir à mon compte';
+
+  @override
+  String get confirm_delete_account =>
+      'Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.';
+
+  @override
+  String get apply_to => 'Postuler';
+
+  @override
+  String get unsaved_question => 'Non enregistré ?';
+
+  @override
+  String get confirm_remove_from_favorites =>
+      'Voulez-vous vraiment retirer ce contenu de vos favoris ?';
+
+  @override
+  String get unsaved => 'Non enregistré';
+
+  @override
+  String get report => 'Signaler';
+
+  @override
+  String get candidates => 'Candidats';
+
+  @override
+  String get view => 'Voir';
+
+  @override
+  String get blocked_user_successfully => 'Utilisateur bloqué avec succès';
+
+  @override
+  String get block => 'Bloquer';
+
+  @override
+  String get unblocked_user_successfully => 'Utilisateur débloqué avec succès';
+
+  @override
+  String get no_blocked_user => 'Aucun utilisateur bloqué';
+
+  @override
+  String get and => 'Et';
 }

@@ -9,12 +9,10 @@ import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/jobs/presentation/bloc/save_content/save_content_bloc.dart';
 import 'package:kianja/features/jobs/presentation/bloc/saved_events_list/saved_events_list_bloc.dart';
-import 'package:kianja/features/jobs/presentation/bloc/saved_hots_list/saved_hots_list_bloc.dart';
 import 'package:kianja/features/jobs/presentation/bloc/saved_job_applicants_list/saved_job_applicants_list_bloc.dart';
 import 'package:kianja/features/jobs/presentation/bloc/saved_list/saved_list_bloc.dart';
 import 'package:kianja/features/jobs/presentation/bloc/saved_training_centers_list/saved_training_centers_list_bloc.dart';
 import 'package:kianja/features/jobs/presentation/pages/saved/saved_event_screen.dart';
-// import 'package:kianja/features/jobs/presentation/pages/saved/saved_hot_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/saved/saved_job_applicant_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/saved/saved_job_offer_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/saved/saved_training_center_screen.dart';
@@ -91,7 +89,7 @@ class _SavedScreenState extends State<SavedScreen>
         ),
       ],
       child: BaseScreen(
-        appBar: const TitleHeader(title: 'My recordings'),
+        appBar: TitleHeader(title: context.appLoc.favorites),
         child: Column(
           children: [
             SizedBox(

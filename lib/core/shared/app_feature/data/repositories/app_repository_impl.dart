@@ -29,6 +29,17 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
+  Future<Either<Failure, Unit>> deleteUser() async {
+    try {
+      await remoteDataSource.deleteUser();
+      await appUserHive.deleteUser();
+      return right(unit);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
   Future<Either<Failure, User>> getCachedUser() async {
     try {
       final user = appUserHive.getUser();

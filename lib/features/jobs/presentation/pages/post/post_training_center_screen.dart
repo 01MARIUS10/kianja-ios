@@ -105,26 +105,35 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
 
   // ── Submit ────────────────────────────────────────────────────────────────
   void _post(BuildContext context) {
-    if (_centerNameController.text.trim().isEmpty) {
-      AppMessenger.showWarning(context, 'Please add a center name');
-      return;
-    }
-    if (_descriptionController.text.trim().isEmpty) {
-      AppMessenger.showWarning(context, 'Please add a description');
-      return;
-    }
-    if (_selectedDomainId == null) {
-      AppMessenger.showWarning(context, 'Please select at least one domain');
-      return;
-    }
-    if (_selectedLocationId == null) {
-      AppMessenger.showWarning(context, 'Please select a location');
-      return;
-    }
-    // if (_selectedActorId == null) {
-    //   AppMessenger.showWarning(context, 'Please select an actor');
+    // if (_centerNameController.text.trim().isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please add a center name');
     //   return;
     // }
+    // if (_descriptionController.text.trim().isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please add a description');
+    //   return;
+    // }
+    // if (_selectedDomainId == null) {
+    //   AppMessenger.showWarning(context, 'Please select at least one domain');
+    //   return;
+    // }
+    // if (_selectedLocationId == null) {
+    //   AppMessenger.showWarning(context, 'Please select a location');
+    //   return;
+    // }
+    // // if (_selectedActorId == null) {
+    // //   AppMessenger.showWarning(context, 'Please select an actor');
+    // //   return;
+    // // }
+    if (_centerNameController.text.trim().isEmpty ||
+        _descriptionController.text.trim().isEmpty ||
+        _selectedDomainId == null ||
+        _selectedLocationId == null) {
+      AppMessenger.showWarning(
+        context,
+        context.appLoc.please_fill_all_required_fields,
+      );
+    }
 
     if (_photos.isNotEmpty) {
       AppDebug.showPrint('Uploading ${_photos.length} photos...');

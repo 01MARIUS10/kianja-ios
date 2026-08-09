@@ -57,6 +57,22 @@ class JobApplicantProfessionsFetchSuccess extends JobsState {
   List<Object> get props => [jobCategories];
 }
 
+class JobMotifsFetchSuccess extends JobsState {
+  const JobMotifsFetchSuccess({required this.motifs});
+  final List<Motif> motifs;
+
+  @override
+  List<Object> get props => [motifs];
+}
+
+class JobSignalerContenuSuccess extends JobsState {
+  const JobSignalerContenuSuccess({required this.signaler});
+  final Signaler signaler;
+
+  @override
+  List<Object> get props => [signaler];
+}
+
 /// [GetJobApplicantFiltersUseCase] succeeded.
 class JobApplicantFiltersFetchSuccess extends JobsState {
   const JobApplicantFiltersFetchSuccess({required this.jobApplicantFilter});

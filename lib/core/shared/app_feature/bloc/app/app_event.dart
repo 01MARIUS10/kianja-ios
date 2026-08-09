@@ -52,6 +52,10 @@ class AppUserDeleted extends AppEvent {
   const AppUserDeleted();
 }
 
+class AppUserDeleteRequested extends AppEvent {
+  const AppUserDeleteRequested();
+}
+
 class AppThemeChanged extends AppEvent {
   const AppThemeChanged({required this.appMode});
   final AppMode appMode;

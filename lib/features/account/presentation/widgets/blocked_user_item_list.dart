@@ -1,22 +1,25 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
 import 'package:kianja/core/shared/widgets/avatar/default_avatar.dart';
 import 'package:kianja/core/themes/app_colors.dart';
-import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
-import 'package:kianja/features/account/domain/usecases/unblock_user/unblock_user_params.dart';
-import 'package:kianja/features/account/presentation/bloc/account_bloc.dart';
-import 'package:kianja/routing/routes.dart';
+import 'package:kianja/core/utils/extensions.dart';
 
 class BlockedUserItemList extends StatelessWidget {
-  const BlockedUserItemList({super.key, required this.user, this.onTap});
+  const BlockedUserItemList({
+    super.key,
+    required this.user,
+    this.onTap,
+    this.isUnblocking = false,
+    this.onUnblock,
+  });
 
   final User user;
   final VoidCallback? onTap;
+  final bool isUnblocking;
+  final VoidCallback? onUnblock;
 
   @override
   Widget build(BuildContext context) {
@@ -108,46 +111,24 @@ class BlockedUserItemList extends StatelessWidget {
                     Align(
                       alignment: Alignment.bottomRight,
                       child: ElevatedButton(
-                        onPressed: () {
-                          BlocProvider.of<AccountBloc>(context).add(
-                            AccountUnblockUserRequested(
-                              unblockUserParams: UnblockUserParams(id: user.id),
-                            ),
-                          );
-                        },
-                        child: BlocConsumer<AccountBloc, AccountState>(
-                          listener: (context, state) {
-                            if (state is AccountUnblockUserSuccess) {
-                              context.pushReplacementNamed(Routes.jobs.name);
-                              AppMessenger.showSuccess(
-                                context,
-                                'Utilisateur debloqué avec succès',
-                              );
-                            } else if (state is AccountRequestFailure) {
-                              AppMessenger.showError(context, state.message);
-                            }
-                          },
-                          builder: (context, state) {
-                            if (state is AccountRequestInProgress) {
-                              return const SizedBox(
+                        onPressed: isUnblocking ? null : onUnblock,
+                        child: isUnblocking
+                            ? const SizedBox(
                                 width: 24,
                                 height: 24,
                                 child: CircularProgressIndicator(
                                   strokeWidth: 2,
                                 ),
-                              );
-                            }
-                            return Text(
-                              'Debloquer'.toUpperCase(),
-                              style: theme.textTheme.titleSmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: isDark
-                                    ? AppColors.darkTextPrimary
-                                    : AppColors.lightTextPrimary,
+                              )
+                            : Text(
+                                context.appLoc.unblock.toUpperCase(),
+                                style: theme.textTheme.titleSmall?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: isDark
+                                      ? AppColors.darkTextPrimary
+                                      : AppColors.lightTextPrimary,
+                                ),
                               ),
-                            );
-                          },
-                        ),
                       ),
                     ),
                   ],

@@ -114,7 +114,9 @@ class _ComplaintsSuggestionsScreenState
                 final isLoading = state is JobsRequestInProgress;
 
                 return BaseScreen(
-                  appBar: const TitleHeader(title: 'Plaintes et suggestions'),
+                  appBar: TitleHeader(
+                    title: context.appLoc.complaints_and_suggestions,
+                  ),
                   child: GestureDetector(
                     onTap: () => FocusScope.of(context).unfocus(),
                     child: SingleChildScrollView(

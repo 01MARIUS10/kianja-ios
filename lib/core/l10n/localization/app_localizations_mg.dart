@@ -888,4 +888,94 @@ class AppLocalizationsMg extends AppLocalizations {
   @override
   String get not_enough_kara_or_email_already_used =>
       'Tsy ampy ny Kara anananao na efa ampiasaina ity adiresy mailaka ity.';
+
+  @override
+  String get candidate_profile => 'Mombamomba ny kandidà';
+
+  @override
+  String get user_profile => 'Mombamomba ny mpampiasa';
+
+  @override
+  String get view_my_cv => 'Hijery ny CV-ko';
+
+  @override
+  String get please_select_a_reason => 'Misafidiana antony azafady';
+
+  @override
+  String get content_reported_successfully =>
+      'Voatatitra soa aman-tsara ny votoaty';
+
+  @override
+  String get report_this_content => 'Tatitro ity votoaty ity';
+
+  @override
+  String get reason => 'Antony';
+
+  @override
+  String get comment => 'Fanamarihana';
+
+  @override
+  String get privacy_policy => 'Politikan\'ny fiainana manokana';
+
+  @override
+  String get complaints_and_suggestions => 'Fitarainana sy soso-kevitra';
+
+  @override
+  String get blocked_users => 'Mpampiasa voasakana';
+
+  @override
+  String get delete_account => 'Fafao ny kaonty';
+
+  @override
+  String get unblock => 'Esory ny sakana';
+
+  @override
+  String get complaints_or_suggestions_sent_successfully =>
+      'Voaray soa aman-tsara ny fitarainanao na ny soso-kevitrao';
+
+  @override
+  String get return_to_my_account => 'Hiverina amin\'ny kaontiko';
+
+  @override
+  String get confirm_delete_account =>
+      'Azo antoka ve fa te hamafa ny kaontinao ianao? Tsy azo averina intsony ity hetsika ity.';
+
+  @override
+  String get apply_to => 'Handefa kandidà';
+
+  @override
+  String get unsaved_question => 'Tsy voatahiry?';
+
+  @override
+  String get confirm_remove_from_favorites =>
+      'Tena tianao esorina amin\'ny ankafizinao ve ity votoaty ity?';
+
+  @override
+  String get unsaved => 'Tsy voatahiry';
+
+  @override
+  String get report => 'Hitatitra';
+
+  @override
+  String get candidates => 'Kandidà';
+
+  @override
+  String get view => 'Hijery';
+
+  @override
+  String get blocked_user_successfully =>
+      'Voasakana soa aman-tsara ny mpampiasa';
+
+  @override
+  String get block => 'Sakanana';
+
+  @override
+  String get unblocked_user_successfully =>
+      'Voasokatra soa aman-tsara ny mpampiasa';
+
+  @override
+  String get no_blocked_user => 'Tsy misy mpampiasa voasakana';
+
+  @override
+  String get and => 'Ary';
 }

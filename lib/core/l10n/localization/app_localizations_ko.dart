@@ -861,4 +861,89 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String get not_enough_kara_or_email_already_used =>
       'Kara가 부족하거나 이미 사용 중인 이메일입니다.';
+
+  @override
+  String get candidate_profile => '지원자 프로필';
+
+  @override
+  String get user_profile => '사용자 프로필';
+
+  @override
+  String get view_my_cv => '내 이력서 보기';
+
+  @override
+  String get please_select_a_reason => '사유를 선택해 주세요';
+
+  @override
+  String get content_reported_successfully => '콘텐츠가 성공적으로 신고되었습니다';
+
+  @override
+  String get report_this_content => '이 콘텐츠 신고';
+
+  @override
+  String get reason => '사유';
+
+  @override
+  String get comment => '댓글';
+
+  @override
+  String get privacy_policy => '개인정보 처리방침';
+
+  @override
+  String get complaints_and_suggestions => '불만 및 제안';
+
+  @override
+  String get blocked_users => '차단된 사용자';
+
+  @override
+  String get delete_account => '계정 삭제';
+
+  @override
+  String get unblock => '차단 해제';
+
+  @override
+  String get complaints_or_suggestions_sent_successfully =>
+      '불만 또는 제안이 성공적으로 제출되었습니다';
+
+  @override
+  String get return_to_my_account => '내 계정으로 돌아가기';
+
+  @override
+  String get confirm_delete_account => '정말 계정을 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.';
+
+  @override
+  String get apply_to => '지원하기';
+
+  @override
+  String get unsaved_question => '저장되지 않았습니다. 계속하시겠습니까?';
+
+  @override
+  String get confirm_remove_from_favorites => '이 콘텐츠를 즐겨찾기에서 정말 삭제하시겠습니까?';
+
+  @override
+  String get unsaved => '저장되지 않음';
+
+  @override
+  String get report => '신고';
+
+  @override
+  String get candidates => '지원자';
+
+  @override
+  String get view => '보기';
+
+  @override
+  String get blocked_user_successfully => '사용자가 성공적으로 차단되었습니다';
+
+  @override
+  String get block => '차단';
+
+  @override
+  String get unblocked_user_successfully => '사용자가 성공적으로 차단 해제되었습니다';
+
+  @override
+  String get no_blocked_user => '차단된 사용자가 없습니다';
+
+  @override
+  String get and => '그리고';
 }

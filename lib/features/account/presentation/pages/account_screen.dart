@@ -16,6 +16,7 @@ import 'package:kianja/features/account/presentation/widgets/account_menu/accoun
 import 'package:kianja/features/account/presentation/widgets/account_menu/account_menu_card.dart';
 import 'package:kianja/features/account/presentation/widgets/account_menu/account_menu_image_item.dart';
 import 'package:kianja/features/account/presentation/widgets/account_menu/account_menu_item.dart';
+import 'package:kianja/features/account/presentation/widgets/delete_account_confirmation_dialog.dart';
 import 'package:kianja/features/account/presentation/widgets/logout_confirmation_dialog.dart';
 import 'package:kianja/routing/routes.dart';
 
@@ -158,7 +159,7 @@ class AccountScreen extends StatelessWidget {
                   ),
                   AccountMenuItem(
                     icon: Icons.send_outlined,
-                    label: 'Plaintes et suggestions',
+                    label: context.appLoc.complaints_and_suggestions,
                     iconColor: AppColors.warning,
                     onTap: () {
                       context.goNamed(Routes.complaintsAndSuggestions.name);
@@ -166,7 +167,7 @@ class AccountScreen extends StatelessWidget {
                   ),
                   AccountMenuItem(
                     icon: Icons.block_outlined,
-                    label: 'Blocked users',
+                    label: context.appLoc.blocked_users,
                     iconColor: Colors.blueGrey,
                     onTap: () {
                       context.goNamed(Routes.blockedUsers.name);
@@ -189,7 +190,7 @@ class AccountScreen extends StatelessWidget {
                   ),
                   AccountMenuItem(
                     icon: Icons.privacy_tip_outlined,
-                    label: 'Privacy Policy',
+                    label: context.appLoc.privacy_policy,
                     iconColor: AppColors.warning,
                     onTap: () {
                       context.pushNamed(Routes.privacyPolicy.name);
@@ -205,9 +206,41 @@ class AccountScreen extends StatelessWidget {
                   ),
                   AccountMenuItem(
                     icon: Icons.warning_amber_outlined,
-                    label: 'Delete account',
+                    label: context.appLoc.delete_account,
                     iconColor: AppColors.danger,
-                    onTap: () {},
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (dialogContext) {
+                          return BlocConsumer<AppBloc, AppState>(
+                            listener: (context, state) {
+                              if (state.userDeleteStatus ==
+                                  AppUserDeleteStatus.deleted) {
+                                if (context.canPop()) {
+                                  context.pop();
+                                }
+                                context.goNamed(Routes.jobs.name);
+                              }
+                            },
+                            builder: (context, state) {
+                              return DeleteAccountConfirmationDialog(
+                                isLoading:
+                                    (state.userDeleteStatus ==
+                                        AppUserDeleteStatus.loading) ||
+                                    (state.userDeleteStatus ==
+                                        AppUserDeleteStatus.deleted),
+                                onConfirm: () {
+                                  BlocProvider.of<AppBloc>(
+                                    context,
+                                  ).add(const AppUserDeleteRequested());
+                                },
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
                   ),
                 ],
               ),

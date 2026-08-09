@@ -35,7 +35,7 @@ class CandidateDetailScreen extends StatelessWidget {
           ),
         ),
       child: BaseScreen(
-        appBar: const TitleHeader(title: 'Candidate profil'),
+        appBar: TitleHeader(title: context.appLoc.candidate_profile),
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(
             Constants.paddingMedium,
@@ -97,7 +97,7 @@ class CandidateDetailScreen extends StatelessWidget {
                           icon: Icons.phone_outlined,
                           label: context.appLoc.phone_number,
                           value:
-                              '+261 ${AppFunction.formatPhoneNumber(user.phone)}',
+                              '${AppFunction.codePhoneNumber(user.phone)} ${AppFunction.formatPhoneNumber(user.phone)}',
                           iconColor: AppColors.success,
                         ),
                         const Divider(thickness: 0.5),
@@ -126,7 +126,7 @@ class CandidateDetailScreen extends StatelessWidget {
                                 child: PersonalInfoRow(
                                   icon: Icons.picture_as_pdf_outlined,
                                   label: context.appLoc.resume,
-                                  value: 'Voir mon CV',
+                                  value: context.appLoc.view_my_cv,
                                   iconColor: AppColors.info,
                                 ),
                               ),

@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
@@ -20,6 +19,8 @@ import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_cate
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_domain.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/price_plan.dart';
+import 'package:kianja/features/jobs/domain/entities/motif/motif.dart';
+import 'package:kianja/features/jobs/domain/entities/signaler/signaler.dart';
 import 'package:kianja/features/jobs/domain/entities/training/hot_event.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center_filter.dart';
@@ -47,6 +48,7 @@ import 'package:kianja/features/jobs/domain/usecases/get_job_features_usecase.da
 import 'package:kianja/features/jobs/domain/usecases/get_job_offer_detail_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_offer_filtering_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_offers_group_by_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_motifs_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_price_plan/get_price_plan_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_price_plan/get_price_plan_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_detail_usecase.dart';
@@ -54,6 +56,8 @@ import 'package:kianja/features/jobs/domain/usecases/get_training_center_domains
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_filter_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_hot_event_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_view_domain_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/signaler_contenu/signaler_contenu_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/signaler_contenu/signaler_contenu_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/subscribe_expert_executive_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/subscribe_expert_executive_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/upload_image_usecase.dart';
@@ -98,6 +102,8 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     required this._createHotEventUseCase,
     required this._viewUserProfileUseCase,
     required this._blockUserUseCase,
+    required this._getMotifsUseCase,
+    required this._signalerContenuUseCase,
   }) : super(JobsInitial()) {
     on<JobsGroupByTypeFetchRequested>(_onGroupByTypeFetchRequested);
     on<JobsGroupByDateFetchRequested>(_onGroupByDateFetchRequested);
@@ -144,6 +150,8 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     on<CreateHotEventRequested>(_onCreateHotEventRequested);
     on<JobsViewUserProfileRequested>(_onJobsViewUserProfileRequested);
     on<JobsBlockUserRequested>(_onJobsBlockUserRequested);
+    on<JobMotifsFetchRequested>(_onJobMotifsFetchRequested);
+    on<JobSignalerContenuRequested>(_onJobSignalerContenuRequested);
   }
 
   final GetJobOffersGroupByUseCase _getJobOffersGroupByUseCase;
@@ -174,6 +182,8 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
   final CreateHotEventUseCase _createHotEventUseCase;
   final ViewUserProfileUseCase _viewUserProfileUseCase;
   final BlockUserUseCase _blockUserUseCase;
+  final GetMotifsUseCase _getMotifsUseCase;
+  final SignalerContenuUseCase _signalerContenuUseCase;
 
   static const int _viewAllPageSize = 15;
   int _currentViewAllPage = 1;
@@ -199,6 +209,30 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
   List<HotEvent> _cachedViewAllHotEvents = [];
   bool _hasMoreViewAllHotEvents = true;
   bool _isLoadMoreViewAllHotEventsInProgress = false;
+
+  Future<void> _onJobSignalerContenuRequested(
+    JobSignalerContenuRequested event,
+    Emitter<JobsState> emit,
+  ) async {
+    emit(JobsRequestInProgress());
+    final result = await _signalerContenuUseCase(event.signalerContenuParams);
+    result.fold(
+      (failure) => emit(JobsRequestFailure(message: failure.message)),
+      (signaler) => emit(JobSignalerContenuSuccess(signaler: signaler)),
+    );
+  }
+
+  Future<void> _onJobMotifsFetchRequested(
+    JobMotifsFetchRequested event,
+    Emitter<JobsState> emit,
+  ) async {
+    emit(JobsRequestInProgress());
+    final result = await _getMotifsUseCase(NoParams());
+    result.fold(
+      (failure) => emit(JobsRequestFailure(message: failure.message)),
+      (motifs) => emit(JobMotifsFetchSuccess(motifs: motifs)),
+    );
+  }
 
   Future<void> _onCreateHotEventRequested(
     CreateHotEventRequested event,

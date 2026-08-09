@@ -7,6 +7,7 @@ import 'package:kianja/core/utils/app_debug.dart';
 
 abstract interface class AppRemoteDataSource {
   Future<UserModel> getUser();
+  Future<void> deleteUser();
   Future<List<SponsPartnerModel>> getSponsPartner();
   Future<SponsorAndPartnerModel> getSponsorAndPartnerByMenuId({
     required int menuId,
@@ -24,6 +25,13 @@ class AppRemoteDataSourceImpl implements AppRemoteDataSource {
       final result = jsonHandler(response.data);
       AppDebug.showPrint('User data $result');
       return UserModel.fromJson(result);
+    });
+  }
+
+  @override
+  Future<void> deleteUser() async {
+    return requestHandler(() async {
+      await dio.delete('/api/profil');
     });
   }
 

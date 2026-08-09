@@ -14,12 +14,14 @@ class ViewCandidatePdf extends StatelessWidget {
         title: Text(context.appLoc.view_pdf, textAlign: TextAlign.start),
         centerTitle: false,
       ),
-      body: SfPdfViewer.network(
-        pdfUrl,
-        canShowPaginationDialog: false,
-        canShowScrollHead: false,
-        canShowPageLoadingIndicator: false,
-        pageSpacing: 2,
+      body: SafeArea(
+        child: SfPdfViewer.network(
+          pdfUrl,
+          canShowPaginationDialog: false,
+          canShowScrollHead: false,
+          canShowPageLoadingIndicator: false,
+          pageSpacing: 2,
+        ),
       ),
     );
   }

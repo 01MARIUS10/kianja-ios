@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/presentation/bloc/apply_to_offer/apply_to_offer_bloc.dart';
 import 'package:kianja/routing/routes.dart';
 
@@ -63,7 +64,7 @@ class ApplyButton extends StatelessWidget {
                       );
                     }
                     return Text(
-                      'Postuler'.toUpperCase(),
+                      context.appLoc.apply_to.toUpperCase(),
                       style: theme.textTheme.bodySmall?.copyWith(
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1.2,

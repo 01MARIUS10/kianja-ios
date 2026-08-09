@@ -177,26 +177,70 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       const SizedBox(width: 8),
                       Expanded(
-                        child: InkWell(
-                          onTap: () =>
-                              context.pushNamed(Routes.termsOfUse.name),
-                          child: RichText(
-                            text: TextSpan(
-                              style: theme.textTheme.bodyMedium,
-                              children: [
-                                TextSpan(text: context.appLoc.agree_with),
-                                TextSpan(
-                                  text: ' ${context.appLoc.terms_use}',
-                                  style: theme.textTheme.bodyMedium!.copyWith(
-                                    color: isDark
-                                        ? AppColors.darkPrimary
-                                        : AppColors.lightPrimary,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
+                        child: Row(
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                style: theme.textTheme.bodyMedium,
+                                children: [
+                                  TextSpan(text: context.appLoc.agree_with),
+                                ],
+                              ),
                             ),
-                          ),
+                            InkWell(
+                              onTap: () =>
+                                  context.pushNamed(Routes.termsOfUse.name),
+                              child: RichText(
+                                text: TextSpan(
+                                  style: theme.textTheme.bodyMedium,
+                                  children: [
+                                    TextSpan(
+                                      text: ' ${context.appLoc.terms_use}',
+                                      style: theme.textTheme.bodyMedium!
+                                          .copyWith(
+                                            color: isDark
+                                                ? AppColors.darkPrimary
+                                                : AppColors.lightPrimary,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                style: theme.textTheme.bodyMedium,
+                                children: [
+                                  TextSpan(
+                                    text: ' ${context.appLoc.and}'
+                                        .toLowerCase(),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () =>
+                                  context.pushNamed(Routes.privacyPolicy.name),
+                              child: RichText(
+                                text: TextSpan(
+                                  style: theme.textTheme.bodyMedium,
+                                  children: [
+                                    TextSpan(
+                                      text: ' ${context.appLoc.privacy_policy}',
+                                      style: theme.textTheme.bodyMedium!
+                                          .copyWith(
+                                            color: isDark
+                                                ? AppColors.darkPrimary
+                                                : AppColors.lightPrimary,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],

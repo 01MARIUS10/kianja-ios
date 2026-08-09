@@ -7,6 +7,7 @@ import 'package:kianja/core/shared/app_feature/data/datasources/app_shared_prefs
 import 'package:kianja/core/shared/app_feature/domain/entities/spons_partner.dart';
 import 'package:kianja/core/shared/app_feature/domain/entities/sponsor_and_partner.dart';
 import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
+import 'package:kianja/core/shared/app_feature/domain/usecases/delete_user_usecase.dart';
 import 'package:kianja/core/shared/app_feature/domain/usecases/get_app_spons_partner_usecase.dart';
 import 'package:kianja/core/shared/app_feature/domain/usecases/get_sponsor_and_partner_by_menu_id_usecase.dart';
 import 'package:kianja/core/shared/app_feature/domain/usecases/get_user_usecase.dart';
@@ -24,6 +25,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     required this._getUserUseCase,
     required this._getAppSponsPartnerUseCase,
     required this._getSponsorAndPartnerByMenuIdUseCase,
+    required this._deleteUserUseCase,
     // required DeleteCachedUserUseCase deleteCachedUserUseCase,
   }) : super(
          const AppState(
@@ -40,6 +42,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<AppUserLoaded>(_onAppUserLoaded);
     on<AppUserUpdated>(_onAppUserUpdated);
     on<AppUserDeleted>(_onAppUserDeleted);
+    on<AppUserDeleteRequested>(_onAppUserDeleteRequested);
     on<AppThemeChanged>(_onAppThemeChanged);
     on<AppSponsPartnerLoaded>(_onAppSponsPartnerLoaded);
     on<AppSponsorAndPartnerLoaded>(_onAppSponsorAndPartnerLoaded);
@@ -49,6 +52,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   final GetAppSponsPartnerUseCase _getAppSponsPartnerUseCase;
   final GetSponsorAndPartnerByMenuIdUseCase
   _getSponsorAndPartnerByMenuIdUseCase;
+  final DeleteUserUseCase _deleteUserUseCase;
   // final DeleteCachedUserUseCase _deleteCachedUserUseCase;
 
   void _onAppInitialized(AppInitialized event, Emitter emit) async {
@@ -94,6 +98,33 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             : AppUserStatus.loaded,
         appInitStatus: AppInitStatus.loaded,
       ),
+    );
+  }
+
+  void _onAppUserDeleteRequested(
+    AppUserDeleteRequested event,
+    Emitter emit,
+  ) async {
+    emit(state.copyWith(userDeleteStatus: AppUserDeleteStatus.loading));
+    final result = await _deleteUserUseCase(NoParams());
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          userDeleteStatus: AppUserDeleteStatus.error,
+          errorMessage: failure.message,
+        ),
+      ),
+      (_) {
+        emit(
+          state.copyWith(
+            isAuthenticated: false,
+            userDeleteStatus: AppUserDeleteStatus.deleted,
+            user: const User.empty(),
+          ),
+        );
+        _appSharedPrefs.remove(Constants.token);
+        add(const AppInitialized());
+      },
     );
   }
 

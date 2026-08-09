@@ -43,9 +43,9 @@ class SaveJobApplicantContentDismissible extends StatelessWidget {
         }
         return false;
       },
-      background: const _DismissActionBackground(
+      background: _DismissActionBackground(
         alignment: Alignment.centerRight,
-        label: 'Unsaved',
+        label: context.appLoc.unsaved_question,
         color: AppColors.danger,
       ),
       child: Stack(

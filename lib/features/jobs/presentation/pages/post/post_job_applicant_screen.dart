@@ -112,37 +112,48 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
   // ── Submit ────────────────────────────────────────────────────────────
 
   void _postJobApplicant(BuildContext context) {
-    if (_titleController.text.trim().isEmpty) {
-      AppMessenger.showWarning(context, 'Please add a job title');
-      return;
-    }
-    if (_motivationController.text.trim().isEmpty) {
-      AppMessenger.showWarning(context, 'Please add a motivation');
-      return;
-    }
-    if (_selectedCategories.isEmpty) {
-      AppMessenger.showWarning(context, 'Please select a category');
-      return;
-    }
-    if (_selectedLocations.isEmpty) {
-      AppMessenger.showWarning(context, 'Please select a location');
-      return;
-    }
-    // if (_selectedCategory == null) {
+    // if (_titleController.text.trim().isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please add a job title');
+    //   return;
+    // }
+    // if (_motivationController.text.trim().isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please add a motivation');
+    //   return;
+    // }
+    // if (_selectedCategories.isEmpty) {
     //   AppMessenger.showWarning(context, 'Please select a category');
     //   return;
     // }
-    // if (_selectedLocation == null) {
+    // if (_selectedLocations.isEmpty) {
     //   AppMessenger.showWarning(context, 'Please select a location');
     //   return;
     // }
-    if (_selectedGender == null) {
-      AppMessenger.showWarning(context, 'Please select a gender');
-      return;
-    }
-    if (_selectedPlan == null) {
-      AppMessenger.showWarning(context, 'Please select a plan');
-      return;
+    // // if (_selectedCategory == null) {
+    // //   AppMessenger.showWarning(context, 'Please select a category');
+    // //   return;
+    // // }
+    // // if (_selectedLocation == null) {
+    // //   AppMessenger.showWarning(context, 'Please select a location');
+    // //   return;
+    // // }
+    // if (_selectedGender == null) {
+    //   AppMessenger.showWarning(context, 'Please select a gender');
+    //   return;
+    // }
+    // if (_selectedPlan == null) {
+    //   AppMessenger.showWarning(context, 'Please select a plan');
+    //   return;
+    // }
+    if (_titleController.text.trim().isEmpty ||
+        _motivationController.text.trim().isEmpty ||
+        _selectedCategories.isEmpty ||
+        _selectedLocations.isEmpty ||
+        _selectedGender == null ||
+        _selectedPlan == null) {
+      AppMessenger.showWarning(
+        context,
+        context.appLoc.please_fill_all_required_fields,
+      );
     }
 
     AppDebug.showPrint('title: ${_titleController.text.trim()}');

@@ -229,13 +229,49 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     AccountUnblockUserRequested event,
     Emitter<AccountState> emit,
   ) async {
-    emit(AccountRequestInProgress());
+    final userId = event.unblockUserParams.id;
+
+    // Emit current list with unblockingUserId so only that item shows loading
+    emit(
+      AccountBlockedUsersSuccess(
+        users: _cachedBlockedUsers,
+        hasMore: _hasMoreBlockedUsers,
+        unblockingUserId: userId,
+      ),
+    );
+
     final result = await _unblockUserUseCase(event.unblockUserParams);
     result.fold(
-      (failure) => emit(AccountRequestFailure(message: failure.message)),
-      (_) => emit(
-        const AccountUnblockUserSuccess(message: 'User unblocked successfully'),
-      ),
+      (failure) {
+        // Re-emit the list without unblockingUserId to stop the spinner
+        emit(
+          AccountBlockedUsersSuccess(
+            users: _cachedBlockedUsers,
+            hasMore: _hasMoreBlockedUsers,
+          ),
+        );
+        emit(AccountRequestFailure(message: failure.message));
+      },
+      (_) {
+        // Remove the unblocked user from the cached list
+        _cachedBlockedUsers = _cachedBlockedUsers
+            .where((user) => user.id != userId)
+            .toList();
+
+        // Emit updated list first, then success notification
+        emit(
+          AccountBlockedUsersSuccess(
+            users: _cachedBlockedUsers,
+            hasMore: _hasMoreBlockedUsers,
+          ),
+        );
+        emit(
+          AccountUnblockUserSuccess(
+            message: 'User unblocked successfully',
+            userId: userId,
+          ),
+        );
+      },
     );
   }
 

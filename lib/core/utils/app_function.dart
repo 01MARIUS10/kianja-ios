@@ -14,6 +14,36 @@ abstract class AppFunction {
     return formatted.text;
   }
 
+  static String codePhoneNumber(String phone) {
+    // Remove spaces, parentheses, dashes, etc.
+    var normalized = phone.replaceAll(RegExp(r'\D'), '');
+    // Remove leading 0 from local phone number
+    if (normalized.startsWith('0')) {
+      normalized = normalized.substring(1);
+    }
+    // Madagascar: 3X XX XXX XX
+    if (RegExp(r'^3\d{8}$').hasMatch(normalized)) {
+      return '+261';
+    }
+    // France: 6X XX XX XX XX
+    if (RegExp(r'^6\d{8}$').hasMatch(normalized)) {
+      return '+33';
+    }
+    // United Kingdom: 7XXX XXX XXX
+    if (RegExp(r'^7\d{9}$').hasMatch(normalized)) {
+      return '+44';
+    }
+    // China: 1XX XXXX XXXX
+    if (RegExp(r'^1\d{10}$').hasMatch(normalized)) {
+      return '+86';
+    }
+    // South Korea: 1X XXXX XXXX
+    if (RegExp(r'^1\d{9}$').hasMatch(normalized)) {
+      return '+82';
+    }
+    return '';
+  }
+
   static String getDate(String dateInput) {
     if (dateInput.isEmpty) return '';
 

@@ -35,7 +35,6 @@ import 'package:kianja/features/jobs/presentation/pages/details/training_center_
 import 'package:kianja/features/jobs/presentation/pages/job_applications/job_applications_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/jobs_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/hot_event/create_hot_event_screen.dart';
-import 'package:kianja/features/jobs/presentation/pages/post/hot_event/post_hot_event_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_experts_executives_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_job_applicant_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_job_offer_screen.dart';
@@ -49,6 +48,7 @@ import 'package:kianja/features/jobs/presentation/pages/post/successful/post_job
 import 'package:kianja/features/jobs/presentation/pages/post/successful/post_job_offer_successful_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/successful/post_training_successful_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/saved/saved_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/signaler_contenu/signaler_contenu_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/training_center/training_center_domain_view_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/view_all/job_applicants_view_all_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/view_all/job_category_view_all_screen.dart';
@@ -403,6 +403,17 @@ abstract class AppRouter {
                         final params = state.pathParameters;
                         return ViewProfileScreen(
                           id: int.parse(params['id'] ?? '0'),
+                        );
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.signalerContenu.name,
+                      path: Routes.signalerContenu.path,
+                      builder: (context, state) {
+                        final params = state.pathParameters;
+                        return SignalerContenuScreen(
+                          contenuId: int.parse(params['contenuId'] ?? '0'),
+                          type: params['type'] ?? '',
                         );
                       },
                     ),

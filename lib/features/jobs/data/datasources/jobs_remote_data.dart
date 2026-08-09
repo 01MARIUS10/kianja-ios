@@ -9,6 +9,7 @@ import 'package:kianja/features/jobs/data/models/input/create_job_applicant/crea
 import 'package:kianja/features/jobs/data/models/input/create_job_offer/create_job_offer_input_model.dart';
 import 'package:kianja/features/jobs/data/models/input/create_training_center/create_training_center_input_model.dart';
 import 'package:kianja/features/jobs/data/models/input/hot_event/hot_event_input_model.dart';
+import 'package:kianja/features/jobs/data/models/input/signaler_contenu/signaler_contenu_input_model.dart';
 import 'package:kianja/features/jobs/data/models/input/subscribe_expert_executive/subscribe_expert_executive_input_model.dart';
 import 'package:kianja/features/jobs/data/models/output/expert/expert_executive_model.dart';
 import 'package:kianja/features/jobs/data/models/output/files/job_image/job_image_model.dart';
@@ -23,6 +24,8 @@ import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_c
 import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_domain/job_domain_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_features/job_features_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/price_plan/price_plan_model.dart';
+import 'package:kianja/features/jobs/data/models/output/motif/motif_model.dart';
+import 'package:kianja/features/jobs/data/models/output/signaler/signaler_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/hot_event/hot_event_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/training_center/training_center_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/training_center_filter/training_center_filter_model.dart';
@@ -31,6 +34,10 @@ import 'package:kianja/features/jobs/data/models/output/training/training_center
 import 'package:kianja/features/jobs/presentation/widgets/enum/save_content_enum.dart';
 
 abstract interface class JobsRemoteDataSource {
+  Future<List<MotifModel>> getMotifs();
+  Future<SignalerModel> signalerContenu({
+    required SignalerContenuInputModel singlerContenuInputModel,
+  });
   Future<JobFeaturesModel> getJobFeatures();
   Future<List<JobCategoryModel>> getJobApplicantProfessions();
   Future<JobApplicantFilterModel> getJobApplicantFilters();
@@ -112,6 +119,31 @@ abstract interface class JobsRemoteDataSource {
 class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
   const JobsRemoteDataSourceImpl({required this.dio});
   final Dio dio;
+
+  @override
+  Future<SignalerModel> signalerContenu({
+    required SignalerContenuInputModel singlerContenuInputModel,
+  }) async {
+    return requestHandler(() async {
+      final response = await dio.post(
+        '/api/signaler',
+        data: singlerContenuInputModel.toJson(),
+      );
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      return SignalerModel.fromJson(result);
+    });
+  }
+
+  @override
+  Future<List<MotifModel>> getMotifs() async {
+    return requestHandler(() async {
+      final response = await dio.get('/api/signalement-motifs');
+      final Map<String, dynamic> result = jsonSimpleDecode(response.data);
+      return (result['data'] as List<dynamic>)
+          .map((e) => MotifModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    });
+  }
 
   @override
   Future<HotEventModel> createHotEvent({

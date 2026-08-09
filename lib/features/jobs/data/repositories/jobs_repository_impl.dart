@@ -12,6 +12,7 @@ import 'package:kianja/features/jobs/data/models/input/create_job_applicant/crea
 import 'package:kianja/features/jobs/data/models/input/create_job_offer/create_job_offer_input_model.dart';
 import 'package:kianja/features/jobs/data/models/input/create_training_center/create_training_center_input_model.dart';
 import 'package:kianja/features/jobs/data/models/input/hot_event/hot_event_input_model.dart';
+import 'package:kianja/features/jobs/data/models/input/signaler_contenu/signaler_contenu_input_model.dart';
 import 'package:kianja/features/jobs/data/models/input/subscribe_expert_executive/subscribe_expert_executive_input_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/training_center_view_domain/training_center_view_domain_model.dart';
 import 'package:kianja/features/jobs/domain/entities/expert_executive/expert_executive.dart';
@@ -27,6 +28,8 @@ import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_cate
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_domain.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/price_plan.dart';
+import 'package:kianja/features/jobs/domain/entities/motif/motif.dart';
+import 'package:kianja/features/jobs/domain/entities/signaler/signaler.dart';
 import 'package:kianja/features/jobs/domain/entities/training/hot_event.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center_filter.dart';
@@ -41,12 +44,42 @@ import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_ho
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_price_plan/get_price_plan_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/save_content/save_content_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/signaler_contenu/signaler_contenu_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/subscribe_expert_executive_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_user_profile/view_user_profile_params.dart';
 
 class JobsRepositoryImpl implements JobsRepository {
   const JobsRepositoryImpl({required this.remoteDataSource});
   final JobsRemoteDataSource remoteDataSource;
+
+  @override
+  Future<Either<Failure, Signaler>> signalerContenu({
+    required SignalerContenuParams signalerContenuParams,
+  }) async {
+    try {
+      final response = await remoteDataSource.signalerContenu(
+        singlerContenuInputModel: SignalerContenuInputModel(
+          contenuId: signalerContenuParams.contenuId,
+          type: signalerContenuParams.type,
+          motifId: signalerContenuParams.motifId,
+          commentaire: signalerContenuParams.commentaire,
+        ),
+      );
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Motif>>> getMotifs() async {
+    try {
+      final response = await remoteDataSource.getMotifs();
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
 
   @override
   Future<Either<Failure, TrainingCenterViewDomainModel>>

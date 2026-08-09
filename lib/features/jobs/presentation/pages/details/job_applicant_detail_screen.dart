@@ -23,6 +23,7 @@ import 'package:kianja/features/jobs/domain/usecases/save_content/save_content_p
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/features/jobs/presentation/bloc/save_content/save_content_bloc.dart';
 import 'package:kianja/features/jobs/presentation/widgets/enum/save_content_enum.dart';
+import 'package:kianja/features/jobs/presentation/widgets/signaler_button.dart';
 import 'package:kianja/routing/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -344,42 +345,70 @@ class _JobApplicantDetailScreenState extends State<JobApplicantDetailScreen> {
                       ),
                       const SizedBox(height: Constants.spacingMedium),
 
-                      BlocBuilder<AppBloc, AppState>(
-                        builder: (context, state) {
-                          if (state.isAuthenticated &&
-                              state.user.id == jobApplicant.user.id) {
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: Constants.paddingMedium,
-                              ),
-                              child: Align(
-                                alignment: Alignment.topRight,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    context.pushNamed(
-                                      Routes.prolongerJobApplicant.name,
-                                      pathParameters: {
-                                        'id': jobApplicant.id.toString(),
-                                      },
-                                    );
-                                  },
-                                  child: Text(
-                                    context.appLoc.extend.toUpperCase(),
-                                    style: theme.textTheme.bodySmall?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1.2,
-                                      color: isDark
-                                          ? AppColors.darkTextPrimary
-                                          : AppColors.lightTextPrimary,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          BlocBuilder<AppBloc, AppState>(
+                            builder: (context, state) {
+                              if (state.isAuthenticated) {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: Constants.paddingMedium,
+                                  ),
+                                  child: Align(
+                                    alignment: Alignment.topLeft,
+                                    child: SignalerButton(
+                                      contenuId: widget.id,
+                                      type: 'JOB_APPLICANT',
                                     ),
                                   ),
-                                ),
-                              ),
-                            );
-                          }
-                          return const SizedBox.shrink();
-                        },
+                                );
+                              }
+                              return const SizedBox.shrink();
+                            },
+                          ),
+
+                          BlocBuilder<AppBloc, AppState>(
+                            builder: (context, state) {
+                              if (state.isAuthenticated &&
+                                  state.user.id == jobApplicant.user.id) {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: Constants.paddingMedium,
+                                  ),
+                                  child: Align(
+                                    alignment: Alignment.topRight,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        context.pushNamed(
+                                          Routes.prolongerJobApplicant.name,
+                                          pathParameters: {
+                                            'id': jobApplicant.id.toString(),
+                                          },
+                                        );
+                                      },
+                                      child: Text(
+                                        context.appLoc.extend.toUpperCase(),
+                                        style: theme.textTheme.bodySmall
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              letterSpacing: 1.2,
+                                              color: isDark
+                                                  ? AppColors.darkTextPrimary
+                                                  : AppColors.lightTextPrimary,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                              return const SizedBox.shrink();
+                            },
+                          ),
+                        ],
                       ),
+                      const SizedBox(height: Constants.spacingMedium),
 
                       // About the applicant
                       Padding(

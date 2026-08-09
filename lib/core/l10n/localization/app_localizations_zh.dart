@@ -857,4 +857,88 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get not_enough_kara_or_email_already_used => '您的 Kara 不足，或该电子邮箱已被使用。';
+
+  @override
+  String get candidate_profile => '候选人资料';
+
+  @override
+  String get user_profile => '用户资料';
+
+  @override
+  String get view_my_cv => '查看我的简历';
+
+  @override
+  String get please_select_a_reason => '请选择原因';
+
+  @override
+  String get content_reported_successfully => '内容举报成功';
+
+  @override
+  String get report_this_content => '举报此内容';
+
+  @override
+  String get reason => '原因';
+
+  @override
+  String get comment => '评论';
+
+  @override
+  String get privacy_policy => '隐私政策';
+
+  @override
+  String get complaints_and_suggestions => '投诉与建议';
+
+  @override
+  String get blocked_users => '已屏蔽的用户';
+
+  @override
+  String get delete_account => '删除账户';
+
+  @override
+  String get unblock => '解除屏蔽';
+
+  @override
+  String get complaints_or_suggestions_sent_successfully => '您的投诉或建议已成功提交';
+
+  @override
+  String get return_to_my_account => '返回我的账户';
+
+  @override
+  String get confirm_delete_account => '确定要删除您的账户吗？此操作无法撤销。';
+
+  @override
+  String get apply_to => '申请';
+
+  @override
+  String get unsaved_question => '未保存？';
+
+  @override
+  String get confirm_remove_from_favorites => '您确定要将此内容从收藏中移除吗？';
+
+  @override
+  String get unsaved => '未保存';
+
+  @override
+  String get report => '举报';
+
+  @override
+  String get candidates => '候选人';
+
+  @override
+  String get view => '查看';
+
+  @override
+  String get blocked_user_successfully => '用户已成功屏蔽';
+
+  @override
+  String get block => '屏蔽';
+
+  @override
+  String get unblocked_user_successfully => '用户已成功解除屏蔽';
+
+  @override
+  String get no_blocked_user => '没有被屏蔽的用户';
+
+  @override
+  String get and => '和';
 }

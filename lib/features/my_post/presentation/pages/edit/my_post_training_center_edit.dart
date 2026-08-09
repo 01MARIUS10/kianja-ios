@@ -151,37 +151,47 @@ class _MyPostTrainingCenterEditScreenState
   }
 
   void _updateTrainingCenter(BuildContext context) {
-    if (_nameController.text.trim().isEmpty) {
-      AppMessenger.showWarning(context, 'Please add a center name');
-      return;
-    }
-    if (_descriptionController.text.trim().isEmpty) {
-      AppMessenger.showWarning(context, 'Please add a description');
-      return;
-    }
-    if (_selectedDomainId == null) {
-      AppMessenger.showWarning(context, 'Please select at least one domain');
-      return;
-    }
-    if (_selectedLocationId == null) {
-      AppMessenger.showWarning(context, 'Please select a location');
-      return;
-    }
-    // if (_selectedActorId == null) {
-    //   AppMessenger.showWarning(context, 'Please select an actor');
+    // if (_nameController.text.trim().isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please add a center name');
     //   return;
     // }
-    // if (_selectedPlan == null) {
-    //   AppMessenger.showWarning(context, 'Please select a plan');
+    // if (_descriptionController.text.trim().isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please add a description');
     //   return;
     // }
-    // if (_existingImageIds.isEmpty && _newPhotos.isEmpty) {
-    //   AppMessenger.showWarning(
-    //     context,
-    //     'Please keep or upload at least 1 photo',
-    //   );
+    // if (_selectedDomainId == null) {
+    //   AppMessenger.showWarning(context, 'Please select at least one domain');
     //   return;
     // }
+    // if (_selectedLocationId == null) {
+    //   AppMessenger.showWarning(context, 'Please select a location');
+    //   return;
+    // }
+    // // if (_selectedActorId == null) {
+    // //   AppMessenger.showWarning(context, 'Please select an actor');
+    // //   return;
+    // // }
+    // // if (_selectedPlan == null) {
+    // //   AppMessenger.showWarning(context, 'Please select a plan');
+    // //   return;
+    // // }
+    // // if (_existingImageIds.isEmpty && _newPhotos.isEmpty) {
+    // //   AppMessenger.showWarning(
+    // //     context,
+    // //     'Please keep or upload at least 1 photo',
+    // //   );
+    // //   return;
+    // // }
+
+    if (_nameController.text.trim().isEmpty ||
+        _descriptionController.text.trim().isEmpty ||
+        _selectedDomainId == null ||
+        _selectedLocationId == null) {
+      AppMessenger.showWarning(
+        context,
+        context.appLoc.please_fill_all_required_fields,
+      );
+    }
 
     if (_newPhotos.isNotEmpty) {
       setState(() => _isUploadingImages = true);

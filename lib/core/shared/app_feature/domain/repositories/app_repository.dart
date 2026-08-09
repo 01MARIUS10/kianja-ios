@@ -8,6 +8,7 @@ abstract class AppRepository {
   Future<Either<Failure, User>> getUser();
   Future<Either<Failure, User>> getCachedUser();
   Future<Either<Failure, Unit>> deleteCachedUser();
+  Future<Either<Failure, Unit>> deleteUser();
   Future<Either<Failure, List<SponsPartner>>> getSponsPartner();
   Future<Either<Failure, SponsorAndPartner>> getSponsorAndPartnerByMenuId({
     required int menuId,

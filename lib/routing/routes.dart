@@ -88,6 +88,7 @@ enum Routes {
   changePassword('change-password'), // Change Password
   termsOfUse('/termsOfUse'), // Terms of Use
   privacyPolicy('/privacyPolicy'), // Privacy Policy
+  signalerContenu('/signaler-contenu/:contenuId/:type'), // Signaler Contenu
   // ------------- ACCOUNT ----------------
 
   // ------------- FAVORITES ----------------

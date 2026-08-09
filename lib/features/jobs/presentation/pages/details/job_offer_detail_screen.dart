@@ -23,6 +23,7 @@ import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/features/jobs/presentation/bloc/save_content/save_content_bloc.dart';
 import 'package:kianja/features/jobs/presentation/widgets/apply_button.dart';
 import 'package:kianja/features/jobs/presentation/widgets/enum/save_content_enum.dart';
+import 'package:kianja/features/jobs/presentation/widgets/signaler_button.dart';
 import 'package:kianja/routing/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -360,49 +361,82 @@ class _JobOfferDetailScreenState extends State<JobOfferDetailScreen> {
                         endIndent: Constants.paddingMedium,
                       ),
                       const SizedBox(height: Constants.spacingMedium),
-                      if (jobOffer.preference != null &&
-                          jobOffer.preference?.showPostButton == true)
-                        // widget.matchedLocation != '/account/applications'
-                        //     ?
-                        // if (widget.matchedLocation != '/account/applications')
-                        jobOffer.alreadyPostuler
-                            ? Align(
-                                alignment: Alignment.topRight,
-                                child: Padding(
+
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          BlocBuilder<AppBloc, AppState>(
+                            builder: (context, state) {
+                              if (state.isAuthenticated) {
+                                return Padding(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: Constants.paddingMedium,
-                                    vertical: Constants.paddingMedium,
                                   ),
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: Constants.paddingExtraSmall,
+                                  child: Align(
+                                    alignment: Alignment.topLeft,
+                                    child: SignalerButton(
+                                      contenuId: widget.id,
+                                      type: 'JOB_OFFER',
                                     ),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.info,
-                                      borderRadius: BorderRadius.circular(
-                                        Constants.borderRadiusSmall,
+                                  ),
+                                );
+                              }
+                              return const SizedBox.shrink();
+                            },
+                          ),
+
+                          if (jobOffer.preference != null &&
+                              jobOffer.preference?.showPostButton == true)
+                            // widget.matchedLocation != '/account/applications'
+                            //     ?
+                            // if (widget.matchedLocation != '/account/applications')
+                            jobOffer.alreadyPostuler
+                                ? Align(
+                                    alignment: Alignment.topRight,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: Constants.paddingMedium,
+                                        vertical: Constants.paddingMedium,
+                                      ),
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal:
+                                              Constants.paddingExtraSmall,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.info,
+                                          borderRadius: BorderRadius.circular(
+                                            Constants.borderRadiusSmall,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          context
+                                              .appLoc
+                                              .application_already_sent,
+                                          style: theme.textTheme.bodyLarge
+                                              ?.copyWith(color: Colors.white),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
                                     ),
-                                    child: Text(
-                                      context.appLoc.application_already_sent,
-                                      style: theme.textTheme.bodyLarge
-                                          ?.copyWith(color: Colors.white),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: Constants.paddingMedium,
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.topRight,
+                                      child: ApplyButton(jobId: widget.id),
                                     ),
                                   ),
-                                ),
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: Constants.paddingMedium,
-                                ),
-                                child: Align(
-                                  alignment: Alignment.topRight,
-                                  child: ApplyButton(jobId: widget.id),
-                                ),
-                              ),
+                        ],
+                      ),
+
                       // About the client
+                      const SizedBox(height: Constants.spacingMedium),
+
                       Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: Constants.paddingMedium,

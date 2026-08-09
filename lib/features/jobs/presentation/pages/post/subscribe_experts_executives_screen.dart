@@ -84,51 +84,66 @@ class _SubscribeExpertsExecutivesScreenState
 
   // ── Validation & submit ──────────────────────────────────────────────────
   void _subscribe(BuildContext context) {
-    if (_firstNameController.text.trim().isEmpty) {
-      AppMessenger.showWarning(context, 'Please enter your first name');
-      return;
-    }
-    if (_lastNameController.text.trim().isEmpty) {
-      AppMessenger.showWarning(context, 'Please enter your last name');
-      return;
-    }
-    if (_birthDateController.text.trim().isEmpty) {
-      AppMessenger.showWarning(context, 'Please select your birth date');
-      return;
-    }
-    if (_addressController.text.trim().isEmpty) {
-      AppMessenger.showWarning(context, 'Please enter your address');
-      return;
-    }
-    if (_phoneController.text.trim().isEmpty) {
-      AppMessenger.showWarning(context, 'Please enter your phone number');
-      return;
-    }
-    if (_emailController.text.trim().isEmpty) {
-      AppMessenger.showWarning(context, 'Please enter your email');
-      return;
-    }
-    if (_selectedDomainIds.isEmpty) {
+    // if (_firstNameController.text.trim().isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please enter your first name');
+    //   return;
+    // }
+    // if (_lastNameController.text.trim().isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please enter your last name');
+    //   return;
+    // }
+    // if (_birthDateController.text.trim().isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please select your birth date');
+    //   return;
+    // }
+    // if (_addressController.text.trim().isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please enter your address');
+    //   return;
+    // }
+    // if (_phoneController.text.trim().isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please enter your phone number');
+    //   return;
+    // }
+    // if (_emailController.text.trim().isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please enter your email');
+    //   return;
+    // }
+    // if (_selectedDomainIds.isEmpty) {
+    //   AppMessenger.showWarning(
+    //     context,
+    //     'Please select at least one professional domain',
+    //   );
+    //   return;
+    // }
+    // if (_presentationController.text.trim().isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please add a brief presentation');
+    //   return;
+    // }
+    // if (_resumeFile == null) {
+    //   AppMessenger.showWarning(
+    //     context,
+    //     'Please upload your resume in PDF format',
+    //   );
+    //   return;
+    // }
+    // if (_selectedPlan == null) {
+    //   AppMessenger.showWarning(context, 'Please select a subscription plan');
+    //   return;
+    // }
+    if (_firstNameController.text.trim().isEmpty ||
+        _lastNameController.text.trim().isEmpty ||
+        _birthDateController.text.trim().isEmpty ||
+        _addressController.text.trim().isEmpty ||
+        _phoneController.text.trim().isEmpty ||
+        _emailController.text.trim().isEmpty ||
+        _selectedDomainIds.isEmpty ||
+        _presentationController.text.trim().isEmpty ||
+        _resumeFile == null ||
+        _selectedPlan == null) {
       AppMessenger.showWarning(
         context,
-        'Please select at least one professional domain',
+        context.appLoc.please_fill_all_required_fields,
       );
-      return;
-    }
-    if (_presentationController.text.trim().isEmpty) {
-      AppMessenger.showWarning(context, 'Please add a brief presentation');
-      return;
-    }
-    if (_resumeFile == null) {
-      AppMessenger.showWarning(
-        context,
-        'Please upload your resume in PDF format',
-      );
-      return;
-    }
-    if (_selectedPlan == null) {
-      AppMessenger.showWarning(context, 'Please select a subscription plan');
-      return;
     }
 
     BlocProvider.of<JobsBloc>(

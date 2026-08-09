@@ -23,6 +23,21 @@ class JobApplicantProfessionsFetchRequested extends JobsEvent {
   List<Object> get props => [];
 }
 
+class JobMotifsFetchRequested extends JobsEvent {
+  const JobMotifsFetchRequested();
+
+  @override
+  List<Object> get props => [];
+}
+
+class JobSignalerContenuRequested extends JobsEvent {
+  const JobSignalerContenuRequested({required this.signalerContenuParams});
+  final SignalerContenuParams signalerContenuParams;
+
+  @override
+  List<Object> get props => [signalerContenuParams];
+}
+
 /// Fetch job applicant filters.
 class JobApplicantFiltersFetchRequested extends JobsEvent {
   const JobApplicantFiltersFetchRequested();

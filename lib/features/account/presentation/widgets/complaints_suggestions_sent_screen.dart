@@ -4,6 +4,7 @@ import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/routing/routes.dart';
 
 class ComplaintsSuggestionsSentScreen extends StatelessWidget {
@@ -15,7 +16,7 @@ class ComplaintsSuggestionsSentScreen extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
 
     return BaseScreen(
-      appBar: const TitleHeader(title: 'Plaintes et suggestions'),
+      appBar: TitleHeader(title: context.appLoc.complaints_and_suggestions),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -36,7 +37,7 @@ class ComplaintsSuggestionsSentScreen extends StatelessWidget {
                 horizontal: Constants.paddingMedium,
               ),
               child: Text(
-                'Vos plaintes ou suggestions ont été envoyée avec succès',
+                context.appLoc.complaints_or_suggestions_sent_successfully,
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -49,7 +50,7 @@ class ComplaintsSuggestionsSentScreen extends StatelessWidget {
                 context.goNamed(Routes.account.name);
               },
               child: Text(
-                'Revenir à mon compte',
+                context.appLoc.return_to_my_account,
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: isDark

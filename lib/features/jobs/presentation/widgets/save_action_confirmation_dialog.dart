@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 
 class SaveActionConfirmationDialog extends StatelessWidget {
   const SaveActionConfirmationDialog({
@@ -54,7 +55,7 @@ class SaveActionConfirmationDialog extends StatelessWidget {
           children: [
             const SizedBox(height: Constants.spacingSmall),
             Text(
-              'Unsaved ?',
+              context.appLoc.unsaved_question,
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -62,7 +63,7 @@ class SaveActionConfirmationDialog extends StatelessWidget {
             ),
             const SizedBox(height: Constants.spacingMedium),
             Text(
-              'Vous voulez vraiment enlever ce contenu de vos favoris ?',
+              context.appLoc.confirm_remove_from_favorites,
               style: theme.textTheme.bodyLarge?.copyWith(
                 fontWeight: FontWeight.w500,
               ),
@@ -112,7 +113,7 @@ class SaveActionConfirmationDialog extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        'Cancel',
+                        context.appLoc.cancel,
                         style: theme.textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.w600,
                         ),

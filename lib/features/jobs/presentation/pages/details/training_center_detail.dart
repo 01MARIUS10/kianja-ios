@@ -23,6 +23,7 @@ import 'package:kianja/features/jobs/domain/usecases/save_content/save_content_p
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/features/jobs/presentation/bloc/save_content/save_content_bloc.dart';
 import 'package:kianja/features/jobs/presentation/widgets/enum/save_content_enum.dart';
+import 'package:kianja/features/jobs/presentation/widgets/signaler_button.dart';
 import 'package:kianja/routing/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -356,6 +357,27 @@ class _TrainingCenterDetailState extends State<TrainingCenterDetail> {
                               height: 1,
                               indent: Constants.paddingMedium,
                               endIndent: Constants.paddingMedium,
+                            ),
+                            const SizedBox(height: Constants.spacingMedium),
+
+                            BlocBuilder<AppBloc, AppState>(
+                              builder: (context, state) {
+                                if (state.isAuthenticated) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: Constants.paddingMedium,
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.topLeft,
+                                      child: SignalerButton(
+                                        contenuId: widget.id,
+                                        type: 'TRAINING_CENTER',
+                                      ),
+                                    ),
+                                  );
+                                }
+                                return const SizedBox.shrink();
+                              },
                             ),
                             const SizedBox(height: Constants.spacingMedium),
 

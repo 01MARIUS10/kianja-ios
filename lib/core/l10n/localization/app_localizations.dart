@@ -1795,6 +1795,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You don\'t have enough Kara or this email is already in use.'**
   String get not_enough_kara_or_email_already_used;
+
+  /// No description provided for @candidate_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Candidate profile'**
+  String get candidate_profile;
+
+  /// No description provided for @user_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'User profile'**
+  String get user_profile;
+
+  /// No description provided for @view_my_cv.
+  ///
+  /// In en, this message translates to:
+  /// **'View my CV'**
+  String get view_my_cv;
+
+  /// No description provided for @please_select_a_reason.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a reason'**
+  String get please_select_a_reason;
+
+  /// No description provided for @content_reported_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Content reported successfully'**
+  String get content_reported_successfully;
+
+  /// No description provided for @report_this_content.
+  ///
+  /// In en, this message translates to:
+  /// **'Report this content'**
+  String get report_this_content;
+
+  /// No description provided for @reason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get reason;
+
+  /// No description provided for @comment.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment'**
+  String get comment;
+
+  /// No description provided for @privacy_policy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacy_policy;
+
+  /// No description provided for @complaints_and_suggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Complaints and suggestions'**
+  String get complaints_and_suggestions;
+
+  /// No description provided for @blocked_users.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked users'**
+  String get blocked_users;
+
+  /// No description provided for @delete_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account'**
+  String get delete_account;
+
+  /// No description provided for @unblock.
+  ///
+  /// In en, this message translates to:
+  /// **'Unblock'**
+  String get unblock;
+
+  /// No description provided for @complaints_or_suggestions_sent_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Your complaints or suggestions have been sent successfully'**
+  String get complaints_or_suggestions_sent_successfully;
+
+  /// No description provided for @return_to_my_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Return to my account'**
+  String get return_to_my_account;
+
+  /// No description provided for @confirm_delete_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your account? This action cannot be undone.'**
+  String get confirm_delete_account;
+
+  /// No description provided for @apply_to.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply to'**
+  String get apply_to;
+
+  /// No description provided for @unsaved_question.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsaved?'**
+  String get unsaved_question;
+
+  /// No description provided for @confirm_remove_from_favorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to remove this content from your favorites?'**
+  String get confirm_remove_from_favorites;
+
+  /// No description provided for @unsaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsaved'**
+  String get unsaved;
+
+  /// No description provided for @report.
+  ///
+  /// In en, this message translates to:
+  /// **'Report'**
+  String get report;
+
+  /// No description provided for @candidates.
+  ///
+  /// In en, this message translates to:
+  /// **'Candidates'**
+  String get candidates;
+
+  /// No description provided for @view.
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get view;
+
+  /// No description provided for @blocked_user_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'User blocked successfully'**
+  String get blocked_user_successfully;
+
+  /// No description provided for @block.
+  ///
+  /// In en, this message translates to:
+  /// **'Block'**
+  String get block;
+
+  /// No description provided for @unblocked_user_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'User unblocked successfully'**
+  String get unblocked_user_successfully;
+
+  /// No description provided for @no_blocked_user.
+  ///
+  /// In en, this message translates to:
+  /// **'No blocked users'**
+  String get no_blocked_user;
+
+  /// No description provided for @and.
+  ///
+  /// In en, this message translates to:
+  /// **'And'**
+  String get and;
 }
 
 class _AppLocalizationsDelegate

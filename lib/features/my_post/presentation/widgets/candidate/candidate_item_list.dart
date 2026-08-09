@@ -131,7 +131,7 @@ class CandidateItemList extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
-                                  'Voir ${context.appLoc.resume}',
+                                  '${context.appLoc.view} ${context.appLoc.resume}',
                                   style: theme.textTheme.bodySmall?.copyWith(
                                     color: AppColors.info,
                                   ),

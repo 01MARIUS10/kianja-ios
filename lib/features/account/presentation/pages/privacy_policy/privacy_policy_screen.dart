@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/utils/app_debug.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/account/presentation/bloc/account_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -17,7 +18,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
       create: (context) =>
           GetIt.instance<AccountBloc>()..add(const AccountPrivacyRequested()),
       child: Scaffold(
-        appBar: const TitleHeader(title: 'Privacy Policy'),
+        appBar: TitleHeader(title: context.appLoc.privacy_policy),
         body: SafeArea(
           child: BlocBuilder<AccountBloc, AccountState>(
             builder: (context, state) {

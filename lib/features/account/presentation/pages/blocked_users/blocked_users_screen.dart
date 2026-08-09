@@ -10,7 +10,9 @@ import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/core/utils/usecase/query_page_params.dart';
+import 'package:kianja/features/account/domain/usecases/unblock_user/unblock_user_params.dart';
 import 'package:kianja/features/account/presentation/bloc/account_bloc.dart';
 import 'package:kianja/features/account/presentation/widgets/blocked_user_item_list.dart';
 import 'package:kianja/features/my_post/presentation/widgets/my_post_refresh_screen.dart';
@@ -30,6 +32,7 @@ class _BlockedUsersScreenState extends State<BlockedUsersScreen> {
   String? _errorMessage;
   Completer<void>? _refreshCompleter;
   AccountBloc? _myAccountBloc;
+  int? _unblockingUserId;
 
   @override
   void initState() {
@@ -93,15 +96,17 @@ class _BlockedUsersScreenState extends State<BlockedUsersScreen> {
         return _myAccountBloc!;
       },
       child: BaseScreen(
-        appBar: const TitleHeader(title: 'Blocked Users'),
+        appBar: TitleHeader(title: context.appLoc.blocked_users),
         child: BlocConsumer<AccountBloc, AccountState>(
           listenWhen: (previous, current) =>
               current is AccountBlockedUsersSuccess ||
+              current is AccountUnblockUserSuccess ||
               current is AccountRequestFailure,
           listener: (context, state) {
             if (state is AccountBlockedUsersSuccess) {
               setState(() {
                 _candidates = state.users;
+                _unblockingUserId = state.unblockingUserId;
                 _hasLoadedOnce = true;
                 _errorMessage = null;
               });
@@ -109,6 +114,11 @@ class _BlockedUsersScreenState extends State<BlockedUsersScreen> {
                 _refreshCompleter?.complete();
                 _refreshCompleter = null;
               }
+            } else if (state is AccountUnblockUserSuccess) {
+              AppMessenger.showSuccess(
+                context,
+                context.appLoc.unblocked_user_successfully,
+              );
             } else if (state is AccountRequestFailure) {
               if (!_hasLoadedOnce) {
                 setState(() => _errorMessage = state.message);
@@ -123,6 +133,11 @@ class _BlockedUsersScreenState extends State<BlockedUsersScreen> {
           },
           buildWhen: (previous, current) {
             if (current is AccountRequestInProgress && _hasLoadedOnce) {
+              return false;
+            }
+            // Don't rebuild on AccountUnblockUserSuccess since list is
+            // already updated via the AccountBlockedUsersSuccess emitted before it.
+            if (current is AccountUnblockUserSuccess) {
               return false;
             }
             return true;
@@ -147,7 +162,7 @@ class _BlockedUsersScreenState extends State<BlockedUsersScreen> {
 
             if (_hasLoadedOnce) {
               if (_candidates.isEmpty) {
-                return const Center(child: Text('Aucun utilisateur bloqué.'));
+                return Center(child: Text(context.appLoc.no_blocked_user));
               }
 
               final hasMore =
@@ -181,7 +196,19 @@ class _BlockedUsersScreenState extends State<BlockedUsersScreen> {
                     AppDebug.showPrint(
                       'Blocked User: ${candidate.firstName} ${candidate.lastName} (ID: ${candidate.id})',
                     );
-                    return BlockedUserItemList(user: candidate);
+                    return BlockedUserItemList(
+                      user: candidate,
+                      isUnblocking: _unblockingUserId == candidate.id,
+                      onUnblock: () {
+                        BlocProvider.of<AccountBloc>(context).add(
+                          AccountUnblockUserRequested(
+                            unblockUserParams: UnblockUserParams(
+                              id: candidate.id,
+                            ),
+                          ),
+                        );
+                      },
+                    );
                   },
                   separatorBuilder: (context, index) {
                     return const SizedBox(height: Constants.spacingExtraSmall);

@@ -874,4 +874,91 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get not_enough_kara_or_email_already_used =>
       'You don\'t have enough Kara or this email is already in use.';
+
+  @override
+  String get candidate_profile => 'Candidate profile';
+
+  @override
+  String get user_profile => 'User profile';
+
+  @override
+  String get view_my_cv => 'View my CV';
+
+  @override
+  String get please_select_a_reason => 'Please select a reason';
+
+  @override
+  String get content_reported_successfully => 'Content reported successfully';
+
+  @override
+  String get report_this_content => 'Report this content';
+
+  @override
+  String get reason => 'Reason';
+
+  @override
+  String get comment => 'Comment';
+
+  @override
+  String get privacy_policy => 'Privacy Policy';
+
+  @override
+  String get complaints_and_suggestions => 'Complaints and suggestions';
+
+  @override
+  String get blocked_users => 'Blocked users';
+
+  @override
+  String get delete_account => 'Delete account';
+
+  @override
+  String get unblock => 'Unblock';
+
+  @override
+  String get complaints_or_suggestions_sent_successfully =>
+      'Your complaints or suggestions have been sent successfully';
+
+  @override
+  String get return_to_my_account => 'Return to my account';
+
+  @override
+  String get confirm_delete_account =>
+      'Are you sure you want to delete your account? This action cannot be undone.';
+
+  @override
+  String get apply_to => 'Apply to';
+
+  @override
+  String get unsaved_question => 'Unsaved?';
+
+  @override
+  String get confirm_remove_from_favorites =>
+      'Are you sure you want to remove this content from your favorites?';
+
+  @override
+  String get unsaved => 'Unsaved';
+
+  @override
+  String get report => 'Report';
+
+  @override
+  String get candidates => 'Candidates';
+
+  @override
+  String get view => 'View';
+
+  @override
+  String get blocked_user_successfully => 'User blocked successfully';
+
+  @override
+  String get block => 'Block';
+
+  @override
+  String get unblocked_user_successfully => 'User unblocked successfully';
+
+  @override
+  String get no_blocked_user => 'No blocked users';
+
+  @override
+  String get and => 'And';
 }

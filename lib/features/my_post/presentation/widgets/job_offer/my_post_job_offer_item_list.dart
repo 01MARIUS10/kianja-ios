@@ -7,6 +7,7 @@ import 'package:kianja/core/shared/widgets/avatar/default_avatar.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_function.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/routing/routes.dart';
 
@@ -190,7 +191,7 @@ class MyPostJobOfferItemList extends StatelessWidget {
                                           ),
                                         ),
                                         child: Text(
-                                          'Candidats (${jobOffer.candidatsCount})',
+                                          '${context.appLoc.candidates} (${jobOffer.candidatsCount})',
                                           style: theme.textTheme.bodyLarge
                                               ?.copyWith(color: Colors.white),
                                           maxLines: 1,
