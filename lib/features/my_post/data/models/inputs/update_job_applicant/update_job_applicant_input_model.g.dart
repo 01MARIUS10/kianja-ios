@@ -25,8 +25,6 @@ _UpdateJobApplicantInputModel _$UpdateJobApplicantInputModelFromJson(
           .toList() ??
       [],
   genderId: (json['genderId'] as num?)?.toInt() ?? -1,
-  typeId: (json['typeId'] as num?)?.toInt() ?? -1,
-  durationId: (json['durationId'] as num?)?.toInt() ?? -1,
   status: json['status'] as String? ?? 'published',
 );
 
@@ -41,7 +39,5 @@ Map<String, dynamic> _$UpdateJobApplicantInputModelToJson(
   'categoryIds': instance.categories,
   'locationsIds': instance.locations,
   'genderId': instance.genderId,
-  'typeId': instance.typeId,
-  'durationId': instance.durationId,
   'status': instance.status,
 };

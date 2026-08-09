@@ -18,6 +18,7 @@ abstract class UserModel with _$UserModel implements User {
     required String residence,
     @JsonKey(name: 'date_candidature', defaultValue: '')
     required String dateCandidature,
+    @JsonKey(defaultValue: false) required bool isBlocked,
     @JsonKey(name: 'created_at', defaultValue: '') required String createdAt,
   }) = _UserModel;
 

@@ -4,12 +4,16 @@ import 'package:kianja/features/account/data/datasources/remote/account_remote_d
 import 'package:kianja/features/account/data/datasources/remote/account_remote_data_impl.dart';
 import 'package:kianja/features/account/data/repositories/account_repository_impl.dart';
 import 'package:kianja/features/account/domain/repositories/account_repository.dart';
+import 'package:kianja/features/account/domain/usecases/blocked_users/blocked_users_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/cgu_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/change_password/change_password_usecase.dart';
+import 'package:kianja/features/account/domain/usecases/complaints_suggestions/complaints_suggestions_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/delete_profil_photo_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/get_all_kara_history_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/get_kara_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/logout_usecase.dart';
+import 'package:kianja/features/account/domain/usecases/privacy_usecase.dart';
+import 'package:kianja/features/account/domain/usecases/unblock_user/unblock_user_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/upate_user_info/update_user_info_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/upload_profil_cv/upload_profil_cv_usecase.dart';
 import 'package:kianja/features/account/domain/usecases/upload_profil_photo/upload_profil_photo_usecase.dart';
@@ -42,6 +46,9 @@ Future<void> initAccountDependencies(GetIt getIt, Dio dio) async {
   getIt.registerLazySingleton<CguUsecase>(
     () => CguUsecase(accountRepository: getIt()),
   );
+  getIt.registerLazySingleton<PrivacyUseCase>(
+    () => PrivacyUseCase(accountRepository: getIt()),
+  );
   getIt.registerLazySingleton<GetAllKaraHistoryUsecase>(
     () => GetAllKaraHistoryUsecase(accountRepository: getIt()),
   );
@@ -57,6 +64,15 @@ Future<void> initAccountDependencies(GetIt getIt, Dio dio) async {
   getIt.registerLazySingleton<UploadProfilCVUseCase>(
     () => UploadProfilCVUseCase(accountRepository: getIt()),
   );
+  getIt.registerLazySingleton<ComplaintsSuggestionsUseCase>(
+    () => ComplaintsSuggestionsUseCase(accountRepository: getIt()),
+  );
+  getIt.registerLazySingleton<BlockedUsersUseCase>(
+    () => BlockedUsersUseCase(accountRepository: getIt()),
+  );
+  getIt.registerLazySingleton<UnblockUserUseCase>(
+    () => UnblockUserUseCase(accountRepository: getIt()),
+  );
 
   // Blocs
   getIt.registerFactory(
@@ -66,11 +82,15 @@ Future<void> initAccountDependencies(GetIt getIt, Dio dio) async {
       changePasswordUseCase: getIt(),
       updateUserInfoUseCase: getIt(),
       cguUseCase: getIt(),
+      privacyUseCase: getIt(),
       getAllKaraHistoryUsecase: getIt(),
       getKaraUseCase: getIt(),
       uploadProfilPhotoUseCase: getIt(),
       deleteProfilPhotoUseCase: getIt(),
       uploadProfilCVUseCase: getIt(),
+      complaintsSuggestionsUseCase: getIt(),
+      blockedUsersUseCase: getIt(),
+      unblockUserUseCase: getIt(),
     ),
   );
 }

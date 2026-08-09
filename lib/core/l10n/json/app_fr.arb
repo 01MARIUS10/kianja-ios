@@ -96,7 +96,7 @@
   "please_fill_fields": "Veuillez remplir tous les champs obligatoires",
   "motivation": "Lettre de motivation",
   "add_motivation": "Ajouter une lettre de motivation",
-  "resume_optional": "CV (facultatif)",
+  "resume_optional": "CV (Optionnel)",
   "upload": "Télécharger",
   "upload_resume_pdf": "Téléchargez votre CV au format PDF et permettez aux membres de le consulter.",
   "price": "Prix",
@@ -258,7 +258,7 @@
   "could_not_launch_phone_app": "Impossible d'ouvrir l'application téléphonique",
   "about": "À propos",
   "announcer": "Annonceur",
-  "apply": "Postuler",
+  "apply": "Appliquer",
   "my_applications": "Mes candidatures",
   "enable_apply_button": "Activer le bouton Postuler",
   "favorites": "Favoris",
@@ -279,5 +279,6 @@
   "extend": "Prolonger",
   "extension": "Prolongement",
   "extended_successfully": "Prolongé avec succès",
-  "extend_successful": "Prolongement réussi."
+  "extend_successful": "Prolongement réussi.",
+  "not_enough_kara_or_email_already_used": "Vous n'avez pas assez de Kara ou cette adresse e-mail est déjà utilisée."
 }

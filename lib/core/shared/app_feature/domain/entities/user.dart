@@ -9,6 +9,7 @@ class User {
     required this.email,
     required this.residence,
     required this.dateCandidature,
+    required this.isBlocked,
     required this.createdAt,
   });
   const User.empty({
@@ -21,6 +22,7 @@ class User {
     this.email = '',
     this.residence = '',
     this.dateCandidature = '',
+    this.isBlocked = false,
     this.createdAt = '',
   });
   final int id;
@@ -32,5 +34,6 @@ class User {
   final String email;
   final String residence;
   final String dateCandidature;
+  final bool isBlocked;
   final String createdAt;
 }

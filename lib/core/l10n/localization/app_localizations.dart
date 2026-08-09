@@ -689,7 +689,7 @@ abstract class AppLocalizations {
   /// No description provided for @resume_optional.
   ///
   /// In en, this message translates to:
-  /// **'Resume (optional)'**
+  /// **'Resume (Optional)'**
   String get resume_optional;
 
   /// No description provided for @upload.
@@ -1789,6 +1789,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Extension successful.'**
   String get extend_successful;
+
+  /// No description provided for @not_enough_kara_or_email_already_used.
+  ///
+  /// In en, this message translates to:
+  /// **'You don\'t have enough Kara or this email is already in use.'**
+  String get not_enough_kara_or_email_already_used;
 }
 
 class _AppLocalizationsDelegate

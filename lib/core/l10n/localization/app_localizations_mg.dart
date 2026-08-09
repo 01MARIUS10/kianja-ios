@@ -307,7 +307,7 @@ class AppLocalizationsMg extends AppLocalizations {
   String get add_motivation => 'Ampio ny antony manosika';
 
   @override
-  String get resume_optional => 'CV (tsy voatery)';
+  String get resume_optional => 'CV (Tsy voatery)';
 
   @override
   String get upload => 'Ampidiro';
@@ -817,7 +817,7 @@ class AppLocalizationsMg extends AppLocalizations {
   String get announcer => 'Mpampandefa filazana';
 
   @override
-  String get apply => 'Handefa kandidà';
+  String get apply => 'Ampiharina';
 
   @override
   String get my_applications => 'Kandidà nalefako';
@@ -884,4 +884,8 @@ class AppLocalizationsMg extends AppLocalizations {
 
   @override
   String get extend_successful => 'Nahomby ny fanitarana.';
+
+  @override
+  String get not_enough_kara_or_email_already_used =>
+      'Tsy ampy ny Kara anananao na efa ampiasaina ity adiresy mailaka ity.';
 }

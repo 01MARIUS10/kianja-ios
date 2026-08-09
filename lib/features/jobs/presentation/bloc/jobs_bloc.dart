@@ -1,7 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/usecase/no_params.dart';
 import 'package:kianja/core/utils/usecase/query_page_params.dart';
@@ -24,6 +26,8 @@ import 'package:kianja/features/jobs/domain/entities/training/training_center_fi
 import 'package:kianja/features/jobs/domain/entities/training/training_center_hot_event.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center_view_all_domain.dart';
 import 'package:kianja/features/jobs/domain/usecases/apply_to_offer_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/block_user/block_user_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/block_user/block_user_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_hot_event/create_hot_event_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_hot_event/create_hot_event_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_params.dart';
@@ -58,6 +62,8 @@ import 'package:kianja/features/jobs/domain/usecases/view_all_hot_event_usecase.
 import 'package:kianja/features/jobs/domain/usecases/view_all_job_applicants/view_all_job_applicants_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_job_offers_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_training_centers_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/view_user_profile/view_user_profile_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/view_user_profile/view_user_profile_usecase.dart';
 
 part 'jobs_event.dart';
 part 'jobs_state.dart';
@@ -90,6 +96,8 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     required this._createTrainingCenterUseCase,
     required this._subscribeExpertExecutiveUseCase,
     required this._createHotEventUseCase,
+    required this._viewUserProfileUseCase,
+    required this._blockUserUseCase,
   }) : super(JobsInitial()) {
     on<JobsGroupByTypeFetchRequested>(_onGroupByTypeFetchRequested);
     on<JobsGroupByDateFetchRequested>(_onGroupByDateFetchRequested);
@@ -134,6 +142,8 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
     on<CreateTrainingCenterRequested>(_onCreateTrainingCenterRequested);
     on<SubscribeExpertExecutiveRequested>(_onSubscribeExpertExecutiveRequested);
     on<CreateHotEventRequested>(_onCreateHotEventRequested);
+    on<JobsViewUserProfileRequested>(_onJobsViewUserProfileRequested);
+    on<JobsBlockUserRequested>(_onJobsBlockUserRequested);
   }
 
   final GetJobOffersGroupByUseCase _getJobOffersGroupByUseCase;
@@ -162,6 +172,8 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
   final CreateTrainingCenterUseCase _createTrainingCenterUseCase;
   final SubscribeExpertExecutiveUseCase _subscribeExpertExecutiveUseCase;
   final CreateHotEventUseCase _createHotEventUseCase;
+  final ViewUserProfileUseCase _viewUserProfileUseCase;
+  final BlockUserUseCase _blockUserUseCase;
 
   static const int _viewAllPageSize = 15;
   int _currentViewAllPage = 1;
@@ -926,6 +938,32 @@ class JobsBloc extends Bloc<JobsEvent, JobsState> {
       (failure) => emit(JobsRequestFailure(message: failure.message)),
       (jobApplicant) =>
           emit(JobsGetJobApplicantDetailSuccess(jobApplicant: jobApplicant)),
+    );
+  }
+
+  Future<void> _onJobsViewUserProfileRequested(
+    JobsViewUserProfileRequested event,
+    Emitter<JobsState> emit,
+  ) async {
+    emit(JobsRequestInProgress());
+    final result = await _viewUserProfileUseCase(event.viewUserProfileParams);
+    result.fold(
+      (failure) => emit(JobsRequestFailure(message: failure.message)),
+      (user) => emit(JobsViewUserProfileSuccess(user: user)),
+    );
+  }
+
+  Future<void> _onJobsBlockUserRequested(
+    JobsBlockUserRequested event,
+    Emitter<JobsState> emit,
+  ) async {
+    emit(JobsRequestInProgress());
+    final result = await _blockUserUseCase(event.blockUserParams);
+    result.fold(
+      (failure) => emit(JobsRequestFailure(message: failure.message)),
+      (_) => emit(
+        const JobsBlockUserSuccess(message: 'User blocked successfully'),
+      ),
     );
   }
 }

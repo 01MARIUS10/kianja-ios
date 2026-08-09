@@ -62,12 +62,51 @@ class AccountWalletHistorySuccess extends AccountState {
   List<Object> get props => [history, hasMore, isLoadMore];
 }
 
+class AccountBlockedUsersSuccess extends AccountState {
+  const AccountBlockedUsersSuccess({
+    required this.users,
+    required this.hasMore,
+    this.isLoadMore = false,
+  });
+
+  final List<User> users;
+  final bool hasMore;
+  final bool isLoadMore;
+
+  @override
+  List<Object> get props => [users, hasMore, isLoadMore];
+}
+
+class AccountUnblockUserSuccess extends AccountState {
+  const AccountUnblockUserSuccess({required this.message});
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}
+
+class AccountSendComplaintsSuggestionsSuccess extends AccountState {
+  const AccountSendComplaintsSuggestionsSuccess({required this.message});
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}
+
 class AccountCguSuccess extends AccountState {
   const AccountCguSuccess({required this.cgu});
   final String cgu;
 
   @override
   List<Object> get props => [cgu];
+}
+
+class AccountPrivacySuccess extends AccountState {
+  const AccountPrivacySuccess({required this.privacy});
+  final String privacy;
+
+  @override
+  List<Object> get props => [privacy];
 }
 
 class AccountKaraRequestInProgress extends AccountState {}

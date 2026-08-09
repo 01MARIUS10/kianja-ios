@@ -9,6 +9,7 @@ import 'package:kianja/core/shared/widgets/fields/phone_input_field.dart';
 import 'package:kianja/core/shared/widgets/fields/text_input_field.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
+import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/core/utils/extensions.dart';
@@ -195,10 +196,10 @@ class _SubscribeExpertsExecutivesScreenState
                   pathParameters: {'id': state.expertExecutive.id.toString()},
                 );
               } else if (state is JobsRequestFailure) {
-                if (state.message == 'Unprocessable entity') {
+                if (state.message == context.appLoc.unprocessable_entity) {
                   AppMessenger.showError(
                     context,
-                    context.appLoc.no_enough_kara,
+                    context.appLoc.not_enough_kara_or_email_already_used,
                   );
                 } else {
                   AppMessenger.showError(context, state.message);
@@ -402,6 +403,7 @@ class _SubscribeExpertsExecutivesScreenState
                           isLoading: isLoading,
                           onPlanSelected: (plan) {
                             _selectedPlan = plan;
+                            AppDebug.showPrint('Seleted plan : $plan');
                           },
                           onSubscribe: () => _subscribe(context),
                         ),

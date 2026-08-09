@@ -11,17 +11,16 @@ import 'package:kianja/core/shared/widgets/fields/label_field.dart';
 import 'package:kianja/core/shared/widgets/fields/text_input_field.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/shared/widgets/loading/shimmer_job_detail_indicator.dart';
+import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
-import 'package:kianja/features/jobs/domain/entities/jobs/price_plan.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_price_plan/get_price_plan_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_training_center_detail_usecase.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/multi_photo_upload_widget.dart';
-import 'package:kianja/features/jobs/presentation/widgets/post/post_features_training_center.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_training_center/update_training_center_params.dart';
 import 'package:kianja/features/my_post/presentation/bloc/my_post_bloc.dart';
 
@@ -48,11 +47,11 @@ class _MyPostTrainingCenterEditScreenState
   // final List<int> _selectedDomainIds = [];
   int? _selectedDomainId;
   int? _selectedLocationId;
-  int? _selectedActorId;
+  // int? _selectedActorId;
 
   JobFeatures? _jobFeatures;
-  List<PricePlan> _plans = [];
-  PricePlan? _selectedPlan;
+  // List<PricePlan> _plans = [];
+  // PricePlan? _selectedPlan;
   bool _isFormReady = false;
 
   // Existing images (from entity detail)
@@ -106,9 +105,9 @@ class _MyPostTrainingCenterEditScreenState
         _descriptionController.text.trim().isNotEmpty;
     final hasSelections =
         _selectedLocationId != null &&
-        _selectedActorId != null &&
-        _selectedDomainId != null &&
-        _plans.isNotEmpty;
+        // _selectedActorId != null &&
+        _selectedDomainId != null;
+    // _plans.isNotEmpty;
     final hasAnyImage = _existingImageIds.isNotEmpty || _newPhotos.isNotEmpty;
 
     setState(() {
@@ -132,12 +131,12 @@ class _MyPostTrainingCenterEditScreenState
     _checkFormReady();
   }
 
-  void _toggleActor(int actorId) {
-    setState(() {
-      _selectedActorId = _selectedActorId == actorId ? null : actorId;
-    });
-    _checkFormReady();
-  }
+  // void _toggleActor(int actorId) {
+  //   setState(() {
+  //     _selectedActorId = _selectedActorId == actorId ? null : actorId;
+  //   });
+  //   _checkFormReady();
+  // }
 
   void _removeExistingImageAt(int index) {
     setState(() {
@@ -168,21 +167,21 @@ class _MyPostTrainingCenterEditScreenState
       AppMessenger.showWarning(context, 'Please select a location');
       return;
     }
-    if (_selectedActorId == null) {
-      AppMessenger.showWarning(context, 'Please select an actor');
-      return;
-    }
-    if (_selectedPlan == null) {
-      AppMessenger.showWarning(context, 'Please select a plan');
-      return;
-    }
-    if (_existingImageIds.isEmpty && _newPhotos.isEmpty) {
-      AppMessenger.showWarning(
-        context,
-        'Please keep or upload at least 1 photo',
-      );
-      return;
-    }
+    // if (_selectedActorId == null) {
+    //   AppMessenger.showWarning(context, 'Please select an actor');
+    //   return;
+    // }
+    // if (_selectedPlan == null) {
+    //   AppMessenger.showWarning(context, 'Please select a plan');
+    //   return;
+    // }
+    // if (_existingImageIds.isEmpty && _newPhotos.isEmpty) {
+    //   AppMessenger.showWarning(
+    //     context,
+    //     'Please keep or upload at least 1 photo',
+    //   );
+    //   return;
+    // }
 
     if (_newPhotos.isNotEmpty) {
       setState(() => _isUploadingImages = true);
@@ -204,11 +203,11 @@ class _MyPostTrainingCenterEditScreenState
           description: _descriptionController.text.trim(),
           imageIds: imageIds,
           domainId: _selectedDomainId!,
-          actorId: _selectedActorId!,
+          // actorId: _selectedActorId!,
           locationId: _selectedLocationId!,
-          typeId: _selectedPlan!.type.id,
-          tagId: _selectedPlan!.type.id,
-          durationId: _selectedPlan!.duration.id,
+          // typeId: _selectedPlan!.type.id,
+          // tagId: _selectedPlan!.type.id,
+          // durationId: _selectedPlan!.duration.id,
           status: 'published',
         ),
       ),
@@ -256,10 +255,12 @@ class _MyPostTrainingCenterEditScreenState
                 _checkFormReady();
               } else if (state is GetTrainingCenterDetailSuccess) {
                 _populateForm(state.trainingCenter);
-              } else if (state is JobsGetPricePlanSuccess) {
-                setState(() => _plans = state.pricePlans);
-                _checkFormReady();
-              } else if (state is JobsUploadMultipleImagesSuccess) {
+              }
+              // else if (state is JobsGetPricePlanSuccess) {
+              //   setState(() => _plans = state.pricePlans);
+              //   _checkFormReady();
+              // }
+              else if (state is JobsUploadMultipleImagesSuccess) {
                 final uploadedIds = state.jobImages.map((e) => e.id).toList();
                 final merged = <int>[
                   ..._existingImageIds,
@@ -340,7 +341,7 @@ class _MyPostTrainingCenterEditScreenState
                           ),
                           const SizedBox(height: Constants.spacingMedium),
 
-                          LabelField(label: '${context.appLoc.photo} *'),
+                          LabelField(label: context.appLoc.photo),
                           const SizedBox(height: Constants.spacingSmall),
                           if (_existingImageUrls.isNotEmpty) ...[
                             SingleChildScrollView(
@@ -438,15 +439,15 @@ class _MyPostTrainingCenterEditScreenState
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              Text(
-                                '(${context.appLoc.max_5})',
-                                style: theme.textTheme.bodyMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: isDark
-                                      ? Colors.white54
-                                      : Colors.black54,
-                                ),
-                              ),
+                              // Text(
+                              //   '(${context.appLoc.max_5})',
+                              //   style: theme.textTheme.bodyMedium?.copyWith(
+                              //     fontWeight: FontWeight.bold,
+                              //     color: isDark
+                              //         ? Colors.white54
+                              //         : Colors.black54,
+                              //   ),
+                              // ),
                             ],
                           ),
                           const SizedBox(height: Constants.spacingSmall),
@@ -566,70 +567,94 @@ class _MyPostTrainingCenterEditScreenState
                           ),
                           const SizedBox(height: Constants.spacingMedium),
 
-                          LabelField(
-                            label: '${context.appLoc.about_center_publisher} *',
-                          ),
-                          const SizedBox(height: Constants.spacingSmall),
-                          if (_jobFeatures != null)
-                            Wrap(
-                              spacing: Constants.spacingMedium,
-                              children: _jobFeatures!.actors.map((actor) {
-                                final isSelected = _selectedActorId == actor.id;
-                                return InkWell(
-                                  onTap: isBusy
-                                      ? null
-                                      : () => _toggleActor(actor.id),
-                                  borderRadius: BorderRadius.circular(4),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 6,
-                                    ),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        SizedBox(
-                                          width: 24,
-                                          height: 24,
-                                          child: Checkbox(
-                                            value: isSelected,
-                                            onChanged: isBusy
-                                                ? null
-                                                : (_) => _toggleActor(actor.id),
+                          // LabelField(
+                          //   label: '${context.appLoc.about_center_publisher} *',
+                          // ),
+                          // const SizedBox(height: Constants.spacingSmall),
+                          // if (_jobFeatures != null)
+                          //   Wrap(
+                          //     spacing: Constants.spacingMedium,
+                          //     children: _jobFeatures!.actors.map((actor) {
+                          //       final isSelected = _selectedActorId == actor.id;
+                          //       return InkWell(
+                          //         onTap: isBusy
+                          //             ? null
+                          //             : () => _toggleActor(actor.id),
+                          //         borderRadius: BorderRadius.circular(4),
+                          //         child: Padding(
+                          //           padding: const EdgeInsets.symmetric(
+                          //             vertical: 6,
+                          //           ),
+                          //           child: Row(
+                          //             mainAxisSize: MainAxisSize.min,
+                          //             children: [
+                          //               SizedBox(
+                          //                 width: 24,
+                          //                 height: 24,
+                          //                 child: Checkbox(
+                          //                   value: isSelected,
+                          //                   onChanged: isBusy
+                          //                       ? null
+                          //                       : (_) => _toggleActor(actor.id),
+                          //                 ),
+                          //               ),
+                          //               const SizedBox(
+                          //                 width: Constants.spacingExtraSmall,
+                          //               ),
+                          //               Text(
+                          //                 actor.name,
+                          //                 style: theme.textTheme.bodyMedium,
+                          //               ),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //       );
+                          //     }).toList(),
+                          //   )
+                          // else
+                          //   const Padding(
+                          //     padding: EdgeInsets.symmetric(vertical: 8),
+                          //     child: CircularProgressIndicator(),
+                          //   ),
+                          // const SizedBox(height: Constants.spacingLarge),
+                          // const Divider(),
+                          // const SizedBox(height: Constants.spacingMedium),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: ElevatedButton(
+                              onPressed: () => _updateTrainingCenter(context),
+                              child: isSaving
+                                  ? const SizedBox(
+                                      width: 24,
+                                      height: 24,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                      ),
+                                    )
+                                  : Text(
+                                      context.appLoc.update,
+                                      style: theme.textTheme.titleMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            letterSpacing: 1.2,
+                                            color: isDark
+                                                ? AppColors.darkTextPrimary
+                                                : AppColors.lightTextPrimary,
                                           ),
-                                        ),
-                                        const SizedBox(
-                                          width: Constants.spacingExtraSmall,
-                                        ),
-                                        Text(
-                                          actor.name,
-                                          style: theme.textTheme.bodyMedium,
-                                        ),
-                                      ],
                                     ),
-                                  ),
-                                );
-                              }).toList(),
-                            )
-                          else
-                            const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 8),
-                              child: CircularProgressIndicator(),
                             ),
-
-                          const SizedBox(height: Constants.spacingLarge),
-                          const Divider(),
-                          const SizedBox(height: Constants.spacingMedium),
-
-                          PostFeaturesTrainingCenter(
-                            plans: _plans,
-                            isLoading: isBusy,
-                            postButtonLabel: context.appLoc.update,
-                            onPlanSelected: (plan) {
-                              _selectedPlan = plan;
-                            },
-                            onPost: () => _updateTrainingCenter(context),
                           ),
-                          const SizedBox(height: Constants.spacingLarge),
+
+                          // PostFeaturesTrainingCenter(
+                          //   plans: _plans,
+                          //   isLoading: isBusy,
+                          //   postButtonLabel: context.appLoc.update,
+                          //   onPlanSelected: (plan) {
+                          //     _selectedPlan = plan;
+                          //   },
+                          //   onPost: () => _updateTrainingCenter(context),
+                          // ),
+                          // const SizedBox(height: Constants.spacingLarge),
                         ],
                       ),
                     ),

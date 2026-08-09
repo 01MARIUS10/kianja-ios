@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/errors/failures.dart';
+import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
 import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/jobs/data/models/output/training/training_center_view_domain/training_center_view_domain_model.dart';
 import 'package:kianja/features/jobs/domain/entities/expert_executive/expert_executive.dart';
@@ -21,14 +22,17 @@ import 'package:kianja/features/jobs/domain/entities/training/hot_event.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center_filter.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center_hot_event.dart';
+import 'package:kianja/features/jobs/domain/usecases/block_user/block_user_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_hot_event/create_hot_event_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_offer/create_job_offer_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_training_center/create_training_center_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_price_plan/get_price_plan_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/save_content/save_content_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/subscribe_expert_executive_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/view_user_profile/view_user_profile_params.dart';
 
 abstract interface class JobsRepository {
   Future<Either<Failure, JobFeatures>> getJobFeatures();
@@ -58,7 +62,7 @@ abstract interface class JobsRepository {
   Future<Either<Failure, JobImage>> uploadImage({required XFile file});
   Future<Either<Failure, JobPdf>> uploadPdf({required PlatformFile file});
   Future<Either<Failure, List<PricePlan>>> getPricePlans({
-    required String plan,
+    required GetPricePlanParams getPricePlanParams,
   });
   Future<Either<Failure, JobApplicant>> createJobApplicant({
     required CreateJobApplicantParams createJobApplicantParams,
@@ -110,5 +114,11 @@ abstract interface class JobsRepository {
   });
   Future<Either<Failure, HotEvent>> createHotEvent({
     required CreateHotEventParams createHotEventParams,
+  });
+  Future<Either<Failure, User>> viewUserProfile({
+    required ViewUserProfileParams viewUserProfileParams,
+  });
+  Future<Either<Failure, Unit>> blockUser({
+    required BlockUserParams blockUserParams,
   });
 }

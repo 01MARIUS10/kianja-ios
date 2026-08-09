@@ -17,6 +17,7 @@ enum Routes {
   // ------------- ABOUT ----------------
 
   viewAdd('/viewAdd'),
+  viewUserProfile('/viewUserProfile/:id'),
 
   // ------------- HOME (Job offers) ----------------
   jobs('/'),
@@ -45,7 +46,7 @@ enum Routes {
   postTrainingCenter('training-center'),
   postExpertExecutive('expert-executive'),
   postHotEvent('postHotEvent/:trainingCenterId'),
-  createHotEvent('createHotEvent'),
+  createHotEvent('createHotEvent/:trainingCenterId'),
   createHotEventSuccessful('createHotEventSuccessfully/:id'),
   subscribeExpertExecutive('subscribe-expert-executive'),
   postExpertExecutiveSuccessful('expert-executive-successfully-posted/:id'),
@@ -76,9 +77,17 @@ enum Routes {
   applications('/applications'),
   personalInfo('personal-info'), // Personal Info
   viewProfileCV('profile-cv'),
+  complaintsAndSuggestions(
+    'complaints-and-suggestions',
+  ), // Complaints and Suggestions
+  complaintsAndSuggestionsSent(
+    'complaints-and-suggestions-sent',
+  ), // Complaints and Suggestions Sent
+  blockedUsers('blocked-users'), // Blocked Users
   updatePersonalInfo('edit'), // Update Personal Info
   changePassword('change-password'), // Change Password
   termsOfUse('/termsOfUse'), // Terms of Use
+  privacyPolicy('/privacyPolicy'), // Privacy Policy
   // ------------- ACCOUNT ----------------
 
   // ------------- FAVORITES ----------------

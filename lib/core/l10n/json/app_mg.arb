@@ -96,7 +96,7 @@
   "please_fill_fields": "Fenoy azafady ny saha rehetra takiana",
   "motivation": "Antony manosika",
   "add_motivation": "Ampio ny antony manosika",
-  "resume_optional": "CV (tsy voatery)",
+  "resume_optional": "CV (Tsy voatery)",
   "upload": "Ampidiro",
   "upload_resume_pdf": "Ampidiro ny CV-nao amin'ny endrika PDF ary avelao hojerin'ny mpikambana.",
   "price": "Vidiny",
@@ -258,7 +258,7 @@
   "could_not_launch_phone_app": "Tsy afaka nanokatra ny rindranasa antso",
   "about": "Momba",
   "announcer": "Mpampandefa filazana",
-  "apply": "Handefa kandidà",
+  "apply": "Ampiharina",
   "my_applications": "Kandidà nalefako",
   "enable_apply_button": "Alefaso ny bokotra Handefa kandidà",
   "favorites": "Ankafizina",
@@ -279,5 +279,6 @@
   "extend": "Hanitatra",
   "extension": "Fanitarana",
   "extended_successfully": "Vita soa aman-tsara ny fanitarana",
-  "extend_successful": "Nahomby ny fanitarana."
+  "extend_successful": "Nahomby ny fanitarana.",
+  "not_enough_kara_or_email_already_used": "Tsy ampy ny Kara anananao na efa ampiasaina ity adiresy mailaka ity."
 }

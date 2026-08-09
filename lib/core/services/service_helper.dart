@@ -60,6 +60,9 @@ Failure failureHandler(AppException e) {
     CancelledException() => CancelledFailure(message: e.message),
     BadCertificateException() => BadCertificateFailure(message: e.message),
     // Server side exceptions
+    UnprocessableEntityException() => UnprocessableEntityFailure(
+      message: e.message,
+    ),
     InternalServerErrorException() => InternalServerErrorFailure(
       message: e.message,
     ),

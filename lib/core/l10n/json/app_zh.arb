@@ -279,5 +279,6 @@
   "extend": "延长",
   "extension": "延期",
   "extended_successfully": "延长成功",
-  "extend_successful": "延期成功。"
+  "extend_successful": "延期成功。",
+  "not_enough_kara_or_email_already_used": "您的 Kara 不足，或该电子邮箱已被使用。"
 }

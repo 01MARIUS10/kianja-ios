@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/errors/exceptions.dart';
 import 'package:kianja/core/errors/failures.dart';
 import 'package:kianja/core/services/service_helper.dart';
+import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/jobs/data/datasources/jobs_remote_data.dart';
@@ -31,14 +32,17 @@ import 'package:kianja/features/jobs/domain/entities/training/training_center.da
 import 'package:kianja/features/jobs/domain/entities/training/training_center_filter.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center_hot_event.dart';
 import 'package:kianja/features/jobs/domain/repositories/jobs_repository.dart';
+import 'package:kianja/features/jobs/domain/usecases/block_user/block_user_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_hot_event/create_hot_event_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_offer/create_job_offer_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_training_center/create_training_center_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_hot_event_detail/get_hot_event_detail_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/get_price_plan/get_price_plan_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/save_content/save_content_params.dart';
 import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/subscribe_expert_executive_params.dart';
+import 'package:kianja/features/jobs/domain/usecases/view_user_profile/view_user_profile_params.dart';
 
 class JobsRepositoryImpl implements JobsRepository {
   const JobsRepositoryImpl({required this.remoteDataSource});
@@ -149,7 +153,7 @@ class JobsRepositoryImpl implements JobsRepository {
           imageIds: createTrainingCenterParams.imageIds,
           domainId: createTrainingCenterParams.domainId,
           typeId: createTrainingCenterParams.typeId,
-          tagId: createTrainingCenterParams.tagId,
+          // tagId: createTrainingCenterParams.tagId,
           durationId: createTrainingCenterParams.durationId,
           status: createTrainingCenterParams.status,
         ),
@@ -292,10 +296,13 @@ class JobsRepositoryImpl implements JobsRepository {
 
   @override
   Future<Either<Failure, List<PricePlan>>> getPricePlans({
-    required String plan,
+    required GetPricePlanParams getPricePlanParams,
   }) async {
     try {
-      final response = await remoteDataSource.getPricePlans(plan: plan);
+      final response = await remoteDataSource.getPricePlans(
+        plan: getPricePlanParams.plan,
+        id: getPricePlanParams.id,
+      );
       return right(response);
     } on AppException catch (e) {
       return left(failureHandler(e));
@@ -530,6 +537,32 @@ class JobsRepositoryImpl implements JobsRepository {
         ),
       );
       return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, User>> viewUserProfile({
+    required ViewUserProfileParams viewUserProfileParams,
+  }) async {
+    try {
+      final response = await remoteDataSource.viewUserProfile(
+        id: viewUserProfileParams.id,
+      );
+      return right(response);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> blockUser({
+    required BlockUserParams blockUserParams,
+  }) async {
+    try {
+      await remoteDataSource.blockUser(id: blockUserParams.id);
+      return right(unit);
     } on AppException catch (e) {
       return left(failureHandler(e));
     }

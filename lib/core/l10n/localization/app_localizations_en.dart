@@ -305,7 +305,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get add_motivation => 'Add motivation';
 
   @override
-  String get resume_optional => 'Resume (optional)';
+  String get resume_optional => 'Resume (Optional)';
 
   @override
   String get upload => 'Upload';
@@ -870,4 +870,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get extend_successful => 'Extension successful.';
+
+  @override
+  String get not_enough_kara_or_email_already_used =>
+      'You don\'t have enough Kara or this email is already in use.';
 }

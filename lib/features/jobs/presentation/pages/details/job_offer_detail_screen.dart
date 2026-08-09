@@ -417,33 +417,43 @@ class _JobOfferDetailScreenState extends State<JobOfferDetailScreen> {
                               ),
                             ),
                             const SizedBox(height: Constants.spacingMedium),
-                            Row(
-                              children: [
-                                ClipOval(
-                                  child: jobOffer.user.photoUrl.isNotEmpty
-                                      ? CachedNetworkImage(
-                                          imageUrl:
-                                              '${EnvConfig.baseApiUrl}${jobOffer.user.photoUrl}',
-                                          fit: BoxFit.cover,
-                                          width: Constants.size35,
-                                          height: Constants.size35,
-                                          placeholder: (context, url) =>
-                                              const CircularProgressIndicator(),
-                                          errorWidget: (_, _, _) =>
-                                              const DefaultAvatar(
-                                                size: Constants.size35,
-                                              ),
-                                        )
-                                      : const DefaultAvatar(
-                                          size: Constants.size35,
-                                        ),
-                                ),
-                                const SizedBox(width: Constants.spacingSmall),
-                                Text(
-                                  '${jobOffer.user.firstName} ${jobOffer.user.lastName}',
-                                  style: theme.textTheme.bodySmall,
-                                ),
-                              ],
+                            InkWell(
+                              onTap: () {
+                                context.pushNamed(
+                                  Routes.viewUserProfile.name,
+                                  pathParameters: {
+                                    'id': jobOffer.user.id.toString(),
+                                  },
+                                );
+                              },
+                              child: Row(
+                                children: [
+                                  ClipOval(
+                                    child: jobOffer.user.photoUrl.isNotEmpty
+                                        ? CachedNetworkImage(
+                                            imageUrl:
+                                                '${EnvConfig.baseApiUrl}${jobOffer.user.photoUrl}',
+                                            fit: BoxFit.cover,
+                                            width: Constants.size35,
+                                            height: Constants.size35,
+                                            placeholder: (context, url) =>
+                                                const CircularProgressIndicator(),
+                                            errorWidget: (_, _, _) =>
+                                                const DefaultAvatar(
+                                                  size: Constants.size35,
+                                                ),
+                                          )
+                                        : const DefaultAvatar(
+                                            size: Constants.size35,
+                                          ),
+                                  ),
+                                  const SizedBox(width: Constants.spacingSmall),
+                                  Text(
+                                    '${jobOffer.user.firstName} ${jobOffer.user.lastName}',
+                                    style: theme.textTheme.bodySmall,
+                                  ),
+                                ],
+                              ),
                             ),
                             const SizedBox(height: Constants.spacingSmall),
                             Row(

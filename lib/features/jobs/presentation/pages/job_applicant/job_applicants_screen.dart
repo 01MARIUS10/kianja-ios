@@ -102,18 +102,18 @@ class _JobApplicantsScreenState extends State<JobApplicantsScreen>
 
     switch (index) {
       case 0:
-        blocContext.read<AppBloc>().add(
-          const AppSponsorAndPartnerLoaded(menuId: 5),
-        );
+        // blocContext.read<AppBloc>().add(
+        //   const AppSponsorAndPartnerLoaded(menuId: 5),
+        // );
         if (_zoneData == null && _zoneError == null) {
           blocContext.read<JobsBloc>().add(
             const JobsGroupByZoneFetchRequested(query: 'Zone'),
           );
         }
       case 1:
-        blocContext.read<AppBloc>().add(
-          const AppSponsorAndPartnerLoaded(menuId: 6),
-        );
+        // blocContext.read<AppBloc>().add(
+        //   const AppSponsorAndPartnerLoaded(menuId: 6),
+        // );
         if (_professionData == null && _professionError == null) {
           blocContext.read<JobsBloc>().add(
             const JobApplicantProfessionsFetchRequested(),
@@ -121,9 +121,9 @@ class _JobApplicantsScreenState extends State<JobApplicantsScreen>
         }
 
       case 2:
-        blocContext.read<AppBloc>().add(
-          const AppSponsorAndPartnerLoaded(menuId: 7),
-        );
+        // blocContext.read<AppBloc>().add(
+        //   const AppSponsorAndPartnerLoaded(menuId: 7),
+        // );
         if (_filterData == null && _filterError == null) {
           blocContext.read<JobsBloc>().add(
             const JobApplicantFiltersFetchRequested(),
@@ -150,9 +150,9 @@ class _JobApplicantsScreenState extends State<JobApplicantsScreen>
               getJobApplicantParams: GetJobApplicantParams(query: 'Zone'),
             ),
           );
-        BlocProvider.of<AppBloc>(
-          context,
-        ).add(const AppSponsorAndPartnerLoaded(menuId: 5));
+        // BlocProvider.of<AppBloc>(
+        //   context,
+        // ).add(const AppSponsorAndPartnerLoaded(menuId: 5));
         return _jobsBloc!;
       },
       child: BlocListener<JobsBloc, JobsState>(

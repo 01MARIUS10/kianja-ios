@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
+import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/account/presentation/bloc/account_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -18,39 +19,51 @@ class TermsOfUseScreen extends StatelessWidget {
           GetIt.instance<AccountBloc>()..add(const AccountCguRequested()),
       child: Scaffold(
         appBar: TitleHeader(title: context.appLoc.terms_use),
-        body: BlocBuilder<AccountBloc, AccountState>(
-          builder: (context, state) {
-            if (state is AccountRequestInProgress) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is AccountRequestFailure) {
-              return ServerFailureScreen(
-                onRetry: () {
-                  BlocProvider.of<AccountBloc>(
-                    context,
-                  ).add(const AccountCguRequested());
-                },
-                message: state.message,
-              );
-            } else if (state is AccountCguSuccess) {
-              final WebViewController webViewController = WebViewController()
-                ..setNavigationDelegate(
-                  NavigationDelegate(
-                    onNavigationRequest: (request) async {
-                      final uri = Uri.parse(request.url);
-                      if (['tel', 'mailto', 'sms'].contains(uri.scheme)) {
-                        await launchUrl(uri); // package url_launcher
-                        return NavigationDecision.prevent;
-                      }
-                      return NavigationDecision.navigate;
-                    },
-                  ),
-                )
-                ..setJavaScriptMode(JavaScriptMode.unrestricted)
-                ..loadHtmlString(state.cgu);
-              return WebViewWidget(controller: webViewController);
-            }
-            return const SizedBox.shrink();
-          },
+        body: SafeArea(
+          child: BlocBuilder<AccountBloc, AccountState>(
+            builder: (context, state) {
+              if (state is AccountRequestInProgress) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is AccountRequestFailure) {
+                return ServerFailureScreen(
+                  onRetry: () {
+                    BlocProvider.of<AccountBloc>(
+                      context,
+                    ).add(const AccountCguRequested());
+                  },
+                  message: state.message,
+                );
+              } else if (state is AccountCguSuccess) {
+                AppDebug.showPrint('cgu: ${state.cgu}');
+                final WebViewController webViewController = WebViewController()
+                  ..setNavigationDelegate(
+                    NavigationDelegate(
+                      onNavigationRequest: (request) async {
+                        final uri = Uri.parse(request.url);
+                        if (['tel', 'mailto', 'sms'].contains(uri.scheme)) {
+                          await launchUrl(uri); // package url_launcher
+                          return NavigationDecision.prevent;
+                        }
+                        return NavigationDecision.navigate;
+                      },
+                    ),
+                  )
+                  ..setJavaScriptMode(JavaScriptMode.unrestricted)
+                  ..loadHtmlString(
+                    state.cgu,
+                    baseUrl: 'https://kianja.mips.mg/cgu',
+                  );
+                return Column(
+                  children: [
+                    Expanded(
+                      child: WebViewWidget(controller: webViewController),
+                    ),
+                  ],
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
         ),
       ),
     );

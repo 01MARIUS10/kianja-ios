@@ -7,16 +7,15 @@ import 'package:kianja/core/shared/widgets/fields/label_field.dart';
 import 'package:kianja/core/shared/widgets/fields/text_input_field.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/shared/widgets/loading/shimmer_job_detail_indicator.dart';
+import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
-import 'package:kianja/features/jobs/domain/entities/jobs/price_plan.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_price_plan/get_price_plan_params.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
-import 'package:kianja/features/jobs/presentation/widgets/post/post_features_section.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/single_pdf_upload_widget.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/single_photo_upload_widget.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_job_applicant/update_job_applicant_params.dart';
@@ -49,8 +48,8 @@ class _MyPostJobApplicantEditScreenState
   int? _selectedGender;
 
   JobFeatures? _jobFeatures;
-  List<PricePlan> _plans = [];
-  PricePlan? _selectedPlan;
+  // List<PricePlan> _plans = [];
+  // PricePlan? _selectedPlan;
 
   String? _existingPdfUrl;
   String? _uploadPdfUrl;
@@ -96,8 +95,8 @@ class _MyPostJobApplicantEditScreenState
         // _selectedLocation != null &&
         _selectedGender != null &&
         _selectedCategories.isNotEmpty &&
-        _selectedLocations.isNotEmpty &&
-        _plans.isNotEmpty;
+        _selectedLocations.isNotEmpty;
+    // _plans.isNotEmpty;
     setState(() {
       _isFormReady = hasBasics && hasSelections;
     });
@@ -170,10 +169,10 @@ class _MyPostJobApplicantEditScreenState
       AppMessenger.showWarning(context, 'Please select a gender');
       return;
     }
-    if (_selectedPlan == null) {
-      AppMessenger.showWarning(context, 'Please select a plan');
-      return;
-    }
+    // if (_selectedPlan == null) {
+    //   AppMessenger.showWarning(context, 'Please select a plan');
+    //   return;
+    // }
 
     final pdfUrlToSend = _uploadPdfUrl ?? _existingPdfUrl ?? '';
     final photoUrlToSend = _uploadPhotoUrl ?? _existingPhotoUrl ?? '';
@@ -192,8 +191,8 @@ class _MyPostJobApplicantEditScreenState
           locations: _selectedLocations,
           // locationId: _selectedLocation!,
           genderId: _selectedGender!,
-          typeId: _selectedPlan!.type.id,
-          durationId: _selectedPlan!.duration.id,
+          // typeId: _selectedPlan!.type.id,
+          // durationId: _selectedPlan!.duration.id,
           // categoryId: _selectedCategory!,
           status: 'published',
         ),
@@ -236,10 +235,12 @@ class _MyPostJobApplicantEditScreenState
                 _checkFormReady();
               } else if (state is JobsGetJobApplicantDetailSuccess) {
                 _populateFromJobApplicant(state.jobApplicant);
-              } else if (state is JobsGetPricePlanSuccess) {
-                setState(() => _plans = state.pricePlans);
-                _checkFormReady();
-              } else if (state is JobsUploadImageSuccess) {
+              }
+              // else if (state is JobsGetPricePlanSuccess) {
+              //   setState(() => _plans = state.pricePlans);
+              //   _checkFormReady();
+              // }
+              else if (state is JobsUploadImageSuccess) {
                 setState(() {
                   _isUploadingImages = true;
                   _uploadPhotoUrl = state.jobImage.url;
@@ -650,19 +651,44 @@ class _MyPostJobApplicantEditScreenState
                                 );
                               }).toList(),
                             ),
-                          const SizedBox(height: Constants.spacingLarge),
-                          const Divider(),
+
                           const SizedBox(height: Constants.spacingMedium),
 
-                          PostFeaturesSection(
-                            plans: _plans,
-                            isLoading: isSaving,
-                            onPlanSelected: (plan) {
-                              _selectedPlan = plan;
-                            },
-                            onPost: () => _updateJobApplicant(context),
-                            postButtonLabel: context.appLoc.update,
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: ElevatedButton(
+                              onPressed: () => _updateJobApplicant(context),
+                              child: isSaving
+                                  ? const SizedBox(
+                                      width: 24,
+                                      height: 24,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                      ),
+                                    )
+                                  : Text(
+                                      context.appLoc.update,
+                                      style: theme.textTheme.titleMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            letterSpacing: 1.2,
+                                            color: isDark
+                                                ? AppColors.darkTextPrimary
+                                                : AppColors.lightTextPrimary,
+                                          ),
+                                    ),
+                            ),
                           ),
+
+                          // PostFeaturesSection(
+                          //   plans: _plans,
+                          //   isLoading: isSaving,
+                          //   onPlanSelected: (plan) {
+                          //     _selectedPlan = plan;
+                          //   },
+                          //   onPost: () => _updateJobApplicant(context),
+                          //   postButtonLabel: context.appLoc.update,
+                          // ),
                           const SizedBox(height: Constants.spacingLarge),
                         ],
                       ),

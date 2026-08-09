@@ -169,14 +169,23 @@ class _TrainingCenterDetailState extends State<TrainingCenterDetail> {
                                               Routes.myPost.path)
                                         InkWell(
                                           onTap: () {
-                                            context.pushNamed(
-                                              Routes.postHotEvent.name,
+                                            context.goNamed(
+                                              Routes.createHotEvent.name,
                                               pathParameters: {
                                                 'trainingCenterId':
                                                     trainingCenter.id
                                                         .toString(),
                                               },
+                                              extra: {'type': 'event'},
                                             );
+                                            // context.pushNamed(
+                                            //   Routes.postHotEvent.name,
+                                            //   pathParameters: {
+                                            //     'trainingCenterId':
+                                            //         trainingCenter.id
+                                            //             .toString(),
+                                            //   },
+                                            // );
                                           },
                                           child: Row(
                                             mainAxisAlignment:
@@ -367,39 +376,50 @@ class _TrainingCenterDetailState extends State<TrainingCenterDetail> {
                                   const SizedBox(
                                     height: Constants.spacingMedium,
                                   ),
-                                  Row(
-                                    children: [
-                                      ClipOval(
-                                        child:
-                                            trainingCenter
-                                                .user
-                                                .photoUrl
-                                                .isNotEmpty
-                                            ? CachedNetworkImage(
-                                                imageUrl:
-                                                    '${EnvConfig.baseApiUrl}${trainingCenter.user.photoUrl}',
-                                                fit: BoxFit.cover,
-                                                width: Constants.size35,
-                                                height: Constants.size35,
-                                                placeholder: (context, url) =>
-                                                    const CircularProgressIndicator(),
-                                                errorWidget: (_, _, _) =>
-                                                    const DefaultAvatar(
-                                                      size: Constants.size35,
-                                                    ),
-                                              )
-                                            : const DefaultAvatar(
-                                                size: Constants.size35,
-                                              ),
-                                      ),
-                                      const SizedBox(
-                                        width: Constants.spacingSmall,
-                                      ),
-                                      Text(
-                                        '${trainingCenter.user.firstName} ${trainingCenter.user.lastName}',
-                                        style: theme.textTheme.bodySmall,
-                                      ),
-                                    ],
+                                  InkWell(
+                                    onTap: () {
+                                      context.pushNamed(
+                                        Routes.viewUserProfile.name,
+                                        pathParameters: {
+                                          'id': trainingCenter.user.id
+                                              .toString(),
+                                        },
+                                      );
+                                    },
+                                    child: Row(
+                                      children: [
+                                        ClipOval(
+                                          child:
+                                              trainingCenter
+                                                  .user
+                                                  .photoUrl
+                                                  .isNotEmpty
+                                              ? CachedNetworkImage(
+                                                  imageUrl:
+                                                      '${EnvConfig.baseApiUrl}${trainingCenter.user.photoUrl}',
+                                                  fit: BoxFit.cover,
+                                                  width: Constants.size35,
+                                                  height: Constants.size35,
+                                                  placeholder: (context, url) =>
+                                                      const CircularProgressIndicator(),
+                                                  errorWidget: (_, _, _) =>
+                                                      const DefaultAvatar(
+                                                        size: Constants.size35,
+                                                      ),
+                                                )
+                                              : const DefaultAvatar(
+                                                  size: Constants.size35,
+                                                ),
+                                        ),
+                                        const SizedBox(
+                                          width: Constants.spacingSmall,
+                                        ),
+                                        Text(
+                                          '${trainingCenter.user.firstName} ${trainingCenter.user.lastName}',
+                                          style: theme.textTheme.bodySmall,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   const SizedBox(
                                     height: Constants.spacingSmall,

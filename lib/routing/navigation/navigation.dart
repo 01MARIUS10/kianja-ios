@@ -100,7 +100,7 @@ class Navigation extends StatelessWidget {
                         appRouteState.matchedLocation == Routes.account.path;
                     navigationShell.goBranch(index);
                     // Manage the account expired session
-                    if (index == 3 && accountRoute) {
+                    if (index == 4 && accountRoute) {
                       BlocProvider.of<AppBloc>(
                         context,
                       ).add(const AppUserLoaded());

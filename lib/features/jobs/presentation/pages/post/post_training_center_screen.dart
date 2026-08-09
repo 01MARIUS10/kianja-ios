@@ -51,7 +51,15 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
   PricePlan? _selectedPlan;
 
   // ── Toggles ──────────────────────────────────────────────────────────────
-  void _toggleDomain(int domainId) {
+  void _toggleDomain(BuildContext context, int domainId) {
+    BlocProvider.of<JobsBloc>(context).add(
+      JobsGetPricePlanRequested(
+        getPricePlanParams: GetPricePlanParams(
+          plan: 'training-center',
+          id: domainId,
+        ),
+      ),
+    );
     setState(() {
       setState(() {
         if (_selectedDomainId == domainId) {
@@ -138,7 +146,7 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
           domainId: _selectedDomainId!,
           locationId: _selectedLocationId!,
           typeId: _selectedPlan!.type.id,
-          tagId: _selectedPlan!.type.id,
+          // tagId: _selectedPlan!.type.id,
           durationId: _selectedPlan!.duration.id,
           status: 'published',
         ),
@@ -268,7 +276,7 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
                             children: _jobFeatures!.domains.map((domain) {
                               final isSelected = _selectedDomainId == domain.id;
                               return InkWell(
-                                onTap: () => _toggleDomain(domain.id),
+                                onTap: () => _toggleDomain(context, domain.id),
                                 borderRadius: BorderRadius.circular(4),
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
@@ -283,7 +291,7 @@ class _PostTrainingCenterScreenState extends State<PostTrainingCenterScreen> {
                                         child: Checkbox(
                                           value: isSelected,
                                           onChanged: (value) =>
-                                              _toggleDomain(domain.id),
+                                              _toggleDomain(context, domain.id),
                                         ),
                                       ),
                                       const SizedBox(

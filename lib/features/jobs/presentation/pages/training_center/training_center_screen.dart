@@ -95,9 +95,9 @@ class _TrainingCenterScreenState extends State<TrainingCenterScreen>
 
     switch (index) {
       case 0:
-        blocContext.read<AppBloc>().add(
-          const AppSponsorAndPartnerLoaded(menuId: 8),
-        );
+        // blocContext.read<AppBloc>().add(
+        //   const AppSponsorAndPartnerLoaded(menuId: 8),
+        // );
         if (_hotEventData == null && _hotEventError == null) {
           blocContext.read<JobsBloc>().add(
             const GetTrainingCenterHotEventRequested(),
@@ -109,9 +109,9 @@ class _TrainingCenterScreenState extends State<TrainingCenterScreen>
           );
         }
       case 1:
-        blocContext.read<AppBloc>().add(
-          const AppSponsorAndPartnerLoaded(menuId: 1),
-        );
+        // blocContext.read<AppBloc>().add(
+        //   const AppSponsorAndPartnerLoaded(menuId: 1),
+        // );
         if (_domainData == null && _domainError == null) {
           blocContext.read<JobsBloc>().add(
             const GetTrainingCenterDomainsRequested(),
@@ -135,9 +135,9 @@ class _TrainingCenterScreenState extends State<TrainingCenterScreen>
         _jobsBloc = GetIt.instance<JobsBloc>()
           ..add(const GetTrainingCenterHotEventRequested())
           ..add(const GetTrainingCenterFilterRequested());
-        BlocProvider.of<AppBloc>(
-          context,
-        ).add(const AppSponsorAndPartnerLoaded(menuId: 8));
+        // BlocProvider.of<AppBloc>(
+        //   context,
+        // ).add(const AppSponsorAndPartnerLoaded(menuId: 8));
         return _jobsBloc!;
       },
       child: BlocListener<JobsBloc, JobsState>(

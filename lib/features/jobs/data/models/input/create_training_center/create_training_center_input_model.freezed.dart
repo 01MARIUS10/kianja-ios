@@ -15,7 +15,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CreateTrainingCenterInputModel {
 
-@JsonKey(defaultValue: '') String get name;@JsonKey(defaultValue: '') String get description;@JsonKey(defaultValue: -1) int get locationId;@JsonKey(name: 'image_ids') List<int>? get imageIds;@JsonKey(defaultValue: -1) int get domainId;@JsonKey(defaultValue: -1) int get typeId;@JsonKey(defaultValue: -1) int get tagId;@JsonKey(defaultValue: -1) int get durationId;@JsonKey(defaultValue: 'published') String get status;
+@JsonKey(defaultValue: '') String get name;@JsonKey(defaultValue: '') String get description;@JsonKey(defaultValue: -1) int get locationId;@JsonKey(name: 'image_ids') List<int>? get imageIds;@JsonKey(defaultValue: -1) int get domainId;@JsonKey(defaultValue: -1) int get typeId;// @JsonKey(defaultValue: -1) required int tagId,
+@JsonKey(defaultValue: -1) int get durationId;@JsonKey(defaultValue: 'published') String get status;
 /// Create a copy of CreateTrainingCenterInputModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +29,16 @@ $CreateTrainingCenterInputModelCopyWith<CreateTrainingCenterInputModel> get copy
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateTrainingCenterInputModel&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.locationId, locationId) || other.locationId == locationId)&&const DeepCollectionEquality().equals(other.imageIds, imageIds)&&(identical(other.domainId, domainId) || other.domainId == domainId)&&(identical(other.typeId, typeId) || other.typeId == typeId)&&(identical(other.tagId, tagId) || other.tagId == tagId)&&(identical(other.durationId, durationId) || other.durationId == durationId)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateTrainingCenterInputModel&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.locationId, locationId) || other.locationId == locationId)&&const DeepCollectionEquality().equals(other.imageIds, imageIds)&&(identical(other.domainId, domainId) || other.domainId == domainId)&&(identical(other.typeId, typeId) || other.typeId == typeId)&&(identical(other.durationId, durationId) || other.durationId == durationId)&&(identical(other.status, status) || other.status == status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,description,locationId,const DeepCollectionEquality().hash(imageIds),domainId,typeId,tagId,durationId,status);
+int get hashCode => Object.hash(runtimeType,name,description,locationId,const DeepCollectionEquality().hash(imageIds),domainId,typeId,durationId,status);
 
 @override
 String toString() {
-  return 'CreateTrainingCenterInputModel(name: $name, description: $description, locationId: $locationId, imageIds: $imageIds, domainId: $domainId, typeId: $typeId, tagId: $tagId, durationId: $durationId, status: $status)';
+  return 'CreateTrainingCenterInputModel(name: $name, description: $description, locationId: $locationId, imageIds: $imageIds, domainId: $domainId, typeId: $typeId, durationId: $durationId, status: $status)';
 }
 
 
@@ -48,7 +49,7 @@ abstract mixin class $CreateTrainingCenterInputModelCopyWith<$Res>  {
   factory $CreateTrainingCenterInputModelCopyWith(CreateTrainingCenterInputModel value, $Res Function(CreateTrainingCenterInputModel) _then) = _$CreateTrainingCenterInputModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(defaultValue: '') String name,@JsonKey(defaultValue: '') String description,@JsonKey(defaultValue: -1) int locationId,@JsonKey(name: 'image_ids') List<int>? imageIds,@JsonKey(defaultValue: -1) int domainId,@JsonKey(defaultValue: -1) int typeId,@JsonKey(defaultValue: -1) int tagId,@JsonKey(defaultValue: -1) int durationId,@JsonKey(defaultValue: 'published') String status
+@JsonKey(defaultValue: '') String name,@JsonKey(defaultValue: '') String description,@JsonKey(defaultValue: -1) int locationId,@JsonKey(name: 'image_ids') List<int>? imageIds,@JsonKey(defaultValue: -1) int domainId,@JsonKey(defaultValue: -1) int typeId,@JsonKey(defaultValue: -1) int durationId,@JsonKey(defaultValue: 'published') String status
 });
 
 
@@ -65,7 +66,7 @@ class _$CreateTrainingCenterInputModelCopyWithImpl<$Res>
 
 /// Create a copy of CreateTrainingCenterInputModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? description = null,Object? locationId = null,Object? imageIds = freezed,Object? domainId = null,Object? typeId = null,Object? tagId = null,Object? durationId = null,Object? status = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? description = null,Object? locationId = null,Object? imageIds = freezed,Object? domainId = null,Object? typeId = null,Object? durationId = null,Object? status = null,}) {
   return _then(_self.copyWith(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
@@ -73,7 +74,6 @@ as String,locationId: null == locationId ? _self.locationId : locationId // igno
 as int,imageIds: freezed == imageIds ? _self.imageIds : imageIds // ignore: cast_nullable_to_non_nullable
 as List<int>?,domainId: null == domainId ? _self.domainId : domainId // ignore: cast_nullable_to_non_nullable
 as int,typeId: null == typeId ? _self.typeId : typeId // ignore: cast_nullable_to_non_nullable
-as int,tagId: null == tagId ? _self.tagId : tagId // ignore: cast_nullable_to_non_nullable
 as int,durationId: null == durationId ? _self.durationId : durationId // ignore: cast_nullable_to_non_nullable
 as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as String,
@@ -161,10 +161,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: '')  String name, @JsonKey(defaultValue: '')  String description, @JsonKey(defaultValue: -1)  int locationId, @JsonKey(name: 'image_ids')  List<int>? imageIds, @JsonKey(defaultValue: -1)  int domainId, @JsonKey(defaultValue: -1)  int typeId, @JsonKey(defaultValue: -1)  int tagId, @JsonKey(defaultValue: -1)  int durationId, @JsonKey(defaultValue: 'published')  String status)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: '')  String name, @JsonKey(defaultValue: '')  String description, @JsonKey(defaultValue: -1)  int locationId, @JsonKey(name: 'image_ids')  List<int>? imageIds, @JsonKey(defaultValue: -1)  int domainId, @JsonKey(defaultValue: -1)  int typeId, @JsonKey(defaultValue: -1)  int durationId, @JsonKey(defaultValue: 'published')  String status)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CreateTrainingCenterInputModel() when $default != null:
-return $default(_that.name,_that.description,_that.locationId,_that.imageIds,_that.domainId,_that.typeId,_that.tagId,_that.durationId,_that.status);case _:
+return $default(_that.name,_that.description,_that.locationId,_that.imageIds,_that.domainId,_that.typeId,_that.durationId,_that.status);case _:
   return orElse();
 
 }
@@ -182,10 +182,10 @@ return $default(_that.name,_that.description,_that.locationId,_that.imageIds,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: '')  String name, @JsonKey(defaultValue: '')  String description, @JsonKey(defaultValue: -1)  int locationId, @JsonKey(name: 'image_ids')  List<int>? imageIds, @JsonKey(defaultValue: -1)  int domainId, @JsonKey(defaultValue: -1)  int typeId, @JsonKey(defaultValue: -1)  int tagId, @JsonKey(defaultValue: -1)  int durationId, @JsonKey(defaultValue: 'published')  String status)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(defaultValue: '')  String name, @JsonKey(defaultValue: '')  String description, @JsonKey(defaultValue: -1)  int locationId, @JsonKey(name: 'image_ids')  List<int>? imageIds, @JsonKey(defaultValue: -1)  int domainId, @JsonKey(defaultValue: -1)  int typeId, @JsonKey(defaultValue: -1)  int durationId, @JsonKey(defaultValue: 'published')  String status)  $default,) {final _that = this;
 switch (_that) {
 case _CreateTrainingCenterInputModel():
-return $default(_that.name,_that.description,_that.locationId,_that.imageIds,_that.domainId,_that.typeId,_that.tagId,_that.durationId,_that.status);case _:
+return $default(_that.name,_that.description,_that.locationId,_that.imageIds,_that.domainId,_that.typeId,_that.durationId,_that.status);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -202,10 +202,10 @@ return $default(_that.name,_that.description,_that.locationId,_that.imageIds,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(defaultValue: '')  String name, @JsonKey(defaultValue: '')  String description, @JsonKey(defaultValue: -1)  int locationId, @JsonKey(name: 'image_ids')  List<int>? imageIds, @JsonKey(defaultValue: -1)  int domainId, @JsonKey(defaultValue: -1)  int typeId, @JsonKey(defaultValue: -1)  int tagId, @JsonKey(defaultValue: -1)  int durationId, @JsonKey(defaultValue: 'published')  String status)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(defaultValue: '')  String name, @JsonKey(defaultValue: '')  String description, @JsonKey(defaultValue: -1)  int locationId, @JsonKey(name: 'image_ids')  List<int>? imageIds, @JsonKey(defaultValue: -1)  int domainId, @JsonKey(defaultValue: -1)  int typeId, @JsonKey(defaultValue: -1)  int durationId, @JsonKey(defaultValue: 'published')  String status)?  $default,) {final _that = this;
 switch (_that) {
 case _CreateTrainingCenterInputModel() when $default != null:
-return $default(_that.name,_that.description,_that.locationId,_that.imageIds,_that.domainId,_that.typeId,_that.tagId,_that.durationId,_that.status);case _:
+return $default(_that.name,_that.description,_that.locationId,_that.imageIds,_that.domainId,_that.typeId,_that.durationId,_that.status);case _:
   return null;
 
 }
@@ -217,7 +217,7 @@ return $default(_that.name,_that.description,_that.locationId,_that.imageIds,_th
 @JsonSerializable()
 
 class _CreateTrainingCenterInputModel extends CreateTrainingCenterInputModel {
-  const _CreateTrainingCenterInputModel({@JsonKey(defaultValue: '') required this.name, @JsonKey(defaultValue: '') required this.description, @JsonKey(defaultValue: -1) required this.locationId, @JsonKey(name: 'image_ids') final  List<int>? imageIds, @JsonKey(defaultValue: -1) required this.domainId, @JsonKey(defaultValue: -1) required this.typeId, @JsonKey(defaultValue: -1) required this.tagId, @JsonKey(defaultValue: -1) required this.durationId, @JsonKey(defaultValue: 'published') required this.status}): _imageIds = imageIds,super._();
+  const _CreateTrainingCenterInputModel({@JsonKey(defaultValue: '') required this.name, @JsonKey(defaultValue: '') required this.description, @JsonKey(defaultValue: -1) required this.locationId, @JsonKey(name: 'image_ids') final  List<int>? imageIds, @JsonKey(defaultValue: -1) required this.domainId, @JsonKey(defaultValue: -1) required this.typeId, @JsonKey(defaultValue: -1) required this.durationId, @JsonKey(defaultValue: 'published') required this.status}): _imageIds = imageIds,super._();
   factory _CreateTrainingCenterInputModel.fromJson(Map<String, dynamic> json) => _$CreateTrainingCenterInputModelFromJson(json);
 
 @override@JsonKey(defaultValue: '') final  String name;
@@ -234,7 +234,7 @@ class _CreateTrainingCenterInputModel extends CreateTrainingCenterInputModel {
 
 @override@JsonKey(defaultValue: -1) final  int domainId;
 @override@JsonKey(defaultValue: -1) final  int typeId;
-@override@JsonKey(defaultValue: -1) final  int tagId;
+// @JsonKey(defaultValue: -1) required int tagId,
 @override@JsonKey(defaultValue: -1) final  int durationId;
 @override@JsonKey(defaultValue: 'published') final  String status;
 
@@ -251,16 +251,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateTrainingCenterInputModel&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.locationId, locationId) || other.locationId == locationId)&&const DeepCollectionEquality().equals(other._imageIds, _imageIds)&&(identical(other.domainId, domainId) || other.domainId == domainId)&&(identical(other.typeId, typeId) || other.typeId == typeId)&&(identical(other.tagId, tagId) || other.tagId == tagId)&&(identical(other.durationId, durationId) || other.durationId == durationId)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateTrainingCenterInputModel&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.locationId, locationId) || other.locationId == locationId)&&const DeepCollectionEquality().equals(other._imageIds, _imageIds)&&(identical(other.domainId, domainId) || other.domainId == domainId)&&(identical(other.typeId, typeId) || other.typeId == typeId)&&(identical(other.durationId, durationId) || other.durationId == durationId)&&(identical(other.status, status) || other.status == status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,description,locationId,const DeepCollectionEquality().hash(_imageIds),domainId,typeId,tagId,durationId,status);
+int get hashCode => Object.hash(runtimeType,name,description,locationId,const DeepCollectionEquality().hash(_imageIds),domainId,typeId,durationId,status);
 
 @override
 String toString() {
-  return 'CreateTrainingCenterInputModel(name: $name, description: $description, locationId: $locationId, imageIds: $imageIds, domainId: $domainId, typeId: $typeId, tagId: $tagId, durationId: $durationId, status: $status)';
+  return 'CreateTrainingCenterInputModel(name: $name, description: $description, locationId: $locationId, imageIds: $imageIds, domainId: $domainId, typeId: $typeId, durationId: $durationId, status: $status)';
 }
 
 
@@ -271,7 +271,7 @@ abstract mixin class _$CreateTrainingCenterInputModelCopyWith<$Res> implements $
   factory _$CreateTrainingCenterInputModelCopyWith(_CreateTrainingCenterInputModel value, $Res Function(_CreateTrainingCenterInputModel) _then) = __$CreateTrainingCenterInputModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(defaultValue: '') String name,@JsonKey(defaultValue: '') String description,@JsonKey(defaultValue: -1) int locationId,@JsonKey(name: 'image_ids') List<int>? imageIds,@JsonKey(defaultValue: -1) int domainId,@JsonKey(defaultValue: -1) int typeId,@JsonKey(defaultValue: -1) int tagId,@JsonKey(defaultValue: -1) int durationId,@JsonKey(defaultValue: 'published') String status
+@JsonKey(defaultValue: '') String name,@JsonKey(defaultValue: '') String description,@JsonKey(defaultValue: -1) int locationId,@JsonKey(name: 'image_ids') List<int>? imageIds,@JsonKey(defaultValue: -1) int domainId,@JsonKey(defaultValue: -1) int typeId,@JsonKey(defaultValue: -1) int durationId,@JsonKey(defaultValue: 'published') String status
 });
 
 
@@ -288,7 +288,7 @@ class __$CreateTrainingCenterInputModelCopyWithImpl<$Res>
 
 /// Create a copy of CreateTrainingCenterInputModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? description = null,Object? locationId = null,Object? imageIds = freezed,Object? domainId = null,Object? typeId = null,Object? tagId = null,Object? durationId = null,Object? status = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? description = null,Object? locationId = null,Object? imageIds = freezed,Object? domainId = null,Object? typeId = null,Object? durationId = null,Object? status = null,}) {
   return _then(_CreateTrainingCenterInputModel(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
@@ -296,7 +296,6 @@ as String,locationId: null == locationId ? _self.locationId : locationId // igno
 as int,imageIds: freezed == imageIds ? _self._imageIds : imageIds // ignore: cast_nullable_to_non_nullable
 as List<int>?,domainId: null == domainId ? _self.domainId : domainId // ignore: cast_nullable_to_non_nullable
 as int,typeId: null == typeId ? _self.typeId : typeId // ignore: cast_nullable_to_non_nullable
-as int,tagId: null == tagId ? _self.tagId : tagId // ignore: cast_nullable_to_non_nullable
 as int,durationId: null == durationId ? _self.durationId : durationId // ignore: cast_nullable_to_non_nullable
 as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as String,

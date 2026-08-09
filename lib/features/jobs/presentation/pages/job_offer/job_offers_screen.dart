@@ -105,9 +105,9 @@ class _JobOffersScreenState extends State<JobOffersScreen>
 
     switch (index) {
       case 0:
-        blocContext.read<AppBloc>().add(
-          const AppSponsorAndPartnerLoaded(menuId: 1),
-        );
+        // blocContext.read<AppBloc>().add(
+        //   const AppSponsorAndPartnerLoaded(menuId: 1),
+        // );
         // Only fetch if not already cached
         if (_typeData == null && _typeError == null) {
           blocContext.read<JobsBloc>().add(
@@ -115,27 +115,27 @@ class _JobOffersScreenState extends State<JobOffersScreen>
           );
         }
       case 1:
-        blocContext.read<AppBloc>().add(
-          const AppSponsorAndPartnerLoaded(menuId: 2),
-        );
+        // blocContext.read<AppBloc>().add(
+        //   const AppSponsorAndPartnerLoaded(menuId: 2),
+        // );
         if (_dateData == null && _dateError == null) {
           blocContext.read<JobsBloc>().add(
             const JobsGroupByDateFetchRequested(query: 'Date'),
           );
         }
       case 2:
-        blocContext.read<AppBloc>().add(
-          const AppSponsorAndPartnerLoaded(menuId: 3),
-        );
+        // blocContext.read<AppBloc>().add(
+        //   const AppSponsorAndPartnerLoaded(menuId: 3),
+        // );
         if (_zoneData == null && _zoneError == null) {
           blocContext.read<JobsBloc>().add(
             const JobsGroupByZoneFetchRequested(query: 'Zone'),
           );
         }
       case 3:
-        blocContext.read<AppBloc>().add(
-          const AppSponsorAndPartnerLoaded(menuId: 4),
-        );
+        // blocContext.read<AppBloc>().add(
+        //   const AppSponsorAndPartnerLoaded(menuId: 4),
+        // );
         if (_filterData == null && _filterError == null) {
           blocContext.read<JobsBloc>().add(
             const JobOfferFilteringFetchRequested(),

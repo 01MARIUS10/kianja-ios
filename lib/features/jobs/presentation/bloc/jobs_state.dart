@@ -335,6 +335,22 @@ class GetTrainingCenterViewDomainSuccess extends JobsState {
   List<Object> get props => [trainingCenterViewDomain];
 }
 
+class JobsViewUserProfileSuccess extends JobsState {
+  const JobsViewUserProfileSuccess({required this.user});
+  final User user;
+
+  @override
+  List<Object> get props => [user];
+}
+
+class JobsBlockUserSuccess extends JobsState {
+  const JobsBlockUserSuccess({required this.message});
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}
+
 /// Any request failed.
 class JobsRequestFailure extends JobsState {
   const JobsRequestFailure({required this.message});

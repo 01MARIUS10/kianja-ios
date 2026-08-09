@@ -18,8 +18,8 @@ abstract class UpdateJobApplicantInputModel
     required List<int> locations,
     // @JsonKey(defaultValue: -1) required int locationId,
     @JsonKey(defaultValue: -1) required int genderId,
-    @JsonKey(defaultValue: -1) required int typeId,
-    @JsonKey(defaultValue: -1) required int durationId,
+    // @JsonKey(defaultValue: -1) required int typeId,
+    // @JsonKey(defaultValue: -1) required int durationId,
     // @JsonKey(defaultValue: -1) required int categoryId,
     @JsonKey(defaultValue: 'published') required String status,
   }) = _UpdateJobApplicantInputModel;

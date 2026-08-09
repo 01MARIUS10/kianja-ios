@@ -13,7 +13,7 @@ abstract class CreateTrainingCenterInputModel
     @JsonKey(name: 'image_ids') List<int>? imageIds,
     @JsonKey(defaultValue: -1) required int domainId,
     @JsonKey(defaultValue: -1) required int typeId,
-    @JsonKey(defaultValue: -1) required int tagId,
+    // @JsonKey(defaultValue: -1) required int tagId,
     @JsonKey(defaultValue: -1) required int durationId,
     @JsonKey(defaultValue: 'published') required String status,
   }) = _CreateTrainingCenterInputModel;

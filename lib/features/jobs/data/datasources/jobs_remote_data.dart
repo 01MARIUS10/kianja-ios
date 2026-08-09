@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/services/service_helper.dart';
+import 'package:kianja/core/shared/app_feature/data/models/user/user_model.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/features/jobs/data/mappers/training_center_badge_mapper.dart';
 import 'package:kianja/features/jobs/data/models/input/create_job_applicant/create_job_applicant_input_model.dart';
@@ -34,6 +35,7 @@ abstract interface class JobsRemoteDataSource {
   Future<List<JobCategoryModel>> getJobApplicantProfessions();
   Future<JobApplicantFilterModel> getJobApplicantFilters();
   Future<JobOfferFilteringModel> getJobOfferFiltering();
+  Future<void> blockUser({required int id});
   Future<List<JobOfferFilterModel>> getJobOffersGroupBy({
     required String query,
   });
@@ -50,7 +52,10 @@ abstract interface class JobsRemoteDataSource {
   });
   Future<JobImageModel> uploadJobImage({required XFile file});
   Future<JobPdfModel> uploadJobPdf({required PlatformFile file});
-  Future<List<PricePlanModel>> getPricePlans({required String plan});
+  Future<List<PricePlanModel>> getPricePlans({
+    required String plan,
+    required int id,
+  });
   Future<JobApplicantModel> createJobApplicant({
     required CreateJobApplicantInputModel createJobApplicantInputModel,
   });
@@ -101,6 +106,7 @@ abstract interface class JobsRemoteDataSource {
   Future<HotEventModel> createHotEvent({
     required HotEventInputModel hotEventInputModel,
   });
+  Future<UserModel> viewUserProfile({required int id});
 }
 
 class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
@@ -154,7 +160,7 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
       final response = await dio.get('/api/training-centers');
       final Map<String, dynamic> result = jsonHandler(response.data);
       return (result['Contenu'] as List<dynamic>)
-          .take(2)
+          .take(1)
           .map(
             (e) =>
                 TrainingCenterHotEventModel.fromJson(e as Map<String, dynamic>),
@@ -455,9 +461,22 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
   }
 
   @override
-  Future<List<PricePlanModel>> getPricePlans({required String plan}) async {
+  Future<List<PricePlanModel>> getPricePlans({
+    required String plan,
+    required int id,
+  }) async {
     return requestHandler(() async {
-      final response = await dio.get('/api/plans/$plan');
+      String urlPlan = '';
+      if (plan == 'training-center') {
+        if (id == 0) {
+          urlPlan = '/api/plans/$plan';
+        } else {
+          urlPlan = '/api/plans/$plan?domainId=$id';
+        }
+      } else {
+        urlPlan = '/api/plans/$plan';
+      }
+      final response = await dio.get(urlPlan);
       final result = jsonSimpleDecode(response.data);
       final List<dynamic> plans = result['data'] ?? [];
       return plans
@@ -602,6 +621,22 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
       return JobApplicantModel.fromJson(
         result['Contenu'] as Map<String, dynamic>,
       );
+    });
+  }
+
+  @override
+  Future<UserModel> viewUserProfile({required int id}) {
+    return requestHandler(() async {
+      final response = await dio.get('/api/profil/$id');
+      final Map<String, dynamic> user = jsonHandler(response.data);
+      return UserModel.fromJson(user);
+    });
+  }
+
+  @override
+  Future<void> blockUser({required int id}) {
+    return requestHandler(() async {
+      await dio.post('/api/profil/$id/block');
     });
   }
 }

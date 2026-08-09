@@ -857,4 +857,8 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get extend_successful => '연장이 완료되었습니다.';
+
+  @override
+  String get not_enough_kara_or_email_already_used =>
+      'Kara가 부족하거나 이미 사용 중인 이메일입니다.';
 }

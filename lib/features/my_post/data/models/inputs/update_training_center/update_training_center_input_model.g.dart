@@ -17,9 +17,6 @@ _UpdateTrainingCenterInputModel _$UpdateTrainingCenterInputModelFromJson(
   imageIds: (json['image_ids'] as List<dynamic>?)
       ?.map((e) => (e as num).toInt())
       .toList(),
-  typeId: (json['typeId'] as num?)?.toInt() ?? -1,
-  tagId: (json['tagId'] as num?)?.toInt() ?? -1,
-  durationId: (json['durationId'] as num?)?.toInt() ?? -1,
   status: json['status'] as String? ?? 'published',
 );
 
@@ -32,8 +29,5 @@ Map<String, dynamic> _$UpdateTrainingCenterInputModelToJson(
   'locationId': instance.locationId,
   'domainId': instance.domainId,
   'image_ids': instance.imageIds,
-  'typeId': instance.typeId,
-  'tagId': instance.tagId,
-  'durationId': instance.durationId,
   'status': instance.status,
 };

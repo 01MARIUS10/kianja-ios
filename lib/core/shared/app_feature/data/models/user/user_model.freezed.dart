@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserModel {
 
-@JsonKey(name: 'user_id', defaultValue: -1) int get id;@JsonKey(name: 'first_name', defaultValue: '') String get firstName;@JsonKey(name: 'last_name', defaultValue: '') String get lastName;@JsonKey(name: 'photo', defaultValue: '') String get photoUrl;@JsonKey(name: 'cv_url', defaultValue: '') String get cvUrl;@JsonKey(defaultValue: '') String get phone;@JsonKey(defaultValue: '') String get email;@JsonKey(name: 'lieu_residence', defaultValue: '') String get residence;@JsonKey(name: 'date_candidature', defaultValue: '') String get dateCandidature;@JsonKey(name: 'created_at', defaultValue: '') String get createdAt;
+@JsonKey(name: 'user_id', defaultValue: -1) int get id;@JsonKey(name: 'first_name', defaultValue: '') String get firstName;@JsonKey(name: 'last_name', defaultValue: '') String get lastName;@JsonKey(name: 'photo', defaultValue: '') String get photoUrl;@JsonKey(name: 'cv_url', defaultValue: '') String get cvUrl;@JsonKey(defaultValue: '') String get phone;@JsonKey(defaultValue: '') String get email;@JsonKey(name: 'lieu_residence', defaultValue: '') String get residence;@JsonKey(name: 'date_candidature', defaultValue: '') String get dateCandidature;@JsonKey(defaultValue: false) bool get isBlocked;@JsonKey(name: 'created_at', defaultValue: '') String get createdAt;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserModelCopyWith<UserModel> get copyWith => _$UserModelCopyWithImpl<UserModel>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.cvUrl, cvUrl) || other.cvUrl == cvUrl)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.email, email) || other.email == email)&&(identical(other.residence, residence) || other.residence == residence)&&(identical(other.dateCandidature, dateCandidature) || other.dateCandidature == dateCandidature)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.cvUrl, cvUrl) || other.cvUrl == cvUrl)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.email, email) || other.email == email)&&(identical(other.residence, residence) || other.residence == residence)&&(identical(other.dateCandidature, dateCandidature) || other.dateCandidature == dateCandidature)&&(identical(other.isBlocked, isBlocked) || other.isBlocked == isBlocked)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,firstName,lastName,photoUrl,cvUrl,phone,email,residence,dateCandidature,createdAt);
+int get hashCode => Object.hash(runtimeType,id,firstName,lastName,photoUrl,cvUrl,phone,email,residence,dateCandidature,isBlocked,createdAt);
 
 @override
 String toString() {
-  return 'UserModel(id: $id, firstName: $firstName, lastName: $lastName, photoUrl: $photoUrl, cvUrl: $cvUrl, phone: $phone, email: $email, residence: $residence, dateCandidature: $dateCandidature, createdAt: $createdAt)';
+  return 'UserModel(id: $id, firstName: $firstName, lastName: $lastName, photoUrl: $photoUrl, cvUrl: $cvUrl, phone: $phone, email: $email, residence: $residence, dateCandidature: $dateCandidature, isBlocked: $isBlocked, createdAt: $createdAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'user_id', defaultValue: -1) int id,@JsonKey(name: 'first_name', defaultValue: '') String firstName,@JsonKey(name: 'last_name', defaultValue: '') String lastName,@JsonKey(name: 'photo', defaultValue: '') String photoUrl,@JsonKey(name: 'cv_url', defaultValue: '') String cvUrl,@JsonKey(defaultValue: '') String phone,@JsonKey(defaultValue: '') String email,@JsonKey(name: 'lieu_residence', defaultValue: '') String residence,@JsonKey(name: 'date_candidature', defaultValue: '') String dateCandidature,@JsonKey(name: 'created_at', defaultValue: '') String createdAt
+@JsonKey(name: 'user_id', defaultValue: -1) int id,@JsonKey(name: 'first_name', defaultValue: '') String firstName,@JsonKey(name: 'last_name', defaultValue: '') String lastName,@JsonKey(name: 'photo', defaultValue: '') String photoUrl,@JsonKey(name: 'cv_url', defaultValue: '') String cvUrl,@JsonKey(defaultValue: '') String phone,@JsonKey(defaultValue: '') String email,@JsonKey(name: 'lieu_residence', defaultValue: '') String residence,@JsonKey(name: 'date_candidature', defaultValue: '') String dateCandidature,@JsonKey(defaultValue: false) bool isBlocked,@JsonKey(name: 'created_at', defaultValue: '') String createdAt
 });
 
 
@@ -65,7 +65,7 @@ class _$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? firstName = null,Object? lastName = null,Object? photoUrl = null,Object? cvUrl = null,Object? phone = null,Object? email = null,Object? residence = null,Object? dateCandidature = null,Object? createdAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? firstName = null,Object? lastName = null,Object? photoUrl = null,Object? cvUrl = null,Object? phone = null,Object? email = null,Object? residence = null,Object? dateCandidature = null,Object? isBlocked = null,Object? createdAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
@@ -76,7 +76,8 @@ as String,phone: null == phone ? _self.phone : phone // ignore: cast_nullable_to
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,residence: null == residence ? _self.residence : residence // ignore: cast_nullable_to_non_nullable
 as String,dateCandidature: null == dateCandidature ? _self.dateCandidature : dateCandidature // ignore: cast_nullable_to_non_nullable
-as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String,isBlocked: null == isBlocked ? _self.isBlocked : isBlocked // ignore: cast_nullable_to_non_nullable
+as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -162,10 +163,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_id', defaultValue: -1)  int id, @JsonKey(name: 'first_name', defaultValue: '')  String firstName, @JsonKey(name: 'last_name', defaultValue: '')  String lastName, @JsonKey(name: 'photo', defaultValue: '')  String photoUrl, @JsonKey(name: 'cv_url', defaultValue: '')  String cvUrl, @JsonKey(defaultValue: '')  String phone, @JsonKey(defaultValue: '')  String email, @JsonKey(name: 'lieu_residence', defaultValue: '')  String residence, @JsonKey(name: 'date_candidature', defaultValue: '')  String dateCandidature, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_id', defaultValue: -1)  int id, @JsonKey(name: 'first_name', defaultValue: '')  String firstName, @JsonKey(name: 'last_name', defaultValue: '')  String lastName, @JsonKey(name: 'photo', defaultValue: '')  String photoUrl, @JsonKey(name: 'cv_url', defaultValue: '')  String cvUrl, @JsonKey(defaultValue: '')  String phone, @JsonKey(defaultValue: '')  String email, @JsonKey(name: 'lieu_residence', defaultValue: '')  String residence, @JsonKey(name: 'date_candidature', defaultValue: '')  String dateCandidature, @JsonKey(defaultValue: false)  bool isBlocked, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.id,_that.firstName,_that.lastName,_that.photoUrl,_that.cvUrl,_that.phone,_that.email,_that.residence,_that.dateCandidature,_that.createdAt);case _:
+return $default(_that.id,_that.firstName,_that.lastName,_that.photoUrl,_that.cvUrl,_that.phone,_that.email,_that.residence,_that.dateCandidature,_that.isBlocked,_that.createdAt);case _:
   return orElse();
 
 }
@@ -183,10 +184,10 @@ return $default(_that.id,_that.firstName,_that.lastName,_that.photoUrl,_that.cvU
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_id', defaultValue: -1)  int id, @JsonKey(name: 'first_name', defaultValue: '')  String firstName, @JsonKey(name: 'last_name', defaultValue: '')  String lastName, @JsonKey(name: 'photo', defaultValue: '')  String photoUrl, @JsonKey(name: 'cv_url', defaultValue: '')  String cvUrl, @JsonKey(defaultValue: '')  String phone, @JsonKey(defaultValue: '')  String email, @JsonKey(name: 'lieu_residence', defaultValue: '')  String residence, @JsonKey(name: 'date_candidature', defaultValue: '')  String dateCandidature, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_id', defaultValue: -1)  int id, @JsonKey(name: 'first_name', defaultValue: '')  String firstName, @JsonKey(name: 'last_name', defaultValue: '')  String lastName, @JsonKey(name: 'photo', defaultValue: '')  String photoUrl, @JsonKey(name: 'cv_url', defaultValue: '')  String cvUrl, @JsonKey(defaultValue: '')  String phone, @JsonKey(defaultValue: '')  String email, @JsonKey(name: 'lieu_residence', defaultValue: '')  String residence, @JsonKey(name: 'date_candidature', defaultValue: '')  String dateCandidature, @JsonKey(defaultValue: false)  bool isBlocked, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _UserModel():
-return $default(_that.id,_that.firstName,_that.lastName,_that.photoUrl,_that.cvUrl,_that.phone,_that.email,_that.residence,_that.dateCandidature,_that.createdAt);case _:
+return $default(_that.id,_that.firstName,_that.lastName,_that.photoUrl,_that.cvUrl,_that.phone,_that.email,_that.residence,_that.dateCandidature,_that.isBlocked,_that.createdAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -203,10 +204,10 @@ return $default(_that.id,_that.firstName,_that.lastName,_that.photoUrl,_that.cvU
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'user_id', defaultValue: -1)  int id, @JsonKey(name: 'first_name', defaultValue: '')  String firstName, @JsonKey(name: 'last_name', defaultValue: '')  String lastName, @JsonKey(name: 'photo', defaultValue: '')  String photoUrl, @JsonKey(name: 'cv_url', defaultValue: '')  String cvUrl, @JsonKey(defaultValue: '')  String phone, @JsonKey(defaultValue: '')  String email, @JsonKey(name: 'lieu_residence', defaultValue: '')  String residence, @JsonKey(name: 'date_candidature', defaultValue: '')  String dateCandidature, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'user_id', defaultValue: -1)  int id, @JsonKey(name: 'first_name', defaultValue: '')  String firstName, @JsonKey(name: 'last_name', defaultValue: '')  String lastName, @JsonKey(name: 'photo', defaultValue: '')  String photoUrl, @JsonKey(name: 'cv_url', defaultValue: '')  String cvUrl, @JsonKey(defaultValue: '')  String phone, @JsonKey(defaultValue: '')  String email, @JsonKey(name: 'lieu_residence', defaultValue: '')  String residence, @JsonKey(name: 'date_candidature', defaultValue: '')  String dateCandidature, @JsonKey(defaultValue: false)  bool isBlocked, @JsonKey(name: 'created_at', defaultValue: '')  String createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.id,_that.firstName,_that.lastName,_that.photoUrl,_that.cvUrl,_that.phone,_that.email,_that.residence,_that.dateCandidature,_that.createdAt);case _:
+return $default(_that.id,_that.firstName,_that.lastName,_that.photoUrl,_that.cvUrl,_that.phone,_that.email,_that.residence,_that.dateCandidature,_that.isBlocked,_that.createdAt);case _:
   return null;
 
 }
@@ -218,7 +219,7 @@ return $default(_that.id,_that.firstName,_that.lastName,_that.photoUrl,_that.cvU
 @JsonSerializable()
 
 class _UserModel extends UserModel {
-  const _UserModel({@JsonKey(name: 'user_id', defaultValue: -1) required this.id, @JsonKey(name: 'first_name', defaultValue: '') required this.firstName, @JsonKey(name: 'last_name', defaultValue: '') required this.lastName, @JsonKey(name: 'photo', defaultValue: '') required this.photoUrl, @JsonKey(name: 'cv_url', defaultValue: '') required this.cvUrl, @JsonKey(defaultValue: '') required this.phone, @JsonKey(defaultValue: '') required this.email, @JsonKey(name: 'lieu_residence', defaultValue: '') required this.residence, @JsonKey(name: 'date_candidature', defaultValue: '') required this.dateCandidature, @JsonKey(name: 'created_at', defaultValue: '') required this.createdAt}): super._();
+  const _UserModel({@JsonKey(name: 'user_id', defaultValue: -1) required this.id, @JsonKey(name: 'first_name', defaultValue: '') required this.firstName, @JsonKey(name: 'last_name', defaultValue: '') required this.lastName, @JsonKey(name: 'photo', defaultValue: '') required this.photoUrl, @JsonKey(name: 'cv_url', defaultValue: '') required this.cvUrl, @JsonKey(defaultValue: '') required this.phone, @JsonKey(defaultValue: '') required this.email, @JsonKey(name: 'lieu_residence', defaultValue: '') required this.residence, @JsonKey(name: 'date_candidature', defaultValue: '') required this.dateCandidature, @JsonKey(defaultValue: false) required this.isBlocked, @JsonKey(name: 'created_at', defaultValue: '') required this.createdAt}): super._();
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
 @override@JsonKey(name: 'user_id', defaultValue: -1) final  int id;
@@ -230,6 +231,7 @@ class _UserModel extends UserModel {
 @override@JsonKey(defaultValue: '') final  String email;
 @override@JsonKey(name: 'lieu_residence', defaultValue: '') final  String residence;
 @override@JsonKey(name: 'date_candidature', defaultValue: '') final  String dateCandidature;
+@override@JsonKey(defaultValue: false) final  bool isBlocked;
 @override@JsonKey(name: 'created_at', defaultValue: '') final  String createdAt;
 
 /// Create a copy of UserModel
@@ -245,16 +247,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.cvUrl, cvUrl) || other.cvUrl == cvUrl)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.email, email) || other.email == email)&&(identical(other.residence, residence) || other.residence == residence)&&(identical(other.dateCandidature, dateCandidature) || other.dateCandidature == dateCandidature)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.cvUrl, cvUrl) || other.cvUrl == cvUrl)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.email, email) || other.email == email)&&(identical(other.residence, residence) || other.residence == residence)&&(identical(other.dateCandidature, dateCandidature) || other.dateCandidature == dateCandidature)&&(identical(other.isBlocked, isBlocked) || other.isBlocked == isBlocked)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,firstName,lastName,photoUrl,cvUrl,phone,email,residence,dateCandidature,createdAt);
+int get hashCode => Object.hash(runtimeType,id,firstName,lastName,photoUrl,cvUrl,phone,email,residence,dateCandidature,isBlocked,createdAt);
 
 @override
 String toString() {
-  return 'UserModel(id: $id, firstName: $firstName, lastName: $lastName, photoUrl: $photoUrl, cvUrl: $cvUrl, phone: $phone, email: $email, residence: $residence, dateCandidature: $dateCandidature, createdAt: $createdAt)';
+  return 'UserModel(id: $id, firstName: $firstName, lastName: $lastName, photoUrl: $photoUrl, cvUrl: $cvUrl, phone: $phone, email: $email, residence: $residence, dateCandidature: $dateCandidature, isBlocked: $isBlocked, createdAt: $createdAt)';
 }
 
 
@@ -265,7 +267,7 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'user_id', defaultValue: -1) int id,@JsonKey(name: 'first_name', defaultValue: '') String firstName,@JsonKey(name: 'last_name', defaultValue: '') String lastName,@JsonKey(name: 'photo', defaultValue: '') String photoUrl,@JsonKey(name: 'cv_url', defaultValue: '') String cvUrl,@JsonKey(defaultValue: '') String phone,@JsonKey(defaultValue: '') String email,@JsonKey(name: 'lieu_residence', defaultValue: '') String residence,@JsonKey(name: 'date_candidature', defaultValue: '') String dateCandidature,@JsonKey(name: 'created_at', defaultValue: '') String createdAt
+@JsonKey(name: 'user_id', defaultValue: -1) int id,@JsonKey(name: 'first_name', defaultValue: '') String firstName,@JsonKey(name: 'last_name', defaultValue: '') String lastName,@JsonKey(name: 'photo', defaultValue: '') String photoUrl,@JsonKey(name: 'cv_url', defaultValue: '') String cvUrl,@JsonKey(defaultValue: '') String phone,@JsonKey(defaultValue: '') String email,@JsonKey(name: 'lieu_residence', defaultValue: '') String residence,@JsonKey(name: 'date_candidature', defaultValue: '') String dateCandidature,@JsonKey(defaultValue: false) bool isBlocked,@JsonKey(name: 'created_at', defaultValue: '') String createdAt
 });
 
 
@@ -282,7 +284,7 @@ class __$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? firstName = null,Object? lastName = null,Object? photoUrl = null,Object? cvUrl = null,Object? phone = null,Object? email = null,Object? residence = null,Object? dateCandidature = null,Object? createdAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? firstName = null,Object? lastName = null,Object? photoUrl = null,Object? cvUrl = null,Object? phone = null,Object? email = null,Object? residence = null,Object? dateCandidature = null,Object? isBlocked = null,Object? createdAt = null,}) {
   return _then(_UserModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
@@ -293,7 +295,8 @@ as String,phone: null == phone ? _self.phone : phone // ignore: cast_nullable_to
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,residence: null == residence ? _self.residence : residence // ignore: cast_nullable_to_non_nullable
 as String,dateCandidature: null == dateCandidature ? _self.dateCandidature : dateCandidature // ignore: cast_nullable_to_non_nullable
-as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String,isBlocked: null == isBlocked ? _self.isBlocked : isBlocked // ignore: cast_nullable_to_non_nullable
+as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

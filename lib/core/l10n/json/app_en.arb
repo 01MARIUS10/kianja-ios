@@ -96,7 +96,7 @@
   "please_fill_fields": "Please fill all required fields",
   "motivation": "Motivation",
   "add_motivation": "Add motivation",
-  "resume_optional": "Resume (optional)",
+  "resume_optional": "Resume (Optional)",
   "upload": "Upload",
   "upload_resume_pdf": "Upload your resume in PDF format and let members look at it.",
   "price": "Price",
@@ -279,5 +279,6 @@
   "extend": "Extend",
   "extension": "Extension",
   "extended_successfully": "Extended successfully",
-  "extend_successful": "Extension successful."
+  "extend_successful": "Extension successful.",
+  "not_enough_kara_or_email_already_used": "You don't have enough Kara or this email is already in use."
 }

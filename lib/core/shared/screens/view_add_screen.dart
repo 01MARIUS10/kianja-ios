@@ -13,32 +13,38 @@ class ViewAddScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: BlocBuilder<AppBloc, AppState>(
-        builder: (context, state) {
-          if (state.sponsPartnerStatus == AppSponsPartnerStatus.loaded) {
-            AppDebug.showPrint('Token in ViewAddScreen: ${state.token}');
-            final WebViewController webViewController = WebViewController()
-              ..setNavigationDelegate(
-                NavigationDelegate(
-                  onNavigationRequest: (request) async {
-                    final uri = Uri.parse(request.url);
-                    if (['tel', 'mailto', 'sms'].contains(uri.scheme)) {
-                      await launchUrl(uri); // package url_launcher
-                      return NavigationDecision.prevent;
-                    }
-                    return NavigationDecision.navigate;
-                  },
-                ),
-              )
-              ..setJavaScriptMode(JavaScriptMode.unrestricted)
-              ..loadRequest(
-                Uri.parse(url),
-                headers: {'Authorization': 'Bearer ${state.token}'},
+      body: SafeArea(
+        child: BlocBuilder<AppBloc, AppState>(
+          builder: (context, state) {
+            if (state.sponsPartnerStatus == AppSponsPartnerStatus.loaded) {
+              AppDebug.showPrint('Token in ViewAddScreen: ${state.token}');
+              final WebViewController webViewController = WebViewController()
+                ..setNavigationDelegate(
+                  NavigationDelegate(
+                    onNavigationRequest: (request) async {
+                      final uri = Uri.parse(request.url);
+                      if (['tel', 'mailto', 'sms'].contains(uri.scheme)) {
+                        await launchUrl(uri); // package url_launcher
+                        return NavigationDecision.prevent;
+                      }
+                      return NavigationDecision.navigate;
+                    },
+                  ),
+                )
+                ..setJavaScriptMode(JavaScriptMode.unrestricted)
+                ..loadRequest(
+                  Uri.parse(url),
+                  headers: {'Authorization': 'Bearer ${state.token}'},
+                );
+              return Column(
+                children: [
+                  Expanded(child: WebViewWidget(controller: webViewController)),
+                ],
               );
-            return WebViewWidget(controller: webViewController);
-          }
-          return const Center(child: CircularProgressIndicator());
-        },
+            }
+            return const Center(child: CircularProgressIndicator());
+          },
+        ),
       ),
     );
   }

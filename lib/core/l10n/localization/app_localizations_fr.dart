@@ -307,7 +307,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get add_motivation => 'Ajouter une lettre de motivation';
 
   @override
-  String get resume_optional => 'CV (facultatif)';
+  String get resume_optional => 'CV (Optionnel)';
 
   @override
   String get upload => 'Télécharger';
@@ -819,7 +819,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get announcer => 'Annonceur';
 
   @override
-  String get apply => 'Postuler';
+  String get apply => 'Appliquer';
 
   @override
   String get my_applications => 'Mes candidatures';
@@ -884,4 +884,8 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get extend_successful => 'Prolongement réussi.';
+
+  @override
+  String get not_enough_kara_or_email_already_used =>
+      'Vous n\'avez pas assez de Kara ou cette adresse e-mail est déjà utilisée.';
 }

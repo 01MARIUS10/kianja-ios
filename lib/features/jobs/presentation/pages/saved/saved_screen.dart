@@ -14,7 +14,7 @@ import 'package:kianja/features/jobs/presentation/bloc/saved_job_applicants_list
 import 'package:kianja/features/jobs/presentation/bloc/saved_list/saved_list_bloc.dart';
 import 'package:kianja/features/jobs/presentation/bloc/saved_training_centers_list/saved_training_centers_list_bloc.dart';
 import 'package:kianja/features/jobs/presentation/pages/saved/saved_event_screen.dart';
-import 'package:kianja/features/jobs/presentation/pages/saved/saved_hot_screen.dart';
+// import 'package:kianja/features/jobs/presentation/pages/saved/saved_hot_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/saved/saved_job_applicant_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/saved/saved_job_offer_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/saved/saved_training_center_screen.dart';
@@ -33,7 +33,7 @@ class _SavedScreenState extends State<SavedScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
   }
 
   @override
@@ -70,14 +70,14 @@ class _SavedScreenState extends State<SavedScreen>
               ),
             ),
         ),
-        BlocProvider<SavedHotsListBloc>(
-          create: (_) => GetIt.instance<SavedHotsListBloc>()
-            ..add(
-              const SavedHotsListLoaded(
-                queryPageParams: QueryPageParams(page: 1),
-              ),
-            ),
-        ),
+        // BlocProvider<SavedHotsListBloc>(
+        //   create: (_) => GetIt.instance<SavedHotsListBloc>()
+        //     ..add(
+        //       const SavedHotsListLoaded(
+        //         queryPageParams: QueryPageParams(page: 1),
+        //       ),
+        //     ),
+        // ),
         BlocProvider<SavedEventsListBloc>(
           create: (_) => GetIt.instance<SavedEventsListBloc>()
             ..add(
@@ -113,7 +113,7 @@ class _SavedScreenState extends State<SavedScreen>
                   Tab(text: context.appLoc.job_offers),
                   Tab(text: context.appLoc.job_applicants),
                   Tab(text: context.appLoc.training_centers),
-                  Tab(text: context.appLoc.hots),
+                  // Tab(text: context.appLoc.hots),
                   Tab(text: context.appLoc.events),
                 ],
               ),
@@ -126,7 +126,7 @@ class _SavedScreenState extends State<SavedScreen>
                   SavedJobOfferScreen(),
                   SavedJobApplicantScreen(),
                   SavedTrainingCenterScreen(),
-                  SavedHotScreen(),
+                  // SavedHotScreen(),
                   SavedEventScreen(),
                 ],
               ),

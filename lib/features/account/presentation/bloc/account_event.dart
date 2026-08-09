@@ -23,8 +23,32 @@ class AccountCguRequested extends AccountEvent {
   const AccountCguRequested();
 }
 
+class AccountPrivacyRequested extends AccountEvent {
+  const AccountPrivacyRequested();
+}
+
 class AccountKaraRequested extends AccountEvent {
   const AccountKaraRequested();
+}
+
+class AccountBlockedUsersRequested extends AccountEvent {
+  const AccountBlockedUsersRequested({required this.queryPageParams});
+  final QueryPageParams queryPageParams;
+
+  @override
+  List<Object> get props => [queryPageParams];
+}
+
+class AccountBlockedUsersLoadMoreRequested extends AccountEvent {
+  const AccountBlockedUsersLoadMoreRequested();
+}
+
+class AccountUnblockUserRequested extends AccountEvent {
+  const AccountUnblockUserRequested({required this.unblockUserParams});
+  final UnblockUserParams unblockUserParams;
+
+  @override
+  List<Object> get props => [unblockUserParams];
 }
 
 class AccountUpdateUserInfoRequested extends AccountEvent {
@@ -54,6 +78,16 @@ class AccountProfilPhotoUploadRequested extends AccountEvent {
 
   @override
   List<Object> get props => [file];
+}
+
+class AccountSendComplaintsSuggestionsRequested extends AccountEvent {
+  const AccountSendComplaintsSuggestionsRequested({
+    required this.complaintsSuggestionsParams,
+  });
+  final ComplaintsSuggestionsParams complaintsSuggestionsParams;
+
+  @override
+  List<Object> get props => [complaintsSuggestionsParams];
 }
 
 class AccountProfilPhotoDeleteRequested extends AccountEvent {

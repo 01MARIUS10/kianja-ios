@@ -854,4 +854,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get extend_successful => '延期成功。';
+
+  @override
+  String get not_enough_kara_or_email_already_used => '您的 Kara 不足，或该电子邮箱已被使用。';
 }

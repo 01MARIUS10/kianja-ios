@@ -156,14 +156,22 @@ class AccountScreen extends StatelessWidget {
                       context.goNamed(Routes.applications.name);
                     },
                   ),
-                  // AccountMenuItem(
-                  //   icon: Icons.favorite_outline,
-                  //   label: 'Recordings',
-                  //   iconColor: Colors.blueGrey,
-                  //   onTap: () {
-                  //     context.goNamed(Routes.saved.name);
-                  //   },
-                  // ),
+                  AccountMenuItem(
+                    icon: Icons.send_outlined,
+                    label: 'Plaintes et suggestions',
+                    iconColor: AppColors.warning,
+                    onTap: () {
+                      context.goNamed(Routes.complaintsAndSuggestions.name);
+                    },
+                  ),
+                  AccountMenuItem(
+                    icon: Icons.block_outlined,
+                    label: 'Blocked users',
+                    iconColor: Colors.blueGrey,
+                    onTap: () {
+                      context.goNamed(Routes.blockedUsers.name);
+                    },
+                  ),
                   const AccountMenuAccordionItem(iconColor: Colors.green),
                 ],
               ),
@@ -180,6 +188,14 @@ class AccountScreen extends StatelessWidget {
                     },
                   ),
                   AccountMenuItem(
+                    icon: Icons.privacy_tip_outlined,
+                    label: 'Privacy Policy',
+                    iconColor: AppColors.warning,
+                    onTap: () {
+                      context.pushNamed(Routes.privacyPolicy.name);
+                    },
+                  ),
+                  AccountMenuItem(
                     icon: Icons.view_comfy_alt_outlined,
                     label: context.appLoc.change_password,
                     iconColor: Colors.cyan,
@@ -187,11 +203,12 @@ class AccountScreen extends StatelessWidget {
                       context.goNamed(Routes.changePassword.name);
                     },
                   ),
-                  // const AccountMenuItem(
-                  //   icon: Icons.settings_outlined,
-                  //   label: 'Delete account',
-                  //   iconColor: Colors.indigo,
-                  // ),
+                  AccountMenuItem(
+                    icon: Icons.warning_amber_outlined,
+                    label: 'Delete account',
+                    iconColor: AppColors.danger,
+                    onTap: () {},
+                  ),
                 ],
               ),
 

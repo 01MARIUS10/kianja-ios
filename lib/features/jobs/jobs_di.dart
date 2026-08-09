@@ -4,6 +4,7 @@ import 'package:kianja/features/jobs/data/datasources/jobs_remote_data.dart';
 import 'package:kianja/features/jobs/data/repositories/jobs_repository_impl.dart';
 import 'package:kianja/features/jobs/domain/repositories/jobs_repository.dart';
 import 'package:kianja/features/jobs/domain/usecases/apply_to_offer_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/block_user/block_user_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_hot_event/create_hot_event_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_applicant/create_job_applicant_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_offer/create_job_offer_usecase.dart';
@@ -37,6 +38,7 @@ import 'package:kianja/features/jobs/domain/usecases/view_all_hot_event_usecase.
 import 'package:kianja/features/jobs/domain/usecases/view_all_job_applicants/view_all_job_applicants_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_job_offers_usecase.dart';
 import 'package:kianja/features/jobs/domain/usecases/view_all_training_centers_usecase.dart';
+import 'package:kianja/features/jobs/domain/usecases/view_user_profile/view_user_profile_usecase.dart';
 import 'package:kianja/features/jobs/presentation/bloc/apply_to_offer/apply_to_offer_bloc.dart';
 import 'package:kianja/features/jobs/presentation/bloc/job_applications/job_applications_bloc.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
@@ -162,6 +164,12 @@ Future<void> initJobsDependencies(GetIt getIt, Dio dio) async {
   getIt.registerLazySingleton<GetJobApplicationsUseCase>(
     () => GetJobApplicationsUseCase(jobsRepository: getIt()),
   );
+  getIt.registerLazySingleton<ViewUserProfileUseCase>(
+    () => ViewUserProfileUseCase(jobsRepository: getIt()),
+  );
+  getIt.registerLazySingleton<BlockUserUseCase>(
+    () => BlockUserUseCase(jobsRepository: getIt()),
+  );
 
   getIt.registerLazySingleton(JobsTabResetNotifier.new);
 
@@ -194,6 +202,8 @@ Future<void> initJobsDependencies(GetIt getIt, Dio dio) async {
       createTrainingCenterUseCase: getIt(),
       subscribeExpertExecutiveUseCase: getIt(),
       createHotEventUseCase: getIt(),
+      viewUserProfileUseCase: getIt(),
+      blockUserUseCase: getIt(),
     ),
   );
   getIt.registerFactory(() => ApplyToOfferBloc(applyToOfferUseCase: getIt()));

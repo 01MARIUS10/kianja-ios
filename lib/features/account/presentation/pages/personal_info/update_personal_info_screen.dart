@@ -115,6 +115,7 @@ class _UpdatePersonalInfoScreenState extends State<UpdatePersonalInfoScreen> {
             email: user.email,
             residence: user.residence,
             dateCandidature: user.dateCandidature,
+            isBlocked: user.isBlocked,
             createdAt: user.createdAt,
           ),
         ),

@@ -143,7 +143,7 @@ class _ProlongerJobApplicantScreenState
                                     _selectedPlan = plan;
                                   },
                                   onPost: () => _postJobApplicant(context),
-                                  postButtonLabel: context.appLoc.apply
+                                  postButtonLabel: context.appLoc.extend
                                       .toUpperCase(),
                                 ),
                               ],

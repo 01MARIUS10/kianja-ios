@@ -6,7 +6,7 @@ class CreateTrainingCenterParams {
     required this.domainId,
     required this.locationId,
     required this.typeId,
-    required this.tagId,
+    // required this.tagId,
     required this.durationId,
     required this.status,
   });
@@ -16,7 +16,7 @@ class CreateTrainingCenterParams {
   final int domainId;
   final int locationId;
   final int typeId;
-  final int tagId;
+  // final int tagId;
   final int durationId;
   final String status;
 }

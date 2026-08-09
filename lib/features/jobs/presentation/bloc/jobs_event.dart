@@ -302,3 +302,19 @@ class CreateHotEventRequested extends JobsEvent {
   @override
   List<Object> get props => [createHotEventParams];
 }
+
+class JobsViewUserProfileRequested extends JobsEvent {
+  const JobsViewUserProfileRequested({required this.viewUserProfileParams});
+  final ViewUserProfileParams viewUserProfileParams;
+
+  @override
+  List<Object> get props => [viewUserProfileParams];
+}
+
+class JobsBlockUserRequested extends JobsEvent {
+  const JobsBlockUserRequested({required this.blockUserParams});
+  final BlockUserParams blockUserParams;
+
+  @override
+  List<Object> get props => [blockUserParams];
+}

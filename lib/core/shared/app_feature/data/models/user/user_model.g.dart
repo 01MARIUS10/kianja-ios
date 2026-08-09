@@ -16,6 +16,7 @@ _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
   email: json['email'] as String? ?? '',
   residence: json['lieu_residence'] as String? ?? '',
   dateCandidature: json['date_candidature'] as String? ?? '',
+  isBlocked: json['isBlocked'] as bool? ?? false,
   createdAt: json['created_at'] as String? ?? '',
 );
 
@@ -30,5 +31,6 @@ Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
       'email': instance.email,
       'lieu_residence': instance.residence,
       'date_candidature': instance.dateCandidature,
+      'isBlocked': instance.isBlocked,
       'created_at': instance.createdAt,
     };

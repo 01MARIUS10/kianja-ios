@@ -9,8 +9,8 @@ class UpdateJobApplicantParams {
     required this.locations,
     // required this.locationId,
     required this.genderId,
-    required this.typeId,
-    required this.durationId,
+    // required this.typeId,
+    // required this.durationId,
     // required this.categoryId,
     required this.status,
   });
@@ -24,8 +24,8 @@ class UpdateJobApplicantParams {
   final String? pdfUrl;
   // final int locationId;
   final int genderId;
-  final int typeId;
-  final int durationId;
+  // final int typeId;
+  // final int durationId;
   // final int categoryId;
   final String status;
 }

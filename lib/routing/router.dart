@@ -10,11 +10,15 @@ import 'package:kianja/core/shared/widgets/photos/photo_viewer_screen.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/features/about/presentation/pages/about_screen.dart';
 import 'package:kianja/features/account/presentation/pages/account_screen.dart';
+import 'package:kianja/features/account/presentation/pages/blocked_users/blocked_users_screen.dart';
 import 'package:kianja/features/account/presentation/pages/change_password/change_password_screen.dart';
+import 'package:kianja/features/account/presentation/pages/complaints_suggestions/complaints_suggestions_screen.dart';
 import 'package:kianja/features/account/presentation/pages/personal_info/personal_info_screen.dart';
 import 'package:kianja/features/account/presentation/pages/personal_info/update_personal_info_screen.dart';
+import 'package:kianja/features/account/presentation/pages/privacy_policy/privacy_policy_screen.dart';
 import 'package:kianja/features/account/presentation/pages/terms_of_use/terms_of_use_screen.dart';
 import 'package:kianja/features/account/presentation/pages/wallet/wallet_screen.dart';
+import 'package:kianja/features/account/presentation/widgets/complaints_suggestions_sent_screen.dart';
 import 'package:kianja/features/account/presentation/widgets/view_profil_cv.dart';
 import 'package:kianja/features/auth/presentation/pages/signin_screen.dart';
 import 'package:kianja/features/auth/presentation/pages/signup_screen.dart';
@@ -50,6 +54,7 @@ import 'package:kianja/features/jobs/presentation/pages/view_all/job_applicants_
 import 'package:kianja/features/jobs/presentation/pages/view_all/job_category_view_all_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/view_all/training_center_hot_event_view_all_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/view_all/training_center_view_all_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/view_profile/view_profile_screen.dart';
 import 'package:kianja/features/my_post/presentation/pages/candidates/candidate_detail_screen.dart';
 import 'package:kianja/features/my_post/presentation/pages/candidates/candidates_screen.dart';
 import 'package:kianja/features/my_post/presentation/pages/edit/my_post_hot_event_edit.dart';
@@ -172,6 +177,16 @@ abstract class AppRouter {
           },
         ),
 
+        // ================= PRIVACY POLICY =================
+        GoRoute(
+          parentNavigatorKey: _rootNavigatorKey,
+          name: Routes.privacyPolicy.name,
+          path: Routes.privacyPolicy.path,
+          builder: (context, state) {
+            return const PrivacyPolicyScreen();
+          },
+        ),
+
         // ================= VIEW ADD =================
         GoRoute(
           parentNavigatorKey: _rootNavigatorKey,
@@ -288,6 +303,9 @@ abstract class AppRouter {
                       builder: (context, state) {
                         final params = state.pathParameters;
                         final extra = state.extra as Map<String, String>? ?? {};
+                        AppDebug.showPrint('id ${params['id']}');
+                        AppDebug.showPrint('category ${extra['category']}');
+                        AppDebug.showPrint('query ${extra['query']}');
                         return HotEventDetailScreen(
                           id: int.parse(params['id'] ?? '0'),
                           name: extra['category'] ?? '',
@@ -301,6 +319,10 @@ abstract class AppRouter {
                       builder: (context, state) {
                         final params = state.pathParameters;
                         final extra = state.extra as Map<String, String>? ?? {};
+                        AppDebug.showPrint('id ${params['trainingCenterId']}');
+                        AppDebug.showPrint(
+                          'matchedLocationBefore ${extra['matchedLocationBefore']}',
+                        );
                         return TrainingCenterDetail(
                           id: int.parse(params['trainingCenterId'] ?? '0'),
                           matchedLocationBefore:
@@ -373,6 +395,16 @@ abstract class AppRouter {
                           ],
                         ),
                       ],
+                    ),
+                    GoRoute(
+                      name: Routes.viewUserProfile.name,
+                      path: Routes.viewUserProfile.path,
+                      builder: (context, state) {
+                        final params = state.pathParameters;
+                        return ViewProfileScreen(
+                          id: int.parse(params['id'] ?? '0'),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -588,49 +620,49 @@ abstract class AppRouter {
                       },
                     ),
                     GoRoute(
-                      name: Routes.postHotEvent.name,
-                      path: Routes.postHotEvent.path,
+                      name: Routes.createHotEvent.name,
+                      path: Routes.createHotEvent.path,
                       builder: (context, state) {
+                        final extra = state.extra as Map<String, String>? ?? {};
                         final params = state.pathParameters;
-                        return PostHotEventScreen(
+                        return CreateHotEventScreen(
                           trainingCenterId: int.parse(
                             params['trainingCenterId'] ?? '0',
                           ),
+                          type: extra['type'] ?? '',
                         );
                       },
                       routes: [
                         GoRoute(
-                          name: Routes.createHotEvent.name,
-                          path: Routes.createHotEvent.path,
+                          name: Routes.createHotEventSuccessful.name,
+                          path: Routes.createHotEventSuccessful.path,
                           builder: (context, state) {
-                            final extra =
-                                state.extra as Map<String, dynamic>? ?? {};
                             final params = state.pathParameters;
-                            return CreateHotEventScreen(
-                              trainingCenterId: int.parse(
-                                params['trainingCenterId'] ?? '0',
-                              ),
+                            final extra =
+                                state.extra as Map<String, String>? ?? {};
+                            return PostHotEventSuccessfulScreen(
+                              id: int.parse(params['id'] ?? '0'),
                               type: extra['type'] ?? '',
                             );
                           },
-                          routes: [
-                            GoRoute(
-                              name: Routes.createHotEventSuccessful.name,
-                              path: Routes.createHotEventSuccessful.path,
-                              builder: (context, state) {
-                                final params = state.pathParameters;
-                                final extra =
-                                    state.extra as Map<String, dynamic>? ?? {};
-                                return PostHotEventSuccessfulScreen(
-                                  id: int.parse(params['id'] ?? '0'),
-                                  type: extra['type'] ?? '',
-                                );
-                              },
-                            ),
-                          ],
                         ),
                       ],
                     ),
+                    // GoRoute(
+                    //   name: Routes.postHotEvent.name,
+                    //   path: Routes.postHotEvent.path,
+                    //   builder: (context, state) {
+                    //     final params = state.pathParameters;
+                    //     return PostHotEventScreen(
+                    //       trainingCenterId: int.parse(
+                    //         params['trainingCenterId'] ?? '0',
+                    //       ),
+                    //     );
+                    //   },
+                    //   routes: [
+
+                    //   ],
+                    // ),
                   ],
                 ),
               ],
@@ -684,6 +716,29 @@ abstract class AppRouter {
                       path: Routes.applications.path,
                       builder: (context, state) {
                         return const JobApplicationsScreen();
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.complaintsAndSuggestions.name,
+                      path: Routes.complaintsAndSuggestions.path,
+                      builder: (context, state) {
+                        return const ComplaintsSuggestionsScreen();
+                      },
+                      routes: [
+                        GoRoute(
+                          name: Routes.complaintsAndSuggestionsSent.name,
+                          path: Routes.complaintsAndSuggestionsSent.path,
+                          builder: (context, state) {
+                            return const ComplaintsSuggestionsSentScreen();
+                          },
+                        ),
+                      ],
+                    ),
+                    GoRoute(
+                      name: Routes.blockedUsers.name,
+                      path: Routes.blockedUsers.path,
+                      builder: (context, state) {
+                        return const BlockedUsersScreen();
                       },
                     ),
                     GoRoute(

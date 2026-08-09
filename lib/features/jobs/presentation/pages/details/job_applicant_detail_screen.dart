@@ -396,33 +396,43 @@ class _JobApplicantDetailScreenState extends State<JobApplicantDetailScreen> {
                               ),
                             ),
                             const SizedBox(height: Constants.spacingMedium),
-                            Row(
-                              children: [
-                                ClipOval(
-                                  child: jobApplicant.user.photoUrl.isNotEmpty
-                                      ? CachedNetworkImage(
-                                          imageUrl:
-                                              '${EnvConfig.baseApiUrl}${jobApplicant.user.photoUrl}',
-                                          fit: BoxFit.cover,
-                                          width: Constants.size35,
-                                          height: Constants.size35,
-                                          placeholder: (context, url) =>
-                                              const CircularProgressIndicator(),
-                                          errorWidget: (_, _, _) =>
-                                              const DefaultAvatar(
-                                                size: Constants.size35,
-                                              ),
-                                        )
-                                      : const DefaultAvatar(
-                                          size: Constants.size35,
-                                        ),
-                                ),
-                                const SizedBox(width: Constants.spacingSmall),
-                                Text(
-                                  '${jobApplicant.user.firstName} ${jobApplicant.user.lastName}',
-                                  style: theme.textTheme.bodySmall,
-                                ),
-                              ],
+                            InkWell(
+                              onTap: () {
+                                context.pushNamed(
+                                  Routes.viewUserProfile.name,
+                                  pathParameters: {
+                                    'id': jobApplicant.user.id.toString(),
+                                  },
+                                );
+                              },
+                              child: Row(
+                                children: [
+                                  ClipOval(
+                                    child: jobApplicant.user.photoUrl.isNotEmpty
+                                        ? CachedNetworkImage(
+                                            imageUrl:
+                                                '${EnvConfig.baseApiUrl}${jobApplicant.user.photoUrl}',
+                                            fit: BoxFit.cover,
+                                            width: Constants.size35,
+                                            height: Constants.size35,
+                                            placeholder: (context, url) =>
+                                                const CircularProgressIndicator(),
+                                            errorWidget: (_, _, _) =>
+                                                const DefaultAvatar(
+                                                  size: Constants.size35,
+                                                ),
+                                          )
+                                        : const DefaultAvatar(
+                                            size: Constants.size35,
+                                          ),
+                                  ),
+                                  const SizedBox(width: Constants.spacingSmall),
+                                  Text(
+                                    '${jobApplicant.user.firstName} ${jobApplicant.user.lastName}',
+                                    style: theme.textTheme.bodySmall,
+                                  ),
+                                ],
+                              ),
                             ),
                             const SizedBox(height: Constants.spacingSmall),
                             Row(
