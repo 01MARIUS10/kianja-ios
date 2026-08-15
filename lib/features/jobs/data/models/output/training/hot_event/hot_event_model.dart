@@ -18,6 +18,7 @@ abstract class HotEventModel with _$HotEventModel implements HotEvent {
     @JsonKey(defaultValue: '') required String imageUrl,
     JobImageModel? image,
     @JsonKey(name: 'training_center') required TrainingCenterModel center,
+    @JsonKey(defaultValue: false) required bool isFavorite,
   }) = _HotEventModel;
 
   const HotEventModel._();

@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kianja/core/config/assets.dart';
-import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/app_feature/domain/entities/spons_partner.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
@@ -33,8 +32,7 @@ class BannerPub extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(Constants.borderRadiusSmall),
               child: CachedNetworkImage(
-                imageUrl:
-                    '${EnvConfig.baseApiUrl}${sponsPartner.imageUrl.first}',
+                imageUrl: sponsPartner.image,
                 fit: BoxFit.cover,
                 placeholder: (context, url) =>
                     const Center(child: CircularProgressIndicator()),

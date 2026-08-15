@@ -187,6 +187,40 @@ class MyPostGetAllEventsSuccess extends MyPostState {
 }
 // ---------------------------------------------------------------- GET ALL
 
+// GET CANDIDATES ---------------------------------------------------------
+class MyPostGetCandidatesSuccess extends MyPostState {
+  const MyPostGetCandidatesSuccess({
+    required this.users,
+    required this.hasMore,
+    this.isLoadMore = false,
+  });
+
+  final List<User> users;
+  final bool hasMore;
+  final bool isLoadMore;
+
+  @override
+  List<Object> get props => [users, hasMore, isLoadMore];
+}
+
+class MyPostGetCandidateSuccess extends MyPostState {
+  const MyPostGetCandidateSuccess({required this.user});
+
+  final User user;
+
+  @override
+  List<Object> get props => [user];
+}
+
+class MyPostProlongerJobApplicantSuccess extends MyPostState {
+  const MyPostProlongerJobApplicantSuccess({required this.jobApplicant});
+  final JobApplicant jobApplicant;
+
+  @override
+  List<Object> get props => [jobApplicant];
+}
+// --------------------------------------------------------- GET CANDIDATES
+
 // ---------------------------------------------------------- SUCCESS STATE
 //
 //

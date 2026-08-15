@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kianja/core/config/assets.dart';
+import 'package:kianja/core/shared/widgets/photos/photo_type_enum.dart';
 import 'package:kianja/routing/routes.dart';
 
 class PhotoHandler extends StatefulWidget {
@@ -10,11 +11,13 @@ class PhotoHandler extends StatefulWidget {
     required this.imageUrls,
     this.height = 320,
     this.width,
+    this.photoTypeEnum = PhotoTypeEnum.hiring,
     this.fit = BoxFit.fill,
   });
   final List<String> imageUrls;
   final double? height;
   final double? width;
+  final PhotoTypeEnum photoTypeEnum;
   final BoxFit fit;
 
   @override
@@ -34,24 +37,42 @@ class _PhotoHandlerState extends State<PhotoHandler> {
   void _openPhotoViewer(BuildContext context, int index) {
     context.pushNamed(
       Routes.photoViewer.name,
-      extra: {'imageUrls': widget.imageUrls, 'initialIndex': index.toString()},
+      extra: {
+        'imageUrls': widget.imageUrls,
+        'initialIndex': index.toString(),
+        'photoTypeEnum': widget.photoTypeEnum,
+      },
     );
   }
 
   @override
   Widget build(BuildContext context) {
     if (widget.imageUrls.isEmpty) {
+      final String assetImage = switch (widget.photoTypeEnum) {
+        PhotoTypeEnum.hiring => Assets.hiring,
+        PhotoTypeEnum.trainingCenter => Assets.trainingCenter,
+        PhotoTypeEnum.hot => Assets.hot,
+        PhotoTypeEnum.event => Assets.events,
+      };
+
       return SizedBox(
         height: widget.height,
         width: widget.width,
         child: GestureDetector(
           onTap: () => _openPhotoViewer(context, 0),
-          child: Image.asset(Assets.logoKianja, fit: widget.fit),
+          child: Image.asset(assetImage, fit: widget.fit),
         ),
       );
     }
 
     if (widget.imageUrls.length == 1) {
+      final String assetImage = switch (widget.photoTypeEnum) {
+        PhotoTypeEnum.hiring => Assets.hiring,
+        PhotoTypeEnum.trainingCenter => Assets.trainingCenter,
+        PhotoTypeEnum.hot => Assets.hot,
+        PhotoTypeEnum.event => Assets.events,
+      };
+
       return SizedBox(
         height: widget.height,
         width: widget.width,
@@ -63,7 +84,7 @@ class _PhotoHandlerState extends State<PhotoHandler> {
             placeholder: (context, url) =>
                 const Center(child: CircularProgressIndicator()),
             errorWidget: (context, url, error) =>
-                Image.asset(Assets.logoKianja, fit: widget.fit),
+                Image.asset(assetImage, fit: widget.fit),
           ),
         ),
       );
@@ -83,6 +104,12 @@ class _PhotoHandlerState extends State<PhotoHandler> {
               });
             },
             itemBuilder: (context, index) {
+              final String assetImage = switch (widget.photoTypeEnum) {
+                PhotoTypeEnum.hiring => Assets.hiring,
+                PhotoTypeEnum.trainingCenter => Assets.trainingCenter,
+                PhotoTypeEnum.hot => Assets.hot,
+                PhotoTypeEnum.event => Assets.events,
+              };
               return GestureDetector(
                 onTap: () => _openPhotoViewer(context, index),
                 child: CachedNetworkImage(
@@ -91,7 +118,7 @@ class _PhotoHandlerState extends State<PhotoHandler> {
                   placeholder: (context, url) =>
                       const Center(child: CircularProgressIndicator()),
                   errorWidget: (context, url, error) =>
-                      Image.asset(Assets.logoKianja, fit: widget.fit),
+                      Image.asset(assetImage, fit: widget.fit),
                 ),
               );
             },

@@ -7,8 +7,10 @@ import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/error_screen/no_connection_screen.dart';
 import 'package:kianja/core/shared/widgets/error_screen/server_failure_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
+import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
-import 'package:kianja/features/jobs/domain/usecases/view_all_training_centers_usecase.dart';
+import 'package:kianja/core/utils/usecase/query_page_params.dart';
+import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/features/jobs/presentation/widgets/enum/width_view_enum.dart';
 import 'package:kianja/features/jobs/presentation/widgets/item/card/training_center_card.dart';
@@ -29,84 +31,170 @@ class TrainingCenterViewAllScreen extends StatelessWidget {
       create: (context) => GetIt.instance<JobsBloc>()
         ..add(
           ViewAllTrainingCentersRequested(
-            viewAllTrainingCentersParams: ViewAllTrainingCentersParams(
-              query: query,
-            ),
+            queryPageParams: QueryPageParams(query: query, page: 1),
           ),
         ),
       child: BaseScreen(
         appBar: TitleHeader(title: title),
-        child: BlocConsumer<JobsBloc, JobsState>(
-          listener: (context, state) {
-            if (state is ViewAllTrainingCentersSuccess) {
-              // AppMessenger.showSuccess(context, 'View All Fetch Success');
-            } else if (state is JobsRequestFailure) {
-              // AppMessenger.showError(context, state.message);
-            }
-          },
-          builder: (context, state) {
-            if (state is ViewAllTrainingCentersSuccess) {
-              final trainingCenterList = state.trainingCenters;
-              return AlignedGridView.count(
+        child: _TrainingCenterViewAllContent(query: query),
+      ),
+    );
+  }
+}
+
+class _TrainingCenterViewAllContent extends StatefulWidget {
+  const _TrainingCenterViewAllContent({required this.query});
+  final String query;
+
+  @override
+  State<_TrainingCenterViewAllContent> createState() =>
+      _TrainingCenterViewAllContentState();
+}
+
+class _TrainingCenterViewAllContentState
+    extends State<_TrainingCenterViewAllContent> {
+  final ScrollController _scrollController = ScrollController();
+
+  List<TrainingCenter> _trainingCenters = [];
+  bool _hasLoadedOnce = false;
+  bool _hasMore = false;
+  String? _errorMessage;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController
+      ..removeListener(_onScroll)
+      ..dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (!_scrollController.hasClients) return;
+
+    final position = _scrollController.position;
+    if (position.maxScrollExtent - position.pixels > 300) return;
+
+    final state = BlocProvider.of<JobsBloc>(context).state;
+    if (state is ViewAllTrainingCentersSuccess &&
+        state.hasMore &&
+        !state.isLoadMore) {
+      BlocProvider.of<JobsBloc>(
+        context,
+      ).add(const LoadMoreTrainingCenterRequested());
+    }
+  }
+
+  void _fetchFirstPage() {
+    BlocProvider.of<JobsBloc>(context).add(
+      ViewAllTrainingCentersRequested(
+        queryPageParams: QueryPageParams(query: widget.query, page: 1),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<JobsBloc, JobsState>(
+      listenWhen: (previous, current) =>
+          current is ViewAllTrainingCentersSuccess ||
+          current is JobsRequestFailure,
+      listener: (context, state) {
+        if (state is ViewAllTrainingCentersSuccess) {
+          setState(() {
+            _trainingCenters = state.trainingCenters;
+            _hasMore = state.hasMore;
+            _hasLoadedOnce = true;
+            _errorMessage = null;
+          });
+        } else if (state is JobsRequestFailure) {
+          if (!_hasLoadedOnce) {
+            setState(() => _errorMessage = state.message);
+          } else {
+            AppMessenger.showError(context, state.message);
+          }
+        }
+      },
+      buildWhen: (previous, current) {
+        if (current is JobsRequestInProgress && _hasLoadedOnce) {
+          return false;
+        }
+        return true;
+      },
+      builder: (context, state) {
+        if (!_hasLoadedOnce && state is JobsRequestInProgress) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (!_hasLoadedOnce && _errorMessage != null) {
+          if (_errorMessage!.contains('connection')) {
+            return NoConnectionScreen(onRetry: _fetchFirstPage);
+          }
+          return ServerFailureScreen(
+            onRetry: _fetchFirstPage,
+            message: _errorMessage!,
+          );
+        }
+
+        if (_hasLoadedOnce) {
+          return CustomScrollView(
+            controller: _scrollController,
+            physics: const AlwaysScrollableScrollPhysics(),
+            slivers: [
+              SliverPadding(
                 padding: const EdgeInsets.symmetric(
                   vertical: Constants.paddingMedium,
                   horizontal: Constants.paddingMedium,
                 ),
-                addAutomaticKeepAlives: false,
-                crossAxisCount: 2,
-                crossAxisSpacing: Constants.spacingSmall,
-                mainAxisSpacing: Constants.spacingMedium,
-                itemCount: trainingCenterList.length,
-                itemBuilder: (context, index) {
-                  return Align(
-                    alignment: Alignment.topCenter,
-                    child: InkWell(
-                      onTap: () {
-                        context.pushNamed(
-                          Routes.trainingCenterDetail.name,
-                          pathParameters: {
-                            'trainingCenterId': trainingCenterList[index].id
-                                .toString(),
-                          },
-                        );
-                      },
-                      child: TrainingCenterCard(
-                        trainingCenter: trainingCenterList[index],
-                        widthViewEnum: WidthViewEnum.grid,
+                sliver: SliverAlignedGrid.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: Constants.spacingSmall,
+                  mainAxisSpacing: Constants.spacingMedium,
+                  itemCount: _trainingCenters.length,
+                  itemBuilder: (context, index) {
+                    return Align(
+                      alignment: Alignment.topCenter,
+                      child: InkWell(
+                        onTap: () {
+                          context.pushNamed(
+                            Routes.trainingCenterDetail.name,
+                            pathParameters: {
+                              'trainingCenterId': _trainingCenters[index].id
+                                  .toString(),
+                            },
+                          );
+                        },
+                        child: TrainingCenterCard(
+                          trainingCenter: _trainingCenters[index],
+                          widthViewEnum: WidthViewEnum.grid,
+                        ),
                       ),
+                    );
+                  },
+                ),
+              ),
+              if (_hasMore)
+                const SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: Constants.paddingMedium,
                     ),
-                  );
-                },
-              );
-            } else if (state is JobsRequestFailure) {
-              if (state.message.contains('connection')) {
-                return NoConnectionScreen(
-                  onRetry: () {
-                    BlocProvider.of<JobsBloc>(context).add(
-                      ViewAllTrainingCentersRequested(
-                        viewAllTrainingCentersParams:
-                            ViewAllTrainingCentersParams(query: query),
-                      ),
-                    );
-                  },
-                );
-              } else {
-                return ServerFailureScreen(
-                  onRetry: () {
-                    BlocProvider.of<JobsBloc>(context).add(
-                      ViewAllTrainingCentersRequested(
-                        viewAllTrainingCentersParams:
-                            ViewAllTrainingCentersParams(query: query),
-                      ),
-                    );
-                  },
-                );
-              }
-            }
-            return const Center(child: CircularProgressIndicator());
-          },
-        ),
-      ),
+                    child: Center(
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                  ),
+                ),
+            ],
+          );
+        }
+
+        return const SizedBox.shrink();
+      },
     );
   }
 }

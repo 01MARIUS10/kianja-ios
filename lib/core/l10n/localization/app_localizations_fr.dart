@@ -282,7 +282,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get category_3_max => 'Catégorie * (3 max)';
 
   @override
-  String get location => 'Lieu';
+  String get location => 'Localisation';
 
   @override
   String get actor => 'Acteur';
@@ -307,7 +307,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get add_motivation => 'Ajouter une lettre de motivation';
 
   @override
-  String get resume_optional => 'CV (facultatif)';
+  String get resume_optional => 'CV (Optionnel)';
 
   @override
   String get upload => 'Télécharger';
@@ -817,4 +817,165 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get announcer => 'Annonceur';
+
+  @override
+  String get apply => 'Appliquer';
+
+  @override
+  String get my_applications => 'Mes candidatures';
+
+  @override
+  String get enable_apply_button => 'Activer le bouton Postuler';
+
+  @override
+  String get favorites => 'Favoris';
+
+  @override
+  String get expertise_domain => 'Domaine d\'expertise';
+
+  @override
+  String get posted_successfully => 'Publié avec succès';
+
+  @override
+  String get application_already_sent => 'Candidature déjà envoyée';
+
+  @override
+  String get published_by => 'Publié par';
+
+  @override
+  String get photo_optional => 'Photo (Optionnelle)';
+
+  @override
+  String get you_applied_to_this_offer => 'Vous avez postulé à cette offre.';
+
+  @override
+  String get applied_successfully => 'Candidature envoyée avec succès';
+
+  @override
+  String get you_applied_successfully_to_this_offer =>
+      'Vous avez postulé avec succès à cette offre.';
+
+  @override
+  String get view_my_applications => 'Voir mes candidatures';
+
+  @override
+  String get post_successful => 'Publication réussie.';
+
+  @override
+  String get view_post => 'Voir la publication';
+
+  @override
+  String get loading => 'Chargement...';
+
+  @override
+  String get zone_by_province => 'Zone (par province)';
+
+  @override
+  String get free => 'Gratuit';
+
+  @override
+  String get extend => 'Prolonger';
+
+  @override
+  String get extension => 'Prolongement';
+
+  @override
+  String get extended_successfully => 'Prolongé avec succès';
+
+  @override
+  String get extend_successful => 'Prolongement réussi.';
+
+  @override
+  String get not_enough_kara_or_email_already_used =>
+      'Vous n\'avez pas assez de Kara ou cette adresse e-mail est déjà utilisée.';
+
+  @override
+  String get candidate_profile => 'Profil du candidat';
+
+  @override
+  String get user_profile => 'Profil utilisateur';
+
+  @override
+  String get view_my_cv => 'Voir mon CV';
+
+  @override
+  String get please_select_a_reason => 'Veuillez sélectionner un motif';
+
+  @override
+  String get content_reported_successfully => 'Contenu signalé avec succès';
+
+  @override
+  String get report_this_content => 'Signaler ce contenu';
+
+  @override
+  String get reason => 'Motif';
+
+  @override
+  String get comment => 'Commentaire';
+
+  @override
+  String get privacy_policy => 'Politique de confidentialité';
+
+  @override
+  String get complaints_and_suggestions => 'Plaintes et suggestions';
+
+  @override
+  String get blocked_users => 'Utilisateurs bloqués';
+
+  @override
+  String get delete_account => 'Supprimer le compte';
+
+  @override
+  String get unblock => 'Débloquer';
+
+  @override
+  String get complaints_or_suggestions_sent_successfully =>
+      'Vos plaintes ou suggestions ont été envoyées avec succès';
+
+  @override
+  String get return_to_my_account => 'Revenir à mon compte';
+
+  @override
+  String get confirm_delete_account =>
+      'Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.';
+
+  @override
+  String get apply_to => 'Postuler';
+
+  @override
+  String get unsaved_question => 'Non enregistré ?';
+
+  @override
+  String get confirm_remove_from_favorites =>
+      'Voulez-vous vraiment retirer ce contenu de vos favoris ?';
+
+  @override
+  String get unsaved => 'Non enregistré';
+
+  @override
+  String get report => 'Signaler';
+
+  @override
+  String get candidates => 'Candidats';
+
+  @override
+  String get view => 'Voir';
+
+  @override
+  String get blocked_user_successfully => 'Utilisateur bloqué avec succès';
+
+  @override
+  String get block => 'Bloquer';
+
+  @override
+  String get unblocked_user_successfully => 'Utilisateur débloqué avec succès';
+
+  @override
+  String get no_blocked_user => 'Aucun utilisateur bloqué';
+
+  @override
+  String get and => 'Et';
+
+  @override
+  String get upload_3_photos => 'Vous pouvez télécharger jusqu\'à 3 photos';
 }

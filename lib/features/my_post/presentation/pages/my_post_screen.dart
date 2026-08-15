@@ -9,7 +9,7 @@ import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/my_post/presentation/bloc/my_post_bloc.dart';
 import 'package:kianja/features/my_post/presentation/pages/categories/my_post_event_screen.dart';
-import 'package:kianja/features/my_post/presentation/pages/categories/my_post_hot_screen.dart';
+// import 'package:kianja/features/my_post/presentation/pages/categories/my_post_hot_screen.dart';
 import 'package:kianja/features/my_post/presentation/pages/categories/my_post_job_applicant_screen.dart';
 import 'package:kianja/features/my_post/presentation/pages/categories/my_post_job_offer_screen.dart';
 import 'package:kianja/features/my_post/presentation/pages/categories/my_post_training_center_screen.dart';
@@ -28,7 +28,7 @@ class _MyPostScreenState extends State<MyPostScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
   }
 
   @override
@@ -69,7 +69,7 @@ class _MyPostScreenState extends State<MyPostScreen>
                   Tab(text: context.appLoc.job_offers),
                   Tab(text: context.appLoc.job_applicants),
                   Tab(text: context.appLoc.training_centers),
-                  Tab(text: context.appLoc.hots),
+                  // Tab(text: context.appLoc.hots),
                   Tab(text: context.appLoc.events),
                 ],
               ),
@@ -82,7 +82,7 @@ class _MyPostScreenState extends State<MyPostScreen>
                   MyPostJobOfferScreen(),
                   MyPostJobApplicantScreen(),
                   MyPostTrainingCenterScreen(),
-                  MyPostHotScreen(),
+                  // MyPostHotScreen(),
                   MyPostEventScreen(),
                 ],
               ),

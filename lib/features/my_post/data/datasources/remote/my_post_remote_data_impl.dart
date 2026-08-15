@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:kianja/core/services/service_helper.dart';
+import 'package:kianja/core/shared/app_feature/data/models/user/user_model.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/features/jobs/data/models/input/hot_event/hot_event_input_model.dart';
 import 'package:kianja/features/jobs/data/models/output/expert/expert_executive_model.dart';
@@ -8,6 +9,7 @@ import 'package:kianja/features/jobs/data/models/output/jobs/job_offer/job_offer
 import 'package:kianja/features/jobs/data/models/output/training/hot_event/hot_event_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/training_center/training_center_model.dart';
 import 'package:kianja/features/my_post/data/datasources/remote/my_post_remote_data.dart';
+import 'package:kianja/features/my_post/data/models/inputs/prolonger_job_applicant/prolonger_job_applicant_input_model.dart';
 import 'package:kianja/features/my_post/data/models/inputs/update_expert_executive/update_expert_executive_input_model.dart';
 import 'package:kianja/features/my_post/data/models/inputs/update_job_applicant/update_job_applicant_input_model.dart';
 import 'package:kianja/features/my_post/data/models/inputs/update_job_offer/update_job_offer_input_model.dart';
@@ -211,6 +213,43 @@ class MyPostRemoteDataImpl implements MyPostRemoteData {
       return eventList
           .map((event) => HotEventModel.fromJson(event as Map<String, dynamic>))
           .toList();
+    });
+  }
+
+  @override
+  Future<List<UserModel>> getAllCandidates({
+    required int jobId,
+    required int page,
+  }) {
+    return requestHandler(() async {
+      final response = await dio.get('/api/job-offers/$jobId/candidats');
+      final Map<String, dynamic> result = jsonSimpleDecode(response.data);
+      return (result['data'] as List<dynamic>)
+          .map((e) => UserModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    });
+  }
+
+  @override
+  Future<UserModel> getCandidate({required int id}) {
+    return requestHandler(() async {
+      final response = await dio.get('/api/profil/$id');
+      final Map<String, dynamic> user = jsonHandler(response.data);
+      return UserModel.fromJson(user);
+    });
+  }
+
+  @override
+  Future<JobApplicantModel> prolongerJobApplicant({
+    required ProlongerJobApplicantInputModel prolongerJobApplicantInputModel,
+  }) async {
+    return requestHandler(() async {
+      final response = await dio.post(
+        '/api/job-applicants/${prolongerJobApplicantInputModel.id}/prolonger',
+        data: prolongerJobApplicantInputModel.toJson(),
+      );
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      return JobApplicantModel.fromJson(result);
     });
   }
 }

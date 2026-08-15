@@ -152,6 +152,34 @@ class MyPostGetAllEventsRequested extends MyPostEvent {
 }
 // ----------------------------------------------------------- GET ALL EVENT
 
+// GET CANDIDATES EVENT ----------------------------------------------------
+class MyPostGetAllCandidatesRequested extends MyPostEvent {
+  const MyPostGetAllCandidatesRequested({required this.getCandidatesParams});
+  final GetCandidatesParams getCandidatesParams;
+
+  @override
+  List<Object> get props => [getCandidatesParams];
+}
+
+class MyPostGetCandidateRequested extends MyPostEvent {
+  const MyPostGetCandidateRequested({required this.getCandidateParams});
+  final GetCandidateParams getCandidateParams;
+
+  @override
+  List<Object> get props => [getCandidateParams];
+}
+
+class MyPostProlongerJobApplicantRequested extends MyPostEvent {
+  const MyPostProlongerJobApplicantRequested({
+    required this.prolongerJobApplicantParams,
+  });
+  final ProlongerJobApplicantParams prolongerJobApplicantParams;
+
+  @override
+  List<Object> get props => [prolongerJobApplicantParams];
+}
+// ---------------------------------------------------- GET CANDIDATES EVENT
+
 // LOAD MORE ITEM EVENT ----------------------------------------------------
 class MyPostLoadMoreJobOffersRequested extends MyPostEvent {
   const MyPostLoadMoreJobOffersRequested();
@@ -171,6 +199,14 @@ class MyPostLoadMoreHotsRequested extends MyPostEvent {
 
 class MyPostLoadMoreEventsRequested extends MyPostEvent {
   const MyPostLoadMoreEventsRequested();
+}
+
+class MyPostLoadMoreCandidatesRequested extends MyPostEvent {
+  const MyPostLoadMoreCandidatesRequested({required this.getCandidatesParams});
+  final GetCandidatesParams getCandidatesParams;
+
+  @override
+  List<Object> get props => [getCandidatesParams];
 }
 
 // ---------------------------------------------------- LOAD MORE ITEM EVENT

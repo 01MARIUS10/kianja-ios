@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/fields/date_field.dart';
 import 'package:kianja/core/shared/widgets/fields/label_field.dart';
 import 'package:kianja/core/shared/widgets/fields/text_input_field.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
+import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_features.dart';
 import 'package:kianja/features/jobs/domain/usecases/create_job_offer/create_job_offer_params.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
-import 'package:kianja/features/jobs/presentation/widgets/post/single_photo_upload_widget.dart';
+import 'package:kianja/features/jobs/presentation/widgets/post/multi_photo_upload_widget.dart';
 import 'package:kianja/routing/routes.dart';
 
 class PostJobOfferScreen extends StatefulWidget {
@@ -30,11 +32,13 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
   final TextEditingController _dateController = TextEditingController();
 
   final List<int> _selectedCategories = [];
-  int? _selectedLocation;
+  final List<int> _selectedLocations = [];
+  // int? _selectedLocation;
   int? _selectedGender;
   int? _selectedActor;
+  bool _isShowPostButtonActived = false;
 
-  int? _uploadImageId;
+  List<XFile> _photos = [];
   JobFeatures? _jobFeatures;
 
   void _clearValues() {
@@ -43,10 +47,12 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
     _dateController.clear();
     setState(() {
       _selectedCategories.clear();
-      _selectedLocation = null;
+      _selectedLocations.clear();
+      // _selectedLocation = null;
       _selectedGender = null;
       _selectedActor = null;
-      _uploadImageId = null;
+      _isShowPostButtonActived = false;
+      _photos = [];
     });
   }
 
@@ -55,7 +61,8 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
         _descriptionController.text.trim().isEmpty ||
         _dateController.text.trim().isEmpty ||
         _selectedCategories.isEmpty ||
-        _selectedLocation == null ||
+        _selectedLocations.isEmpty ||
+        // _selectedLocation == null ||
         _selectedGender == null ||
         _selectedActor == null) {
       AppMessenger.showWarning(
@@ -64,16 +71,29 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
       );
       return;
     }
+    if (_photos.isNotEmpty) {
+      AppDebug.showPrint('Uploading ${_photos.length} photos...');
+      BlocProvider.of<JobsBloc>(
+        context,
+      ).add(JobsUploadMultipleImagesRequested(files: _photos));
+    } else {
+      _submitJobOffer(context, []);
+    }
+  }
+
+  void _submitJobOffer(BuildContext context, List<int> imageIds) {
     BlocProvider.of<JobsBloc>(context).add(
       JobsCreateJobOfferRequested(
         createJobOfferParams: CreateJobOfferParams(
           title: _titleController.text.trim(),
-          imageId: _uploadImageId,
+          imageIds: imageIds,
           description: _descriptionController.text.trim(),
           categories: _selectedCategories,
-          location: _selectedLocation!,
+          locations: _selectedLocations,
+          // location: _selectedLocation!,
           gender: _selectedGender!,
           actor: _selectedActor!,
+          showPostButton: _isShowPostButtonActived,
           limitDate: _dateController.text.trim(),
           status: 'published',
         ),
@@ -93,15 +113,27 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
     });
   }
 
-  void _toggleLocation(int locationId) {
+  void _toggleLocations(int locationId) {
     setState(() {
-      if (_selectedLocation == locationId) {
-        _selectedLocation = null;
+      if (_selectedLocations.contains(locationId)) {
+        _selectedLocations.remove(locationId);
       } else {
-        _selectedLocation = locationId;
+        if (_selectedLocations.length < 3) {
+          _selectedLocations.add(locationId);
+        }
       }
     });
   }
+
+  // void _toggleLocation(int locationId) {
+  //   setState(() {
+  //     if (_selectedLocation == locationId) {
+  //       _selectedLocation = null;
+  //     } else {
+  //       _selectedLocation = locationId;
+  //     }
+  //   });
+  // }
 
   void _toggleGender(int genderId) {
     setState(() {
@@ -120,6 +152,13 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
       } else {
         _selectedActor = actorId;
       }
+    });
+  }
+
+  void _toggleShowPostButton(bool value) {
+    AppDebug.showPrint('IS ACTIVE : $value');
+    setState(() {
+      _isShowPostButtonActived = value;
     });
   }
 
@@ -147,14 +186,9 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
                 setState(() {
                   _jobFeatures = state.jobFeatures;
                 });
-              } else if (state is JobsUploadImageSuccess) {
-                setState(() {
-                  _uploadImageId = state.jobImage.id;
-                });
-                // AppMessenger.showSuccess(
-                //   context,
-                //   'Photo uploaded successfully',
-                // );
+              } else if (state is JobsUploadMultipleImagesSuccess) {
+                final imageIds = state.jobImages.map((e) => e.id).toList();
+                _submitJobOffer(context, imageIds);
               } else if (state is JobsCreateJobOfferSuccess) {
                 _clearValues();
                 context.pushReplacementNamed(
@@ -192,13 +226,10 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
 
                         LabelField(label: context.appLoc.photo),
                         const SizedBox(height: Constants.spacingSmall),
-                        SinglePhotoUploadWidget(
-                          onPhotoChanged: (photo) {
-                            if (photo != null) {
-                              BlocProvider.of<JobsBloc>(
-                                context,
-                              ).add(JobsUploadImageRequested(file: photo));
-                            }
+                        MultiPhotoUploadWidget(
+                          maxPhotos: 5,
+                          onPhotosChanged: (photos) {
+                            setState(() => _photos = photos);
                           },
                         ),
                         const SizedBox(height: Constants.spacingMedium),
@@ -246,7 +277,7 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
                                     vertical: 6,
                                   ),
                                   child: Row(
-                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisSize: MainAxisSize.max,
                                     children: [
                                       SizedBox(
                                         width: 24,
@@ -277,23 +308,80 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
                           ),
                         const SizedBox(height: Constants.spacingMedium),
 
-                        LabelField(label: '${context.appLoc.location} *'),
+                        // LabelField(label: '${context.appLoc.location} *'),
+                        // const SizedBox(height: Constants.spacingSmall),
+                        // if (_jobFeatures != null)
+                        //   Wrap(
+                        //     spacing: Constants.spacingMedium,
+                        //     children: _jobFeatures!.locations.map((location) {
+                        //       final isSelected =
+                        //           _selectedLocation == location.id;
+                        //       return InkWell(
+                        //         onTap: () => _toggleLocation(location.id),
+                        //         borderRadius: BorderRadius.circular(4),
+                        //         child: Padding(
+                        //           padding: const EdgeInsets.symmetric(
+                        //             vertical: 6,
+                        //           ),
+                        //           child: Row(
+                        //             mainAxisSize: MainAxisSize.min,
+                        //             children: [
+                        //               SizedBox(
+                        //                 width: 24,
+                        //                 height: 24,
+                        //                 child: Checkbox(
+                        //                   value: isSelected,
+                        //                   onChanged: (value) =>
+                        //                       _toggleLocation(location.id),
+                        //                 ),
+                        //               ),
+                        //               const SizedBox(
+                        //                 width: Constants.spacingExtraSmall,
+                        //               ),
+                        //               Text(
+                        //                 location.name,
+                        //                 style: theme.textTheme.bodyMedium,
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       );
+                        //     }).toList(),
+                        //   ),
+                        Row(
+                          children: [
+                            Text(
+                              '${context.appLoc.location} * ',
+                              style: theme.textTheme.titleSmall!.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              context.appLoc.max_3,
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: isDark ? Colors.white54 : Colors.black54,
+                              ),
+                            ),
+                          ],
+                        ),
                         const SizedBox(height: Constants.spacingSmall),
                         if (_jobFeatures != null)
                           Wrap(
                             spacing: Constants.spacingMedium,
                             children: _jobFeatures!.locations.map((location) {
-                              final isSelected =
-                                  _selectedLocation == location.id;
+                              final isSelected = _selectedLocations.contains(
+                                location.id,
+                              );
                               return InkWell(
-                                onTap: () => _toggleLocation(location.id),
+                                onTap: () => _toggleLocations(location.id),
                                 borderRadius: BorderRadius.circular(4),
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
                                     vertical: 6,
                                   ),
                                   child: Row(
-                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisSize: MainAxisSize.max,
                                     children: [
                                       SizedBox(
                                         width: 24,
@@ -301,7 +389,7 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
                                         child: Checkbox(
                                           value: isSelected,
                                           onChanged: (value) =>
-                                              _toggleLocation(location.id),
+                                              _toggleLocations(location.id),
                                         ),
                                       ),
                                       const SizedBox(
@@ -316,6 +404,11 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
                                 ),
                               );
                             }).toList(),
+                          )
+                        else
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 8.0),
+                            child: CircularProgressIndicator(),
                           ),
                         const SizedBox(height: Constants.spacingMedium),
 
@@ -418,6 +511,33 @@ class _PostJobOfferScreenState extends State<PostJobOfferScreen> {
                         ),
                         const SizedBox(height: Constants.spacingSmall),
                         DateField(dateController: _dateController),
+                        const SizedBox(height: Constants.spacingMedium),
+
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 6),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                context.appLoc.enable_apply_button,
+                                style: theme.textTheme.bodyMedium,
+                              ),
+                              const SizedBox(
+                                width: Constants.spacingExtraSmall,
+                              ),
+                              SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: Checkbox(
+                                  value: _isShowPostButtonActived,
+                                  onChanged: (value) {
+                                    _toggleShowPostButton(value!);
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                         const SizedBox(height: Constants.spacingMedium),
 
                         Align(

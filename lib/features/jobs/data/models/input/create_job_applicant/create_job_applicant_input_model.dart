@@ -9,12 +9,17 @@ abstract class CreateJobApplicantInputModel
   const factory CreateJobApplicantInputModel({
     @JsonKey(name: 'title', defaultValue: '') required String title,
     @JsonKey(name: 'motivation', defaultValue: '') required String motivation,
+    @JsonKey(name: 'photo_candidat') String? photoUrl,
     @JsonKey(name: 'resumepdf_path') String? pdfUrl,
-    @JsonKey(defaultValue: -1) required int locationId,
+    // @JsonKey(defaultValue: -1) required int locationId,
     @JsonKey(defaultValue: -1) required int genderId,
     @JsonKey(defaultValue: -1) required int typeId,
     @JsonKey(defaultValue: -1) required int durationId,
-    @JsonKey(defaultValue: -1) required int categoryId,
+    // @JsonKey(defaultValue: -1) required int categoryId,
+    @JsonKey(name: 'categoryIds', defaultValue: [])
+    required List<int> categories,
+    @JsonKey(name: 'locationIds', defaultValue: [])
+    required List<int> locationIds,
     @JsonKey(defaultValue: 'published') required String status,
   }) = _CreateJobApplicantInputModel;
 

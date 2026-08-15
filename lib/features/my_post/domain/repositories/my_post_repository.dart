@@ -1,5 +1,6 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:kianja/core/errors/failures.dart';
+import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
 import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/jobs/domain/entities/expert_executive/expert_executive.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
@@ -7,6 +8,9 @@ import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/jobs/domain/entities/training/hot_event.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_hot_event/delete_hot_event_params.dart';
+import 'package:kianja/features/my_post/domain/usecases/get_candidate_usecase.dart';
+import 'package:kianja/features/my_post/domain/usecases/get_candidates/get_candidates_params.dart';
+import 'package:kianja/features/my_post/domain/usecases/prolonger/prolonger_job_applicant_params.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_expert_executive/update_expert_executive_params.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_hot_event/update_hot_event_params.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_job_applicant/update_job_applicant_params.dart';
@@ -55,5 +59,18 @@ abstract class MyPostRepository {
   });
   Future<Either<Failure, List<HotEvent>>> getAllEvents({
     required QueryPageParams queryPageParams,
+  });
+
+  // Get list of candidates
+  Future<Either<Failure, List<User>>> getAllCandidates({
+    required GetCandidatesParams getCandidatesParams,
+  });
+
+  Future<Either<Failure, User>> getCandidate({
+    required GetCandidateParams getCandidateParams,
+  });
+
+  Future<Either<Failure, JobApplicant>> prolongerJobApplicant({
+    required ProlongerJobApplicantParams prolongerJobApplicantParams,
   });
 }

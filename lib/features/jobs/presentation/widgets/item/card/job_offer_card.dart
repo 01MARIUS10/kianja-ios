@@ -37,26 +37,40 @@ class JobOfferCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           // Cover Image
-          Container(
-            height: Constants.size150,
-            width: double.infinity,
-            color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
-            child: CachedNetworkImage(
-              imageUrl: '${EnvConfig.baseApiUrl}${jobOffer.image?.url}',
-              fit: BoxFit.fill,
-              errorWidget: (context, url, error) {
-                return Image.asset(
-                  Assets.hiring,
-                  fit: BoxFit.fill,
-                  errorBuilder: (context, url, error) =>
-                      const Icon(Icons.image, size: 40, color: Colors.grey),
-                );
-              },
-              progressIndicatorBuilder: (context, url, progress) {
-                return const Center(child: CircularProgressIndicator());
-              },
+          if (jobOffer.images != null && jobOffer.images!.isNotEmpty)
+            Container(
+              height: Constants.size150,
+              width: double.infinity,
+              color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
+              child: CachedNetworkImage(
+                imageUrl:
+                    '${EnvConfig.baseApiUrl}${jobOffer.images!.first.url}',
+                fit: BoxFit.fill,
+                errorWidget: (context, url, error) {
+                  return Image.asset(
+                    Assets.hiring,
+                    fit: BoxFit.fill,
+                    errorBuilder: (context, url, error) =>
+                        const Icon(Icons.image, size: 40, color: Colors.grey),
+                  );
+                },
+                progressIndicatorBuilder: (context, url, progress) {
+                  return const Center(child: CircularProgressIndicator());
+                },
+              ),
             ),
-          ),
+
+          if (jobOffer.images != null && jobOffer.images!.isEmpty)
+            SizedBox(
+              height: Constants.size150,
+              width: double.infinity,
+              child: Image.asset(
+                Assets.hiring,
+                fit: BoxFit.fill,
+                errorBuilder: (context, url, error) =>
+                    const Icon(Icons.image, size: 40, color: Colors.grey),
+              ),
+            ),
 
           Padding(
             padding: const EdgeInsets.all(Constants.paddingSmall),
@@ -85,7 +99,9 @@ class JobOfferCard extends StatelessWidget {
                     const SizedBox(width: Constants.spacingExtraSmall),
                     Expanded(
                       child: Text(
-                        jobOffer.location?.name ?? '',
+                        jobOffer.locations
+                            .map((location) => location.name)
+                            .join(', '),
                         style: theme.textTheme.bodySmall,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -130,12 +146,15 @@ class JobOfferCard extends StatelessWidget {
                   children: [
                     ClipOval(
                       child: jobOffer.user.photoUrl.isNotEmpty
-                          ? Image.network(
-                              '${EnvConfig.baseApiUrl}${jobOffer.user.photoUrl}',
+                          ? CachedNetworkImage(
+                              imageUrl:
+                                  '${EnvConfig.baseApiUrl}${jobOffer.user.photoUrl}',
                               fit: BoxFit.cover,
                               width: Constants.size30,
                               height: Constants.size30,
-                              errorBuilder: (_, _, _) =>
+                              placeholder: (context, url) =>
+                                  const CircularProgressIndicator(),
+                              errorWidget: (_, _, _) =>
                                   const DefaultAvatar(size: Constants.size30),
                             )
                           : const DefaultAvatar(size: Constants.size30),

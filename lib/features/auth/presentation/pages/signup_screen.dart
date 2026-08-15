@@ -44,6 +44,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String _fullPhone = '';
   bool _agreeToTerms = false;
 
+  late final List<String> _genders = [
+    context.appLoc.male,
+    context.appLoc.female,
+  ];
+  final List<String> _genderValues = ['Male', 'Female'];
+
   @override
   void dispose() {
     _firstNameController.dispose();
@@ -171,26 +177,70 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       const SizedBox(width: 8),
                       Expanded(
-                        child: InkWell(
-                          onTap: () =>
-                              context.pushNamed(Routes.termsOfUse.name),
-                          child: RichText(
-                            text: TextSpan(
-                              style: theme.textTheme.bodyMedium,
-                              children: [
-                                TextSpan(text: context.appLoc.agree_with),
-                                TextSpan(
-                                  text: ' ${context.appLoc.terms_use}',
-                                  style: theme.textTheme.bodyMedium!.copyWith(
-                                    color: isDark
-                                        ? AppColors.darkPrimary
-                                        : AppColors.lightPrimary,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
+                        child: Row(
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                style: theme.textTheme.bodyMedium,
+                                children: [
+                                  TextSpan(text: context.appLoc.agree_with),
+                                ],
+                              ),
                             ),
-                          ),
+                            InkWell(
+                              onTap: () =>
+                                  context.pushNamed(Routes.termsOfUse.name),
+                              child: RichText(
+                                text: TextSpan(
+                                  style: theme.textTheme.bodyMedium,
+                                  children: [
+                                    TextSpan(
+                                      text: ' ${context.appLoc.terms_use}',
+                                      style: theme.textTheme.bodyMedium!
+                                          .copyWith(
+                                            color: isDark
+                                                ? AppColors.darkPrimary
+                                                : AppColors.lightPrimary,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                style: theme.textTheme.bodyMedium,
+                                children: [
+                                  TextSpan(
+                                    text: ' ${context.appLoc.and}'
+                                        .toLowerCase(),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () =>
+                                  context.pushNamed(Routes.privacyPolicy.name),
+                              child: RichText(
+                                text: TextSpan(
+                                  style: theme.textTheme.bodyMedium,
+                                  children: [
+                                    TextSpan(
+                                      text: ' ${context.appLoc.privacy_policy}',
+                                      style: theme.textTheme.bodyMedium!
+                                          .copyWith(
+                                            color: isDark
+                                                ? AppColors.darkPrimary
+                                                : AppColors.lightPrimary,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -206,7 +256,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       listener: (context, state) {
                         if (state is AuthSignUpSuccess) {
                           BlocProvider.of<AppBloc>(context)
-                            ..add(const AppAuthenticated(isAuthenticated: true))
+                            ..add(
+                              const AppAuthenticated(
+                                isAuthenticated: true,
+                                token: '',
+                              ),
+                            )
                             ..add(const AppUserLoaded());
                           context.goNamed(Routes.account.name);
                         } else if (state is AuthRequestFailure) {
@@ -260,7 +315,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       signUpParams: SignUpParams(
                                         firstName: _firstNameController.text,
                                         lastName: _lastNameController.text,
-                                        genre: _genderController.text,
+                                        genre:
+                                            _genderValues[_genders.indexOf(
+                                              _genderController.text,
+                                            )],
                                         phone: _fullPhone,
                                         birthDate:
                                             int.tryParse(

@@ -214,9 +214,14 @@ class _DomainContent extends StatelessWidget {
 
           // Empty state
           if (vip.isEmpty && premium.isEmpty && normal.isEmpty)
-            _EmptyState(theme: theme),
-
-          const SizedBox(height: Constants.spacingLarge),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                _EmptyState(theme: theme),
+                const SizedBox(height: Constants.spacingLarge),
+              ],
+            ),
         ],
       ),
     );

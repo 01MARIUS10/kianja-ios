@@ -1,12 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
 import 'package:kianja/core/shared/app_feature/bloc/connectivity/connectivity_bloc.dart';
+import 'package:kianja/core/shared/widgets/avatar/default_avatar.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/core/utils/extensions.dart';
+import 'package:kianja/features/jobs/presentation/jobs_tab_reset_notifier.dart';
 import 'package:kianja/routing/routes.dart';
 
 class Navigation extends StatelessWidget {
@@ -32,7 +37,7 @@ class Navigation extends StatelessWidget {
         }
       },
       child: Scaffold(
-        body: navigationShell,
+        body: SafeArea(child: navigationShell),
         bottomNavigationBar: BlocConsumer<ConnectivityBloc, ConnectivityState>(
           listener: (context, state) {
             // return switch (state) {
@@ -95,10 +100,17 @@ class Navigation extends StatelessWidget {
                         appRouteState.matchedLocation == Routes.account.path;
                     navigationShell.goBranch(index);
                     // Manage the account expired session
-                    if (index == 3 && accountRoute) {
+                    if (index == 4 && accountRoute) {
                       BlocProvider.of<AppBloc>(
                         context,
                       ).add(const AppUserLoaded());
+                    }
+
+                    if (index == 0) {
+                      if (appRouteState.uri.path != Routes.jobs.path) {
+                        context.go(Routes.jobs.path);
+                      }
+                      GetIt.instance<JobsTabResetNotifier>().reset();
                     }
                   },
                   items: [
@@ -111,10 +123,17 @@ class Navigation extends StatelessWidget {
                     ),
                     BottomNavigationBarItem(
                       icon: const Icon(
-                        Icons.add_box,
+                        Icons.favorite,
                         size: Constants.iconSizeSmall,
                       ),
-                      label: context.appLoc.post,
+                      label: context.appLoc.favorites,
+                    ),
+                    const BottomNavigationBarItem(
+                      icon: Icon(
+                        Icons.add_circle,
+                        size: Constants.iconSizeSmall * 1.6,
+                      ),
+                      label: '',
                     ),
                     BottomNavigationBarItem(
                       icon: const Icon(
@@ -124,10 +143,30 @@ class Navigation extends StatelessWidget {
                       label: context.appLoc.my_post,
                     ),
                     BottomNavigationBarItem(
-                      icon: const Icon(
-                        Icons.person,
-                        size: Constants.iconSizeSmall,
-                      ),
+                      icon:
+                          (state.userStatus == AppUserStatus.loaded &&
+                              state.isAuthenticated == true)
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(
+                                Constants.borderRadiusSmall,
+                              ),
+                              child: CachedNetworkImage(
+                                imageUrl:
+                                    '${EnvConfig.baseApiUrl}${state.user.photoUrl}',
+                                fit: BoxFit.cover,
+                                width: Constants.iconSizeSmall,
+                                height: Constants.iconSizeSmall,
+                                placeholder: (context, url) =>
+                                    const CircularProgressIndicator(),
+                                errorWidget: (_, _, _) => const DefaultAvatar(
+                                  size: Constants.iconSizeSmall,
+                                ),
+                              ),
+                            )
+                          : const Icon(
+                              Icons.person,
+                              size: Constants.iconSizeSmall,
+                            ),
                       label: context.appLoc.account,
                     ),
                   ],

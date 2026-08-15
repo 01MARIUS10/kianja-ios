@@ -5,15 +5,21 @@ import 'package:go_router/go_router.dart';
 import 'package:kianja/core/shared/app_feature/bloc/app/app_bloc.dart';
 import 'package:kianja/core/shared/app_feature/presentation/modify_app_lang_screen.dart';
 import 'package:kianja/core/shared/screens/view_add_screen.dart';
+import 'package:kianja/core/shared/widgets/photos/photo_type_enum.dart';
 import 'package:kianja/core/shared/widgets/photos/photo_viewer_screen.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/features/about/presentation/pages/about_screen.dart';
 import 'package:kianja/features/account/presentation/pages/account_screen.dart';
+import 'package:kianja/features/account/presentation/pages/blocked_users/blocked_users_screen.dart';
 import 'package:kianja/features/account/presentation/pages/change_password/change_password_screen.dart';
+import 'package:kianja/features/account/presentation/pages/complaints_suggestions/complaints_suggestions_screen.dart';
 import 'package:kianja/features/account/presentation/pages/personal_info/personal_info_screen.dart';
 import 'package:kianja/features/account/presentation/pages/personal_info/update_personal_info_screen.dart';
+import 'package:kianja/features/account/presentation/pages/privacy_policy/privacy_policy_screen.dart';
 import 'package:kianja/features/account/presentation/pages/terms_of_use/terms_of_use_screen.dart';
 import 'package:kianja/features/account/presentation/pages/wallet/wallet_screen.dart';
+import 'package:kianja/features/account/presentation/widgets/complaints_suggestions_sent_screen.dart';
+import 'package:kianja/features/account/presentation/widgets/view_profil_cv.dart';
 import 'package:kianja/features/auth/presentation/pages/signin_screen.dart';
 import 'package:kianja/features/auth/presentation/pages/signup_screen.dart';
 import 'package:kianja/features/choose_lang/presentation/pages/choose_lang_screen.dart';
@@ -26,36 +32,46 @@ import 'package:kianja/features/jobs/presentation/pages/details/job_applicant_de
 import 'package:kianja/features/jobs/presentation/pages/details/job_applicant_view_pdf_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/details/job_offer_detail_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/details/training_center_detail.dart';
+import 'package:kianja/features/jobs/presentation/pages/job_applications/job_applications_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/jobs_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/hot_event/create_hot_event_screen.dart';
-import 'package:kianja/features/jobs/presentation/pages/post/hot_event/post_hot_event_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_experts_executives_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_job_applicant_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_job_offer_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/post_training_center_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/subscribe_experts_executives_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/post/successful/applied_offer_successful_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/successful/post_executive_successful_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/successful/post_hot_event_successful_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/successful/post_job_applicant_successful_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/successful/post_job_offer_successful_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/post/successful/post_training_successful_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/saved/saved_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/signaler_contenu/signaler_contenu_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/training_center/training_center_domain_view_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/view_all/job_applicants_view_all_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/view_all/job_category_view_all_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/view_all/training_center_hot_event_view_all_screen.dart';
 import 'package:kianja/features/jobs/presentation/pages/view_all/training_center_view_all_screen.dart';
+import 'package:kianja/features/jobs/presentation/pages/view_profile/view_profile_screen.dart';
+import 'package:kianja/features/my_post/presentation/pages/candidates/candidate_detail_screen.dart';
+import 'package:kianja/features/my_post/presentation/pages/candidates/candidates_screen.dart';
 import 'package:kianja/features/my_post/presentation/pages/edit/my_post_hot_event_edit.dart';
 import 'package:kianja/features/my_post/presentation/pages/edit/my_post_job_applicant_edit.dart';
 import 'package:kianja/features/my_post/presentation/pages/edit/my_post_job_offer_edit.dart';
 import 'package:kianja/features/my_post/presentation/pages/edit/my_post_training_center_edit.dart';
 import 'package:kianja/features/my_post/presentation/pages/my_post_screen.dart';
+import 'package:kianja/features/my_post/presentation/pages/prolonger/prolonger_job_applicant_screen.dart';
+import 'package:kianja/features/my_post/presentation/pages/prolonger/prolonger_job_applicant_successful_screen.dart';
+import 'package:kianja/features/my_post/presentation/widgets/candidate/view_candidate_pdf.dart';
 import 'package:kianja/routing/navigation/navigation.dart';
 import 'package:kianja/routing/routes.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
-final _rootNavigatorPostKey = GlobalKey<NavigatorState>();
 final _shellNavigatorJobsKey = GlobalKey<NavigatorState>();
+final _rootNavigatorFavoritesKey = GlobalKey<NavigatorState>();
+final _rootNavigatorPostKey = GlobalKey<NavigatorState>();
 final _shellNavigatorMyPostKey = GlobalKey<NavigatorState>();
 final _shellNavigatorAccountKey = GlobalKey<NavigatorState>();
 
@@ -110,6 +126,10 @@ abstract class AppRouter {
             isAuthenticated == false) {
           return Routes.signIn.path;
         }
+        if (state.matchedLocation == Routes.favorites.path &&
+            isAuthenticated == false) {
+          return Routes.signIn.path;
+        }
 
         return null;
       },
@@ -142,6 +162,7 @@ abstract class AppRouter {
             return PhotoViewerScreen(
               imageUrls: extra['imageUrls'] as List<String>? ?? [],
               initialIndex: int.tryParse(extra['initialIndex'] ?? '0') ?? 0,
+              photoTypeEnum: extra['photoTypeEnum'] ?? PhotoTypeEnum.hiring,
             );
           },
         ),
@@ -153,6 +174,16 @@ abstract class AppRouter {
           path: Routes.termsOfUse.path,
           builder: (context, state) {
             return const TermsOfUseScreen();
+          },
+        ),
+
+        // ================= PRIVACY POLICY =================
+        GoRoute(
+          parentNavigatorKey: _rootNavigatorKey,
+          name: Routes.privacyPolicy.name,
+          path: Routes.privacyPolicy.path,
+          builder: (context, state) {
+            return const PrivacyPolicyScreen();
           },
         ),
 
@@ -203,8 +234,18 @@ abstract class AppRouter {
                         final params = state.pathParameters;
                         return JobOfferDetailScreen(
                           id: int.parse(params['id'] ?? '0'),
+                          matchedLocation: params['matchedLocation'],
                         );
                       },
+                      routes: [
+                        GoRoute(
+                          name: Routes.appliedJobOfferSuccessful.name,
+                          path: Routes.appliedJobOfferSuccessful.path,
+                          builder: (context, state) {
+                            return const AppliedOfferSuccessfulScreen();
+                          },
+                        ),
+                      ],
                     ),
                     GoRoute(
                       name: Routes.jobCategoryViewAll.name,
@@ -262,6 +303,9 @@ abstract class AppRouter {
                       builder: (context, state) {
                         final params = state.pathParameters;
                         final extra = state.extra as Map<String, String>? ?? {};
+                        AppDebug.showPrint('id ${params['id']}');
+                        AppDebug.showPrint('category ${extra['category']}');
+                        AppDebug.showPrint('query ${extra['query']}');
                         return HotEventDetailScreen(
                           id: int.parse(params['id'] ?? '0'),
                           name: extra['category'] ?? '',
@@ -275,6 +319,10 @@ abstract class AppRouter {
                       builder: (context, state) {
                         final params = state.pathParameters;
                         final extra = state.extra as Map<String, String>? ?? {};
+                        AppDebug.showPrint('id ${params['trainingCenterId']}');
+                        AppDebug.showPrint(
+                          'matchedLocationBefore ${extra['matchedLocationBefore']}',
+                        );
                         return TrainingCenterDetail(
                           id: int.parse(params['trainingCenterId'] ?? '0'),
                           matchedLocationBefore:
@@ -348,7 +396,41 @@ abstract class AppRouter {
                         ),
                       ],
                     ),
+                    GoRoute(
+                      name: Routes.viewUserProfile.name,
+                      path: Routes.viewUserProfile.path,
+                      builder: (context, state) {
+                        final params = state.pathParameters;
+                        return ViewProfileScreen(
+                          id: int.parse(params['id'] ?? '0'),
+                        );
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.signalerContenu.name,
+                      path: Routes.signalerContenu.path,
+                      builder: (context, state) {
+                        final params = state.pathParameters;
+                        return SignalerContenuScreen(
+                          contenuId: int.parse(params['contenuId'] ?? '0'),
+                          type: params['type'] ?? '',
+                        );
+                      },
+                    ),
                   ],
+                ),
+              ],
+            ),
+            // Favorites branch
+            StatefulShellBranch(
+              navigatorKey: _rootNavigatorFavoritesKey,
+              routes: [
+                GoRoute(
+                  name: Routes.favorites.name,
+                  path: Routes.favorites.path,
+                  builder: (context, state) {
+                    return const SavedScreen();
+                  },
                 ),
               ],
             ),
@@ -436,6 +518,37 @@ abstract class AppRouter {
                   },
                   routes: [
                     GoRoute(
+                      name: Routes.candidatesList.name,
+                      path: Routes.candidatesList.path,
+                      builder: (context, state) {
+                        final params = state.pathParameters;
+                        return CandidatesScreen(
+                          jobOfferId: int.parse(params['jobId'] ?? '0'),
+                        );
+                      },
+                      routes: [
+                        GoRoute(
+                          name: Routes.candidateDetail.name,
+                          path: Routes.candidateDetail.path,
+                          builder: (context, state) {
+                            final params = state.pathParameters;
+                            return CandidateDetailScreen(
+                              id: int.parse(params['id'] ?? '0'),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    GoRoute(
+                      parentNavigatorKey: _rootNavigatorKey,
+                      name: Routes.viewCandidatePdf.name,
+                      path: Routes.viewCandidatePdf.path,
+                      builder: (context, state) {
+                        final extra = state.extra as Map<String, String>? ?? {};
+                        return ViewCandidatePdf(pdfUrl: extra['pdfUrl'] ?? '');
+                      },
+                    ),
+                    GoRoute(
                       name: Routes.myPostJobOfferEdit.name,
                       path: Routes.myPostJobOfferEdit.path,
                       builder: (context, state) {
@@ -462,6 +575,32 @@ abstract class AppRouter {
                               : null,
                         );
                       },
+                    ),
+                    GoRoute(
+                      name: Routes.prolongerJobApplicant.name,
+                      path: Routes.prolongerJobApplicant.path,
+                      builder: (context, state) {
+                        final params = state.pathParameters;
+                        // final jobApplicant = state.extra;
+                        return ProlongerJobApplicantScreen(
+                          id: int.parse(params['id'] ?? '0'),
+                          // initialJobApplicant: jobApplicant is JobApplicant
+                          //     ? jobApplicant
+                          //     : null,
+                        );
+                      },
+                      routes: [
+                        GoRoute(
+                          name: Routes.prolongerJobApplicantSuccessful.name,
+                          path: Routes.prolongerJobApplicantSuccessful.path,
+                          builder: (context, state) {
+                            final params = state.pathParameters;
+                            return ProlongerJobApplicantSuccessfulScreen(
+                              id: int.parse(params['jobAppId'] ?? '0'),
+                            );
+                          },
+                        ),
+                      ],
                     ),
                     GoRoute(
                       name: Routes.myPostTrainingCenterEdit.name,
@@ -492,49 +631,49 @@ abstract class AppRouter {
                       },
                     ),
                     GoRoute(
-                      name: Routes.postHotEvent.name,
-                      path: Routes.postHotEvent.path,
+                      name: Routes.createHotEvent.name,
+                      path: Routes.createHotEvent.path,
                       builder: (context, state) {
+                        final extra = state.extra as Map<String, String>? ?? {};
                         final params = state.pathParameters;
-                        return PostHotEventScreen(
+                        return CreateHotEventScreen(
                           trainingCenterId: int.parse(
                             params['trainingCenterId'] ?? '0',
                           ),
+                          type: extra['type'] ?? '',
                         );
                       },
                       routes: [
                         GoRoute(
-                          name: Routes.createHotEvent.name,
-                          path: Routes.createHotEvent.path,
+                          name: Routes.createHotEventSuccessful.name,
+                          path: Routes.createHotEventSuccessful.path,
                           builder: (context, state) {
-                            final extra =
-                                state.extra as Map<String, dynamic>? ?? {};
                             final params = state.pathParameters;
-                            return CreateHotEventScreen(
-                              trainingCenterId: int.parse(
-                                params['trainingCenterId'] ?? '0',
-                              ),
+                            final extra =
+                                state.extra as Map<String, String>? ?? {};
+                            return PostHotEventSuccessfulScreen(
+                              id: int.parse(params['id'] ?? '0'),
                               type: extra['type'] ?? '',
                             );
                           },
-                          routes: [
-                            GoRoute(
-                              name: Routes.createHotEventSuccessful.name,
-                              path: Routes.createHotEventSuccessful.path,
-                              builder: (context, state) {
-                                final params = state.pathParameters;
-                                final extra =
-                                    state.extra as Map<String, dynamic>? ?? {};
-                                return PostHotEventSuccessfulScreen(
-                                  id: int.parse(params['id'] ?? '0'),
-                                  type: extra['type'] ?? '',
-                                );
-                              },
-                            ),
-                          ],
                         ),
                       ],
                     ),
+                    // GoRoute(
+                    //   name: Routes.postHotEvent.name,
+                    //   path: Routes.postHotEvent.path,
+                    //   builder: (context, state) {
+                    //     final params = state.pathParameters;
+                    //     return PostHotEventScreen(
+                    //       trainingCenterId: int.parse(
+                    //         params['trainingCenterId'] ?? '0',
+                    //       ),
+                    //     );
+                    //   },
+                    //   routes: [
+
+                    //   ],
+                    // ),
                   ],
                 ),
               ],
@@ -558,6 +697,16 @@ abstract class AppRouter {
                       },
                       routes: [
                         GoRoute(
+                          parentNavigatorKey: _rootNavigatorKey,
+                          name: Routes.viewProfileCV.name,
+                          path: Routes.viewProfileCV.path,
+                          builder: (context, state) {
+                            final extra =
+                                state.extra as Map<String, String>? ?? {};
+                            return ViewProfilCv(pdfUrl: extra['pdfUrl'] ?? '');
+                          },
+                        ),
+                        GoRoute(
                           name: Routes.updatePersonalInfo.name,
                           path: Routes.updatePersonalInfo.path,
                           builder: (context, state) {
@@ -571,6 +720,43 @@ abstract class AppRouter {
                       path: Routes.kara.path,
                       builder: (context, state) {
                         return const WalletScreen();
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.applications.name,
+                      path: Routes.applications.path,
+                      builder: (context, state) {
+                        return const JobApplicationsScreen();
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.complaintsAndSuggestions.name,
+                      path: Routes.complaintsAndSuggestions.path,
+                      builder: (context, state) {
+                        return const ComplaintsSuggestionsScreen();
+                      },
+                      routes: [
+                        GoRoute(
+                          name: Routes.complaintsAndSuggestionsSent.name,
+                          path: Routes.complaintsAndSuggestionsSent.path,
+                          builder: (context, state) {
+                            return const ComplaintsSuggestionsSentScreen();
+                          },
+                        ),
+                      ],
+                    ),
+                    GoRoute(
+                      name: Routes.blockedUsers.name,
+                      path: Routes.blockedUsers.path,
+                      builder: (context, state) {
+                        return const BlockedUsersScreen();
+                      },
+                    ),
+                    GoRoute(
+                      name: Routes.saved.name,
+                      path: Routes.saved.path,
+                      builder: (context, state) {
+                        return const SavedScreen();
                       },
                     ),
                     GoRoute(

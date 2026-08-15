@@ -23,9 +23,32 @@ class JobApplicantProfessionsFetchRequested extends JobsEvent {
   List<Object> get props => [];
 }
 
+class JobMotifsFetchRequested extends JobsEvent {
+  const JobMotifsFetchRequested();
+
+  @override
+  List<Object> get props => [];
+}
+
+class JobSignalerContenuRequested extends JobsEvent {
+  const JobSignalerContenuRequested({required this.signalerContenuParams});
+  final SignalerContenuParams signalerContenuParams;
+
+  @override
+  List<Object> get props => [signalerContenuParams];
+}
+
 /// Fetch job applicant filters.
 class JobApplicantFiltersFetchRequested extends JobsEvent {
   const JobApplicantFiltersFetchRequested();
+
+  @override
+  List<Object> get props => [];
+}
+
+/// Fetch job offer filters.
+class JobOfferFilteringFetchRequested extends JobsEvent {
+  const JobOfferFilteringFetchRequested();
 
   @override
   List<Object> get props => [];
@@ -60,11 +83,19 @@ class JobsGroupByZoneFetchRequested extends JobsEvent {
 
 /// Fetch the flat list of all job offers matching [query].
 class JobsViewAllFetchRequested extends JobsEvent {
-  const JobsViewAllFetchRequested({required this.query});
-  final String query;
+  const JobsViewAllFetchRequested({required this.queryPageParams});
+  final QueryPageParams queryPageParams;
 
   @override
-  List<Object> get props => [query];
+  List<Object> get props => [queryPageParams];
+}
+
+/// Load the next page of job offers for the current view-all query.
+class JobsLoadMoreViewAllRequested extends JobsEvent {
+  const JobsLoadMoreViewAllRequested();
+
+  @override
+  List<Object> get props => [];
 }
 
 /// Fetch job applicants by zone.
@@ -78,13 +109,19 @@ class JobApplicantsZoneFetchRequested extends JobsEvent {
 
 /// Fetch the flat list of all job applicants matching [query].
 class JobApplicantsViewAllFetchRequested extends JobsEvent {
-  const JobApplicantsViewAllFetchRequested({
-    required this.viewAllJobApplicantsParams,
-  });
-  final ViewAllJobApplicantsParams viewAllJobApplicantsParams;
+  const JobApplicantsViewAllFetchRequested({required this.queryPageParams});
+  final QueryPageParams queryPageParams;
 
   @override
-  List<Object> get props => [viewAllJobApplicantsParams];
+  List<Object> get props => [queryPageParams];
+}
+
+/// Load the next page of job applicants for the current view-all query.
+class JobApplicantLoadMoreViewAllRequested extends JobsEvent {
+  const JobApplicantLoadMoreViewAllRequested();
+
+  @override
+  List<Object> get props => [];
 }
 
 /// Upload a PDF file.
@@ -132,6 +169,15 @@ class JobsGetJobOfferDetailRequested extends JobsEvent {
   List<Object> get props => [id];
 }
 
+/// Apply to a job offer.
+class JobsApplyToOfferRequested extends JobsEvent {
+  const JobsApplyToOfferRequested({required this.id});
+  final int id;
+
+  @override
+  List<Object> get props => [id];
+}
+
 /// Get a job applicant detail.
 class JobsGetJobApplicantDetailRequested extends JobsEvent {
   const JobsGetJobApplicantDetailRequested({required this.id});
@@ -163,22 +209,36 @@ class JobCreateJobApplicantRequested extends JobsEvent {
 
 /// Fetch training center hot events.
 class ViewAllHotEventsRequested extends JobsEvent {
-  const ViewAllHotEventsRequested({required this.viewAllHotEventParams});
-  final ViewAllHotEventParams viewAllHotEventParams;
+  const ViewAllHotEventsRequested({required this.queryPageParams});
+  final QueryPageParams queryPageParams;
 
   @override
-  List<Object> get props => [viewAllHotEventParams];
+  List<Object> get props => [queryPageParams];
+}
+
+/// Load the next page of hot event for the current view-all query.
+class LoadMoreHotEventsRequested extends JobsEvent {
+  const LoadMoreHotEventsRequested();
+
+  @override
+  List<Object> get props => [];
 }
 
 /// Fetch training center filters.
 class ViewAllTrainingCentersRequested extends JobsEvent {
-  const ViewAllTrainingCentersRequested({
-    required this.viewAllTrainingCentersParams,
-  });
-  final ViewAllTrainingCentersParams viewAllTrainingCentersParams;
+  const ViewAllTrainingCentersRequested({required this.queryPageParams});
+  final QueryPageParams queryPageParams;
 
   @override
-  List<Object> get props => [viewAllTrainingCentersParams];
+  List<Object> get props => [queryPageParams];
+}
+
+/// Load the next page of training centers for the current view-all query.
+class LoadMoreTrainingCenterRequested extends JobsEvent {
+  const LoadMoreTrainingCenterRequested();
+
+  @override
+  List<Object> get props => [];
 }
 
 /// Fetch training center hot events.
@@ -256,4 +316,20 @@ class CreateHotEventRequested extends JobsEvent {
 
   @override
   List<Object> get props => [createHotEventParams];
+}
+
+class JobsViewUserProfileRequested extends JobsEvent {
+  const JobsViewUserProfileRequested({required this.viewUserProfileParams});
+  final ViewUserProfileParams viewUserProfileParams;
+
+  @override
+  List<Object> get props => [viewUserProfileParams];
+}
+
+class JobsBlockUserRequested extends JobsEvent {
+  const JobsBlockUserRequested({required this.blockUserParams});
+  final BlockUserParams blockUserParams;
+
+  @override
+  List<Object> get props => [blockUserParams];
 }

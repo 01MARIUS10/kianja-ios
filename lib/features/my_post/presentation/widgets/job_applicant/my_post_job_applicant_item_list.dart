@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/widgets/avatar/default_avatar.dart';
@@ -65,7 +66,9 @@ class MyPostJobApplicantItemList extends StatelessWidget {
                     const SizedBox(width: 2),
                     Expanded(
                       child: Text(
-                        jobApplicant.location.name,
+                        jobApplicant.locations
+                            .map((location) => location.name)
+                            .join(', '),
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: textSecondary,
                         ),
@@ -75,6 +78,32 @@ class MyPostJobApplicantItemList extends StatelessWidget {
                     ),
                   ],
                 ),
+                const SizedBox(height: Constants.spacingSmall),
+
+                // Row(
+                //   children: [
+                //     Text(
+                //       '${context.appLoc.end} : ',
+                //       style: theme.textTheme.bodyMedium?.copyWith(
+                //         color: textSecondary,
+                //         fontWeight: FontWeight.w600,
+                //       ),
+                //     ),
+                //     // Expanded(
+                //     //   child: Text(
+                //     //     AppFunction.getDate(jobApplicant.endDate),
+                //     //     style: theme.textTheme.bodyMedium?.copyWith(
+                //     //       color: AppFunction.isExpired(jobApplicant.endDate)
+                //     //           ? AppColors.danger
+                //     //           : AppColors.endEvent,
+                //     //       fontWeight: FontWeight.w700,
+                //     //     ),
+                //     //     maxLines: 1,
+                //     //     overflow: TextOverflow.ellipsis,
+                //     //   ),
+                //     // ),
+                //   ],
+                // ),
               ],
             ),
             const SizedBox(height: Constants.spacingMedium),
@@ -86,12 +115,15 @@ class MyPostJobApplicantItemList extends StatelessWidget {
                 // User avatar
                 ClipOval(
                   child: jobApplicant.user.photoUrl.isNotEmpty
-                      ? Image.network(
-                          '${EnvConfig.baseApiUrl}${jobApplicant.user.photoUrl}',
+                      ? CachedNetworkImage(
+                          imageUrl:
+                              '${EnvConfig.baseApiUrl}${jobApplicant.user.photoUrl}',
                           fit: BoxFit.cover,
                           width: Constants.size35,
                           height: Constants.size35,
-                          errorBuilder: (_, _, _) =>
+                          placeholder: (context, url) =>
+                              const CircularProgressIndicator(),
+                          errorWidget: (_, _, _) =>
                               const DefaultAvatar(size: Constants.size35),
                         )
                       : const DefaultAvatar(size: Constants.size35),

@@ -21,6 +21,7 @@ _HotEventModel _$HotEventModelFromJson(Map<String, dynamic> json) =>
       center: TrainingCenterModel.fromJson(
         json['training_center'] as Map<String, dynamic>,
       ),
+      isFavorite: json['isFavorite'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$HotEventModelToJson(_HotEventModel instance) =>
@@ -34,4 +35,5 @@ Map<String, dynamic> _$HotEventModelToJson(_HotEventModel instance) =>
       'imageUrl': instance.imageUrl,
       'image': instance.image,
       'training_center': instance.center,
+      'isFavorite': instance.isFavorite,
     };

@@ -2,6 +2,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:kianja/core/errors/exceptions.dart';
 import 'package:kianja/core/errors/failures.dart';
 import 'package:kianja/core/services/service_helper.dart';
+import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
 import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/jobs/data/models/input/hot_event/hot_event_input_model.dart';
 import 'package:kianja/features/jobs/domain/entities/expert_executive/expert_executive.dart';
@@ -10,12 +11,16 @@ import 'package:kianja/features/jobs/domain/entities/jobs/job_offer.dart';
 import 'package:kianja/features/jobs/domain/entities/training/hot_event.dart';
 import 'package:kianja/features/jobs/domain/entities/training/training_center.dart';
 import 'package:kianja/features/my_post/data/datasources/remote/my_post_remote_data.dart';
+import 'package:kianja/features/my_post/data/models/inputs/prolonger_job_applicant/prolonger_job_applicant_input_model.dart';
 import 'package:kianja/features/my_post/data/models/inputs/update_expert_executive/update_expert_executive_input_model.dart';
 import 'package:kianja/features/my_post/data/models/inputs/update_job_applicant/update_job_applicant_input_model.dart';
 import 'package:kianja/features/my_post/data/models/inputs/update_job_offer/update_job_offer_input_model.dart';
 import 'package:kianja/features/my_post/data/models/inputs/update_training_center/update_training_center_input_model.dart';
 import 'package:kianja/features/my_post/domain/repositories/my_post_repository.dart';
 import 'package:kianja/features/my_post/domain/usecases/delete/delete_hot_event/delete_hot_event_params.dart';
+import 'package:kianja/features/my_post/domain/usecases/get_candidate_usecase.dart';
+import 'package:kianja/features/my_post/domain/usecases/get_candidates/get_candidates_params.dart';
+import 'package:kianja/features/my_post/domain/usecases/prolonger/prolonger_job_applicant_params.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_expert_executive/update_expert_executive_params.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_hot_event/update_hot_event_params.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_job_applicant/update_job_applicant_params.dart';
@@ -91,13 +96,16 @@ class MyPostRepositoryImpl implements MyPostRepository {
           id: updateJobOfferParams.id,
           title: updateJobOfferParams.title,
           description: updateJobOfferParams.description,
+          imageIds: updateJobOfferParams.imageIds,
           imageId: updateJobOfferParams.imageId,
           categories: updateJobOfferParams.categories,
-          locationId: updateJobOfferParams.location,
+          locations: updateJobOfferParams.locations,
+          // locationId: updateJobOfferParams.location,
           genderId: updateJobOfferParams.gender,
           limitDate: updateJobOfferParams.limitDate,
           status: updateJobOfferParams.status,
           actorId: updateJobOfferParams.actor,
+          showButton: updateJobOfferParams.showPostButton,
         ),
       );
       return right(jobOffer);
@@ -115,13 +123,16 @@ class MyPostRepositoryImpl implements MyPostRepository {
         updateJobApplicantInputModel: UpdateJobApplicantInputModel(
           id: updateJobApplicantParams.id,
           title: updateJobApplicantParams.title,
+          photoUrl: updateJobApplicantParams.photoUrl,
           motivation: updateJobApplicantParams.motivation,
           pdfUrl: updateJobApplicantParams.pdfUrl,
-          locationId: updateJobApplicantParams.locationId,
+          locations: updateJobApplicantParams.locations,
+          categories: updateJobApplicantParams.categories,
+          // locationId: updateJobApplicantParams.locationId,
           genderId: updateJobApplicantParams.genderId,
-          typeId: updateJobApplicantParams.typeId,
-          durationId: updateJobApplicantParams.durationId,
-          categoryId: updateJobApplicantParams.categoryId,
+          // typeId: updateJobApplicantParams.typeId,
+          // durationId: updateJobApplicantParams.durationId,
+          // categoryId: updateJobApplicantParams.categoryId,
           status: updateJobApplicantParams.status,
         ),
       );
@@ -143,11 +154,11 @@ class MyPostRepositoryImpl implements MyPostRepository {
           description: updateTrainingCenterParams.description,
           locationId: updateTrainingCenterParams.locationId,
           imageIds: updateTrainingCenterParams.imageIds,
-          actorId: updateTrainingCenterParams.actorId,
-          typeId: updateTrainingCenterParams.typeId,
-          tagId: updateTrainingCenterParams.tagId,
-          durationId: updateTrainingCenterParams.durationId,
+          // typeId: updateTrainingCenterParams.typeId,
+          // tagId: updateTrainingCenterParams.tagId,
+          // durationId: updateTrainingCenterParams.durationId,
           status: updateTrainingCenterParams.status,
+          domainId: updateTrainingCenterParams.domainId,
         ),
       );
       return right(trainingCenter);
@@ -269,6 +280,53 @@ class MyPostRepositoryImpl implements MyPostRepository {
         page: queryPageParams.page,
       );
       return right(events);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<User>>> getAllCandidates({
+    required GetCandidatesParams getCandidatesParams,
+  }) async {
+    try {
+      final candidates = await myPostRemoteData.getAllCandidates(
+        jobId: getCandidatesParams.jobId,
+        page: getCandidatesParams.page,
+      );
+      return right(candidates);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, User>> getCandidate({
+    required GetCandidateParams getCandidateParams,
+  }) async {
+    try {
+      final candidate = await myPostRemoteData.getCandidate(
+        id: getCandidateParams.id,
+      );
+      return right(candidate);
+    } on AppException catch (e) {
+      return left(failureHandler(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, JobApplicant>> prolongerJobApplicant({
+    required ProlongerJobApplicantParams prolongerJobApplicantParams,
+  }) async {
+    try {
+      final jobApplicant = await myPostRemoteData.prolongerJobApplicant(
+        prolongerJobApplicantInputModel: ProlongerJobApplicantInputModel(
+          id: prolongerJobApplicantParams.id,
+          typeId: prolongerJobApplicantParams.typeId,
+          durationId: prolongerJobApplicantParams.durationId,
+        ),
+      );
+      return right(jobApplicant);
     } on AppException catch (e) {
       return left(failureHandler(e));
     }

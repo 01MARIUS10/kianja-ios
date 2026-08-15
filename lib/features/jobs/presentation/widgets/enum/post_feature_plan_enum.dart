@@ -1,0 +1,1 @@
+enum PostFeaturePlanEnum { jobOffer, jobApplicant }

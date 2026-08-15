@@ -66,7 +66,10 @@ class _MyPostJobOfferScreenState extends State<MyPostJobOfferScreen>
   void _onTap(JobOffer jobOffer) {
     context.pushNamed(
       Routes.jobOfferDetail.name,
-      pathParameters: {'id': jobOffer.id.toString()},
+      pathParameters: {
+        'id': jobOffer.id.toString(),
+        'matchedLocation': GoRouterState.of(context).matchedLocation,
+      },
     );
   }
 

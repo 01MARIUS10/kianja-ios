@@ -61,6 +61,7 @@ class _CreateHotEventScreenState extends State<CreateHotEventScreen> {
     AppDebug.showPrint('title ${_titleController.text.trim()}');
     AppDebug.showPrint('description ${_descriptionController.text.trim()}');
     AppDebug.showPrint('start date ${_startDateController.text.trim()}');
+    AppDebug.showPrint('type ${widget.type}');
     AppDebug.showPrint('end date ${_endDateController.text.trim()}');
     AppDebug.showPrint('imageUrl $_uploadImageId');
     BlocProvider.of<JobsBloc>(context).add(

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kianja/core/config/env_config.dart';
 import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
@@ -25,12 +26,14 @@ class CircleUserAvatar extends StatelessWidget {
       ),
       child: ClipOval(
         child: user.photoUrl.isNotEmpty
-            ? Image.network(
-                '${EnvConfig.baseApiUrl}${user.photoUrl}',
+            ? CachedNetworkImage(
+                imageUrl: '${EnvConfig.baseApiUrl}${user.photoUrl}',
                 fit: BoxFit.cover,
                 width: Constants.size100,
                 height: Constants.size100,
-                errorBuilder: (_, _, _) =>
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) =>
                     const DefaultAvatar(size: Constants.iconSizeLarge),
               )
             : const DefaultAvatar(size: Constants.iconSizeLarge),

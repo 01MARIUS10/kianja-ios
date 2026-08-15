@@ -15,7 +15,9 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CreateJobApplicantInputModel {
 
-@JsonKey(name: 'title', defaultValue: '') String get title;@JsonKey(name: 'motivation', defaultValue: '') String get motivation;@JsonKey(name: 'resumepdf_path') String? get pdfUrl;@JsonKey(defaultValue: -1) int get locationId;@JsonKey(defaultValue: -1) int get genderId;@JsonKey(defaultValue: -1) int get typeId;@JsonKey(defaultValue: -1) int get durationId;@JsonKey(defaultValue: -1) int get categoryId;@JsonKey(defaultValue: 'published') String get status;
+@JsonKey(name: 'title', defaultValue: '') String get title;@JsonKey(name: 'motivation', defaultValue: '') String get motivation;@JsonKey(name: 'photo_candidat') String? get photoUrl;@JsonKey(name: 'resumepdf_path') String? get pdfUrl;// @JsonKey(defaultValue: -1) required int locationId,
+@JsonKey(defaultValue: -1) int get genderId;@JsonKey(defaultValue: -1) int get typeId;@JsonKey(defaultValue: -1) int get durationId;// @JsonKey(defaultValue: -1) required int categoryId,
+@JsonKey(name: 'categoryIds', defaultValue: []) List<int> get categories;@JsonKey(name: 'locationIds', defaultValue: []) List<int> get locationIds;@JsonKey(defaultValue: 'published') String get status;
 /// Create a copy of CreateJobApplicantInputModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +30,16 @@ $CreateJobApplicantInputModelCopyWith<CreateJobApplicantInputModel> get copyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateJobApplicantInputModel&&(identical(other.title, title) || other.title == title)&&(identical(other.motivation, motivation) || other.motivation == motivation)&&(identical(other.pdfUrl, pdfUrl) || other.pdfUrl == pdfUrl)&&(identical(other.locationId, locationId) || other.locationId == locationId)&&(identical(other.genderId, genderId) || other.genderId == genderId)&&(identical(other.typeId, typeId) || other.typeId == typeId)&&(identical(other.durationId, durationId) || other.durationId == durationId)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateJobApplicantInputModel&&(identical(other.title, title) || other.title == title)&&(identical(other.motivation, motivation) || other.motivation == motivation)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.pdfUrl, pdfUrl) || other.pdfUrl == pdfUrl)&&(identical(other.genderId, genderId) || other.genderId == genderId)&&(identical(other.typeId, typeId) || other.typeId == typeId)&&(identical(other.durationId, durationId) || other.durationId == durationId)&&const DeepCollectionEquality().equals(other.categories, categories)&&const DeepCollectionEquality().equals(other.locationIds, locationIds)&&(identical(other.status, status) || other.status == status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,motivation,pdfUrl,locationId,genderId,typeId,durationId,categoryId,status);
+int get hashCode => Object.hash(runtimeType,title,motivation,photoUrl,pdfUrl,genderId,typeId,durationId,const DeepCollectionEquality().hash(categories),const DeepCollectionEquality().hash(locationIds),status);
 
 @override
 String toString() {
-  return 'CreateJobApplicantInputModel(title: $title, motivation: $motivation, pdfUrl: $pdfUrl, locationId: $locationId, genderId: $genderId, typeId: $typeId, durationId: $durationId, categoryId: $categoryId, status: $status)';
+  return 'CreateJobApplicantInputModel(title: $title, motivation: $motivation, photoUrl: $photoUrl, pdfUrl: $pdfUrl, genderId: $genderId, typeId: $typeId, durationId: $durationId, categories: $categories, locationIds: $locationIds, status: $status)';
 }
 
 
@@ -48,7 +50,7 @@ abstract mixin class $CreateJobApplicantInputModelCopyWith<$Res>  {
   factory $CreateJobApplicantInputModelCopyWith(CreateJobApplicantInputModel value, $Res Function(CreateJobApplicantInputModel) _then) = _$CreateJobApplicantInputModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'title', defaultValue: '') String title,@JsonKey(name: 'motivation', defaultValue: '') String motivation,@JsonKey(name: 'resumepdf_path') String? pdfUrl,@JsonKey(defaultValue: -1) int locationId,@JsonKey(defaultValue: -1) int genderId,@JsonKey(defaultValue: -1) int typeId,@JsonKey(defaultValue: -1) int durationId,@JsonKey(defaultValue: -1) int categoryId,@JsonKey(defaultValue: 'published') String status
+@JsonKey(name: 'title', defaultValue: '') String title,@JsonKey(name: 'motivation', defaultValue: '') String motivation,@JsonKey(name: 'photo_candidat') String? photoUrl,@JsonKey(name: 'resumepdf_path') String? pdfUrl,@JsonKey(defaultValue: -1) int genderId,@JsonKey(defaultValue: -1) int typeId,@JsonKey(defaultValue: -1) int durationId,@JsonKey(name: 'categoryIds', defaultValue: []) List<int> categories,@JsonKey(name: 'locationIds', defaultValue: []) List<int> locationIds,@JsonKey(defaultValue: 'published') String status
 });
 
 
@@ -65,17 +67,18 @@ class _$CreateJobApplicantInputModelCopyWithImpl<$Res>
 
 /// Create a copy of CreateJobApplicantInputModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? motivation = null,Object? pdfUrl = freezed,Object? locationId = null,Object? genderId = null,Object? typeId = null,Object? durationId = null,Object? categoryId = null,Object? status = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? motivation = null,Object? photoUrl = freezed,Object? pdfUrl = freezed,Object? genderId = null,Object? typeId = null,Object? durationId = null,Object? categories = null,Object? locationIds = null,Object? status = null,}) {
   return _then(_self.copyWith(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,motivation: null == motivation ? _self.motivation : motivation // ignore: cast_nullable_to_non_nullable
-as String,pdfUrl: freezed == pdfUrl ? _self.pdfUrl : pdfUrl // ignore: cast_nullable_to_non_nullable
-as String?,locationId: null == locationId ? _self.locationId : locationId // ignore: cast_nullable_to_non_nullable
-as int,genderId: null == genderId ? _self.genderId : genderId // ignore: cast_nullable_to_non_nullable
+as String,photoUrl: freezed == photoUrl ? _self.photoUrl : photoUrl // ignore: cast_nullable_to_non_nullable
+as String?,pdfUrl: freezed == pdfUrl ? _self.pdfUrl : pdfUrl // ignore: cast_nullable_to_non_nullable
+as String?,genderId: null == genderId ? _self.genderId : genderId // ignore: cast_nullable_to_non_nullable
 as int,typeId: null == typeId ? _self.typeId : typeId // ignore: cast_nullable_to_non_nullable
 as int,durationId: null == durationId ? _self.durationId : durationId // ignore: cast_nullable_to_non_nullable
-as int,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
-as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as int,categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
+as List<int>,locationIds: null == locationIds ? _self.locationIds : locationIds // ignore: cast_nullable_to_non_nullable
+as List<int>,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -161,10 +164,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'title', defaultValue: '')  String title, @JsonKey(name: 'motivation', defaultValue: '')  String motivation, @JsonKey(name: 'resumepdf_path')  String? pdfUrl, @JsonKey(defaultValue: -1)  int locationId, @JsonKey(defaultValue: -1)  int genderId, @JsonKey(defaultValue: -1)  int typeId, @JsonKey(defaultValue: -1)  int durationId, @JsonKey(defaultValue: -1)  int categoryId, @JsonKey(defaultValue: 'published')  String status)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'title', defaultValue: '')  String title, @JsonKey(name: 'motivation', defaultValue: '')  String motivation, @JsonKey(name: 'photo_candidat')  String? photoUrl, @JsonKey(name: 'resumepdf_path')  String? pdfUrl, @JsonKey(defaultValue: -1)  int genderId, @JsonKey(defaultValue: -1)  int typeId, @JsonKey(defaultValue: -1)  int durationId, @JsonKey(name: 'categoryIds', defaultValue: [])  List<int> categories, @JsonKey(name: 'locationIds', defaultValue: [])  List<int> locationIds, @JsonKey(defaultValue: 'published')  String status)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CreateJobApplicantInputModel() when $default != null:
-return $default(_that.title,_that.motivation,_that.pdfUrl,_that.locationId,_that.genderId,_that.typeId,_that.durationId,_that.categoryId,_that.status);case _:
+return $default(_that.title,_that.motivation,_that.photoUrl,_that.pdfUrl,_that.genderId,_that.typeId,_that.durationId,_that.categories,_that.locationIds,_that.status);case _:
   return orElse();
 
 }
@@ -182,10 +185,10 @@ return $default(_that.title,_that.motivation,_that.pdfUrl,_that.locationId,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'title', defaultValue: '')  String title, @JsonKey(name: 'motivation', defaultValue: '')  String motivation, @JsonKey(name: 'resumepdf_path')  String? pdfUrl, @JsonKey(defaultValue: -1)  int locationId, @JsonKey(defaultValue: -1)  int genderId, @JsonKey(defaultValue: -1)  int typeId, @JsonKey(defaultValue: -1)  int durationId, @JsonKey(defaultValue: -1)  int categoryId, @JsonKey(defaultValue: 'published')  String status)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'title', defaultValue: '')  String title, @JsonKey(name: 'motivation', defaultValue: '')  String motivation, @JsonKey(name: 'photo_candidat')  String? photoUrl, @JsonKey(name: 'resumepdf_path')  String? pdfUrl, @JsonKey(defaultValue: -1)  int genderId, @JsonKey(defaultValue: -1)  int typeId, @JsonKey(defaultValue: -1)  int durationId, @JsonKey(name: 'categoryIds', defaultValue: [])  List<int> categories, @JsonKey(name: 'locationIds', defaultValue: [])  List<int> locationIds, @JsonKey(defaultValue: 'published')  String status)  $default,) {final _that = this;
 switch (_that) {
 case _CreateJobApplicantInputModel():
-return $default(_that.title,_that.motivation,_that.pdfUrl,_that.locationId,_that.genderId,_that.typeId,_that.durationId,_that.categoryId,_that.status);case _:
+return $default(_that.title,_that.motivation,_that.photoUrl,_that.pdfUrl,_that.genderId,_that.typeId,_that.durationId,_that.categories,_that.locationIds,_that.status);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -202,10 +205,10 @@ return $default(_that.title,_that.motivation,_that.pdfUrl,_that.locationId,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'title', defaultValue: '')  String title, @JsonKey(name: 'motivation', defaultValue: '')  String motivation, @JsonKey(name: 'resumepdf_path')  String? pdfUrl, @JsonKey(defaultValue: -1)  int locationId, @JsonKey(defaultValue: -1)  int genderId, @JsonKey(defaultValue: -1)  int typeId, @JsonKey(defaultValue: -1)  int durationId, @JsonKey(defaultValue: -1)  int categoryId, @JsonKey(defaultValue: 'published')  String status)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'title', defaultValue: '')  String title, @JsonKey(name: 'motivation', defaultValue: '')  String motivation, @JsonKey(name: 'photo_candidat')  String? photoUrl, @JsonKey(name: 'resumepdf_path')  String? pdfUrl, @JsonKey(defaultValue: -1)  int genderId, @JsonKey(defaultValue: -1)  int typeId, @JsonKey(defaultValue: -1)  int durationId, @JsonKey(name: 'categoryIds', defaultValue: [])  List<int> categories, @JsonKey(name: 'locationIds', defaultValue: [])  List<int> locationIds, @JsonKey(defaultValue: 'published')  String status)?  $default,) {final _that = this;
 switch (_that) {
 case _CreateJobApplicantInputModel() when $default != null:
-return $default(_that.title,_that.motivation,_that.pdfUrl,_that.locationId,_that.genderId,_that.typeId,_that.durationId,_that.categoryId,_that.status);case _:
+return $default(_that.title,_that.motivation,_that.photoUrl,_that.pdfUrl,_that.genderId,_that.typeId,_that.durationId,_that.categories,_that.locationIds,_that.status);case _:
   return null;
 
 }
@@ -217,17 +220,33 @@ return $default(_that.title,_that.motivation,_that.pdfUrl,_that.locationId,_that
 @JsonSerializable()
 
 class _CreateJobApplicantInputModel extends CreateJobApplicantInputModel {
-  const _CreateJobApplicantInputModel({@JsonKey(name: 'title', defaultValue: '') required this.title, @JsonKey(name: 'motivation', defaultValue: '') required this.motivation, @JsonKey(name: 'resumepdf_path') this.pdfUrl, @JsonKey(defaultValue: -1) required this.locationId, @JsonKey(defaultValue: -1) required this.genderId, @JsonKey(defaultValue: -1) required this.typeId, @JsonKey(defaultValue: -1) required this.durationId, @JsonKey(defaultValue: -1) required this.categoryId, @JsonKey(defaultValue: 'published') required this.status}): super._();
+  const _CreateJobApplicantInputModel({@JsonKey(name: 'title', defaultValue: '') required this.title, @JsonKey(name: 'motivation', defaultValue: '') required this.motivation, @JsonKey(name: 'photo_candidat') this.photoUrl, @JsonKey(name: 'resumepdf_path') this.pdfUrl, @JsonKey(defaultValue: -1) required this.genderId, @JsonKey(defaultValue: -1) required this.typeId, @JsonKey(defaultValue: -1) required this.durationId, @JsonKey(name: 'categoryIds', defaultValue: []) required final  List<int> categories, @JsonKey(name: 'locationIds', defaultValue: []) required final  List<int> locationIds, @JsonKey(defaultValue: 'published') required this.status}): _categories = categories,_locationIds = locationIds,super._();
   factory _CreateJobApplicantInputModel.fromJson(Map<String, dynamic> json) => _$CreateJobApplicantInputModelFromJson(json);
 
 @override@JsonKey(name: 'title', defaultValue: '') final  String title;
 @override@JsonKey(name: 'motivation', defaultValue: '') final  String motivation;
+@override@JsonKey(name: 'photo_candidat') final  String? photoUrl;
 @override@JsonKey(name: 'resumepdf_path') final  String? pdfUrl;
-@override@JsonKey(defaultValue: -1) final  int locationId;
+// @JsonKey(defaultValue: -1) required int locationId,
 @override@JsonKey(defaultValue: -1) final  int genderId;
 @override@JsonKey(defaultValue: -1) final  int typeId;
 @override@JsonKey(defaultValue: -1) final  int durationId;
-@override@JsonKey(defaultValue: -1) final  int categoryId;
+// @JsonKey(defaultValue: -1) required int categoryId,
+ final  List<int> _categories;
+// @JsonKey(defaultValue: -1) required int categoryId,
+@override@JsonKey(name: 'categoryIds', defaultValue: []) List<int> get categories {
+  if (_categories is EqualUnmodifiableListView) return _categories;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_categories);
+}
+
+ final  List<int> _locationIds;
+@override@JsonKey(name: 'locationIds', defaultValue: []) List<int> get locationIds {
+  if (_locationIds is EqualUnmodifiableListView) return _locationIds;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_locationIds);
+}
+
 @override@JsonKey(defaultValue: 'published') final  String status;
 
 /// Create a copy of CreateJobApplicantInputModel
@@ -243,16 +262,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateJobApplicantInputModel&&(identical(other.title, title) || other.title == title)&&(identical(other.motivation, motivation) || other.motivation == motivation)&&(identical(other.pdfUrl, pdfUrl) || other.pdfUrl == pdfUrl)&&(identical(other.locationId, locationId) || other.locationId == locationId)&&(identical(other.genderId, genderId) || other.genderId == genderId)&&(identical(other.typeId, typeId) || other.typeId == typeId)&&(identical(other.durationId, durationId) || other.durationId == durationId)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateJobApplicantInputModel&&(identical(other.title, title) || other.title == title)&&(identical(other.motivation, motivation) || other.motivation == motivation)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.pdfUrl, pdfUrl) || other.pdfUrl == pdfUrl)&&(identical(other.genderId, genderId) || other.genderId == genderId)&&(identical(other.typeId, typeId) || other.typeId == typeId)&&(identical(other.durationId, durationId) || other.durationId == durationId)&&const DeepCollectionEquality().equals(other._categories, _categories)&&const DeepCollectionEquality().equals(other._locationIds, _locationIds)&&(identical(other.status, status) || other.status == status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,motivation,pdfUrl,locationId,genderId,typeId,durationId,categoryId,status);
+int get hashCode => Object.hash(runtimeType,title,motivation,photoUrl,pdfUrl,genderId,typeId,durationId,const DeepCollectionEquality().hash(_categories),const DeepCollectionEquality().hash(_locationIds),status);
 
 @override
 String toString() {
-  return 'CreateJobApplicantInputModel(title: $title, motivation: $motivation, pdfUrl: $pdfUrl, locationId: $locationId, genderId: $genderId, typeId: $typeId, durationId: $durationId, categoryId: $categoryId, status: $status)';
+  return 'CreateJobApplicantInputModel(title: $title, motivation: $motivation, photoUrl: $photoUrl, pdfUrl: $pdfUrl, genderId: $genderId, typeId: $typeId, durationId: $durationId, categories: $categories, locationIds: $locationIds, status: $status)';
 }
 
 
@@ -263,7 +282,7 @@ abstract mixin class _$CreateJobApplicantInputModelCopyWith<$Res> implements $Cr
   factory _$CreateJobApplicantInputModelCopyWith(_CreateJobApplicantInputModel value, $Res Function(_CreateJobApplicantInputModel) _then) = __$CreateJobApplicantInputModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'title', defaultValue: '') String title,@JsonKey(name: 'motivation', defaultValue: '') String motivation,@JsonKey(name: 'resumepdf_path') String? pdfUrl,@JsonKey(defaultValue: -1) int locationId,@JsonKey(defaultValue: -1) int genderId,@JsonKey(defaultValue: -1) int typeId,@JsonKey(defaultValue: -1) int durationId,@JsonKey(defaultValue: -1) int categoryId,@JsonKey(defaultValue: 'published') String status
+@JsonKey(name: 'title', defaultValue: '') String title,@JsonKey(name: 'motivation', defaultValue: '') String motivation,@JsonKey(name: 'photo_candidat') String? photoUrl,@JsonKey(name: 'resumepdf_path') String? pdfUrl,@JsonKey(defaultValue: -1) int genderId,@JsonKey(defaultValue: -1) int typeId,@JsonKey(defaultValue: -1) int durationId,@JsonKey(name: 'categoryIds', defaultValue: []) List<int> categories,@JsonKey(name: 'locationIds', defaultValue: []) List<int> locationIds,@JsonKey(defaultValue: 'published') String status
 });
 
 
@@ -280,17 +299,18 @@ class __$CreateJobApplicantInputModelCopyWithImpl<$Res>
 
 /// Create a copy of CreateJobApplicantInputModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? motivation = null,Object? pdfUrl = freezed,Object? locationId = null,Object? genderId = null,Object? typeId = null,Object? durationId = null,Object? categoryId = null,Object? status = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? motivation = null,Object? photoUrl = freezed,Object? pdfUrl = freezed,Object? genderId = null,Object? typeId = null,Object? durationId = null,Object? categories = null,Object? locationIds = null,Object? status = null,}) {
   return _then(_CreateJobApplicantInputModel(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,motivation: null == motivation ? _self.motivation : motivation // ignore: cast_nullable_to_non_nullable
-as String,pdfUrl: freezed == pdfUrl ? _self.pdfUrl : pdfUrl // ignore: cast_nullable_to_non_nullable
-as String?,locationId: null == locationId ? _self.locationId : locationId // ignore: cast_nullable_to_non_nullable
-as int,genderId: null == genderId ? _self.genderId : genderId // ignore: cast_nullable_to_non_nullable
+as String,photoUrl: freezed == photoUrl ? _self.photoUrl : photoUrl // ignore: cast_nullable_to_non_nullable
+as String?,pdfUrl: freezed == pdfUrl ? _self.pdfUrl : pdfUrl // ignore: cast_nullable_to_non_nullable
+as String?,genderId: null == genderId ? _self.genderId : genderId // ignore: cast_nullable_to_non_nullable
 as int,typeId: null == typeId ? _self.typeId : typeId // ignore: cast_nullable_to_non_nullable
 as int,durationId: null == durationId ? _self.durationId : durationId // ignore: cast_nullable_to_non_nullable
-as int,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
-as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as int,categories: null == categories ? _self._categories : categories // ignore: cast_nullable_to_non_nullable
+as List<int>,locationIds: null == locationIds ? _self._locationIds : locationIds // ignore: cast_nullable_to_non_nullable
+as List<int>,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

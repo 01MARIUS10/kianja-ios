@@ -10,12 +10,17 @@ abstract class UpdateJobApplicantInputModel
     @JsonKey(defaultValue: -1) required int id,
     @JsonKey(name: 'title', defaultValue: '') required String title,
     @JsonKey(name: 'motivation', defaultValue: '') required String motivation,
+    @JsonKey(name: 'photo_candidat', defaultValue: '') String? photoUrl,
     @JsonKey(name: 'resumepdf_path', defaultValue: '') String? pdfUrl,
-    @JsonKey(defaultValue: -1) required int locationId,
+    @JsonKey(name: 'categoryIds', defaultValue: [])
+    required List<int> categories,
+    @JsonKey(name: 'locationsIds', defaultValue: [])
+    required List<int> locations,
+    // @JsonKey(defaultValue: -1) required int locationId,
     @JsonKey(defaultValue: -1) required int genderId,
-    @JsonKey(defaultValue: -1) required int typeId,
-    @JsonKey(defaultValue: -1) required int durationId,
-    @JsonKey(defaultValue: -1) required int categoryId,
+    // @JsonKey(defaultValue: -1) required int typeId,
+    // @JsonKey(defaultValue: -1) required int durationId,
+    // @JsonKey(defaultValue: -1) required int categoryId,
     @JsonKey(defaultValue: 'published') required String status,
   }) = _UpdateJobApplicantInputModel;
 

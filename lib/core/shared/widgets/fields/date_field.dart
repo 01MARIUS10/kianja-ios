@@ -39,7 +39,8 @@ class _DateFieldState extends State<DateField> {
       setState(() {
         widget.dateController.text = '${picked.toLocal()}'.split(' ')[0];
         // widget.dateController.text = picked.year.toString();
-        AppDebug.showPrint('Selected date: ${widget.dateController.text}');
+        AppDebug.showPrint('Selected date1: ${DateTime.now()}');
+        AppDebug.showPrint('Selected date2: ${widget.dateController.text}');
       });
     }
   }

@@ -24,10 +24,14 @@ fun getVersionCodeTimestamp(): Int {
     return code
 }
 
-val agpMajor = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.substringBefore('.').toInt()
+// val agpMajor = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.substringBefore('.').toInt()
 
-if (agpMajor < 9) {
-   apply(plugin = "org.jetbrains.kotlin.android")
+// if (agpMajor < 9) {
+//   apply(plugin = "org.jetbrains.kotlin.android")
+// }
+
+base {
+    archivesName.set("KIANJA_v${flutter.versionName}-${getVersionCodeTimestamp()}")
 }
 
 android {
@@ -39,6 +43,8 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
+    
 
     kotlin {
         compilerOptions {
@@ -56,7 +62,8 @@ android {
         // versionCode = flutter.versionCode
         versionCode = getVersionCodeTimestamp()
         versionName = flutter.versionName
-        setProperty("archivesBaseName", "KIANJA_v${versionName}-${versionCode}")
+        // setProperty("archivesBaseName", "KIANJA_v${versionName}-${versionCode}")
+        // archivesName.set("KIANJA_v${flutter.versionName}-${getVersionCodeTimestamp()}")
     }
 
     signingConfigs {
@@ -79,6 +86,7 @@ android {
             proguardFiles(
                 // Default file with automatically generated optimization rules.
                 getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
 
             // TODO: Add your own signing config for the release build.

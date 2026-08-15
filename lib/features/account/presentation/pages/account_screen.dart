@@ -16,6 +16,7 @@ import 'package:kianja/features/account/presentation/widgets/account_menu/accoun
 import 'package:kianja/features/account/presentation/widgets/account_menu/account_menu_card.dart';
 import 'package:kianja/features/account/presentation/widgets/account_menu/account_menu_image_item.dart';
 import 'package:kianja/features/account/presentation/widgets/account_menu/account_menu_item.dart';
+import 'package:kianja/features/account/presentation/widgets/delete_account_confirmation_dialog.dart';
 import 'package:kianja/features/account/presentation/widgets/logout_confirmation_dialog.dart';
 import 'package:kianja/routing/routes.dart';
 
@@ -127,14 +128,6 @@ class AccountScreen extends StatelessWidget {
               AccountMenuCard(
                 children: [
                   AccountMenuItem(
-                    icon: Icons.card_travel,
-                    label: 'Profile',
-                    iconColor: AppColors.info,
-                    onTap: () {
-                      // context.goNamed(Routes.personalInfo.name);
-                    },
-                  ),
-                  AccountMenuItem(
                     icon: Icons.person_outline,
                     label: context.appLoc.personal_info,
                     iconColor: AppColors.warning,
@@ -156,15 +149,29 @@ class AccountScreen extends StatelessWidget {
                       context.goNamed(Routes.kara.name);
                     },
                   ),
-                  const AccountMenuItem(
+                  AccountMenuItem(
                     icon: Icons.wallet_outlined,
-                    label: 'Applications',
+                    label: context.appLoc.my_applications,
                     iconColor: AppColors.warning,
+                    onTap: () {
+                      context.goNamed(Routes.applications.name);
+                    },
                   ),
-                  const AccountMenuItem(
-                    icon: Icons.bookmark_outline,
-                    label: 'Saved',
+                  AccountMenuItem(
+                    icon: Icons.send_outlined,
+                    label: context.appLoc.complaints_and_suggestions,
+                    iconColor: AppColors.warning,
+                    onTap: () {
+                      context.goNamed(Routes.complaintsAndSuggestions.name);
+                    },
+                  ),
+                  AccountMenuItem(
+                    icon: Icons.block_outlined,
+                    label: context.appLoc.blocked_users,
                     iconColor: Colors.blueGrey,
+                    onTap: () {
+                      context.goNamed(Routes.blockedUsers.name);
+                    },
                   ),
                   const AccountMenuAccordionItem(iconColor: Colors.green),
                 ],
@@ -182,6 +189,14 @@ class AccountScreen extends StatelessWidget {
                     },
                   ),
                   AccountMenuItem(
+                    icon: Icons.privacy_tip_outlined,
+                    label: context.appLoc.privacy_policy,
+                    iconColor: AppColors.warning,
+                    onTap: () {
+                      context.pushNamed(Routes.privacyPolicy.name);
+                    },
+                  ),
+                  AccountMenuItem(
                     icon: Icons.view_comfy_alt_outlined,
                     label: context.appLoc.change_password,
                     iconColor: Colors.cyan,
@@ -189,11 +204,44 @@ class AccountScreen extends StatelessWidget {
                       context.goNamed(Routes.changePassword.name);
                     },
                   ),
-                  // const AccountMenuItem(
-                  //   icon: Icons.settings_outlined,
-                  //   label: 'Delete account',
-                  //   iconColor: Colors.indigo,
-                  // ),
+                  AccountMenuItem(
+                    icon: Icons.warning_amber_outlined,
+                    label: context.appLoc.delete_account,
+                    iconColor: AppColors.danger,
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (dialogContext) {
+                          return BlocConsumer<AppBloc, AppState>(
+                            listener: (context, state) {
+                              if (state.userDeleteStatus ==
+                                  AppUserDeleteStatus.deleted) {
+                                if (context.canPop()) {
+                                  context.pop();
+                                }
+                                context.goNamed(Routes.jobs.name);
+                              }
+                            },
+                            builder: (context, state) {
+                              return DeleteAccountConfirmationDialog(
+                                isLoading:
+                                    (state.userDeleteStatus ==
+                                        AppUserDeleteStatus.loading) ||
+                                    (state.userDeleteStatus ==
+                                        AppUserDeleteStatus.deleted),
+                                onConfirm: () {
+                                  BlocProvider.of<AppBloc>(
+                                    context,
+                                  ).add(const AppUserDeleteRequested());
+                                },
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ],
               ),
 
@@ -210,9 +258,9 @@ class AccountScreen extends StatelessWidget {
                     if (context.canPop()) {
                       context.pop();
                     }
-                    BlocProvider.of<AppBloc>(
-                      context,
-                    ).add(const AppAuthenticated(isAuthenticated: false));
+                    BlocProvider.of<AppBloc>(context).add(
+                      const AppAuthenticated(isAuthenticated: false, token: ''),
+                    );
                     context.goNamed(Routes.signIn.name);
                   }
                 },

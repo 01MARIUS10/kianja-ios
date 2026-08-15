@@ -13,13 +13,10 @@ _UpdateTrainingCenterInputModel _$UpdateTrainingCenterInputModelFromJson(
   name: json['name'] as String? ?? '',
   description: json['description'] as String? ?? '',
   locationId: (json['locationId'] as num?)?.toInt() ?? -1,
+  domainId: (json['domainId'] as num?)?.toInt() ?? -1,
   imageIds: (json['image_ids'] as List<dynamic>?)
       ?.map((e) => (e as num).toInt())
       .toList(),
-  actorId: (json['actorId'] as num?)?.toInt() ?? -1,
-  typeId: (json['typeId'] as num?)?.toInt() ?? -1,
-  tagId: (json['tagId'] as num?)?.toInt() ?? -1,
-  durationId: (json['durationId'] as num?)?.toInt() ?? -1,
   status: json['status'] as String? ?? 'published',
 );
 
@@ -30,10 +27,7 @@ Map<String, dynamic> _$UpdateTrainingCenterInputModelToJson(
   'name': instance.name,
   'description': instance.description,
   'locationId': instance.locationId,
+  'domainId': instance.domainId,
   'image_ids': instance.imageIds,
-  'actorId': instance.actorId,
-  'typeId': instance.typeId,
-  'tagId': instance.tagId,
-  'durationId': instance.durationId,
   'status': instance.status,
 };

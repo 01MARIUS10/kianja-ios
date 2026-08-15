@@ -9,6 +9,7 @@ import 'package:kianja/core/shared/widgets/fields/phone_input_field.dart';
 import 'package:kianja/core/shared/widgets/fields/text_input_field.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
+import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/core/utils/app_messenger.dart';
 import 'package:kianja/core/utils/constants.dart';
 import 'package:kianja/core/utils/extensions.dart';
@@ -19,6 +20,7 @@ import 'package:kianja/features/jobs/domain/usecases/subscribe_expert_executive/
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/post_features_expert_executive.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/single_pdf_upload_widget.dart';
+import 'package:kianja/features/jobs/presentation/widgets/post/single_photo_upload_widget.dart';
 import 'package:kianja/routing/routes.dart';
 
 class SubscribeExpertsExecutivesScreen extends StatefulWidget {
@@ -48,6 +50,9 @@ class _SubscribeExpertsExecutivesScreenState
   PricePlan? _selectedPlan;
 
   PlatformFile? _resumeFile;
+
+  // ── Upload results ─────────────────────────────────────────────────────
+  String? _uploadImageUrl;
 
   // ── Domain toggles ───────────────────────────────────────────────────────
   void _toggleDomain(int id) {
@@ -79,51 +84,66 @@ class _SubscribeExpertsExecutivesScreenState
 
   // ── Validation & submit ──────────────────────────────────────────────────
   void _subscribe(BuildContext context) {
-    if (_firstNameController.text.trim().isEmpty) {
-      AppMessenger.showWarning(context, 'Please enter your first name');
-      return;
-    }
-    if (_lastNameController.text.trim().isEmpty) {
-      AppMessenger.showWarning(context, 'Please enter your last name');
-      return;
-    }
-    if (_birthDateController.text.trim().isEmpty) {
-      AppMessenger.showWarning(context, 'Please select your birth date');
-      return;
-    }
-    if (_addressController.text.trim().isEmpty) {
-      AppMessenger.showWarning(context, 'Please enter your address');
-      return;
-    }
-    if (_phoneController.text.trim().isEmpty) {
-      AppMessenger.showWarning(context, 'Please enter your phone number');
-      return;
-    }
-    if (_emailController.text.trim().isEmpty) {
-      AppMessenger.showWarning(context, 'Please enter your email');
-      return;
-    }
-    if (_selectedDomainIds.isEmpty) {
+    // if (_firstNameController.text.trim().isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please enter your first name');
+    //   return;
+    // }
+    // if (_lastNameController.text.trim().isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please enter your last name');
+    //   return;
+    // }
+    // if (_birthDateController.text.trim().isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please select your birth date');
+    //   return;
+    // }
+    // if (_addressController.text.trim().isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please enter your address');
+    //   return;
+    // }
+    // if (_phoneController.text.trim().isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please enter your phone number');
+    //   return;
+    // }
+    // if (_emailController.text.trim().isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please enter your email');
+    //   return;
+    // }
+    // if (_selectedDomainIds.isEmpty) {
+    //   AppMessenger.showWarning(
+    //     context,
+    //     'Please select at least one professional domain',
+    //   );
+    //   return;
+    // }
+    // if (_presentationController.text.trim().isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please add a brief presentation');
+    //   return;
+    // }
+    // if (_resumeFile == null) {
+    //   AppMessenger.showWarning(
+    //     context,
+    //     'Please upload your resume in PDF format',
+    //   );
+    //   return;
+    // }
+    // if (_selectedPlan == null) {
+    //   AppMessenger.showWarning(context, 'Please select a subscription plan');
+    //   return;
+    // }
+    if (_firstNameController.text.trim().isEmpty ||
+        _lastNameController.text.trim().isEmpty ||
+        _birthDateController.text.trim().isEmpty ||
+        _addressController.text.trim().isEmpty ||
+        _phoneController.text.trim().isEmpty ||
+        _emailController.text.trim().isEmpty ||
+        _selectedDomainIds.isEmpty ||
+        _presentationController.text.trim().isEmpty ||
+        _resumeFile == null ||
+        _selectedPlan == null) {
       AppMessenger.showWarning(
         context,
-        'Please select at least one professional domain',
+        context.appLoc.please_fill_all_required_fields,
       );
-      return;
-    }
-    if (_presentationController.text.trim().isEmpty) {
-      AppMessenger.showWarning(context, 'Please add a brief presentation');
-      return;
-    }
-    if (_resumeFile == null) {
-      AppMessenger.showWarning(
-        context,
-        'Please upload your resume in PDF format',
-      );
-      return;
-    }
-    if (_selectedPlan == null) {
-      AppMessenger.showWarning(context, 'Please select a subscription plan');
-      return;
     }
 
     BlocProvider.of<JobsBloc>(
@@ -141,6 +161,7 @@ class _SubscribeExpertsExecutivesScreenState
           email: _emailController.text.trim(),
           phoneNumber: _phoneController.text.trim(),
           address: _addressController.text.trim(),
+          photoUrl: _uploadImageUrl,
           biography: _presentationController.text.trim(),
           domainId: _selectedDomainIds.first,
           cvPdfId: pdfId,
@@ -179,6 +200,8 @@ class _SubscribeExpertsExecutivesScreenState
                 setState(() => _domains = state.jobFeatures.domains);
               } else if (state is JobsGetPricePlanSuccess) {
                 setState(() => _plans = state.pricePlans);
+              } else if (state is JobsUploadImageSuccess) {
+                setState(() => _uploadImageUrl = state.jobImage.url);
               } else if (state is JobsUploadPdfSuccess) {
                 _submitSubscription(context, state.jobPdf.id);
               } else if (state is SubscribeExpertExecutiveSuccess) {
@@ -188,10 +211,10 @@ class _SubscribeExpertsExecutivesScreenState
                   pathParameters: {'id': state.expertExecutive.id.toString()},
                 );
               } else if (state is JobsRequestFailure) {
-                if (state.message == 'Unprocessable entity') {
+                if (state.message == context.appLoc.unprocessable_entity) {
                   AppMessenger.showError(
                     context,
-                    context.appLoc.no_enough_kara,
+                    context.appLoc.not_enough_kara_or_email_already_used,
                   );
                 } else {
                   AppMessenger.showError(context, state.message);
@@ -293,10 +316,10 @@ class _SubscribeExpertsExecutivesScreenState
                         ),
                         const SizedBox(height: Constants.spacingMedium),
 
-                        // ── Professional domain (checkbox wrap, same as
+                        // ── Expertise domain (checkbox wrap, same as
                         //    category in PostJobApplicantScreen) ──────────
                         LabelField(
-                          label: '${context.appLoc.professional_domain} *',
+                          label: '${context.appLoc.expertise_domain} *',
                         ),
                         const SizedBox(height: Constants.spacingSmall),
                         if (_domains.isNotEmpty)
@@ -358,6 +381,20 @@ class _SubscribeExpertsExecutivesScreenState
                         ),
                         const SizedBox(height: Constants.spacingMedium),
 
+                        // ── Photo ───────────────────────────────────
+                        LabelField(label: context.appLoc.photo),
+                        const SizedBox(height: Constants.spacingSmall),
+                        SinglePhotoUploadWidget(
+                          onPhotoChanged: (photo) {
+                            if (photo != null) {
+                              BlocProvider.of<JobsBloc>(
+                                context,
+                              ).add(JobsUploadImageRequested(file: photo));
+                            }
+                          },
+                        ),
+                        const SizedBox(height: Constants.spacingMedium),
+
                         // ── Resume ───────────────────────────────────────
                         LabelField(label: '${context.appLoc.resume} *'),
                         const SizedBox(height: Constants.spacingSmall),
@@ -381,6 +418,7 @@ class _SubscribeExpertsExecutivesScreenState
                           isLoading: isLoading,
                           onPlanSelected: (plan) {
                             _selectedPlan = plan;
+                            AppDebug.showPrint('Seleted plan : $plan');
                           },
                           onSubscribe: () => _subscribe(context),
                         ),

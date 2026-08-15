@@ -5,8 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kianja/core/languages/languages.dart';
 import 'package:kianja/core/shared/app_feature/data/datasources/app_shared_prefs.dart';
 import 'package:kianja/core/shared/app_feature/domain/entities/spons_partner.dart';
+import 'package:kianja/core/shared/app_feature/domain/entities/sponsor_and_partner.dart';
 import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
+import 'package:kianja/core/shared/app_feature/domain/usecases/delete_user_usecase.dart';
 import 'package:kianja/core/shared/app_feature/domain/usecases/get_app_spons_partner_usecase.dart';
+import 'package:kianja/core/shared/app_feature/domain/usecases/get_sponsor_and_partner_by_menu_id_usecase.dart';
 import 'package:kianja/core/shared/app_feature/domain/usecases/get_user_usecase.dart';
 import 'package:kianja/core/themes/mode/app_mode.dart';
 import 'package:kianja/core/utils/app_debug.dart';
@@ -21,6 +24,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     required this._appSharedPrefs,
     required this._getUserUseCase,
     required this._getAppSponsPartnerUseCase,
+    required this._getSponsorAndPartnerByMenuIdUseCase,
+    required this._deleteUserUseCase,
     // required DeleteCachedUserUseCase deleteCachedUserUseCase,
   }) : super(
          const AppState(
@@ -37,12 +42,17 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<AppUserLoaded>(_onAppUserLoaded);
     on<AppUserUpdated>(_onAppUserUpdated);
     on<AppUserDeleted>(_onAppUserDeleted);
+    on<AppUserDeleteRequested>(_onAppUserDeleteRequested);
     on<AppThemeChanged>(_onAppThemeChanged);
     on<AppSponsPartnerLoaded>(_onAppSponsPartnerLoaded);
+    on<AppSponsorAndPartnerLoaded>(_onAppSponsorAndPartnerLoaded);
   }
   final AppSharedPrefs _appSharedPrefs;
   final GetUserUseCase _getUserUseCase;
   final GetAppSponsPartnerUseCase _getAppSponsPartnerUseCase;
+  final GetSponsorAndPartnerByMenuIdUseCase
+  _getSponsorAndPartnerByMenuIdUseCase;
+  final DeleteUserUseCase _deleteUserUseCase;
   // final DeleteCachedUserUseCase _deleteCachedUserUseCase;
 
   void _onAppInitialized(AppInitialized event, Emitter emit) async {
@@ -91,6 +101,33 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     );
   }
 
+  void _onAppUserDeleteRequested(
+    AppUserDeleteRequested event,
+    Emitter emit,
+  ) async {
+    emit(state.copyWith(userDeleteStatus: AppUserDeleteStatus.loading));
+    final result = await _deleteUserUseCase(NoParams());
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          userDeleteStatus: AppUserDeleteStatus.error,
+          errorMessage: failure.message,
+        ),
+      ),
+      (_) {
+        emit(
+          state.copyWith(
+            isAuthenticated: false,
+            userDeleteStatus: AppUserDeleteStatus.deleted,
+            user: const User.empty(),
+          ),
+        );
+        _appSharedPrefs.remove(Constants.token);
+        add(const AppInitialized());
+      },
+    );
+  }
+
   void _onAppLanguageConfirmed(AppLanguageConfirmed event, Emitter emit) async {
     emit(state.copyWith(languageStatus: AppLanguageStatus.loading));
     await _appSharedPrefs.save(Constants.isAlreadyChosenLang, true);
@@ -109,7 +146,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   void _onAppAuthenticated(AppAuthenticated event, Emitter emit) {
-    emit(state.copyWith(isAuthenticated: event.isAuthenticated));
+    emit(
+      state.copyWith(
+        isAuthenticated: event.isAuthenticated,
+        token: event.token,
+      ),
+    );
   }
 
   void _onAppUserLoaded(AppUserLoaded event, Emitter emit) async {
@@ -188,6 +230,34 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         state.copyWith(
           sponsPartnerStatus: AppSponsPartnerStatus.loaded,
           sponsPartners: sponsPartners,
+        ),
+      ),
+    );
+  }
+
+  void _onAppSponsorAndPartnerLoaded(
+    AppSponsorAndPartnerLoaded event,
+    Emitter emit,
+  ) async {
+    emit(
+      state.copyWith(
+        sponsorAndPartnerStatus: AppSponsorAndPartnerStatus.loading,
+      ),
+    );
+    final result = await _getSponsorAndPartnerByMenuIdUseCase(
+      GetSponsorAndPartnerByMenuIdParams(menuId: event.menuId),
+    );
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          sponsorAndPartnerStatus: AppSponsorAndPartnerStatus.error,
+          errorMessage: failure.message,
+        ),
+      ),
+      (sponsorAndPartner) => emit(
+        state.copyWith(
+          sponsorAndPartnerStatus: AppSponsorAndPartnerStatus.loaded,
+          sponsorAndPartner: sponsorAndPartner,
         ),
       ),
     );

@@ -83,6 +83,30 @@ class MyPostTrainingCenterItemList extends StatelessWidget {
                   ),
                 ),
               ),
+            if (trainingCenter.images != null && trainingCenter.images!.isEmpty)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(
+                  Constants.borderRadiusSmall,
+                ),
+                child: SizedBox(
+                  width: 120,
+                  height: 120,
+                  child: Image.asset(
+                    Assets.trainingCenter,
+                    fit: BoxFit.cover,
+                    errorBuilder: (ctx, e, st) => Container(
+                      color: isDark
+                          ? AppColors.darkBorder
+                          : AppColors.lightBorder,
+                      child: const Icon(
+                        Icons.image,
+                        size: 32,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             const SizedBox(width: Constants.spacingSmall),
 
             // Content
@@ -104,10 +128,10 @@ class MyPostTrainingCenterItemList extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             height: 1.2,
                           ),
-                          maxLines: 2,
+                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        const SizedBox(height: Constants.spacingExtraSmall),
+                        const SizedBox(height: Constants.spacingSmall),
 
                         // Location
                         if (trainingCenter.location != null)
@@ -131,7 +155,33 @@ class MyPostTrainingCenterItemList extends StatelessWidget {
                               ),
                             ],
                           ),
-                        const SizedBox(height: Constants.spacingExtraSmall),
+                        const SizedBox(height: Constants.spacingSmall),
+
+                        // Row(
+                        //   children: [
+                        //     Text(
+                        //       '${context.appLoc.end} : ',
+                        //       style: theme.textTheme.bodyMedium?.copyWith(
+                        //         color: textSecondary,
+                        //         fontWeight: FontWeight.w600,
+                        //       ),
+                        //     ),
+                        //     // Expanded(
+                        //     //   child: Text(
+                        //     //     AppFunction.getDate(jobApplicant.endDate),
+                        //     //     style: theme.textTheme.bodyMedium?.copyWith(
+                        //     //       color: AppFunction.isExpired(jobApplicant.endDate)
+                        //     //           ? AppColors.danger
+                        //     //           : AppColors.endEvent,
+                        //     //       fontWeight: FontWeight.w700,
+                        //     //     ),
+                        //     //     maxLines: 1,
+                        //     //     overflow: TextOverflow.ellipsis,
+                        //     //   ),
+                        //     // ),
+                        //   ],
+                        // ),
+                        // const SizedBox(height: Constants.spacingExtraSmall),
                       ],
                     ),
 
@@ -142,15 +192,17 @@ class MyPostTrainingCenterItemList extends StatelessWidget {
                         // User avatar
                         ClipOval(
                           child: trainingCenter.user.photoUrl.isNotEmpty
-                              ? Image.network(
-                                  '${EnvConfig.baseApiUrl}${trainingCenter.user.photoUrl}',
+                              ? CachedNetworkImage(
+                                  imageUrl:
+                                      '${EnvConfig.baseApiUrl}${trainingCenter.user.photoUrl}',
                                   fit: BoxFit.cover,
                                   width: Constants.size35,
                                   height: Constants.size35,
-                                  errorBuilder: (_, _, _) =>
-                                      const DefaultAvatar(
-                                        size: Constants.size35,
-                                      ),
+                                  placeholder: (context, url) =>
+                                      const CircularProgressIndicator(),
+                                  errorWidget: (_, _, _) => const DefaultAvatar(
+                                    size: Constants.size35,
+                                  ),
                                 )
                               : const DefaultAvatar(size: Constants.size35),
                         ),

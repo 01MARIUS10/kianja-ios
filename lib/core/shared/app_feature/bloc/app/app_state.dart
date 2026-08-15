@@ -5,9 +5,13 @@ enum AppInitStatus { initial, loading, loaded, error }
 
 enum AppUserStatus { initial, loading, loaded, sessionExpired, deleted, error }
 
+enum AppUserDeleteStatus { initial, loading, deleted, error }
+
 enum AppLanguageStatus { initial, loading, confirmed, error }
 
 enum AppSponsPartnerStatus { initial, loading, loaded, error }
+
+enum AppSponsorAndPartnerStatus { initial, loading, loaded, error }
 
 class AppState extends Equatable {
   const AppState({
@@ -19,8 +23,11 @@ class AppState extends Equatable {
     this.user = const User.empty(),
     this.appInitStatus = AppInitStatus.initial,
     this.userStatus = AppUserStatus.initial,
+    this.userDeleteStatus = AppUserDeleteStatus.initial,
     this.languageStatus = AppLanguageStatus.initial,
     this.sponsPartnerStatus = AppSponsPartnerStatus.initial,
+    this.sponsorAndPartnerStatus = AppSponsorAndPartnerStatus.initial,
+    this.sponsorAndPartner = const SponsorAndPartner.empty(),
     this.sponsPartners = const [],
     this.errorMessage = '',
   });
@@ -32,8 +39,11 @@ class AppState extends Equatable {
   final User user;
   final AppInitStatus appInitStatus;
   final AppUserStatus userStatus;
+  final AppUserDeleteStatus userDeleteStatus;
   final AppLanguageStatus languageStatus;
   final AppSponsPartnerStatus sponsPartnerStatus;
+  final AppSponsorAndPartnerStatus sponsorAndPartnerStatus;
+  final SponsorAndPartner sponsorAndPartner;
   final List<SponsPartner> sponsPartners;
   final String errorMessage;
 
@@ -45,8 +55,11 @@ class AppState extends Equatable {
     User? user,
     AppInitStatus? appInitStatus,
     AppUserStatus? userStatus,
+    AppUserDeleteStatus? userDeleteStatus,
     AppLanguageStatus? languageStatus,
     AppSponsPartnerStatus? sponsPartnerStatus,
+    AppSponsorAndPartnerStatus? sponsorAndPartnerStatus,
+    SponsorAndPartner? sponsorAndPartner,
     List<SponsPartner>? sponsPartners,
     String? errorMessage,
     String? token,
@@ -60,8 +73,12 @@ class AppState extends Equatable {
       user: user ?? this.user,
       appInitStatus: appInitStatus ?? this.appInitStatus,
       userStatus: userStatus ?? this.userStatus,
+      userDeleteStatus: userDeleteStatus ?? this.userDeleteStatus,
       languageStatus: languageStatus ?? this.languageStatus,
       sponsPartnerStatus: sponsPartnerStatus ?? this.sponsPartnerStatus,
+      sponsorAndPartnerStatus:
+          sponsorAndPartnerStatus ?? this.sponsorAndPartnerStatus,
+      sponsorAndPartner: sponsorAndPartner ?? this.sponsorAndPartner,
       sponsPartners: sponsPartners ?? this.sponsPartners,
       errorMessage: errorMessage ?? this.errorMessage,
     );
@@ -77,8 +94,11 @@ class AppState extends Equatable {
     user,
     appInitStatus,
     userStatus,
+    userDeleteStatus,
     languageStatus,
     sponsPartnerStatus,
+    sponsorAndPartnerStatus,
+    sponsorAndPartner,
     sponsPartners,
     errorMessage,
   ];

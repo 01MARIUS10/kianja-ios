@@ -28,11 +28,12 @@ class AppLanguageChanged extends AppEvent {
 }
 
 class AppAuthenticated extends AppEvent {
-  const AppAuthenticated({required this.isAuthenticated});
+  const AppAuthenticated({required this.isAuthenticated, required this.token});
   final bool isAuthenticated;
+  final String token;
 
   @override
-  List<Object> get props => [isAuthenticated];
+  List<Object> get props => [isAuthenticated, token];
 }
 
 class AppUserLoaded extends AppEvent {
@@ -51,6 +52,10 @@ class AppUserDeleted extends AppEvent {
   const AppUserDeleted();
 }
 
+class AppUserDeleteRequested extends AppEvent {
+  const AppUserDeleteRequested();
+}
+
 class AppThemeChanged extends AppEvent {
   const AppThemeChanged({required this.appMode});
   final AppMode appMode;
@@ -61,4 +66,12 @@ class AppThemeChanged extends AppEvent {
 
 class AppSponsPartnerLoaded extends AppEvent {
   const AppSponsPartnerLoaded();
+}
+
+class AppSponsorAndPartnerLoaded extends AppEvent {
+  const AppSponsorAndPartnerLoaded({required this.menuId});
+  final int menuId;
+
+  @override
+  List<Object> get props => [menuId];
 }

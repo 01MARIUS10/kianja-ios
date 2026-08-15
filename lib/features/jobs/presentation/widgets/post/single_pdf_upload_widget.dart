@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:kianja/core/utils/extensions.dart';
 
 class SinglePdfUploadWidget extends StatefulWidget {
   const SinglePdfUploadWidget({
@@ -140,7 +141,7 @@ class _SinglePdfUploadWidgetState extends State<SinglePdfUploadWidget> {
               ElevatedButton.icon(
                 onPressed: _pickPdf,
                 icon: const Icon(Icons.upload_file_outlined, size: 20),
-                label: const Text('Upload'),
+                label: Text(context.appLoc.upload),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24,

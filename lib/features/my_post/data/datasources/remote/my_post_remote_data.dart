@@ -1,9 +1,11 @@
+import 'package:kianja/core/shared/app_feature/data/models/user/user_model.dart';
 import 'package:kianja/features/jobs/data/models/input/hot_event/hot_event_input_model.dart';
 import 'package:kianja/features/jobs/data/models/output/expert/expert_executive_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_applicant/job_applicant_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_offer/job_offer_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/hot_event/hot_event_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/training_center/training_center_model.dart';
+import 'package:kianja/features/my_post/data/models/inputs/prolonger_job_applicant/prolonger_job_applicant_input_model.dart';
 import 'package:kianja/features/my_post/data/models/inputs/update_expert_executive/update_expert_executive_input_model.dart';
 import 'package:kianja/features/my_post/data/models/inputs/update_job_applicant/update_job_applicant_input_model.dart';
 import 'package:kianja/features/my_post/data/models/inputs/update_job_offer/update_job_offer_input_model.dart';
@@ -41,4 +43,17 @@ abstract interface class MyPostRemoteData {
   Future<List<HotEventModel>> getAllHots({required int page});
   Future<List<HotEventModel>> getAllEvents({required int page});
   // Future<List<ExpertExecutiveModel>> getAllExpertExecutives();
+
+  // Get list of candidates
+  Future<List<UserModel>> getAllCandidates({
+    required int jobId,
+    required int page,
+  });
+
+  // Get list of candidates
+  Future<UserModel> getCandidate({required int id});
+
+  Future<JobApplicantModel> prolongerJobApplicant({
+    required ProlongerJobApplicantInputModel prolongerJobApplicantInputModel,
+  });
 }

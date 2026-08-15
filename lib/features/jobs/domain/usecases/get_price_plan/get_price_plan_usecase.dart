@@ -14,6 +14,6 @@ class GetPricePlanUsecase
   Future<Either<Failure, List<PricePlan>>> call(
     GetPricePlanParams params,
   ) async {
-    return await jobsRepository.getPricePlans(plan: params.plan);
+    return await jobsRepository.getPricePlans(getPricePlanParams: params);
   }
 }

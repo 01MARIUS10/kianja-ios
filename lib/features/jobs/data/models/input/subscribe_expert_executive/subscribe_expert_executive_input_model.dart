@@ -15,6 +15,7 @@ abstract class SubscribeExpertExecutiveInputModel
     @JsonKey(name: 'phone_number', defaultValue: '')
     required String phoneNumber,
     @JsonKey(defaultValue: '') required String address,
+    @JsonKey(name: 'image_path', defaultValue: '') String? photoUrl,
     @JsonKey(defaultValue: '') required String biography,
     @JsonKey(name: 'domain_id', defaultValue: -1) required int domainId,
     @JsonKey(name: 'cv_pdf_id', defaultValue: -1) required int cvPdfId,

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SponsPartnerModel {
 
-@JsonKey(name: 'titre', defaultValue: '') String get title;@JsonKey(name: 'image', defaultValue: []) List<String> get imageUrl;@JsonKey(name: 'url', defaultValue: '') String get pageUrl;
+@JsonKey(name: 'titre', defaultValue: '') String get title;@JsonKey(defaultValue: '') String get image;@JsonKey(name: 'url', defaultValue: '') String get pageUrl;
 /// Create a copy of SponsPartnerModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $SponsPartnerModelCopyWith<SponsPartnerModel> get copyWith => _$SponsPartnerMode
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SponsPartnerModel&&(identical(other.title, title) || other.title == title)&&const DeepCollectionEquality().equals(other.imageUrl, imageUrl)&&(identical(other.pageUrl, pageUrl) || other.pageUrl == pageUrl));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SponsPartnerModel&&(identical(other.title, title) || other.title == title)&&(identical(other.image, image) || other.image == image)&&(identical(other.pageUrl, pageUrl) || other.pageUrl == pageUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,const DeepCollectionEquality().hash(imageUrl),pageUrl);
+int get hashCode => Object.hash(runtimeType,title,image,pageUrl);
 
 @override
 String toString() {
-  return 'SponsPartnerModel(title: $title, imageUrl: $imageUrl, pageUrl: $pageUrl)';
+  return 'SponsPartnerModel(title: $title, image: $image, pageUrl: $pageUrl)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $SponsPartnerModelCopyWith<$Res>  {
   factory $SponsPartnerModelCopyWith(SponsPartnerModel value, $Res Function(SponsPartnerModel) _then) = _$SponsPartnerModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'titre', defaultValue: '') String title,@JsonKey(name: 'image', defaultValue: []) List<String> imageUrl,@JsonKey(name: 'url', defaultValue: '') String pageUrl
+@JsonKey(name: 'titre', defaultValue: '') String title,@JsonKey(defaultValue: '') String image,@JsonKey(name: 'url', defaultValue: '') String pageUrl
 });
 
 
@@ -65,11 +65,11 @@ class _$SponsPartnerModelCopyWithImpl<$Res>
 
 /// Create a copy of SponsPartnerModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? imageUrl = null,Object? pageUrl = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? image = null,Object? pageUrl = null,}) {
   return _then(_self.copyWith(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
-as List<String>,pageUrl: null == pageUrl ? _self.pageUrl : pageUrl // ignore: cast_nullable_to_non_nullable
+as String,image: null == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
+as String,pageUrl: null == pageUrl ? _self.pageUrl : pageUrl // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -155,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'titre', defaultValue: '')  String title, @JsonKey(name: 'image', defaultValue: [])  List<String> imageUrl, @JsonKey(name: 'url', defaultValue: '')  String pageUrl)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'titre', defaultValue: '')  String title, @JsonKey(defaultValue: '')  String image, @JsonKey(name: 'url', defaultValue: '')  String pageUrl)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SponsPartnerModel() when $default != null:
-return $default(_that.title,_that.imageUrl,_that.pageUrl);case _:
+return $default(_that.title,_that.image,_that.pageUrl);case _:
   return orElse();
 
 }
@@ -176,10 +176,10 @@ return $default(_that.title,_that.imageUrl,_that.pageUrl);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'titre', defaultValue: '')  String title, @JsonKey(name: 'image', defaultValue: [])  List<String> imageUrl, @JsonKey(name: 'url', defaultValue: '')  String pageUrl)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'titre', defaultValue: '')  String title, @JsonKey(defaultValue: '')  String image, @JsonKey(name: 'url', defaultValue: '')  String pageUrl)  $default,) {final _that = this;
 switch (_that) {
 case _SponsPartnerModel():
-return $default(_that.title,_that.imageUrl,_that.pageUrl);case _:
+return $default(_that.title,_that.image,_that.pageUrl);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +196,10 @@ return $default(_that.title,_that.imageUrl,_that.pageUrl);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'titre', defaultValue: '')  String title, @JsonKey(name: 'image', defaultValue: [])  List<String> imageUrl, @JsonKey(name: 'url', defaultValue: '')  String pageUrl)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'titre', defaultValue: '')  String title, @JsonKey(defaultValue: '')  String image, @JsonKey(name: 'url', defaultValue: '')  String pageUrl)?  $default,) {final _that = this;
 switch (_that) {
 case _SponsPartnerModel() when $default != null:
-return $default(_that.title,_that.imageUrl,_that.pageUrl);case _:
+return $default(_that.title,_that.image,_that.pageUrl);case _:
   return null;
 
 }
@@ -211,17 +211,11 @@ return $default(_that.title,_that.imageUrl,_that.pageUrl);case _:
 @JsonSerializable()
 
 class _SponsPartnerModel extends SponsPartnerModel {
-  const _SponsPartnerModel({@JsonKey(name: 'titre', defaultValue: '') required this.title, @JsonKey(name: 'image', defaultValue: []) required final  List<String> imageUrl, @JsonKey(name: 'url', defaultValue: '') required this.pageUrl}): _imageUrl = imageUrl,super._();
+  const _SponsPartnerModel({@JsonKey(name: 'titre', defaultValue: '') required this.title, @JsonKey(defaultValue: '') required this.image, @JsonKey(name: 'url', defaultValue: '') required this.pageUrl}): super._();
   factory _SponsPartnerModel.fromJson(Map<String, dynamic> json) => _$SponsPartnerModelFromJson(json);
 
 @override@JsonKey(name: 'titre', defaultValue: '') final  String title;
- final  List<String> _imageUrl;
-@override@JsonKey(name: 'image', defaultValue: []) List<String> get imageUrl {
-  if (_imageUrl is EqualUnmodifiableListView) return _imageUrl;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_imageUrl);
-}
-
+@override@JsonKey(defaultValue: '') final  String image;
 @override@JsonKey(name: 'url', defaultValue: '') final  String pageUrl;
 
 /// Create a copy of SponsPartnerModel
@@ -237,16 +231,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SponsPartnerModel&&(identical(other.title, title) || other.title == title)&&const DeepCollectionEquality().equals(other._imageUrl, _imageUrl)&&(identical(other.pageUrl, pageUrl) || other.pageUrl == pageUrl));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SponsPartnerModel&&(identical(other.title, title) || other.title == title)&&(identical(other.image, image) || other.image == image)&&(identical(other.pageUrl, pageUrl) || other.pageUrl == pageUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,const DeepCollectionEquality().hash(_imageUrl),pageUrl);
+int get hashCode => Object.hash(runtimeType,title,image,pageUrl);
 
 @override
 String toString() {
-  return 'SponsPartnerModel(title: $title, imageUrl: $imageUrl, pageUrl: $pageUrl)';
+  return 'SponsPartnerModel(title: $title, image: $image, pageUrl: $pageUrl)';
 }
 
 
@@ -257,7 +251,7 @@ abstract mixin class _$SponsPartnerModelCopyWith<$Res> implements $SponsPartnerM
   factory _$SponsPartnerModelCopyWith(_SponsPartnerModel value, $Res Function(_SponsPartnerModel) _then) = __$SponsPartnerModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'titre', defaultValue: '') String title,@JsonKey(name: 'image', defaultValue: []) List<String> imageUrl,@JsonKey(name: 'url', defaultValue: '') String pageUrl
+@JsonKey(name: 'titre', defaultValue: '') String title,@JsonKey(defaultValue: '') String image,@JsonKey(name: 'url', defaultValue: '') String pageUrl
 });
 
 
@@ -274,11 +268,11 @@ class __$SponsPartnerModelCopyWithImpl<$Res>
 
 /// Create a copy of SponsPartnerModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? imageUrl = null,Object? pageUrl = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? image = null,Object? pageUrl = null,}) {
   return _then(_SponsPartnerModel(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,imageUrl: null == imageUrl ? _self._imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
-as List<String>,pageUrl: null == pageUrl ? _self.pageUrl : pageUrl // ignore: cast_nullable_to_non_nullable
+as String,image: null == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
+as String,pageUrl: null == pageUrl ? _self.pageUrl : pageUrl // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

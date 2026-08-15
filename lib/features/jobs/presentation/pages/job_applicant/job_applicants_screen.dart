@@ -14,6 +14,7 @@ import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant_zone.dar
 import 'package:kianja/features/jobs/domain/entities/jobs/jobs_features/job_category.dart';
 import 'package:kianja/features/jobs/domain/usecases/get_job_applicant_zone/get_job_applicant_params.dart';
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
+import 'package:kianja/features/jobs/presentation/jobs_tab_reset_notifier.dart';
 import 'package:kianja/features/jobs/presentation/pages/job_applicant/job_applicant_filter_screen.dart';
 import 'package:kianja/features/jobs/presentation/widgets/category/job_applicants_horizontal_section.dart';
 import 'package:kianja/routing/routes.dart';
@@ -28,6 +29,8 @@ class JobApplicantsScreen extends StatefulWidget {
 class _JobApplicantsScreenState extends State<JobApplicantsScreen>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late final TabController _tabController;
+  late final JobsTabResetNotifier _resetNotifier;
+  JobsBloc? _jobsBloc;
   int _selectedIndex = 0;
 
   List<JobApplicantZone>? _zoneData;
@@ -52,10 +55,42 @@ class _JobApplicantsScreenState extends State<JobApplicantsScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    _resetNotifier = GetIt.instance<JobsTabResetNotifier>();
+    _resetNotifier.addListener(_resetToInitial);
+  }
+
+  void _resetToInitial() {
+    if (!mounted) return;
+
+    setState(() {
+      _selectedIndex = 0;
+      _zoneData = null;
+      _zoneError = null;
+      _zoneLoading = true;
+      _professionData = null;
+      _professionError = null;
+      _professionLoading = false;
+      _filterData = null;
+      _filterError = null;
+      _filterLoading = false;
+      _selectedFilterLocations.clear();
+      _selectedFilterProfessions.clear();
+    });
+
+    if (_tabController.index != 0) {
+      _tabController.index = 0;
+    }
+
+    _jobsBloc?.add(
+      const JobApplicantsZoneFetchRequested(
+        getJobApplicantParams: GetJobApplicantParams(query: 'Zone'),
+      ),
+    );
   }
 
   @override
   void dispose() {
+    _resetNotifier.removeListener(_resetToInitial);
     _tabController.dispose();
     super.dispose();
   }
@@ -66,18 +101,28 @@ class _JobApplicantsScreenState extends State<JobApplicantsScreen>
 
     switch (index) {
       case 0:
+        // blocContext.read<AppBloc>().add(
+        //   const AppSponsorAndPartnerLoaded(menuId: 5),
+        // );
         if (_zoneData == null && _zoneError == null) {
           blocContext.read<JobsBloc>().add(
             const JobsGroupByZoneFetchRequested(query: 'Zone'),
           );
         }
       case 1:
+        // blocContext.read<AppBloc>().add(
+        //   const AppSponsorAndPartnerLoaded(menuId: 6),
+        // );
         if (_professionData == null && _professionError == null) {
           blocContext.read<JobsBloc>().add(
             const JobApplicantProfessionsFetchRequested(),
           );
         }
+
       case 2:
+        // blocContext.read<AppBloc>().add(
+        //   const AppSponsorAndPartnerLoaded(menuId: 7),
+        // );
         if (_filterData == null && _filterError == null) {
           blocContext.read<JobsBloc>().add(
             const JobApplicantFiltersFetchRequested(),
@@ -97,12 +142,18 @@ class _JobApplicantsScreenState extends State<JobApplicantsScreen>
         : AppColors.lightTextSecondary;
 
     return BlocProvider(
-      create: (context) => GetIt.instance<JobsBloc>()
-        ..add(
-          const JobApplicantsZoneFetchRequested(
-            getJobApplicantParams: GetJobApplicantParams(query: 'Zone'),
-          ),
-        ),
+      create: (context) {
+        _jobsBloc = GetIt.instance<JobsBloc>()
+          ..add(
+            const JobApplicantsZoneFetchRequested(
+              getJobApplicantParams: GetJobApplicantParams(query: 'Zone'),
+            ),
+          );
+        // BlocProvider.of<AppBloc>(
+        //   context,
+        // ).add(const AppSponsorAndPartnerLoaded(menuId: 5));
+        return _jobsBloc!;
+      },
       child: BlocListener<JobsBloc, JobsState>(
         listener: (context, state) {
           if (state is JobsRequestInProgress) {
@@ -625,7 +676,7 @@ class _JobApplicantsScreenState extends State<JobApplicantsScreen>
                       }
                     },
                     child: Text(
-                      'Apply',
+                      context.appLoc.apply,
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),

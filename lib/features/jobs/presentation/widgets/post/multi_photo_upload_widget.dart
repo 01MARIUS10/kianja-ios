@@ -10,9 +10,11 @@ class MultiPhotoUploadWidget extends StatefulWidget {
   const MultiPhotoUploadWidget({
     super.key,
     this.maxPhotos = 5,
+    this.hintText,
     required this.onPhotosChanged,
   });
   final int maxPhotos;
+  final String? hintText;
   final ValueChanged<List<XFile>> onPhotosChanged;
 
   @override
@@ -78,7 +80,7 @@ class _MultiPhotoUploadWidgetState extends State<MultiPhotoUploadWidget> {
         ),
         const SizedBox(height: Constants.spacingMedium),
         Text(
-          context.appLoc.upload_5_photos,
+          widget.hintText ?? context.appLoc.upload_5_photos,
           style: theme.textTheme.bodyMedium?.copyWith(
             color: isDark ? Colors.white70 : Colors.black87,
           ),

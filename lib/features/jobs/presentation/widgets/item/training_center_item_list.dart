@@ -40,40 +40,56 @@ class TrainingCenterItemList extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Cover image
-            ClipRRect(
-              borderRadius: BorderRadius.circular(Constants.borderRadiusSmall),
-              child: SizedBox(
-                width: 110,
-                height: 75,
-                child: CachedNetworkImage(
-                  imageUrl: '${EnvConfig.baseApiUrl}${trainingCenter.imageUrl}',
-                  fit: BoxFit.cover,
-                  errorWidget: (context, url, error) => Image.asset(
-                    Assets.hiring,
+            if (trainingCenter.images != null &&
+                trainingCenter.images!.isNotEmpty)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(
+                  Constants.borderRadiusSmall,
+                ),
+                child: SizedBox(
+                  width: 110,
+                  height: 75,
+                  child: CachedNetworkImage(
+                    imageUrl:
+                        '${EnvConfig.baseApiUrl}${trainingCenter.images?.first.url}',
                     fit: BoxFit.cover,
-                    errorBuilder: (ctx, e, st) => Container(
-                      color: isDark
-                          ? AppColors.darkBorder
-                          : AppColors.lightBorder,
-                      child: const Icon(
-                        Icons.image,
-                        size: 32,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
-                  progressIndicatorBuilder: (context, url, progress) =>
-                      Container(
+                    errorWidget: (context, url, error) => Image.asset(
+                      Assets.hiring,
+                      fit: BoxFit.cover,
+                      errorBuilder: (ctx, e, st) => Container(
                         color: isDark
                             ? AppColors.darkBorder
                             : AppColors.lightBorder,
-                        child: const Center(
-                          child: CircularProgressIndicator(strokeWidth: 2),
+                        child: const Icon(
+                          Icons.image,
+                          size: 32,
+                          color: Colors.grey,
                         ),
                       ),
+                    ),
+                    progressIndicatorBuilder: (context, url, progress) =>
+                        Container(
+                          color: isDark
+                              ? AppColors.darkBorder
+                              : AppColors.lightBorder,
+                          child: const Center(
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          ),
+                        ),
+                  ),
                 ),
               ),
-            ),
+            if (trainingCenter.images != null && trainingCenter.images!.isEmpty)
+              SizedBox(
+                width: 110,
+                height: 75,
+                child: Image.asset(
+                  Assets.trainingCenter,
+                  fit: BoxFit.fill,
+                  errorBuilder: (context, url, error) =>
+                      const Icon(Icons.image, size: 40, color: Colors.grey),
+                ),
+              ),
             const SizedBox(width: Constants.spacingSmall),
 
             // Content
@@ -89,7 +105,7 @@ class TrainingCenterItemList extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       height: 1.2,
                     ),
-                    maxLines: 2,
+                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: Constants.spacingExtraSmall),
@@ -125,12 +141,15 @@ class TrainingCenterItemList extends StatelessWidget {
                       // User avatar
                       ClipOval(
                         child: trainingCenter.user.photoUrl.isNotEmpty
-                            ? Image.network(
-                                '${EnvConfig.baseApiUrl}${trainingCenter.user.photoUrl}',
+                            ? CachedNetworkImage(
+                                imageUrl:
+                                    '${EnvConfig.baseApiUrl}${trainingCenter.user.photoUrl}',
                                 fit: BoxFit.cover,
                                 width: Constants.size30,
                                 height: Constants.size30,
-                                errorBuilder: (_, _, _) =>
+                                placeholder: (context, url) =>
+                                    const CircularProgressIndicator(),
+                                errorWidget: (_, _, _) =>
                                     const DefaultAvatar(size: Constants.size30),
                               )
                             : const DefaultAvatar(size: Constants.size30),

@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kianja/core/shared/app_feature/domain/entities/user.dart';
 import 'package:kianja/core/utils/usecase/query_page_params.dart';
 import 'package:kianja/features/jobs/domain/entities/expert_executive/expert_executive.dart';
 import 'package:kianja/features/jobs/domain/entities/jobs/job_applicant.dart';
@@ -21,6 +22,11 @@ import 'package:kianja/features/my_post/domain/usecases/get_all/get_all_hots_use
 import 'package:kianja/features/my_post/domain/usecases/get_all/get_all_job_applicants_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/get_all/get_all_job_offers_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/get_all/get_all_training_centers_usecase.dart';
+import 'package:kianja/features/my_post/domain/usecases/get_candidate_usecase.dart';
+import 'package:kianja/features/my_post/domain/usecases/get_candidates/get_candidates_params.dart';
+import 'package:kianja/features/my_post/domain/usecases/get_candidates/get_candidates_usecase.dart';
+import 'package:kianja/features/my_post/domain/usecases/prolonger/prolonger_job_applicant_params.dart';
+import 'package:kianja/features/my_post/domain/usecases/prolonger/prolonger_job_applicant_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_expert_executive/update_expert_executive_params.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_expert_executive/update_expert_executive_usecase.dart';
 import 'package:kianja/features/my_post/domain/usecases/update/update_hot_event/update_hot_event_params.dart';
@@ -60,6 +66,12 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
     required this._getAllHotsUseCase,
     required this._getAllEventsUseCase,
     // --------------------------------------------------------- GET ALL USECASE
+
+    // GET CANDIDATES USECASE --------------------------------------------------
+    required this._getCandidatesUseCase,
+    required this._getCandidateUseCase,
+    required this._prolongerJobApplicantUseCase,
+    // -------------------------------------------------- GET CANDIDATES USECASE
   }) : // UPDATE USECASE ------------------------------------------------------
        super(MyPostInitial()) {
     // UPDATE EVENT HANDLER -------------------------------------------------
@@ -84,6 +96,7 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
     on<MyPostGetAllTrainingCentersRequested>(_onGetAllTrainingCentersRequested);
     on<MyPostGetAllHotsRequested>(_onGetAllHotsRequested);
     on<MyPostGetAllEventsRequested>(_onGetAllEventsRequested);
+    on<MyPostGetAllCandidatesRequested>(_onGetAllCandidatesRequested);
     // --------------------------------------------------- GET ALL EVENT HANDLER
 
     // LOAD MORE ITEM EVENT HANDLER --------------------------------------------
@@ -94,7 +107,11 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
     );
     on<MyPostLoadMoreHotsRequested>(_onLoadMoreHotsRequested);
     on<MyPostLoadMoreEventsRequested>(_onLoadMoreEventsRequested);
+    on<MyPostLoadMoreCandidatesRequested>(_onLoadMoreCandidatesRequested);
     // -------------------------------------------- LOAD MORE ITEM EVENT HANDLER
+
+    on<MyPostGetCandidateRequested>(_onGetCandidateRequested);
+    on<MyPostProlongerJobApplicantRequested>(_onProlongerJobApplicantRequested);
   }
 
   // UPDATE USECASE -----------------------------------------------------------
@@ -120,6 +137,12 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
   final GetAllHotsUseCase _getAllHotsUseCase;
   final GetAllEventsUseCase _getAllEventsUseCase;
   // ----------------------------------------------------------- GET ALL USECASE
+
+  // GET CANDIDATES USECASE ----------------------------------------------------
+  final GetCandidatesUseCase _getCandidatesUseCase;
+  final GetCandidateUseCase _getCandidateUseCase;
+  final ProlongerJobApplicantUseCase _prolongerJobApplicantUseCase;
+  // ---------------------------------------------------- GET CANDIDATES USECASE
 
   // PAGINATION STATE ----------------------------------------------------------
   static const int _pageSize = 15;
@@ -152,6 +175,27 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
   bool _hasMoreEvents = true;
   bool _isLoadMoreEventsInProgress = false;
   // ---------------------------------------------------------- PAGINATION STATE
+
+  int _currentUsersPage = 1;
+  List<User> _cachedUsers = [];
+  bool _hasMoreUsers = true;
+  bool _isLoadMoreUsersInProgress = false;
+  // ---------------------------------------------------------- PAGINATION STATE
+
+  Future<void> _onProlongerJobApplicantRequested(
+    MyPostProlongerJobApplicantRequested event,
+    Emitter<MyPostState> emit,
+  ) async {
+    emit(MyPostRequestInProgress());
+    final result = await _prolongerJobApplicantUseCase(
+      event.prolongerJobApplicantParams,
+    );
+    result.fold(
+      (failure) => emit(MyPostRequestFailure(message: failure.message)),
+      (jobApplicant) =>
+          emit(MyPostProlongerJobApplicantSuccess(jobApplicant: jobApplicant)),
+    );
+  }
 
   // UPDATE EVENT HANDLER ---------------------------------------------------
   Future<void> _onUpdateJobOfferRequested(
@@ -655,6 +699,92 @@ class MyPostBloc extends Bloc<MyPostEvent, MyPostState> {
           MyPostGetAllEventsSuccess(
             events: _cachedEvents,
             hasMore: _hasMoreEvents,
+          ),
+        );
+      },
+    );
+  }
+
+  // ----------------------------------------------- GET ALL CANDIDATES
+  Future<void> _onGetCandidateRequested(
+    MyPostGetCandidateRequested event,
+    Emitter<MyPostState> emit,
+  ) async {
+    emit(MyPostRequestInProgress());
+    final result = await _getCandidateUseCase(event.getCandidateParams);
+    result.fold(
+      (failure) => emit(MyPostRequestFailure(message: failure.message)),
+      (user) {
+        emit(MyPostGetCandidateSuccess(user: user));
+      },
+    );
+  }
+
+  Future<void> _onGetAllCandidatesRequested(
+    MyPostGetAllCandidatesRequested event,
+    Emitter<MyPostState> emit,
+  ) async {
+    _currentUsersPage = event.getCandidatesParams.page;
+    _cachedUsers = [];
+    _hasMoreUsers = true;
+    _isLoadMoreUsersInProgress = false;
+
+    emit(MyPostRequestInProgress());
+    final result = await _getCandidatesUseCase(event.getCandidatesParams);
+    result.fold(
+      (failure) => emit(MyPostRequestFailure(message: failure.message)),
+      (users) {
+        _cachedUsers = users;
+        _hasMoreUsers = users.length >= _pageSize;
+        emit(
+          MyPostGetCandidatesSuccess(
+            users: _cachedUsers,
+            hasMore: _hasMoreUsers,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _onLoadMoreCandidatesRequested(
+    MyPostLoadMoreCandidatesRequested event,
+    Emitter<MyPostState> emit,
+  ) async {
+    if (!_hasMoreUsers || _isLoadMoreUsersInProgress) {
+      return;
+    }
+
+    _isLoadMoreUsersInProgress = true;
+    emit(
+      MyPostGetCandidatesSuccess(
+        users: _cachedUsers,
+        hasMore: _hasMoreUsers,
+        isLoadMore: true,
+      ),
+    );
+
+    _currentUsersPage++;
+    final result = await _getCandidatesUseCase(
+      GetCandidatesParams(
+        jobId: event
+            .getCandidatesParams
+            .jobId, // You might want to pass the actual jobId here
+        page: _currentUsersPage,
+      ),
+    );
+    result.fold(
+      (failure) {
+        _isLoadMoreUsersInProgress = false;
+        emit(MyPostRequestFailure(message: failure.message));
+      },
+      (users) {
+        _cachedUsers = [..._cachedUsers, ...users];
+        _hasMoreUsers = users.length >= _pageSize;
+        _isLoadMoreUsersInProgress = false;
+        emit(
+          MyPostGetCandidatesSuccess(
+            users: _cachedUsers,
+            hasMore: _hasMoreUsers,
           ),
         );
       },

@@ -17,11 +17,12 @@ enum Routes {
   // ------------- ABOUT ----------------
 
   viewAdd('/viewAdd'),
+  viewUserProfile('/viewUserProfile/:id'),
 
   // ------------- HOME (Job offers) ----------------
   jobs('/'),
   jobCategoryViewAll('job-category-view-all'),
-  jobOfferDetail('job-offer-detail/:id'),
+  jobOfferDetail('job-offer-detail/:id/:matchedLocation'),
   // ------------- HOME (Job offers) ----------------
 
   // ------------- JOB APPLICANT ----------------
@@ -45,13 +46,14 @@ enum Routes {
   postTrainingCenter('training-center'),
   postExpertExecutive('expert-executive'),
   postHotEvent('postHotEvent/:trainingCenterId'),
-  createHotEvent('createHotEvent'),
+  createHotEvent('createHotEvent/:trainingCenterId'),
   createHotEventSuccessful('createHotEventSuccessfully/:id'),
   subscribeExpertExecutive('subscribe-expert-executive'),
   postExpertExecutiveSuccessful('expert-executive-successfully-posted/:id'),
   postJobOfferSuccessful('job-offer-successfully-posted/:id'),
   postJobApplicantSuccessful('job-applicant-successfully-posted/:id'),
   postTrainingCenterSuccessful('training-center-successfully-posted/:id'),
+  appliedJobOfferSuccessful('appliedJobOfferSuccessful'),
   // ------------- POST ----------------
 
   // ------------- MY POST ----------------
@@ -60,21 +62,47 @@ enum Routes {
   myPostJobApplicantEdit('edit-job-applicant/:id'),
   myPostTrainingCenterEdit('edit-training-center/:id'),
   myPostHotEventEdit('edit-hot-event/:id'),
+  candidatesList('candidates-list/:jobId'),
+  candidateDetail('candidate-detail/:id'),
+  viewCandidatePdf('view-candidate-pdf'),
+  prolongerJobApplicant('prolonger-job-applicant/:id'),
+  prolongerJobApplicantSuccessful(
+    'prolonger-job-applicant-successful/:jobAppId',
+  ),
   // ------------- MY POST ----------------
 
   // ------------- ACCOUNT ----------------
   account('/account'),
   kara('/kara'),
+  applications('/applications'),
   personalInfo('personal-info'), // Personal Info
+  viewProfileCV('profile-cv'),
+  complaintsAndSuggestions(
+    'complaints-and-suggestions',
+  ), // Complaints and Suggestions
+  complaintsAndSuggestionsSent(
+    'complaints-and-suggestions-sent',
+  ), // Complaints and Suggestions Sent
+  blockedUsers('blocked-users'), // Blocked Users
   updatePersonalInfo('edit'), // Update Personal Info
   changePassword('change-password'), // Change Password
   termsOfUse('/termsOfUse'), // Terms of Use
+  privacyPolicy('/privacyPolicy'), // Privacy Policy
+  signalerContenu('/signaler-contenu/:contenuId/:type'), // Signaler Contenu
   // ------------- ACCOUNT ----------------
+
+  // ------------- FAVORITES ----------------
+  favorites('/favorites'),
+  // ------------- FAVORITES ----------------
 
   // ------------- AUTH ----------------
   signIn('/sign-in'),
-  signUp('/sign-up');
+  signUp('/sign-up'),
   // ------------- AUTH ----------------
+
+  // ------------- SAVED ----------------
+  saved('/saved');
+  // ------------- SAVED ----------------
 
   const Routes(this.path);
   final String path;

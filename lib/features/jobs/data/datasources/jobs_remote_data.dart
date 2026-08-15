@@ -2,12 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/services/service_helper.dart';
+import 'package:kianja/core/shared/app_feature/data/models/user/user_model.dart';
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/features/jobs/data/mappers/training_center_badge_mapper.dart';
 import 'package:kianja/features/jobs/data/models/input/create_job_applicant/create_job_applicant_input_model.dart';
 import 'package:kianja/features/jobs/data/models/input/create_job_offer/create_job_offer_input_model.dart';
 import 'package:kianja/features/jobs/data/models/input/create_training_center/create_training_center_input_model.dart';
 import 'package:kianja/features/jobs/data/models/input/hot_event/hot_event_input_model.dart';
+import 'package:kianja/features/jobs/data/models/input/signaler_contenu/signaler_contenu_input_model.dart';
 import 'package:kianja/features/jobs/data/models/input/subscribe_expert_executive/subscribe_expert_executive_input_model.dart';
 import 'package:kianja/features/jobs/data/models/output/expert/expert_executive_model.dart';
 import 'package:kianja/features/jobs/data/models/output/files/job_image/job_image_model.dart';
@@ -17,31 +19,50 @@ import 'package:kianja/features/jobs/data/models/output/jobs/job_applicant_filte
 import 'package:kianja/features/jobs/data/models/output/jobs/job_applicant_zone/job_applicant_zone_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_offer/job_offer_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/job_offer_filter/job_offer_filter_model.dart';
+import 'package:kianja/features/jobs/data/models/output/jobs/job_offer_filtering/job_offer_filtering_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_category/job_category_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_domain/job_domain_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/jobs_features/job_features/job_features_model.dart';
 import 'package:kianja/features/jobs/data/models/output/jobs/price_plan/price_plan_model.dart';
+import 'package:kianja/features/jobs/data/models/output/motif/motif_model.dart';
+import 'package:kianja/features/jobs/data/models/output/signaler/signaler_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/hot_event/hot_event_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/training_center/training_center_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/training_center_filter/training_center_filter_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/training_center_hot_event/training_center_hot_event_model.dart';
 import 'package:kianja/features/jobs/data/models/output/training/training_center_view_domain/training_center_view_domain_model.dart';
+import 'package:kianja/features/jobs/presentation/widgets/enum/save_content_enum.dart';
 
 abstract interface class JobsRemoteDataSource {
+  Future<List<MotifModel>> getMotifs();
+  Future<SignalerModel> signalerContenu({
+    required SignalerContenuInputModel singlerContenuInputModel,
+  });
   Future<JobFeaturesModel> getJobFeatures();
   Future<List<JobCategoryModel>> getJobApplicantProfessions();
   Future<JobApplicantFilterModel> getJobApplicantFilters();
+  Future<JobOfferFilteringModel> getJobOfferFiltering();
+  Future<void> blockUser({required int id});
   Future<List<JobOfferFilterModel>> getJobOffersGroupBy({
     required String query,
   });
   Future<List<JobApplicantZoneModel>> getJobApplicantsZone({
     required String query,
   });
-  Future<List<JobOfferModel>> viewAllJobOffers({required String query});
-  Future<List<JobApplicantModel>> viewAllJobApplicants({required String query});
+  Future<List<JobOfferModel>> viewAllJobOffers({
+    required String query,
+    required int page,
+  });
+  Future<List<JobApplicantModel>> viewAllJobApplicants({
+    required String query,
+    required int page,
+  });
   Future<JobImageModel> uploadJobImage({required XFile file});
   Future<JobPdfModel> uploadJobPdf({required PlatformFile file});
-  Future<List<PricePlanModel>> getPricePlans({required String plan});
+  Future<List<PricePlanModel>> getPricePlans({
+    required String plan,
+    required int id,
+  });
   Future<JobApplicantModel> createJobApplicant({
     required CreateJobApplicantInputModel createJobApplicantInputModel,
   });
@@ -49,6 +70,19 @@ abstract interface class JobsRemoteDataSource {
     required CreateJobOfferInputModel createJobOfferInputModel,
   });
   Future<JobOfferModel> getJobOfferDetail({required int id});
+  Future<String> applyToOffer({required int id});
+  Future<String> saveContent({
+    required SaveContentEnum saveContent,
+    required int id,
+  });
+  Future<List<JobOfferModel>> getAllSavedJobOffers({required int page});
+  Future<List<JobApplicantModel>> getAllSavedJobApplicants({required int page});
+  Future<List<TrainingCenterModel>> getAllSavedTrainingCenters({
+    required int page,
+  });
+  Future<List<HotEventModel>> getAllSavedHots({required int page});
+  Future<List<HotEventModel>> getAllSavedEvents({required int page});
+  Future<List<JobOfferModel>> getJobApplications({required int page});
   Future<JobApplicantModel> getJobApplicantDetail({required int id});
   Future<HotEventModel> getHotEventDetail({
     required String query,
@@ -58,9 +92,13 @@ abstract interface class JobsRemoteDataSource {
   Future<List<JobDomainModel>> getTrainingCenterDomains();
   Future<List<TrainingCenterHotEventModel>> getTrainingCenterHotEvent();
   Future<TrainingCenterFilterModel> getTrainingCenterFilter();
-  Future<List<HotEventModel>> viewAllHotEvents({required String query});
+  Future<List<HotEventModel>> viewAllHotEvents({
+    required String query,
+    required int page,
+  });
   Future<List<TrainingCenterModel>> viewAllTrainingCenters({
     required String query,
+    required int page,
   });
   Future<TrainingCenterViewDomainModel> getTrainingCenterViewDomain({
     required int id,
@@ -75,11 +113,37 @@ abstract interface class JobsRemoteDataSource {
   Future<HotEventModel> createHotEvent({
     required HotEventInputModel hotEventInputModel,
   });
+  Future<UserModel> viewUserProfile({required int id});
 }
 
 class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
   const JobsRemoteDataSourceImpl({required this.dio});
   final Dio dio;
+
+  @override
+  Future<SignalerModel> signalerContenu({
+    required SignalerContenuInputModel singlerContenuInputModel,
+  }) async {
+    return requestHandler(() async {
+      final response = await dio.post(
+        '/api/signaler',
+        data: singlerContenuInputModel.toJson(),
+      );
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      return SignalerModel.fromJson(result);
+    });
+  }
+
+  @override
+  Future<List<MotifModel>> getMotifs() async {
+    return requestHandler(() async {
+      final response = await dio.get('/api/signalement-motifs');
+      final Map<String, dynamic> result = jsonSimpleDecode(response.data);
+      return (result['data'] as List<dynamic>)
+          .map((e) => MotifModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    });
+  }
 
   @override
   Future<HotEventModel> createHotEvent({
@@ -128,7 +192,7 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
       final response = await dio.get('/api/training-centers');
       final Map<String, dynamic> result = jsonHandler(response.data);
       return (result['Contenu'] as List<dynamic>)
-          .take(2)
+          .take(1)
           .map(
             (e) =>
                 TrainingCenterHotEventModel.fromJson(e as Map<String, dynamic>),
@@ -149,9 +213,12 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
   }
 
   @override
-  Future<List<HotEventModel>> viewAllHotEvents({required String query}) async {
+  Future<List<HotEventModel>> viewAllHotEvents({
+    required String query,
+    required int page,
+  }) async {
     return requestHandler(() async {
-      final response = await dio.get('/api/training-centers$query');
+      final response = await dio.get('/api/training-centers$query?page=$page');
       final Map<String, dynamic> result = jsonHandler(response.data);
       final Map<String, dynamic> contenu = result['Contenu'];
       return (contenu['data'] as List<dynamic>)
@@ -163,9 +230,10 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
   @override
   Future<List<TrainingCenterModel>> viewAllTrainingCenters({
     required String query,
+    required int page,
   }) async {
     return requestHandler(() async {
-      final response = await dio.get('/api/training-centers?$query');
+      final response = await dio.get('/api/training-centers?$query&page=$page');
       final Map<String, dynamic> result = jsonHandler(response.data);
       final Map<String, dynamic> contenu = result['Contenu'];
       return (contenu['data'] as List<dynamic>)
@@ -279,6 +347,15 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
   }
 
   @override
+  Future<JobOfferFilteringModel> getJobOfferFiltering() async {
+    return requestHandler(() async {
+      final response = await dio.get('/api/job-offers/filtres');
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      return JobOfferFilteringModel.fromJson(result['Contenu']);
+    });
+  }
+
+  @override
   Future<List<JobOfferFilterModel>> getJobOffersGroupBy({
     required String query,
   }) async {
@@ -297,9 +374,12 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
   }
 
   @override
-  Future<List<JobOfferModel>> viewAllJobOffers({required String query}) async {
+  Future<List<JobOfferModel>> viewAllJobOffers({
+    required String query,
+    required int page,
+  }) async {
     return requestHandler(() async {
-      final response = await dio.get('/api/job-offers?$query');
+      final response = await dio.get('/api/job-offers?$query&page=$page');
       final result = jsonHandler(response.data);
       final Map<String, dynamic> contenu =
           result['Contenu'] as Map<String, dynamic>;
@@ -330,9 +410,10 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
   @override
   Future<List<JobApplicantModel>> viewAllJobApplicants({
     required String query,
+    required int page,
   }) async {
     return requestHandler(() async {
-      final response = await dio.get('/api/job-applicants?$query');
+      final response = await dio.get('/api/job-applicants?$query&page=$page');
       final result = jsonHandler(response.data);
       final Map<String, dynamic> contenu =
           result['Contenu'] as Map<String, dynamic>;
@@ -412,9 +493,22 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
   }
 
   @override
-  Future<List<PricePlanModel>> getPricePlans({required String plan}) async {
+  Future<List<PricePlanModel>> getPricePlans({
+    required String plan,
+    required int id,
+  }) async {
     return requestHandler(() async {
-      final response = await dio.get('/api/plans/$plan');
+      String urlPlan = '';
+      if (plan == 'training-center') {
+        if (id == 0) {
+          urlPlan = '/api/plans/$plan';
+        } else {
+          urlPlan = '/api/plans/$plan?domainId=$id';
+        }
+      } else {
+        urlPlan = '/api/plans/$plan';
+      }
+      final response = await dio.get(urlPlan);
       final result = jsonSimpleDecode(response.data);
       final List<dynamic> plans = result['data'] ?? [];
       return plans
@@ -447,6 +541,111 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
   }
 
   @override
+  Future<String> applyToOffer({required int id}) async {
+    return requestHandler(() async {
+      final response = await dio.post('/api/job-offers/$id/postuler');
+      AppDebug.showPrint('applyToOffer response: $response');
+
+      final Map<String, dynamic> result = jsonSimpleDecode(response.data);
+      // if (result['data'] == null && result['statusCode'] == 200) {
+      //   return result['message'] as String;
+      // }
+      AppDebug.showPrint('applyToOffer result: $result');
+      return result['message'] as String;
+    });
+  }
+
+  @override
+  Future<String> saveContent({
+    required SaveContentEnum saveContent,
+    required int id,
+  }) async {
+    return requestHandler(() async {
+      final type = saveContent.type;
+      final response = await dio.post('/api/$type/$id/favoris');
+      AppDebug.showPrint('saveContent response: $response');
+      final Map<String, dynamic> result = jsonSimpleDecode(response.data);
+      AppDebug.showPrint('saveContent result: $result');
+      return result['message'] as String;
+    });
+  }
+
+  @override
+  Future<List<JobOfferModel>> getAllSavedJobOffers({required int page}) async {
+    return requestHandler(() async {
+      final response = await dio.get('/api/job-offers/favoris');
+      final Map<String, dynamic> result = jsonSimpleDecode(response.data);
+      AppDebug.showPrint('getAllSavedJobOffers result: $result');
+      return (result['data'] as List<dynamic>)
+          .map((e) => JobOfferModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    });
+  }
+
+  @override
+  Future<List<JobApplicantModel>> getAllSavedJobApplicants({
+    required int page,
+  }) async {
+    return requestHandler(() async {
+      final response = await dio.get('/api/job-applicants/favoris');
+      final Map<String, dynamic> result = jsonSimpleDecode(response.data);
+      AppDebug.showPrint('getAllSavedJobApplicants result: $result');
+      return (result['data'] as List<dynamic>)
+          .map((e) => JobApplicantModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    });
+  }
+
+  @override
+  Future<List<TrainingCenterModel>> getAllSavedTrainingCenters({
+    required int page,
+  }) async {
+    return requestHandler(() async {
+      final response = await dio.get('/api/training-centers/favoris');
+      final Map<String, dynamic> result = jsonSimpleDecode(response.data);
+      AppDebug.showPrint('getAllSavedTrainingCenters result: $result');
+      return (result['data'] as List<dynamic>)
+          .map((e) => TrainingCenterModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    });
+  }
+
+  @override
+  Future<List<HotEventModel>> getAllSavedHots({required int page}) async {
+    return requestHandler(() async {
+      final response = await dio.get('/api/training-centers/hots/favoris');
+      final Map<String, dynamic> result = jsonSimpleDecode(response.data);
+      AppDebug.showPrint('getAllSavedHots result: $result');
+      return (result['data'] as List<dynamic>)
+          .map((e) => HotEventModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    });
+  }
+
+  @override
+  Future<List<HotEventModel>> getAllSavedEvents({required int page}) async {
+    return requestHandler(() async {
+      final response = await dio.get('/api/training-centers/events/favoris');
+      final Map<String, dynamic> result = jsonSimpleDecode(response.data);
+      AppDebug.showPrint('getAllSavedEvents result: $result');
+      return (result['data'] as List<dynamic>)
+          .map((e) => HotEventModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    });
+  }
+
+  @override
+  Future<List<JobOfferModel>> getJobApplications({required int page}) async {
+    return requestHandler(() async {
+      final response = await dio.get('/api/job-offers/candidatures');
+      final Map<String, dynamic> result = jsonSimpleDecode(response.data);
+      return (result['data'] as List<dynamic>)
+          .map((e) => JobOfferModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    });
+  }
+
+  @override
   Future<JobApplicantModel> getJobApplicantDetail({required int id}) async {
     return requestHandler(() async {
       final response = await dio.get('/api/job-applicants/$id');
@@ -454,6 +653,22 @@ class JobsRemoteDataSourceImpl implements JobsRemoteDataSource {
       return JobApplicantModel.fromJson(
         result['Contenu'] as Map<String, dynamic>,
       );
+    });
+  }
+
+  @override
+  Future<UserModel> viewUserProfile({required int id}) {
+    return requestHandler(() async {
+      final response = await dio.get('/api/profil/$id');
+      final Map<String, dynamic> user = jsonHandler(response.data);
+      return UserModel.fromJson(user);
+    });
+  }
+
+  @override
+  Future<void> blockUser({required int id}) {
+    return requestHandler(() async {
+      await dio.post('/api/profil/$id/block');
     });
   }
 }

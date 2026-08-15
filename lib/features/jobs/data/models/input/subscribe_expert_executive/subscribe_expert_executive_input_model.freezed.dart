@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SubscribeExpertExecutiveInputModel {
 
-@JsonKey(name: 'firstname', defaultValue: '') String get firstName;@JsonKey(name: 'lastname', defaultValue: '') String get lastName;@JsonKey(name: 'date_of_birth', defaultValue: '') String get dateOfBirth;@JsonKey(defaultValue: '') String get email;@JsonKey(name: 'phone_number', defaultValue: '') String get phoneNumber;@JsonKey(defaultValue: '') String get address;@JsonKey(defaultValue: '') String get biography;@JsonKey(name: 'domain_id', defaultValue: -1) int get domainId;@JsonKey(name: 'cv_pdf_id', defaultValue: -1) int get cvPdfId;
+@JsonKey(name: 'firstname', defaultValue: '') String get firstName;@JsonKey(name: 'lastname', defaultValue: '') String get lastName;@JsonKey(name: 'date_of_birth', defaultValue: '') String get dateOfBirth;@JsonKey(defaultValue: '') String get email;@JsonKey(name: 'phone_number', defaultValue: '') String get phoneNumber;@JsonKey(defaultValue: '') String get address;@JsonKey(name: 'image_path', defaultValue: '') String? get photoUrl;@JsonKey(defaultValue: '') String get biography;@JsonKey(name: 'domain_id', defaultValue: -1) int get domainId;@JsonKey(name: 'cv_pdf_id', defaultValue: -1) int get cvPdfId;
 /// Create a copy of SubscribeExpertExecutiveInputModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $SubscribeExpertExecutiveInputModelCopyWith<SubscribeExpertExecutiveInputModel> 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SubscribeExpertExecutiveInputModel&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth)&&(identical(other.email, email) || other.email == email)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.address, address) || other.address == address)&&(identical(other.biography, biography) || other.biography == biography)&&(identical(other.domainId, domainId) || other.domainId == domainId)&&(identical(other.cvPdfId, cvPdfId) || other.cvPdfId == cvPdfId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SubscribeExpertExecutiveInputModel&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth)&&(identical(other.email, email) || other.email == email)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.address, address) || other.address == address)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.biography, biography) || other.biography == biography)&&(identical(other.domainId, domainId) || other.domainId == domainId)&&(identical(other.cvPdfId, cvPdfId) || other.cvPdfId == cvPdfId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,firstName,lastName,dateOfBirth,email,phoneNumber,address,biography,domainId,cvPdfId);
+int get hashCode => Object.hash(runtimeType,firstName,lastName,dateOfBirth,email,phoneNumber,address,photoUrl,biography,domainId,cvPdfId);
 
 @override
 String toString() {
-  return 'SubscribeExpertExecutiveInputModel(firstName: $firstName, lastName: $lastName, dateOfBirth: $dateOfBirth, email: $email, phoneNumber: $phoneNumber, address: $address, biography: $biography, domainId: $domainId, cvPdfId: $cvPdfId)';
+  return 'SubscribeExpertExecutiveInputModel(firstName: $firstName, lastName: $lastName, dateOfBirth: $dateOfBirth, email: $email, phoneNumber: $phoneNumber, address: $address, photoUrl: $photoUrl, biography: $biography, domainId: $domainId, cvPdfId: $cvPdfId)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $SubscribeExpertExecutiveInputModelCopyWith<$Res>  {
   factory $SubscribeExpertExecutiveInputModelCopyWith(SubscribeExpertExecutiveInputModel value, $Res Function(SubscribeExpertExecutiveInputModel) _then) = _$SubscribeExpertExecutiveInputModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'firstname', defaultValue: '') String firstName,@JsonKey(name: 'lastname', defaultValue: '') String lastName,@JsonKey(name: 'date_of_birth', defaultValue: '') String dateOfBirth,@JsonKey(defaultValue: '') String email,@JsonKey(name: 'phone_number', defaultValue: '') String phoneNumber,@JsonKey(defaultValue: '') String address,@JsonKey(defaultValue: '') String biography,@JsonKey(name: 'domain_id', defaultValue: -1) int domainId,@JsonKey(name: 'cv_pdf_id', defaultValue: -1) int cvPdfId
+@JsonKey(name: 'firstname', defaultValue: '') String firstName,@JsonKey(name: 'lastname', defaultValue: '') String lastName,@JsonKey(name: 'date_of_birth', defaultValue: '') String dateOfBirth,@JsonKey(defaultValue: '') String email,@JsonKey(name: 'phone_number', defaultValue: '') String phoneNumber,@JsonKey(defaultValue: '') String address,@JsonKey(name: 'image_path', defaultValue: '') String? photoUrl,@JsonKey(defaultValue: '') String biography,@JsonKey(name: 'domain_id', defaultValue: -1) int domainId,@JsonKey(name: 'cv_pdf_id', defaultValue: -1) int cvPdfId
 });
 
 
@@ -65,7 +65,7 @@ class _$SubscribeExpertExecutiveInputModelCopyWithImpl<$Res>
 
 /// Create a copy of SubscribeExpertExecutiveInputModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? firstName = null,Object? lastName = null,Object? dateOfBirth = null,Object? email = null,Object? phoneNumber = null,Object? address = null,Object? biography = null,Object? domainId = null,Object? cvPdfId = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? firstName = null,Object? lastName = null,Object? dateOfBirth = null,Object? email = null,Object? phoneNumber = null,Object? address = null,Object? photoUrl = freezed,Object? biography = null,Object? domainId = null,Object? cvPdfId = null,}) {
   return _then(_self.copyWith(
 firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
@@ -73,7 +73,8 @@ as String,dateOfBirth: null == dateOfBirth ? _self.dateOfBirth : dateOfBirth // 
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,phoneNumber: null == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
 as String,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
-as String,biography: null == biography ? _self.biography : biography // ignore: cast_nullable_to_non_nullable
+as String,photoUrl: freezed == photoUrl ? _self.photoUrl : photoUrl // ignore: cast_nullable_to_non_nullable
+as String?,biography: null == biography ? _self.biography : biography // ignore: cast_nullable_to_non_nullable
 as String,domainId: null == domainId ? _self.domainId : domainId // ignore: cast_nullable_to_non_nullable
 as int,cvPdfId: null == cvPdfId ? _self.cvPdfId : cvPdfId // ignore: cast_nullable_to_non_nullable
 as int,
@@ -161,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'firstname', defaultValue: '')  String firstName, @JsonKey(name: 'lastname', defaultValue: '')  String lastName, @JsonKey(name: 'date_of_birth', defaultValue: '')  String dateOfBirth, @JsonKey(defaultValue: '')  String email, @JsonKey(name: 'phone_number', defaultValue: '')  String phoneNumber, @JsonKey(defaultValue: '')  String address, @JsonKey(defaultValue: '')  String biography, @JsonKey(name: 'domain_id', defaultValue: -1)  int domainId, @JsonKey(name: 'cv_pdf_id', defaultValue: -1)  int cvPdfId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'firstname', defaultValue: '')  String firstName, @JsonKey(name: 'lastname', defaultValue: '')  String lastName, @JsonKey(name: 'date_of_birth', defaultValue: '')  String dateOfBirth, @JsonKey(defaultValue: '')  String email, @JsonKey(name: 'phone_number', defaultValue: '')  String phoneNumber, @JsonKey(defaultValue: '')  String address, @JsonKey(name: 'image_path', defaultValue: '')  String? photoUrl, @JsonKey(defaultValue: '')  String biography, @JsonKey(name: 'domain_id', defaultValue: -1)  int domainId, @JsonKey(name: 'cv_pdf_id', defaultValue: -1)  int cvPdfId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SubscribeExpertExecutiveInputModel() when $default != null:
-return $default(_that.firstName,_that.lastName,_that.dateOfBirth,_that.email,_that.phoneNumber,_that.address,_that.biography,_that.domainId,_that.cvPdfId);case _:
+return $default(_that.firstName,_that.lastName,_that.dateOfBirth,_that.email,_that.phoneNumber,_that.address,_that.photoUrl,_that.biography,_that.domainId,_that.cvPdfId);case _:
   return orElse();
 
 }
@@ -182,10 +183,10 @@ return $default(_that.firstName,_that.lastName,_that.dateOfBirth,_that.email,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'firstname', defaultValue: '')  String firstName, @JsonKey(name: 'lastname', defaultValue: '')  String lastName, @JsonKey(name: 'date_of_birth', defaultValue: '')  String dateOfBirth, @JsonKey(defaultValue: '')  String email, @JsonKey(name: 'phone_number', defaultValue: '')  String phoneNumber, @JsonKey(defaultValue: '')  String address, @JsonKey(defaultValue: '')  String biography, @JsonKey(name: 'domain_id', defaultValue: -1)  int domainId, @JsonKey(name: 'cv_pdf_id', defaultValue: -1)  int cvPdfId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'firstname', defaultValue: '')  String firstName, @JsonKey(name: 'lastname', defaultValue: '')  String lastName, @JsonKey(name: 'date_of_birth', defaultValue: '')  String dateOfBirth, @JsonKey(defaultValue: '')  String email, @JsonKey(name: 'phone_number', defaultValue: '')  String phoneNumber, @JsonKey(defaultValue: '')  String address, @JsonKey(name: 'image_path', defaultValue: '')  String? photoUrl, @JsonKey(defaultValue: '')  String biography, @JsonKey(name: 'domain_id', defaultValue: -1)  int domainId, @JsonKey(name: 'cv_pdf_id', defaultValue: -1)  int cvPdfId)  $default,) {final _that = this;
 switch (_that) {
 case _SubscribeExpertExecutiveInputModel():
-return $default(_that.firstName,_that.lastName,_that.dateOfBirth,_that.email,_that.phoneNumber,_that.address,_that.biography,_that.domainId,_that.cvPdfId);case _:
+return $default(_that.firstName,_that.lastName,_that.dateOfBirth,_that.email,_that.phoneNumber,_that.address,_that.photoUrl,_that.biography,_that.domainId,_that.cvPdfId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -202,10 +203,10 @@ return $default(_that.firstName,_that.lastName,_that.dateOfBirth,_that.email,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'firstname', defaultValue: '')  String firstName, @JsonKey(name: 'lastname', defaultValue: '')  String lastName, @JsonKey(name: 'date_of_birth', defaultValue: '')  String dateOfBirth, @JsonKey(defaultValue: '')  String email, @JsonKey(name: 'phone_number', defaultValue: '')  String phoneNumber, @JsonKey(defaultValue: '')  String address, @JsonKey(defaultValue: '')  String biography, @JsonKey(name: 'domain_id', defaultValue: -1)  int domainId, @JsonKey(name: 'cv_pdf_id', defaultValue: -1)  int cvPdfId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'firstname', defaultValue: '')  String firstName, @JsonKey(name: 'lastname', defaultValue: '')  String lastName, @JsonKey(name: 'date_of_birth', defaultValue: '')  String dateOfBirth, @JsonKey(defaultValue: '')  String email, @JsonKey(name: 'phone_number', defaultValue: '')  String phoneNumber, @JsonKey(defaultValue: '')  String address, @JsonKey(name: 'image_path', defaultValue: '')  String? photoUrl, @JsonKey(defaultValue: '')  String biography, @JsonKey(name: 'domain_id', defaultValue: -1)  int domainId, @JsonKey(name: 'cv_pdf_id', defaultValue: -1)  int cvPdfId)?  $default,) {final _that = this;
 switch (_that) {
 case _SubscribeExpertExecutiveInputModel() when $default != null:
-return $default(_that.firstName,_that.lastName,_that.dateOfBirth,_that.email,_that.phoneNumber,_that.address,_that.biography,_that.domainId,_that.cvPdfId);case _:
+return $default(_that.firstName,_that.lastName,_that.dateOfBirth,_that.email,_that.phoneNumber,_that.address,_that.photoUrl,_that.biography,_that.domainId,_that.cvPdfId);case _:
   return null;
 
 }
@@ -217,7 +218,7 @@ return $default(_that.firstName,_that.lastName,_that.dateOfBirth,_that.email,_th
 @JsonSerializable()
 
 class _SubscribeExpertExecutiveInputModel extends SubscribeExpertExecutiveInputModel {
-  const _SubscribeExpertExecutiveInputModel({@JsonKey(name: 'firstname', defaultValue: '') required this.firstName, @JsonKey(name: 'lastname', defaultValue: '') required this.lastName, @JsonKey(name: 'date_of_birth', defaultValue: '') required this.dateOfBirth, @JsonKey(defaultValue: '') required this.email, @JsonKey(name: 'phone_number', defaultValue: '') required this.phoneNumber, @JsonKey(defaultValue: '') required this.address, @JsonKey(defaultValue: '') required this.biography, @JsonKey(name: 'domain_id', defaultValue: -1) required this.domainId, @JsonKey(name: 'cv_pdf_id', defaultValue: -1) required this.cvPdfId}): super._();
+  const _SubscribeExpertExecutiveInputModel({@JsonKey(name: 'firstname', defaultValue: '') required this.firstName, @JsonKey(name: 'lastname', defaultValue: '') required this.lastName, @JsonKey(name: 'date_of_birth', defaultValue: '') required this.dateOfBirth, @JsonKey(defaultValue: '') required this.email, @JsonKey(name: 'phone_number', defaultValue: '') required this.phoneNumber, @JsonKey(defaultValue: '') required this.address, @JsonKey(name: 'image_path', defaultValue: '') this.photoUrl, @JsonKey(defaultValue: '') required this.biography, @JsonKey(name: 'domain_id', defaultValue: -1) required this.domainId, @JsonKey(name: 'cv_pdf_id', defaultValue: -1) required this.cvPdfId}): super._();
   factory _SubscribeExpertExecutiveInputModel.fromJson(Map<String, dynamic> json) => _$SubscribeExpertExecutiveInputModelFromJson(json);
 
 @override@JsonKey(name: 'firstname', defaultValue: '') final  String firstName;
@@ -226,6 +227,7 @@ class _SubscribeExpertExecutiveInputModel extends SubscribeExpertExecutiveInputM
 @override@JsonKey(defaultValue: '') final  String email;
 @override@JsonKey(name: 'phone_number', defaultValue: '') final  String phoneNumber;
 @override@JsonKey(defaultValue: '') final  String address;
+@override@JsonKey(name: 'image_path', defaultValue: '') final  String? photoUrl;
 @override@JsonKey(defaultValue: '') final  String biography;
 @override@JsonKey(name: 'domain_id', defaultValue: -1) final  int domainId;
 @override@JsonKey(name: 'cv_pdf_id', defaultValue: -1) final  int cvPdfId;
@@ -243,16 +245,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SubscribeExpertExecutiveInputModel&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth)&&(identical(other.email, email) || other.email == email)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.address, address) || other.address == address)&&(identical(other.biography, biography) || other.biography == biography)&&(identical(other.domainId, domainId) || other.domainId == domainId)&&(identical(other.cvPdfId, cvPdfId) || other.cvPdfId == cvPdfId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SubscribeExpertExecutiveInputModel&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth)&&(identical(other.email, email) || other.email == email)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.address, address) || other.address == address)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.biography, biography) || other.biography == biography)&&(identical(other.domainId, domainId) || other.domainId == domainId)&&(identical(other.cvPdfId, cvPdfId) || other.cvPdfId == cvPdfId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,firstName,lastName,dateOfBirth,email,phoneNumber,address,biography,domainId,cvPdfId);
+int get hashCode => Object.hash(runtimeType,firstName,lastName,dateOfBirth,email,phoneNumber,address,photoUrl,biography,domainId,cvPdfId);
 
 @override
 String toString() {
-  return 'SubscribeExpertExecutiveInputModel(firstName: $firstName, lastName: $lastName, dateOfBirth: $dateOfBirth, email: $email, phoneNumber: $phoneNumber, address: $address, biography: $biography, domainId: $domainId, cvPdfId: $cvPdfId)';
+  return 'SubscribeExpertExecutiveInputModel(firstName: $firstName, lastName: $lastName, dateOfBirth: $dateOfBirth, email: $email, phoneNumber: $phoneNumber, address: $address, photoUrl: $photoUrl, biography: $biography, domainId: $domainId, cvPdfId: $cvPdfId)';
 }
 
 
@@ -263,7 +265,7 @@ abstract mixin class _$SubscribeExpertExecutiveInputModelCopyWith<$Res> implemen
   factory _$SubscribeExpertExecutiveInputModelCopyWith(_SubscribeExpertExecutiveInputModel value, $Res Function(_SubscribeExpertExecutiveInputModel) _then) = __$SubscribeExpertExecutiveInputModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'firstname', defaultValue: '') String firstName,@JsonKey(name: 'lastname', defaultValue: '') String lastName,@JsonKey(name: 'date_of_birth', defaultValue: '') String dateOfBirth,@JsonKey(defaultValue: '') String email,@JsonKey(name: 'phone_number', defaultValue: '') String phoneNumber,@JsonKey(defaultValue: '') String address,@JsonKey(defaultValue: '') String biography,@JsonKey(name: 'domain_id', defaultValue: -1) int domainId,@JsonKey(name: 'cv_pdf_id', defaultValue: -1) int cvPdfId
+@JsonKey(name: 'firstname', defaultValue: '') String firstName,@JsonKey(name: 'lastname', defaultValue: '') String lastName,@JsonKey(name: 'date_of_birth', defaultValue: '') String dateOfBirth,@JsonKey(defaultValue: '') String email,@JsonKey(name: 'phone_number', defaultValue: '') String phoneNumber,@JsonKey(defaultValue: '') String address,@JsonKey(name: 'image_path', defaultValue: '') String? photoUrl,@JsonKey(defaultValue: '') String biography,@JsonKey(name: 'domain_id', defaultValue: -1) int domainId,@JsonKey(name: 'cv_pdf_id', defaultValue: -1) int cvPdfId
 });
 
 
@@ -280,7 +282,7 @@ class __$SubscribeExpertExecutiveInputModelCopyWithImpl<$Res>
 
 /// Create a copy of SubscribeExpertExecutiveInputModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? firstName = null,Object? lastName = null,Object? dateOfBirth = null,Object? email = null,Object? phoneNumber = null,Object? address = null,Object? biography = null,Object? domainId = null,Object? cvPdfId = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? firstName = null,Object? lastName = null,Object? dateOfBirth = null,Object? email = null,Object? phoneNumber = null,Object? address = null,Object? photoUrl = freezed,Object? biography = null,Object? domainId = null,Object? cvPdfId = null,}) {
   return _then(_SubscribeExpertExecutiveInputModel(
 firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
@@ -288,7 +290,8 @@ as String,dateOfBirth: null == dateOfBirth ? _self.dateOfBirth : dateOfBirth // 
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,phoneNumber: null == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
 as String,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
-as String,biography: null == biography ? _self.biography : biography // ignore: cast_nullable_to_non_nullable
+as String,photoUrl: freezed == photoUrl ? _self.photoUrl : photoUrl // ignore: cast_nullable_to_non_nullable
+as String?,biography: null == biography ? _self.biography : biography // ignore: cast_nullable_to_non_nullable
 as String,domainId: null == domainId ? _self.domainId : domainId // ignore: cast_nullable_to_non_nullable
 as int,cvPdfId: null == cvPdfId ? _self.cvPdfId : cvPdfId // ignore: cast_nullable_to_non_nullable
 as int,

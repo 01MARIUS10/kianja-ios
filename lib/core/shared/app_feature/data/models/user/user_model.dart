@@ -11,10 +11,14 @@ abstract class UserModel with _$UserModel implements User {
     @JsonKey(name: 'first_name', defaultValue: '') required String firstName,
     @JsonKey(name: 'last_name', defaultValue: '') required String lastName,
     @JsonKey(name: 'photo', defaultValue: '') required String photoUrl,
+    @JsonKey(name: 'cv_url', defaultValue: '') required String cvUrl,
     @JsonKey(defaultValue: '') required String phone,
     @JsonKey(defaultValue: '') required String email,
     @JsonKey(name: 'lieu_residence', defaultValue: '')
     required String residence,
+    @JsonKey(name: 'date_candidature', defaultValue: '')
+    required String dateCandidature,
+    @JsonKey(defaultValue: false) required bool isBlocked,
     @JsonKey(name: 'created_at', defaultValue: '') required String createdAt,
   }) = _UserModel;
 

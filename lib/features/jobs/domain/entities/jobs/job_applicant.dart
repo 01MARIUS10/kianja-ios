@@ -8,33 +8,45 @@ class JobApplicant {
     required this.id,
     required this.title,
     required this.motivation,
-    required this.location,
+    // required this.location,
+    required this.locations,
+    required this.categories,
     this.gender,
+    this.photoUrl,
     this.pdfUrl,
     required this.createdAt,
     required this.user,
-    this.category,
+    // this.category,
+    required this.isFavorite,
   });
 
   const JobApplicant.empty({
     this.id = -1,
     this.title = '',
     this.motivation = '',
-    this.location = const JobLocation.empty(),
+    this.categories = const [],
+    this.locations = const [],
+    // this.location = const JobLocation.empty(),
     this.gender,
+    this.photoUrl,
     this.pdfUrl,
     this.createdAt = '',
     this.user = const User.empty(),
-    this.category,
+    // this.category,
+    this.isFavorite = false,
   });
 
   final int id;
   final String title;
   final String motivation;
-  final JobLocation location;
+  final List<JobCategory> categories;
+  final List<JobLocation> locations;
+  // final JobLocation location;
   final JobGender? gender;
+  final String? photoUrl;
   final String? pdfUrl;
   final String createdAt;
   final User user;
-  final JobCategory? category;
+  // final JobCategory? category;
+  final bool isFavorite;
 }

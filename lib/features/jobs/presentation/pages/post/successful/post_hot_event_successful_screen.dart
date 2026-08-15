@@ -4,6 +4,7 @@ import 'package:kianja/core/shared/widgets/base_screen/base_screen.dart';
 import 'package:kianja/core/shared/widgets/headers/title_header.dart';
 import 'package:kianja/core/themes/app_colors.dart';
 import 'package:kianja/core/utils/constants.dart';
+import 'package:kianja/core/utils/extensions.dart';
 import 'package:kianja/routing/routes.dart';
 
 class PostHotEventSuccessfulScreen extends StatelessWidget {
@@ -21,7 +22,7 @@ class PostHotEventSuccessfulScreen extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
 
     return BaseScreen(
-      appBar: const TitleHeader(title: 'Posted successfully'),
+      appBar: TitleHeader(title: context.appLoc.posted_successfully),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -37,7 +38,7 @@ class PostHotEventSuccessfulScreen extends StatelessWidget {
             ),
             const SizedBox(height: Constants.spacingLarge),
             Text(
-              'Post successful.',
+              context.appLoc.post_successful,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -55,7 +56,7 @@ class PostHotEventSuccessfulScreen extends StatelessWidget {
                 );
               },
               child: Text(
-                'View post',
+                context.appLoc.view_post,
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: isDark

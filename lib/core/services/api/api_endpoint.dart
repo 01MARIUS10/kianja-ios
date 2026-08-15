@@ -17,9 +17,12 @@ enum ApiEndpoint {
   jobApplicant(path: '/api/job-applicants/'),
 
   // ============= App =============
+  complaintsSuggestions(path: '/api/plainteSuggestion'),
   getUpdate(path: '/api/app/getUpdate/'),
   appVersions(path: '/api/app/versions/'),
   cgu(path: '/cgu'),
+  privacy(path: '/privacy'),
+  blockedUsers(path: '/api/profil/blocked'),
 
   // ============= Training center =============
   trainingCenter(path: '/api/training-centers/');

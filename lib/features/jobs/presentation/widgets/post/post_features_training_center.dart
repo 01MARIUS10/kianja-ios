@@ -201,15 +201,25 @@ class _PostFeaturesTrainingCenterState
               width: 25,
               fit: BoxFit.cover,
             ),
-            const SizedBox(width: 4),
-            Text(
-              _selectedPlan != null
-                  ? AppFunction.formatNumberWithSpaces(_selectedPlan!.price)
-                  : '-',
-              style: textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+            const SizedBox(width: Constants.spacingSmall),
+            if (_selectedPlan != null && _selectedPlan!.price == 0)
+              Text(
+                context.appLoc.free,
+                style: textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
+            if (_selectedPlan != null && _selectedPlan!.price != 0)
+              Text(
+                _selectedPlan != null
+                    ? AppFunction.formatNumberWithSpaces(_selectedPlan!.price)
+                    : '-',
+                style: textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            const SizedBox(width: Constants.spacingExtraSmall),
+            Text('Kara', style: textTheme.bodyMedium),
           ],
         ),
         const SizedBox(height: 16),

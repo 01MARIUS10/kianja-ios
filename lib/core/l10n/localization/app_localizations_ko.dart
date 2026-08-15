@@ -791,4 +791,162 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get announcer => '게시자';
+
+  @override
+  String get apply => '지원하기';
+
+  @override
+  String get my_applications => '지원 내역';
+
+  @override
+  String get enable_apply_button => '지원 버튼 활성화';
+
+  @override
+  String get favorites => '즐겨찾기';
+
+  @override
+  String get expertise_domain => '전문 분야';
+
+  @override
+  String get posted_successfully => '성공적으로 게시되었습니다';
+
+  @override
+  String get application_already_sent => '이미 지원했습니다';
+
+  @override
+  String get published_by => '게시자';
+
+  @override
+  String get photo_optional => '사진 (선택 사항)';
+
+  @override
+  String get you_applied_to_this_offer => '이 채용 공고에 지원하셨습니다.';
+
+  @override
+  String get applied_successfully => '지원이 완료되었습니다';
+
+  @override
+  String get you_applied_successfully_to_this_offer => '이 채용 공고에 성공적으로 지원했습니다.';
+
+  @override
+  String get view_my_applications => '내 지원 내역 보기';
+
+  @override
+  String get post_successful => '게시가 완료되었습니다.';
+
+  @override
+  String get view_post => '게시물 보기';
+
+  @override
+  String get loading => '불러오는 중...';
+
+  @override
+  String get zone_by_province => '지역 (도/주별)';
+
+  @override
+  String get free => '무료';
+
+  @override
+  String get extend => '연장';
+
+  @override
+  String get extension => '연장';
+
+  @override
+  String get extended_successfully => '성공적으로 연장되었습니다';
+
+  @override
+  String get extend_successful => '연장이 완료되었습니다.';
+
+  @override
+  String get not_enough_kara_or_email_already_used =>
+      'Kara가 부족하거나 이미 사용 중인 이메일입니다.';
+
+  @override
+  String get candidate_profile => '지원자 프로필';
+
+  @override
+  String get user_profile => '사용자 프로필';
+
+  @override
+  String get view_my_cv => '내 이력서 보기';
+
+  @override
+  String get please_select_a_reason => '사유를 선택해 주세요';
+
+  @override
+  String get content_reported_successfully => '콘텐츠가 성공적으로 신고되었습니다';
+
+  @override
+  String get report_this_content => '이 콘텐츠 신고';
+
+  @override
+  String get reason => '사유';
+
+  @override
+  String get comment => '댓글';
+
+  @override
+  String get privacy_policy => '개인정보 처리방침';
+
+  @override
+  String get complaints_and_suggestions => '불만 및 제안';
+
+  @override
+  String get blocked_users => '차단된 사용자';
+
+  @override
+  String get delete_account => '계정 삭제';
+
+  @override
+  String get unblock => '차단 해제';
+
+  @override
+  String get complaints_or_suggestions_sent_successfully =>
+      '불만 또는 제안이 성공적으로 제출되었습니다';
+
+  @override
+  String get return_to_my_account => '내 계정으로 돌아가기';
+
+  @override
+  String get confirm_delete_account => '정말 계정을 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.';
+
+  @override
+  String get apply_to => '지원하기';
+
+  @override
+  String get unsaved_question => '저장되지 않았습니다. 계속하시겠습니까?';
+
+  @override
+  String get confirm_remove_from_favorites => '이 콘텐츠를 즐겨찾기에서 정말 삭제하시겠습니까?';
+
+  @override
+  String get unsaved => '저장되지 않음';
+
+  @override
+  String get report => '신고';
+
+  @override
+  String get candidates => '지원자';
+
+  @override
+  String get view => '보기';
+
+  @override
+  String get blocked_user_successfully => '사용자가 성공적으로 차단되었습니다';
+
+  @override
+  String get block => '차단';
+
+  @override
+  String get unblocked_user_successfully => '사용자가 성공적으로 차단 해제되었습니다';
+
+  @override
+  String get no_blocked_user => '차단된 사용자가 없습니다';
+
+  @override
+  String get and => '그리고';
+
+  @override
+  String get upload_3_photos => '최대 3장의 사진을 업로드할 수 있습니다';
 }

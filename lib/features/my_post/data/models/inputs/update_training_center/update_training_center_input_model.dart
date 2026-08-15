@@ -11,11 +11,11 @@ abstract class UpdateTrainingCenterInputModel
     @JsonKey(defaultValue: '') required String name,
     @JsonKey(defaultValue: '') required String description,
     @JsonKey(defaultValue: -1) required int locationId,
+    @JsonKey(defaultValue: -1) required int domainId,
     @JsonKey(name: 'image_ids') List<int>? imageIds,
-    @JsonKey(defaultValue: -1) required int actorId,
-    @JsonKey(defaultValue: -1) required int typeId,
-    @JsonKey(defaultValue: -1) required int tagId,
-    @JsonKey(defaultValue: -1) required int durationId,
+    // @JsonKey(defaultValue: -1) required int typeId,
+    // @JsonKey(defaultValue: -1) required int tagId,
+    // @JsonKey(defaultValue: -1) required int durationId,
     @JsonKey(defaultValue: 'published') required String status,
   }) = _UpdateTrainingCenterInputModel;
 

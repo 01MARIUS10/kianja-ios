@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kianja/core/services/api/api_endpoint.dart';
 import 'package:kianja/core/services/service_helper.dart';
@@ -6,6 +7,7 @@ import 'package:kianja/core/shared/app_feature/data/models/user/user_model.dart'
 import 'package:kianja/core/utils/app_debug.dart';
 import 'package:kianja/features/account/data/datasources/remote/account_remote_data.dart';
 import 'package:kianja/features/account/data/models/input/change_password/change_password_input_model.dart';
+import 'package:kianja/features/account/data/models/input/send_complaints_suggestions/send_complaints_suggestions_input_model.dart';
 import 'package:kianja/features/account/data/models/input/update_user_info/update_user_info_input_model.dart';
 import 'package:kianja/features/account/data/models/output/kara_history/kara_history_model.dart';
 
@@ -30,6 +32,24 @@ class AccountRemoteDataSourceImpl implements AccountRemoteDataSource {
       AppDebug.showPrint('photo path ${file.path}');
       await dio.post(
         ApiEndpoint.profilPhoto.path,
+        data: formData,
+        onSendProgress: (sent, total) {
+          AppDebug.showPrint('${(sent / total * 100).toStringAsFixed(0)}%');
+        },
+      );
+    });
+  }
+
+  @override
+  Future<void> uploadProfilCV({required PlatformFile file}) async {
+    return requestHandler(() async {
+      final formData = FormData.fromMap({
+        'pdf': await MultipartFile.fromFile(file.path!, filename: file.name),
+      });
+      AppDebug.showPrint('cv name ${file.name}');
+      AppDebug.showPrint('cv path ${file.path}');
+      await dio.post(
+        '/api/profil/cv',
         data: formData,
         onSendProgress: (sent, total) {
           AppDebug.showPrint('${(sent / total * 100).toStringAsFixed(0)}%');
@@ -75,9 +95,30 @@ class AccountRemoteDataSourceImpl implements AccountRemoteDataSource {
   }
 
   @override
+  Future<void> sendComplaintsSuggestions({
+    required SendComplaintsSuggestionsInputModel
+    sendComplaintsSuggestionsInputModel,
+  }) async {
+    return requestHandler(() async {
+      await dio.post(
+        ApiEndpoint.complaintsSuggestions.path,
+        data: sendComplaintsSuggestionsInputModel.toJson(),
+      );
+    });
+  }
+
+  @override
   Future<String> cgu() async {
     return requestHandler(() async {
       final response = await dio.get(ApiEndpoint.cgu.path);
+      return response.data;
+    });
+  }
+
+  @override
+  Future<String> privacy() async {
+    return requestHandler(() async {
+      final response = await dio.get(ApiEndpoint.privacy.path);
       return response.data;
     });
   }
@@ -104,6 +145,27 @@ class AccountRemoteDataSourceImpl implements AccountRemoteDataSource {
       final Map<String, dynamic> result = jsonHandler(response.data);
       AppDebug.showPrint('Solde : ${result['solde']}');
       return result['solde'] ?? 0;
+    });
+  }
+
+  @override
+  Future<List<UserModel>> getBlockedUsers({required int page}) async {
+    return requestHandler(() async {
+      final response = await dio.get(
+        '${ApiEndpoint.blockedUsers.path}?page=$page',
+      );
+      final Map<String, dynamic> result = jsonHandler(response.data);
+      final List<dynamic> blockedUsers = result['data'];
+      return blockedUsers
+          .map((e) => UserModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    });
+  }
+
+  @override
+  Future<void> unblockUser({required int id}) {
+    return requestHandler(() async {
+      await dio.post('/api/profil/$id/unblock');
     });
   }
 }

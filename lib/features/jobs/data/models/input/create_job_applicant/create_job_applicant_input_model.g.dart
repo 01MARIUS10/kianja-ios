@@ -11,12 +11,21 @@ _CreateJobApplicantInputModel _$CreateJobApplicantInputModelFromJson(
 ) => _CreateJobApplicantInputModel(
   title: json['title'] as String? ?? '',
   motivation: json['motivation'] as String? ?? '',
+  photoUrl: json['photo_candidat'] as String?,
   pdfUrl: json['resumepdf_path'] as String?,
-  locationId: (json['locationId'] as num?)?.toInt() ?? -1,
   genderId: (json['genderId'] as num?)?.toInt() ?? -1,
   typeId: (json['typeId'] as num?)?.toInt() ?? -1,
   durationId: (json['durationId'] as num?)?.toInt() ?? -1,
-  categoryId: (json['categoryId'] as num?)?.toInt() ?? -1,
+  categories:
+      (json['categoryIds'] as List<dynamic>?)
+          ?.map((e) => (e as num).toInt())
+          .toList() ??
+      [],
+  locationIds:
+      (json['locationIds'] as List<dynamic>?)
+          ?.map((e) => (e as num).toInt())
+          .toList() ??
+      [],
   status: json['status'] as String? ?? 'published',
 );
 
@@ -25,11 +34,12 @@ Map<String, dynamic> _$CreateJobApplicantInputModelToJson(
 ) => <String, dynamic>{
   'title': instance.title,
   'motivation': instance.motivation,
+  'photo_candidat': instance.photoUrl,
   'resumepdf_path': instance.pdfUrl,
-  'locationId': instance.locationId,
   'genderId': instance.genderId,
   'typeId': instance.typeId,
   'durationId': instance.durationId,
-  'categoryId': instance.categoryId,
+  'categoryIds': instance.categories,
+  'locationIds': instance.locationIds,
   'status': instance.status,
 };

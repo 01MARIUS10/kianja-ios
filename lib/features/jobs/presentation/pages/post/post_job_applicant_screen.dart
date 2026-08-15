@@ -17,6 +17,7 @@ import 'package:kianja/features/jobs/domain/usecases/get_price_plan/get_price_pl
 import 'package:kianja/features/jobs/presentation/bloc/jobs_bloc.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/post_features_section.dart';
 import 'package:kianja/features/jobs/presentation/widgets/post/single_pdf_upload_widget.dart';
+import 'package:kianja/features/jobs/presentation/widgets/post/single_photo_upload_widget.dart';
 import 'package:kianja/routing/routes.dart';
 
 class PostJobApplicantScreen extends StatefulWidget {
@@ -31,8 +32,10 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
   final TextEditingController _motivationController = TextEditingController();
 
   // ── Entity-ID selections (mirrors PostJobOfferScreen) ──────────────────
-  int? _selectedCategory; // single select for job applicant
-  int? _selectedLocation;
+  final List<int> _selectedCategories = [];
+  final List<int> _selectedLocations = [];
+  // int? _selectedCategory; // single select for job applicant
+  // int? _selectedLocation;
   int? _selectedGender;
 
   // ── Features fetched from bloc ─────────────────────────────────────────
@@ -47,18 +50,41 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
   String? _uploadPdfUrl;
 
   // ── Toggles ───────────────────────────────────────────────────────────
-
-  void _toggleCategory(int categoryId) {
+  void _toggleCategories(int categoryId) {
     setState(() {
-      _selectedCategory = _selectedCategory == categoryId ? null : categoryId;
+      if (_selectedCategories.contains(categoryId)) {
+        _selectedCategories.remove(categoryId);
+      } else {
+        if (_selectedCategories.length < 3) {
+          _selectedCategories.add(categoryId);
+        }
+      }
     });
   }
 
-  void _toggleLocation(int locationId) {
+  void _toggleLocations(int locationId) {
     setState(() {
-      _selectedLocation = _selectedLocation == locationId ? null : locationId;
+      if (_selectedLocations.contains(locationId)) {
+        _selectedLocations.remove(locationId);
+      } else {
+        if (_selectedLocations.length < 3) {
+          _selectedLocations.add(locationId);
+        }
+      }
     });
   }
+
+  // void _toggleCategory(int categoryId) {
+  //   setState(() {
+  //     _selectedCategory = _selectedCategory == categoryId ? null : categoryId;
+  //   });
+  // }
+
+  // void _toggleLocation(int locationId) {
+  //   setState(() {
+  //     _selectedLocation = _selectedLocation == locationId ? null : locationId;
+  //   });
+  // }
 
   void _toggleGender(int genderId) {
     setState(() {
@@ -72,8 +98,10 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
     _titleController.clear();
     _motivationController.clear();
     setState(() {
-      _selectedCategory = null;
-      _selectedLocation = null;
+      _selectedCategories.clear();
+      _selectedLocations.clear();
+      // _selectedCategory = null;
+      // _selectedLocation = null;
       _selectedGender = null;
       _selectedPlan = null;
       _uploadImageUrl = null;
@@ -84,35 +112,54 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
   // ── Submit ────────────────────────────────────────────────────────────
 
   void _postJobApplicant(BuildContext context) {
-    if (_titleController.text.trim().isEmpty) {
-      AppMessenger.showWarning(context, 'Please add a job title');
-      return;
-    }
-    if (_motivationController.text.trim().isEmpty) {
-      AppMessenger.showWarning(context, 'Please add a motivation');
-      return;
-    }
-    if (_selectedCategory == null) {
-      AppMessenger.showWarning(context, 'Please select a category');
-      return;
-    }
-    if (_selectedLocation == null) {
-      AppMessenger.showWarning(context, 'Please select a location');
-      return;
-    }
-    if (_selectedGender == null) {
-      AppMessenger.showWarning(context, 'Please select a gender');
-      return;
-    }
-    if (_selectedPlan == null) {
-      AppMessenger.showWarning(context, 'Please select a plan');
-      return;
+    // if (_titleController.text.trim().isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please add a job title');
+    //   return;
+    // }
+    // if (_motivationController.text.trim().isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please add a motivation');
+    //   return;
+    // }
+    // if (_selectedCategories.isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please select a category');
+    //   return;
+    // }
+    // if (_selectedLocations.isEmpty) {
+    //   AppMessenger.showWarning(context, 'Please select a location');
+    //   return;
+    // }
+    // // if (_selectedCategory == null) {
+    // //   AppMessenger.showWarning(context, 'Please select a category');
+    // //   return;
+    // // }
+    // // if (_selectedLocation == null) {
+    // //   AppMessenger.showWarning(context, 'Please select a location');
+    // //   return;
+    // // }
+    // if (_selectedGender == null) {
+    //   AppMessenger.showWarning(context, 'Please select a gender');
+    //   return;
+    // }
+    // if (_selectedPlan == null) {
+    //   AppMessenger.showWarning(context, 'Please select a plan');
+    //   return;
+    // }
+    if (_titleController.text.trim().isEmpty ||
+        _motivationController.text.trim().isEmpty ||
+        _selectedCategories.isEmpty ||
+        _selectedLocations.isEmpty ||
+        _selectedGender == null ||
+        _selectedPlan == null) {
+      AppMessenger.showWarning(
+        context,
+        context.appLoc.please_fill_all_required_fields,
+      );
     }
 
     AppDebug.showPrint('title: ${_titleController.text.trim()}');
     AppDebug.showPrint('motivation: ${_motivationController.text.trim()}');
-    AppDebug.showPrint('categoryId: $_selectedCategory');
-    AppDebug.showPrint('locationId: $_selectedLocation');
+    // AppDebug.showPrint('categoryId: $_selectedCategory');
+    // AppDebug.showPrint('locationId: $_selectedLocation');
     AppDebug.showPrint('genderId: $_selectedGender');
     AppDebug.showPrint('typeId: ${_selectedPlan!.type.id}');
     AppDebug.showPrint('durationId: ${_selectedPlan!.duration.id}');
@@ -124,12 +171,15 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
         createJobApplicantParams: CreateJobApplicantParams(
           title: _titleController.text.trim(),
           motivation: _motivationController.text.trim(),
+          photoUrl: _uploadImageUrl,
           pdfUrl: _uploadPdfUrl,
-          locationId: _selectedLocation!,
+          categories: _selectedCategories,
+          locations: _selectedLocations,
+          // locationId: _selectedLocation!,
           genderId: _selectedGender!,
           typeId: _selectedPlan!.type.id,
           durationId: _selectedPlan!.duration.id,
-          categoryId: _selectedCategory!,
+          // categoryId: _selectedCategory!,
           status: 'published',
         ),
       ),
@@ -149,6 +199,9 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return BlocProvider(
       create: (context) => GetIt.instance<JobsBloc>()
         ..add(const JobFeaturesFetchRequested())
@@ -233,6 +286,20 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                         ),
                         const SizedBox(height: Constants.spacingMedium),
 
+                        // ── Photo ───────────────────────────────────
+                        LabelField(label: context.appLoc.photo_optional),
+                        const SizedBox(height: Constants.spacingSmall),
+                        SinglePhotoUploadWidget(
+                          onPhotoChanged: (photo) {
+                            if (photo != null) {
+                              BlocProvider.of<JobsBloc>(
+                                context,
+                              ).add(JobsUploadImageRequested(file: photo));
+                            }
+                          },
+                        ),
+                        const SizedBox(height: Constants.spacingMedium),
+
                         // ── Resume ───────────────────────────────────────
                         LabelField(label: context.appLoc.resume_optional),
                         const SizedBox(height: Constants.spacingSmall),
@@ -249,36 +316,98 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                         const SizedBox(height: Constants.spacingMedium),
 
                         // ── Category (single select) ─────────────────────
-                        Text(
-                          '${context.appLoc.category} *',
-                          style: theme.textTheme.titleSmall!.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                        // Text(
+                        //   '${context.appLoc.category} *',
+                        //   style: theme.textTheme.titleSmall!.copyWith(
+                        //     fontWeight: FontWeight.bold,
+                        //   ),
+                        // ),
+                        // const SizedBox(height: Constants.spacingSmall),
+                        // if (_jobFeatures != null)
+                        //   Wrap(
+                        //     spacing: Constants.spacingMedium,
+                        //     children: _jobFeatures!.categories.map((category) {
+                        //       final isSelected =
+                        //           _selectedCategory == category.id;
+                        //       return InkWell(
+                        //         onTap: () => _toggleCategory(category.id),
+                        //         borderRadius: BorderRadius.circular(4),
+                        //         child: Padding(
+                        //           padding: const EdgeInsets.symmetric(
+                        //             vertical: 6,
+                        //           ),
+                        //           child: Row(
+                        //             mainAxisSize: MainAxisSize.max,
+                        //             children: [
+                        //               SizedBox(
+                        //                 width: 24,
+                        //                 height: 24,
+                        //                 child: Checkbox(
+                        //                   value: isSelected,
+                        //                   onChanged: (_) =>
+                        //                       _toggleCategory(category.id),
+                        //                 ),
+                        //               ),
+                        //               const SizedBox(
+                        //                 width: Constants.spacingExtraSmall,
+                        //               ),
+                        //               Text(
+                        //                 category.name,
+                        //                 style: theme.textTheme.bodyMedium,
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       );
+                        //     }).toList(),
+                        //   )
+                        // else
+                        //   const Padding(
+                        //     padding: EdgeInsets.symmetric(vertical: 8.0),
+                        //     child: CircularProgressIndicator(),
+                        //   ),
+                        Row(
+                          children: [
+                            Text(
+                              '${context.appLoc.categories} * ',
+                              style: theme.textTheme.titleSmall!.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              context.appLoc.max_3,
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: isDark ? Colors.white54 : Colors.black54,
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(height: Constants.spacingSmall),
                         if (_jobFeatures != null)
                           Wrap(
                             spacing: Constants.spacingMedium,
                             children: _jobFeatures!.categories.map((category) {
-                              final isSelected =
-                                  _selectedCategory == category.id;
+                              final isSelected = _selectedCategories.contains(
+                                category.id,
+                              );
                               return InkWell(
-                                onTap: () => _toggleCategory(category.id),
+                                onTap: () => _toggleCategories(category.id),
                                 borderRadius: BorderRadius.circular(4),
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
                                     vertical: 6,
                                   ),
                                   child: Row(
-                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisSize: MainAxisSize.max,
                                     children: [
                                       SizedBox(
                                         width: 24,
                                         height: 24,
                                         child: Checkbox(
                                           value: isSelected,
-                                          onChanged: (_) =>
-                                              _toggleCategory(category.id),
+                                          onChanged: (value) =>
+                                              _toggleCategories(category.id),
                                         ),
                                       ),
                                       const SizedBox(
@@ -302,31 +431,90 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                         const SizedBox(height: Constants.spacingMedium),
 
                         // ── Location ─────────────────────────────────────
-                        LabelField(label: '${context.appLoc.location} *'),
+                        // LabelField(
+                        //   label: '${context.appLoc.zone_by_province} *',
+                        // ),
+                        // const SizedBox(height: Constants.spacingSmall),
+                        // if (_jobFeatures != null)
+                        //   Wrap(
+                        //     spacing: Constants.spacingMedium,
+                        //     children: _jobFeatures!.locations.map((location) {
+                        //       final isSelected =
+                        //           _selectedLocation == location.id;
+                        //       return InkWell(
+                        //         onTap: () => _toggleLocation(location.id),
+                        //         borderRadius: BorderRadius.circular(4),
+                        //         child: Padding(
+                        //           padding: const EdgeInsets.symmetric(
+                        //             vertical: 6,
+                        //           ),
+                        //           child: Row(
+                        //             mainAxisSize: MainAxisSize.min,
+                        //             children: [
+                        //               SizedBox(
+                        //                 width: 24,
+                        //                 height: 24,
+                        //                 child: Checkbox(
+                        //                   value: isSelected,
+                        //                   onChanged: (_) =>
+                        //                       _toggleLocation(location.id),
+                        //                 ),
+                        //               ),
+                        //               const SizedBox(
+                        //                 width: Constants.spacingExtraSmall,
+                        //               ),
+                        //               Text(
+                        //                 location.name,
+                        //                 style: theme.textTheme.bodyMedium,
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       );
+                        //     }).toList(),
+                        //   ),
+                        Row(
+                          children: [
+                            Text(
+                              '${context.appLoc.location} * ',
+                              style: theme.textTheme.titleSmall!.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              context.appLoc.max_3,
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: isDark ? Colors.white54 : Colors.black54,
+                              ),
+                            ),
+                          ],
+                        ),
                         const SizedBox(height: Constants.spacingSmall),
                         if (_jobFeatures != null)
                           Wrap(
                             spacing: Constants.spacingMedium,
                             children: _jobFeatures!.locations.map((location) {
-                              final isSelected =
-                                  _selectedLocation == location.id;
+                              final isSelected = _selectedLocations.contains(
+                                location.id,
+                              );
                               return InkWell(
-                                onTap: () => _toggleLocation(location.id),
+                                onTap: () => _toggleLocations(location.id),
                                 borderRadius: BorderRadius.circular(4),
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
                                     vertical: 6,
                                   ),
                                   child: Row(
-                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisSize: MainAxisSize.max,
                                     children: [
                                       SizedBox(
                                         width: 24,
                                         height: 24,
                                         child: Checkbox(
                                           value: isSelected,
-                                          onChanged: (_) =>
-                                              _toggleLocation(location.id),
+                                          onChanged: (value) =>
+                                              _toggleLocations(location.id),
                                         ),
                                       ),
                                       const SizedBox(
@@ -341,6 +529,11 @@ class _PostJobApplicantScreenState extends State<PostJobApplicantScreen> {
                                 ),
                               );
                             }).toList(),
+                          )
+                        else
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 8.0),
+                            child: CircularProgressIndicator(),
                           ),
                         const SizedBox(height: Constants.spacingMedium),
 

@@ -146,7 +146,12 @@ class _SignInScreenState extends State<SignInScreen> {
                     listener: (context, state) {
                       if (state is AuthSignInSuccess) {
                         BlocProvider.of<AppBloc>(context)
-                          ..add(const AppAuthenticated(isAuthenticated: true))
+                          ..add(
+                            AppAuthenticated(
+                              isAuthenticated: true,
+                              token: state.token,
+                            ),
+                          )
                           ..add(const AppUserLoaded());
                         context.goNamed(Routes.account.name);
                       } else if (state is AuthRequestFailure) {

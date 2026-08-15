@@ -15,11 +15,19 @@ class JobsRequestInProgress extends JobsState {}
 
 /// [ViewAllJobApplicantsUseCase] succeeded.
 class JobApplicantsViewAllFetchSuccess extends JobsState {
-  const JobApplicantsViewAllFetchSuccess({required this.jobApplicants});
+  const JobApplicantsViewAllFetchSuccess({
+    required this.jobApplicants,
+    required this.query,
+    required this.hasMore,
+    this.isLoadMore = false,
+  });
   final List<JobApplicant> jobApplicants;
+  final String query;
+  final bool hasMore;
+  final bool isLoadMore;
 
   @override
-  List<Object> get props => [jobApplicants];
+  List<Object> get props => [jobApplicants, query, hasMore, isLoadMore];
 }
 
 /// [GetJobApplicantsZoneUseCase] succeeded.
@@ -49,6 +57,22 @@ class JobApplicantProfessionsFetchSuccess extends JobsState {
   List<Object> get props => [jobCategories];
 }
 
+class JobMotifsFetchSuccess extends JobsState {
+  const JobMotifsFetchSuccess({required this.motifs});
+  final List<Motif> motifs;
+
+  @override
+  List<Object> get props => [motifs];
+}
+
+class JobSignalerContenuSuccess extends JobsState {
+  const JobSignalerContenuSuccess({required this.signaler});
+  final Signaler signaler;
+
+  @override
+  List<Object> get props => [signaler];
+}
+
 /// [GetJobApplicantFiltersUseCase] succeeded.
 class JobApplicantFiltersFetchSuccess extends JobsState {
   const JobApplicantFiltersFetchSuccess({required this.jobApplicantFilter});
@@ -56,6 +80,15 @@ class JobApplicantFiltersFetchSuccess extends JobsState {
 
   @override
   List<Object> get props => [jobApplicantFilter];
+}
+
+/// [GetJobOfferFilteringUseCase] succeeded.
+class JobOfferFilteringFetchSuccess extends JobsState {
+  const JobOfferFilteringFetchSuccess({required this.jobOfferFiltering});
+  final JobOfferFiltering jobOfferFiltering;
+
+  @override
+  List<Object> get props => [jobOfferFiltering];
 }
 
 /// [GetJobOffersGroupByUseCase] succeeded.
@@ -88,12 +121,20 @@ class JobsGroupByZoneFetchSuccess extends JobsState {
 /// [ViewAllJobOffersUseCase] succeeded.
 /// [query] is kept so the UI knows which category/filter was active.
 class JobsViewAllFetchSuccess extends JobsState {
-  const JobsViewAllFetchSuccess({required this.jobOffers, required this.query});
+  const JobsViewAllFetchSuccess({
+    required this.jobOffers,
+    required this.query,
+    required this.hasMore,
+    this.isLoadMore = false,
+  });
+
   final List<JobOffer> jobOffers;
   final String query;
+  final bool hasMore;
+  final bool isLoadMore;
 
   @override
-  List<Object> get props => [jobOffers, query];
+  List<Object> get props => [jobOffers, query, hasMore, isLoadMore];
 }
 
 /// [UploadPdfUseCase] succeeded.
@@ -139,6 +180,30 @@ class JobsGetJobOfferDetailSuccess extends JobsState {
 
   @override
   List<Object> get props => [jobOffer];
+}
+
+/// [ApplyToOfferUseCase] succeeded.
+class JobsApplyInProgress extends JobsState {
+  const JobsApplyInProgress();
+
+  @override
+  List<Object> get props => [];
+}
+
+class JobsApplyToOfferSuccess extends JobsState {
+  const JobsApplyToOfferSuccess({required this.applyMessage});
+  final String applyMessage;
+
+  @override
+  List<Object> get props => [applyMessage];
+}
+
+class JobsApplyRequestFailure extends JobsState {
+  const JobsApplyRequestFailure({required this.message});
+  final String message;
+
+  @override
+  List<Object> get props => [message];
 }
 
 /// [GetTrainingCenterDomainsUseCase] succeeded.
@@ -216,20 +281,36 @@ class GetTrainingCenterFilterSuccess extends JobsState {
 
 /// [ViewAllHotEventUseCase] succeeded.
 class ViewAllHotEventsSuccess extends JobsState {
-  const ViewAllHotEventsSuccess({required this.hotEvents});
+  const ViewAllHotEventsSuccess({
+    required this.hotEvents,
+    required this.query,
+    required this.hasMore,
+    this.isLoadMore = false,
+  });
   final List<HotEvent> hotEvents;
+  final String query;
+  final bool hasMore;
+  final bool isLoadMore;
 
   @override
-  List<Object> get props => [hotEvents];
+  List<Object> get props => [hotEvents, query, hasMore, isLoadMore];
 }
 
 /// [ViewAllTrainingCenterUseCase] succeeded.
 class ViewAllTrainingCentersSuccess extends JobsState {
-  const ViewAllTrainingCentersSuccess({required this.trainingCenters});
+  const ViewAllTrainingCentersSuccess({
+    required this.trainingCenters,
+    required this.query,
+    required this.hasMore,
+    this.isLoadMore = false,
+  });
   final List<TrainingCenter> trainingCenters;
+  final String query;
+  final bool hasMore;
+  final bool isLoadMore;
 
   @override
-  List<Object> get props => [trainingCenters];
+  List<Object> get props => [trainingCenters, query, hasMore, isLoadMore];
 }
 
 /// [GetHotEventDetailUseCase] succeeded.
@@ -268,6 +349,22 @@ class GetTrainingCenterViewDomainSuccess extends JobsState {
 
   @override
   List<Object> get props => [trainingCenterViewDomain];
+}
+
+class JobsViewUserProfileSuccess extends JobsState {
+  const JobsViewUserProfileSuccess({required this.user});
+  final User user;
+
+  @override
+  List<Object> get props => [user];
+}
+
+class JobsBlockUserSuccess extends JobsState {
+  const JobsBlockUserSuccess({required this.message});
+  final String message;
+
+  @override
+  List<Object> get props => [message];
 }
 
 /// Any request failed.
