@@ -308,5 +308,6 @@
   "block": "Bloquer",
   "unblocked_user_successfully": "Utilisateur débloqué avec succès",
   "no_blocked_user": "Aucun utilisateur bloqué",
-  "and": "Et"
+  "and": "Et",
+  "upload_3_photos": "Vous pouvez télécharger jusqu'à 3 photos"
 }

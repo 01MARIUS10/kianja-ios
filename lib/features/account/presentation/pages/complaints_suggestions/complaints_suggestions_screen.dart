@@ -144,8 +144,7 @@ class _ComplaintsSuggestionsScreenState
                             onPhotosChanged: (photos) {
                               setState(() => _photos = photos);
                             },
-                            hintText:
-                                'Vous pouvez télécharger jusqu\'à 3 photos',
+                            hintText: context.appLoc.upload_3_photos,
                           ),
                           const SizedBox(height: Constants.spacingMedium),
 

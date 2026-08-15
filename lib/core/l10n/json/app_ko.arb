@@ -308,5 +308,6 @@
   "block": "차단",
   "unblocked_user_successfully": "사용자가 성공적으로 차단 해제되었습니다",
   "no_blocked_user": "차단된 사용자가 없습니다",
-  "and": "그리고"
+  "and": "그리고",
+  "upload_3_photos": "최대 3장의 사진을 업로드할 수 있습니다"
 }

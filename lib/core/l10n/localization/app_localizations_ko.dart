@@ -946,4 +946,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get and => '그리고';
+
+  @override
+  String get upload_3_photos => '최대 3장의 사진을 업로드할 수 있습니다';
 }

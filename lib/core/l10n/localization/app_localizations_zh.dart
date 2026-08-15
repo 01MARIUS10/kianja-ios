@@ -941,4 +941,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get and => '和';
+
+  @override
+  String get upload_3_photos => '您最多可以上传 3 张照片';
 }

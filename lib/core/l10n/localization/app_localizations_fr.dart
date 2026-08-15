@@ -975,4 +975,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get and => 'Et';
+
+  @override
+  String get upload_3_photos => 'Vous pouvez télécharger jusqu\'à 3 photos';
 }

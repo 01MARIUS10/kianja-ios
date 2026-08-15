@@ -1963,6 +1963,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'And'**
   String get and;
+
+  /// No description provided for @upload_3_photos.
+  ///
+  /// In en, this message translates to:
+  /// **'You can upload up to 3 photos'**
+  String get upload_3_photos;
 }
 
 class _AppLocalizationsDelegate

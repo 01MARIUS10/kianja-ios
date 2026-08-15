@@ -961,4 +961,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get and => 'And';
+
+  @override
+  String get upload_3_photos => 'You can upload up to 3 photos';
 }

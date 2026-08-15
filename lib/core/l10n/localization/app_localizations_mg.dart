@@ -978,4 +978,7 @@ class AppLocalizationsMg extends AppLocalizations {
 
   @override
   String get and => 'Ary';
+
+  @override
+  String get upload_3_photos => 'Afaka mampakatra sary hatramin\'ny 3 ianao';
 }

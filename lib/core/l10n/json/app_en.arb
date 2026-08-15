@@ -308,5 +308,6 @@
   "block": "Block",
   "unblocked_user_successfully": "User unblocked successfully",
   "no_blocked_user": "No blocked users",
-  "and": "And"
+  "and": "And",
+  "upload_3_photos": "You can upload up to 3 photos"
 }
