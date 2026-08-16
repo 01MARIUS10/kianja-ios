@@ -386,8 +386,7 @@ class _JobOfferDetailScreenState extends State<JobOfferDetailScreen> {
                             },
                           ),
 
-                          if (jobOffer.preference != null &&
-                              jobOffer.preference?.showPostButton == true)
+                          if (jobOffer.preference != null)
                             // widget.matchedLocation != '/account/applications'
                             //     ?
                             // if (widget.matchedLocation != '/account/applications')
@@ -428,7 +427,11 @@ class _JobOfferDetailScreenState extends State<JobOfferDetailScreen> {
                                     ),
                                     child: Align(
                                       alignment: Alignment.topRight,
-                                      child: ApplyButton(jobId: widget.id),
+                                      child: ApplyButton(
+                                        jobId: widget.id,
+                                        showButton:
+                                            jobOffer.preference!.showPostButton,
+                                      ),
                                     ),
                                   ),
                         ],

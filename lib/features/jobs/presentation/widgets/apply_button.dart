@@ -10,8 +10,9 @@ import 'package:kianja/features/jobs/presentation/bloc/apply_to_offer/apply_to_o
 import 'package:kianja/routing/routes.dart';
 
 class ApplyButton extends StatelessWidget {
-  const ApplyButton({super.key, required this.jobId});
+  const ApplyButton({super.key, required this.jobId, required this.showButton});
   final int jobId;
+  final bool showButton;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,9 @@ class ApplyButton extends StatelessWidget {
           return BlocBuilder<AppBloc, AppState>(
             builder: (context, appState) {
               return ElevatedButton(
-                onPressed: appState.isAuthenticated
+                onPressed: !showButton
+                    ? null
+                    : appState.isAuthenticated
                     ? () {
                         BlocProvider.of<ApplyToOfferBloc>(
                           context,
