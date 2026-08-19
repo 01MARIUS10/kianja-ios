@@ -128,19 +128,6 @@ class _PostScreenState extends State<PostScreen> {
                     });
                   },
                 ),
-                // const SizedBox(height: Constants.spacingMedium),
-                // _PostOptionTile(
-                //   icon: Icons.work_outline,
-                //   title: context.appLoc.expert_executive,
-                //   isSelected: _selectedType == PostType.expertExecutive,
-                //   isDark: isDark,
-                //   theme: theme,
-                //   onTap: () {
-                //     setState(() {
-                //       _selectedType = PostType.expertExecutive;
-                //     });
-                //   },
-                // ),
               ],
             ),
             const SizedBox(height: Constants.spacingLarge),
@@ -200,7 +187,7 @@ class _PostOptionTile extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.all(Constants.paddingMedium),
+        padding: const EdgeInsets.all(Constants.paddingSmall),
         decoration: BoxDecoration(
           color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
           borderRadius: BorderRadius.circular(Constants.borderRadiusMedium),
